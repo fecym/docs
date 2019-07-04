@@ -14,7 +14,7 @@
 
 <p align="center">
   <img :src="$withBase('/imgs/dynamic-entry.jpg')" height="400">
-<p>
+</p>
 
 - 关于 entry， 我们要记住， 他有多种配置类型， 而且可以动态配置， 还可以为入口设置别名呐。 
 
