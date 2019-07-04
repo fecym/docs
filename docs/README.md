@@ -1,5 +1,4 @@
 ---
-
 home: true
 heroImage: /imgs/oops.png
 actionText: 快速上手 →
