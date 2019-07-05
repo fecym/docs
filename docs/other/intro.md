@@ -247,7 +247,10 @@ module.exports = {
   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
   cd -
 ```
-
 - 注意里面的 **blog** 和 **address** 是我们在 **Travis** 配置的那个 blog 和 address
+- 配置完毕之后，你可以修改你的博客，然后你当你 push 代码的时候就会触发 Travis 的执行
+- 打开 Travis 就可以看到他在执行你设置的相应的命令来部署你的博客了
 
 :tada: :100:
+
+- 你大爷的
