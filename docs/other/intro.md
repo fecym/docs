@@ -127,8 +127,39 @@ module.exports = {
 ## 线上部署
 
 ::: warning 线上部署
-当你的文档开发完毕，你可以执行 yarn build 命令对项目进行打包，打包之后会在 .vuepress/dist 里面就是你打包后的静态资源文件，他会转成 html 文件，然后你可以在你的服务器上用 nginx 开个一个端口，解析一个域名，创建一个对应的目录，把项目放进去就可以访问到了，你也可以本地起一个简单的服务器，测试你的项目，都是完全 ok 的
+  - 当你的文档开发完毕，你可以执行 yarn build 命令对项目进行打包，打包之后会在 .vuepress/dist 里面就是你打包后的静态资源文件，他会转成 html 文件，然后你可以在你的服务器上用 nginx 开个一个端口，解析一个域名，创建一个对应的目录，把项目放进去就可以访问到了，你也可以本地起一个简单的服务器，测试你的项目，都是完全 ok 的
+  - 当然如果你想直接部署到 github 的博客上，也是可以的，你需要写一个部署脚本文件，配置一下就可以了，配置内容如下
 :::
+
+```sh
+  #!/usr/bin/env sh
+  # 确保脚本抛出遇到的错误
+  set -e
+  npm install -g vuepress@next
+  # 生成静态文件
+  npm run build
+  # 进入生成的文件夹
+  cd docs/.vuepress/dist
+  # 如果是发布到自定义域名
+  # echo 'www.example.com' > CNAME
+  git init
+  git add -A
+  git commit -m 'deploy'
+  # 如果发布到 https://<USERNAME>.github.io
+  git push -f https://github.com/cym-git/cym-git.github.io.git master
+  # git push -f https://${blog}@${address} master:master
+  # 如果发布到 https://<USERNAME>.github.io/<REPO>
+  # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+  cd -
+```
+- 然后在 package.json 里面增加一个执行脚本，每次开发完毕执行 yarn deploy 命令就会部署到 github 的博客上了
+```json
+  "scripts": {
+    "start": "vuepress dev docs",
+    "build": "vuepress build docs",
+    "deploy": "bash deploy.sh"
+  },
+```
 
 ## 线上自动化部署
 
@@ -180,12 +211,11 @@ module.exports = {
 
 ### 项目里面配置自动化部署
 
-- 此时我们编写在 docs 根目录下新建两个文件，然后编写，以下代码
+- 此时我们编写在 docs 根目录下新建一个 .travis.yml 配置文件，用来配置一下我们的 [**Travis**](http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html)
+- 同时修改 deploy.sh 文件，注意高亮那行
 
-```sh
-  touch .travis.yml deploy.sh
+```sh{28}
   # .travis.yml 文件如下
-
   sudo: required
   language: node_js
   node_js: stable
@@ -196,7 +226,7 @@ module.exports = {
   notifications:
     email: false
 
-  # deploy.sh 目录文件如下
+  # deploy.sh 修改后的
 
   #!/usr/bin/env sh
   # 确保脚本抛出遇到的错误
@@ -212,22 +242,12 @@ module.exports = {
   git add -A
   git commit -m 'deploy'
   # 如果发布到 https://<USERNAME>.github.io
-  # git push -f https://github.com/cym-git/cym-git.github.io.git master
   git push -f https://${blog}@${address} master:master
   # 如果发布到 https://<USERNAME>.github.io/<REPO>
   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
   cd -
-
 ```
 
 - 注意里面的 **blog** 和 **address** 是我们在 **Travis** 配置的那个 blog 和 address
 
-- 然后在 package.json 目录下添加一句脚本
-
-```json
-  "scripts": {
-    "start": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "deploy": "bash deploy.sh"
-  },
-```
+:tada: :100:
