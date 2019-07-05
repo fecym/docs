@@ -486,6 +486,72 @@ optimization: {
   }),
 ```
 
+### 显示打包进度和打包时间
+
+- 需要用到两个插件 progress-bar-webpack-plugin chalk
+- [ProgressBarPlugin](https://www.npmjs.com/package/progress-bar-webpack-plugin) 是用来配置进度条的，[chalk](https://www.npmjs.com/package/chalk) 是用来定义展示的颜色的 
+```js
+  // 打包时间
+  new ProgressBarPlugin({
+    format: '  编译进度：[:bar] ' + chalk.green.bold(':percent') + ' (已用时 :elapsed 秒)',
+    clear: false
+  }),
+```
+### 友好的错误提示
+
+- 在 webpack 中编译过程中终端会输出很多信息的，看着很别扭，此时可以用到一个插件来很友好的显示
+- 在开发环境下展示的log我们完全可以把 **devServer.quiet** 设置为 **true**，此时整个世界都安静了
+- 模拟 vue-cli 中编译过程中输出的信息，我们用到 friendly-errors-webpack-plugin 插件
+- 经测试，貌似只对开发环境管用，那么我们就模拟下 vue-cli 的展示
+- 在 plugins 添加一下代码 [传送门](https://blog.csdn.net/kai_vin/article/details/89025966)
+```js
+  new FriendlyErrorsWebpackPlugin({
+    compilationSuccessInfo: {
+      messages: [`
+        App running at:
+        - Local:   ${chalk.hex('#66D9EF')('http://localhost:' + PORT)}
+        - Network: ${chalk.hex('#66D9EF')('http://' + networkIp + ':' + PORT)}
+      `],
+      clearConsole: true,
+      onErrors: (severity, errors) => {
+        if (severity !== 'error') return
+        const error = errors[0]
+        const filename = error.file && error.file.split('!').pop()
+        notifier.notify({
+          title: packageConfig.name,
+          message: severity + ': ' + error.name,
+          subtitle: filename || '',
+          // icon: path.join(__dirname, 'logo.png')
+        })
+      }
+    }
+  }),
+```
+- networkIp 是我们自己编写的一个利用 os 模块获取本机ip的方法，具体实现如下
+- 获取 networkInterfaces 对象，里面有ip的各种格式，筛选出我们要的那个就可以了
+```js
+  const interfaces = require('os').networkInterfaces()
+  const getNetworkIp = () => {
+    let IpAddress = ''
+    for (let devName in interfaces) {
+      let iface = interfaces[devName]
+      iface.forEach(ipInfo => {
+        if (ipInfo.family === 'IPv4' && ipInfo.address !== '127.0.0.1' && !ipInfo.internal) {
+          IpAddress = ipInfo.address
+        }
+      })
+    }
+    return IpAddress
+  }
+  module.exports = getNetworkIp
+```
+- 最终实现的效果如下所示
+
+<p align="center">
+  <img :src="$withBase('/imgs/dev-error-info.png')""/>
+</p>
+
+
 ## 六、Source Map
 ::: tip 为什么要用source maps
   因为webpack对源代码进行打包后，会对源代码进行压缩、精简、甚至变量名替换，在浏览器中，无法对代码逐行打断点进行调试，所有需要使用source maps进行调试，它使得我们在浏览器中可以看到源代码，进而逐行打断点调试。
