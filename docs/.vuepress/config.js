@@ -12,7 +12,14 @@ module.exports = {
           { text: '从0搭建vue', link: '/webpack/vue' }
         ]
       },
-      { text: 'mapbox', link: '/mapbox/index' },
+      // { text: 'mapbox', link: '/mapbox/index' },
+      {
+        text: 'node',
+        items: [
+          { text: 'node简介', link: '/node/index' },
+          { text: 'fs文件系统', link: '/node/fs' }
+        ]
+      },
       { text: 'vue', link: '/vue' },
     ],
     sidebar: 'auto',
