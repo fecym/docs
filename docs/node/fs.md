@@ -56,6 +56,10 @@
 
 ### 复制文件
 
+- fs.copyFile() 看文档吧，[传送门](http://nodejs.cn/api/fs.html#fs_fs_copyfile_src_dest_flags_callback)
+
+### 链接文件
+
 - 我们所认为的文件的复制操作，对于计算机而言是建立文件链接，把文件备份被称为硬链接（hard link）
 - 把文件创建一个快捷方式就是软链接，也叫符号链接（symbolic link），软链接就是快捷方式
 - fs提供了这么两种方法，fs.link()就是备份文件，fs.symlink()就是软链接
@@ -81,6 +85,18 @@
   fs.unlink(resolve('write/options.txt'), err => {
     if (err) throw err
     console.log('文件删除成功')
+  })
+```
+
+### 重命名文件
+
+- fs.rename() 方法接收三个参数，源名字，新名字，回调函数
+- 如果第一个参数和第二个参数不在同一个文件夹内，还会造成移动文件
+- 如果新名字存在，则会覆盖它
+```js
+  fs.rename(resolve('file/1.txt'), '哈哈哈.js', err => {
+    if (err) throw err;
+    console.log('重命名完成');
   })
 ```
 
