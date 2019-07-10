@@ -26,7 +26,7 @@ module.exports = {
       { text: 'vue', link: '/vue' },
     ],
     sidebar: 'auto',
-    lastUpdated: 'Last Updated',
+    lastUpdated: '最后更新时间',
 
     // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
     repo: 'https://github.com/cym-git',
@@ -51,16 +51,30 @@ module.exports = {
     lineNumbers: true // 代码块显示行号
   },
   // 添加plugins，使用插件
-  plugins: {
-    '@vssue/vuepress-plugin-vssue': {
-      // 设置 `platform` 而不是 `api`
-      platform: 'github',
-      locale: 'zh', // 语言设置
-      // 其他的 Vssue 配置
-      owner: 'cym-git', // github账户名称
-      repo: 'cym-git.github.io', // Github博客仓库
-      clientId: '74b59bdd634bffbe5002', // github上面申请的clientId
-      clientSecret: 'a6cf61f1223501b85583ab5a8901115e3ad0be05', // github上面申请的clientSecret
-    },
-  }
+  plugins: [
+    [
+      '@vuepress/last-updated', {
+        transformer: (timestamp) => {
+          // 不要忘了安装 moment
+          const moment = require('moment')
+          moment.locale('zh-CN')
+          return moment(timestamp).format('YYYY-MM-DD h:mm:ss a')
+        }
+      }
+    ],
+    [
+      '@vssue/vuepress-plugin-vssue', {
+        // 设置 `platform` 而不是 `api`
+        platform: 'github',
+        locale: 'zh', // 语言设置
+        // 其他的 Vssue 配置
+        owner: 'cym-git', // github账户名称
+        repo: 'cym-git.github.io', // Github博客仓库
+        clientId: '74b59bdd634bffbe5002', // github上面申请的clientId
+        clientSecret: 'a6cf61f1223501b85583ab5a8901115e3ad0be05', // github上面申请的clientSecret
+      }
+    ],
+    ['@vuepress/nprogress'],
+    ['@vuepress/back-to-top']
+  ]
 }

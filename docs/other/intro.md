@@ -266,18 +266,20 @@ module.exports = {
   - 配置插件
   ```js
     // 在.vuepress/config.js中添加plugins
-    plugins: {
-      '@vssue/vuepress-plugin-vssue': {
-        // 设置 `platform` 而不是 `api`
-        platform: 'github',
-        locale: 'zh', // 语言设置
-        // 其他的 Vssue 配置
-        owner: 'OWNER_OF_REPO', // github账户名称，登陆名字
-        repo: 'NAME_OF_REPO', // Github博客仓库，仓库地址，不加要https
-        clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
-        clientSecret: 'YOUR_CLIENT_SECRET', // github上面申请的clientSecret
-      },
-    }
+    plugins: [
+      [
+        '@vssue/vuepress-plugin-vssue', {
+          // 设置 `platform` 而不是 `api`
+          platform: 'github',
+          locale: 'zh', // 语言设置
+          // 其他的 Vssue 配置
+          owner: 'OWNER_OF_REPO', // github账户名称，登陆名字
+          repo: 'NAME_OF_REPO', // Github博客仓库，仓库地址，不加要https
+          clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
+          clientSecret: 'YOUR_CLIENT_SECRET', // github上面申请的clientSecret
+        }
+      ]
+    ]
   ```
 - 最后在你想要显示评论的md文件下面，加上这句话就ok了
 ```html
