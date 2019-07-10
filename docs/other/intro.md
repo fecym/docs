@@ -253,4 +253,22 @@ module.exports = {
 
 :tada: :100:
 
-- 你大爷
+## 添加评论系统
+
+```js
+  // 添加plugins，使用插件
+  plugins: {
+    '@vssue/vuepress-plugin-vssue': {
+      // 设置 `platform` 而不是 `api`
+      platform: 'github',
+      locale: 'zh', // 语言设置
+      // 其他的 Vssue 配置
+      owner: 'OWNER_OF_REPO', // github账户名称
+      repo: 'NAME_OF_REPO', // Github博客仓库
+      clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
+      clientSecret: 'YOUR_CLIENT_SECRET', // github上面申请的clientSecret
+    },
+  }
+```
+
+<Vssue title="Vssue Demo" />
