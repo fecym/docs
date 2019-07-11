@@ -23,6 +23,13 @@ module.exports = {
           { text: 'fs文件系统', link: '/node/fs' }
         ]
       },
+      {
+        text: '基础',
+        items: [
+          { text: 'JavaScript', link: '/basis/javascript' },
+          { text: 'css', link: '/basis/css' }
+        ]
+      },
       { text: 'vue', link: '/vue' },
     ],
     sidebar: 'auto',
