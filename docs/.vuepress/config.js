@@ -11,26 +11,33 @@ module.exports = {
       {
         text: 'webpack',
         items: [
-          { text: 'webpack简介', link: '/webpack/index' },
-          { text: '从0搭建vue', link: '/webpack/vue' }
+          { text: 'webpack简介', link: '/views/webpack/index' },
+          { text: '从0搭建vue', link: '/views/webpack/vue' }
         ]
       },
       // { text: 'mapbox', link: '/mapbox/index' },
       {
         text: 'node',
         items: [
-          { text: 'node简介', link: '/node/index' },
-          { text: 'fs文件系统', link: '/node/fs' }
+          { text: 'node简介', link: '/views/node/index' },
+          { text: 'fs文件系统', link: '/views/node/fs' }
+        ]
+      },
+      {
+        text: '数据可视化',
+        items: [
+          { text: 'mapbox', link: '/views/mapbox/index' },
+          { text: 'echarts', link: '/views/echarts/index' }
         ]
       },
       {
         text: '基础',
         items: [
-          { text: 'JavaScript', link: '/basis/javascript' },
-          { text: 'css', link: '/basis/css' }
+          { text: 'JavaScript', link: '/views/basis/javascript' },
+          { text: 'css', link: '/views/basis/css' }
         ]
       },
-      { text: 'vue', link: '/vue' },
+      { text: 'vue', link: '/views/vue' },
     ],
     sidebar: 'auto',
     lastUpdated: '最后更新时间',
