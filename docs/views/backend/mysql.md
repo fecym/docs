@@ -64,7 +64,7 @@
   SELECT * FROM `daily` LIMIT 5, 2
 ```
 
-- 排序：**ORDER BY column_name [desc]**
+- 查询后排序：**ORDER BY column_name [desc]**
 - 加上 **desc** 是倒序
 ```sql
   SELECT * FROM `daily` ORDER BY create_time DESC
@@ -87,4 +87,20 @@
   - 字段可以直接做运算 *select age + 1 'new_age' from emp;*
   - 分组后的条件均可以使用聚合函数
 
+### select语句拓展
 
+- 模糊查询语法：**like '%关键字%'**，like后面跟着模糊查询条件，关键字写在 **%%** 中
+```sql
+  SELECT *  FROM `user` WHERE `user`.realname LIKE '%程%'
+  SELECT *  FROM `user` WHERE username LIKE '%c%'
+```
+
+- 显示null值：**column_name is null**
+```sql
+  -- 只查看realname是null的
+  SELECT * FROM `user` WHERE realname IS NULL
+  -- realname根据输入的任意字符模糊查询，也可以是null
+  SELECT * FROM `user` WHERE realname LIKE '%%' OR realname IS NULL
+  -- 同一个级别的语句要括起来
+  SELECT * FROM `user` WHERE `username` LIKE '%%' AND (`realname` LIKE '%%' OR `realname` IS NULL) ORDER BY create_time desc LIMIT 0, 10
+```
