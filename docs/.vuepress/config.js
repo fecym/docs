@@ -20,7 +20,8 @@ module.exports = {
         text: 'node',
         items: [
           { text: 'node简介', link: '/views/node/index' },
-          { text: 'fs文件系统', link: '/views/node/fs' }
+          { text: 'fs文件系统', link: '/views/node/fs' },
+          { text: 'mysql', link: '/views/backend/mysql' }
         ]
       },
       {
