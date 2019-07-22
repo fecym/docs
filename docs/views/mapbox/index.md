@@ -160,3 +160,32 @@
     map.addLayer(layer)
   }
 ```
+
+## 地图事件
+
+### on -> load事件
+
+- 该事件一般用作地图渲染完毕处理一些事情
+
+### on -> click 事件
+
+- 鼠标单击事件，对原生的click做了很好的封装
+- 比如说我们可以，获取到经纬度，点信息，我们可以根据点信息获取feature信息
+```js
+  // 截取一段根据事件对象获取到的点信息来画地图
+  this.map.on('click', async(ev: any) => {
+    if (this.isMouseGet) {
+      const features: any[] = this.map.queryRenderedFeatures(ev.point)
+      console.log(features, 'sss')
+      if (!features.length) return this.$message.warning('未获取到该区域的数据')
+      await this.drawLine(features[0].properties['admin_code'])
+      const areaInfo: any = {}
+      Object.entries(features[0].properties).forEach((item: any) => {
+        areaInfo[toHump(item[0])] = item[1]
+      })
+      this.info = areaInfo
+      // @ts-ignore
+      this.$refs.dialog.handleDialogOpen(this.info)
+    }
+  })
+```
