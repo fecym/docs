@@ -1,4 +1,5 @@
 # vue 项目的配置
+
 ## 从 0 开始搭建 vue 项目
 
 <!-- 第一行的东西会被作为标题来展示 -->
@@ -140,7 +141,8 @@
   项目中之前设置了 chunks 打包后对应某个模块，但是我们用到了分离插件，导致分离后的东西，动态的我们不确定名字，导致不去加载那个文件，导致页面不渲染，这个属性不设置，也不会不错，他会动态的都给你加上去
   :::
 - 最后我们修改下 package.json 的启动脚本，然后我们可以在 main.js 下写一些执行脚本，就可以看到效果了
-- --mode development 设置webpack运行时的环境为development，--progress 不用说了吧
+- --mode development 设置 webpack 运行时的环境为 development，--progress 不用说了吧
+
 ```JSON
   "scripts": {
     "start": "webpack-dev-server --mode development --progress",
@@ -368,9 +370,10 @@ optimization: {
 }
 ```
 
-- 如果项目使用包模块多的话，我们可以把大点的包都分离出来，cacheGroup就是配置的关键，可以卓个分离分离
-- 比如说你想把vue、vue-router分离出来，或者你用了element、echarts因为打包后单个包太大，你想要分割代码，那就配置cacheGroup
-- 它是webpack自带的插件，不需要引入直接就可以用，简单配置如下
+- 如果项目使用包模块多的话，我们可以把大点的包都分离出来，cacheGroup 就是配置的关键，可以卓个分离分离
+- 比如说你想把 vue、vue-router 分离出来，或者你用了 element、echarts 因为打包后单个包太大，你想要分割代码，那就配置 cacheGroup
+- 它是 webpack 自带的插件，不需要引入直接就可以用，简单配置如下
+
 ```JavaScript
   {
     chunks: 'all',
@@ -454,13 +457,18 @@ optimization: {
         ]
       : []
   ```
-### 去除无用的css
+
+### 去除无用的 css
+
 - 需要用到两个插件 PurgecssPlugin 和 glob
+
 ```sh
   yarn add glob-all --save-dev
   yarn add purgecss-webpack-plugin -D
 ```
+
 - 简单配置如下
+
 ```javascript
   new PurgecssPlugin({
     paths: glob.sync([
@@ -471,12 +479,16 @@ optimization: {
   }),
 ```
 
-### 开启gzip
+### 开启 gzip
+
 - 需要用到插件 CompressionWebpackPlugin
+
 ```sh
   yarn add -D compression-webpack-plugin
 ```
-- 简单配置入下，这样配置下打包后项目就会生成gz压缩包
+
+- 简单配置入下，这样配置下打包后项目就会生成 gz 压缩包
+
 ```javascript
   new CompressionWebpackPlugin({
     algorithm: 'gzip',
@@ -489,7 +501,8 @@ optimization: {
 ### 显示打包进度和打包时间
 
 - 需要用到两个插件 progress-bar-webpack-plugin chalk
-- [ProgressBarPlugin](https://www.npmjs.com/package/progress-bar-webpack-plugin) 是用来配置进度条的，[chalk](https://www.npmjs.com/package/chalk) 是用来定义展示的颜色的 
+- [ProgressBarPlugin](https://www.npmjs.com/package/progress-bar-webpack-plugin) 是用来配置进度条的，[chalk](https://www.npmjs.com/package/chalk) 是用来定义展示的颜色的
+
 ```js
   // 打包时间
   new ProgressBarPlugin({
@@ -497,13 +510,15 @@ optimization: {
     clear: false
   }),
 ```
+
 ### 友好的错误提示
 
 - 在 webpack 中编译过程中终端会输出很多信息的，看着很别扭，此时可以用到一个插件来很友好的显示
-- 在开发环境下展示的log我们完全可以把 **devServer.quiet** 设置为 **true**，此时整个世界都安静了
+- 在开发环境下展示的 log 我们完全可以把 **devServer.quiet** 设置为 **true**，此时整个世界都安静了
 - 模拟 vue-cli 中编译过程中输出的信息，我们用到 friendly-errors-webpack-plugin 插件
 - 经测试，貌似只对开发环境管用，那么我们就模拟下 vue-cli 的展示
 - 在 plugins 添加一下代码 [传送门](https://blog.csdn.net/kai_vin/article/details/89025966)
+
 ```js
   new FriendlyErrorsWebpackPlugin({
     compilationSuccessInfo: {
@@ -527,43 +542,49 @@ optimization: {
     }
   }),
 ```
-- networkIp 是我们自己编写的一个利用 os 模块获取本机ip的方法，具体实现如下
-- 获取 networkInterfaces 对象，里面有ip的各种格式，筛选出我们要的那个就可以了
+
+- networkIp 是我们自己编写的一个利用 os 模块获取本机 ip 的方法，具体实现如下
+- 获取 networkInterfaces 对象，里面有 ip 的各种格式，筛选出我们要的那个就可以了
+
 ```js
-  const interfaces = require('os').networkInterfaces()
-  const getNetworkIp = () => {
-    let IpAddress = ''
-    for (let devName in interfaces) {
-      let iface = interfaces[devName]
-      iface.forEach(ipInfo => {
-        if (ipInfo.family === 'IPv4' && ipInfo.address !== '127.0.0.1' && !ipInfo.internal) {
-          IpAddress = ipInfo.address
-        }
-      })
-    }
-    return IpAddress
+const interfaces = require('os').networkInterfaces()
+const getNetworkIp = () => {
+  let IpAddress = ''
+  for (let devName in interfaces) {
+    let iface = interfaces[devName]
+    iface.forEach(ipInfo => {
+      if (
+        ipInfo.family === 'IPv4' &&
+        ipInfo.address !== '127.0.0.1' &&
+        !ipInfo.internal
+      ) {
+        IpAddress = ipInfo.address
+      }
+    })
   }
-  module.exports = getNetworkIp
+  return IpAddress
+}
+module.exports = getNetworkIp
 ```
+
 - 最终实现的效果如下所示
 
 <p align="center">
   <img :src="$withBase('/imgs/dev-error-info.png')""/>
 </p>
 
-
 ## 六、Source Map
-::: tip 为什么要用source maps
-  因为webpack对源代码进行打包后，会对源代码进行压缩、精简、甚至变量名替换，在浏览器中，无法对代码逐行打断点进行调试，所有需要使用source maps进行调试，它使得我们在浏览器中可以看到源代码，进而逐行打断点调试。
+
+::: tip 为什么要用 source maps
+因为 webpack 对源代码进行打包后，会对源代码进行压缩、精简、甚至变量名替换，在浏览器中，无法对代码逐行打断点进行调试，所有需要使用 source maps 进行调试，它使得我们在浏览器中可以看到源代码，进而逐行打断点调试。
 :::
 
-- 使用方法很简单，只需要在配置中添加devtool属性，赋值一个字符串或者布尔值即可 [传送门](https://www.webpackjs.com/configuration/devtool/)
-- 使用inline-source-map不会对生产环境造成影响
+- 使用方法很简单，只需要在配置中添加 devtool 属性，赋值一个字符串或者布尔值即可 [传送门](https://www.webpackjs.com/configuration/devtool/)
+- 使用 inline-source-map 不会对生产环境造成影响
 
 ```js
   devtool: 'inline-source-map',
 ```
-
 
 - 到此告一段落了，项目地址还是原来的地址，但是分支换成了 develop [传送门](https://gitee.com/cym_git/webpack-pit.git)
 

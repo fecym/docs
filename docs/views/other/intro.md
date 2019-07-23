@@ -127,9 +127,10 @@ module.exports = {
 ## 线上部署
 
 ::: warning 线上部署
-  - 当你的文档开发完毕，你可以执行 yarn build 命令对项目进行打包，打包之后会在 .vuepress/dist 里面就是你打包后的静态资源文件，他会转成 html 文件，然后你可以在你的服务器上用 nginx 开个一个端口，解析一个域名，创建一个对应的目录，把项目放进去就可以访问到了，你也可以本地起一个简单的服务器，测试你的项目，都是完全 ok 的
-  - 当然如果你想直接部署到 github 的博客上，也是可以的，你需要写一个部署脚本文件，配置一下就可以了，配置内容如下
-:::
+
+- 当你的文档开发完毕，你可以执行 yarn build 命令对项目进行打包，打包之后会在 .vuepress/dist 里面就是你打包后的静态资源文件，他会转成 html 文件，然后你可以在你的服务器上用 nginx 开个一个端口，解析一个域名，创建一个对应的目录，把项目放进去就可以访问到了，你也可以本地起一个简单的服务器，测试你的项目，都是完全 ok 的
+- 当然如果你想直接部署到 github 的博客上，也是可以的，你需要写一个部署脚本文件，配置一下就可以了，配置内容如下
+  :::
 
 ```sh
   #!/usr/bin/env sh
@@ -152,7 +153,9 @@ module.exports = {
   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
   cd -
 ```
+
 - 然后在 package.json 里面增加一个执行脚本，每次开发完毕执行 yarn deploy 命令就会部署到 github 的博客上了
+
 ```json
   "scripts": {
     "start": "vuepress dev docs",
@@ -247,16 +250,16 @@ module.exports = {
   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
   cd -
 ```
+
 - 注意里面的 **blog** 和 **address** 是我们在 **Travis** 配置的那个 blog 和 address
 - 配置完毕之后，你可以修改你的博客，然后你当你 push 代码的时候就会触发 Travis 的执行
 - 打开 Travis 就可以看到他在执行你设置的相应的命令来部署你的博客了
 
-
 ## 添加评论系统
 
-- vuepress是可以为自己的博客添加评论系统的，而且很简单
+- vuepress 是可以为自己的博客添加评论系统的，而且很简单
 - 首先添加评论系统授权，所以要在 **github** 中生成 **clientID** 和 **clientSecret**
-- 点击 **你的头像** -> **Settings** ->  **Developer settings** -> **OAuth Apps** 里面点击 **New OAuth App** 按钮，或者直接点[这里](https://github.com/settings/applications/new)
+- 点击 **你的头像** -> **Settings** -> **Developer settings** -> **OAuth Apps** 里面点击 **New OAuth App** 按钮，或者直接点[这里](https://github.com/settings/applications/new)
 - 准备工作做完了，接下来我们只需要配置两步就可以了
   - 第一步：安装插件
   ```sh
@@ -265,26 +268,29 @@ module.exports = {
   ```
   - 配置插件
   ```js
-    // 在.vuepress/config.js中添加plugins
-    plugins: [
-      [
-        '@vssue/vuepress-plugin-vssue', {
-          // 设置 `platform` 而不是 `api`
-          platform: 'github',
-          locale: 'zh', // 语言设置
-          // 其他的 Vssue 配置
-          owner: 'OWNER_OF_REPO', // github账户名称，登陆名字
-          repo: 'NAME_OF_REPO', // Github博客仓库，仓库地址，不加要https
-          clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
-          clientSecret: 'YOUR_CLIENT_SECRET', // github上面申请的clientSecret
-        }
-      ]
+  // 在.vuepress/config.js中添加plugins
+  plugins: [
+    [
+      '@vssue/vuepress-plugin-vssue',
+      {
+        // 设置 `platform` 而不是 `api`
+        platform: 'github',
+        locale: 'zh', // 语言设置
+        // 其他的 Vssue 配置
+        owner: 'OWNER_OF_REPO', // github账户名称，登陆名字
+        repo: 'NAME_OF_REPO', // Github博客仓库，仓库地址，不加要https
+        clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
+        clientSecret: 'YOUR_CLIENT_SECRET' // github上面申请的clientSecret
+      }
     ]
+  ]
   ```
-- 最后在你想要显示评论的md文件下面，加上这句话就ok了
+- 最后在你想要显示评论的 md 文件下面，加上这句话就 ok 了
+
 ```html
-  <Vssue title="Vssue Demo" />
+<Vssue title="Vssue Demo" />
 ```
+
 - 此时你的博客上的就会显示，像我下面显示评论一样了
 
 :tada: :100:
