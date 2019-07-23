@@ -117,7 +117,7 @@ Nginx 配置文件主要分成四部分：main（全局设置）、server（主�
 
   - 当缓存被代理的服务器响应到临时文件时，这个选项限制每次写临时文件的大小。proxy_temp_path（可以在编译的时候）指定写到哪那个目录。
 
-- _proxy_pass，proxy_redirect_ 见 [location](https://cym-git.github.io/views/big-front-end/nginx/#location) 部分。
+- _proxy_pass，proxy_redirect_ 见 [location](#location) 部分。
 
 ### 模块 http_gzip
 
