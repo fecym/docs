@@ -5,6 +5,7 @@ module.exports = {
   head: [
     ['link', { rel: 'icon', href: '/imgs/oops.png' }]
   ],
+  dest: './love',
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
@@ -17,11 +18,12 @@ module.exports = {
       },
       // { text: 'mapbox', link: '/mapbox/index' },
       {
-        text: 'node',
+        text: '大前端',
         items: [
-          { text: 'node简介', link: '/views/node/index' },
-          { text: 'fs文件系统', link: '/views/node/fs' },
-          { text: 'mysql', link: '/views/backend/mysql' }
+          { text: 'node简介', link: '/views/big-front-end/node/index' },
+          { text: 'fs文件系统', link: '/views/big-front-end/node/fs' },
+          { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
+          { text: 'nginx', link: '/views/big-front-end/nginx/index' }
         ]
       },
       {
@@ -41,6 +43,7 @@ module.exports = {
       { text: 'vue', link: '/views/vue' },
     ],
     sidebar: 'auto',
+    sidebarDepth: 4,
     lastUpdated: '最后更新时间',
 
     // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
@@ -52,7 +55,7 @@ module.exports = {
     // 以下为可选的编辑链接选项
 
     // 假如你的文档仓库和项目本身不在一个仓库：
-    docsRepo: 'vuejs/vuepress',
+    docsRepo: 'https://github.com/cym-git/docs',
     // 假如文档不是放在仓库的根目录下：
     docsDir: 'docs',
     // 假如文档放在一个特定的分支下：
@@ -90,6 +93,15 @@ module.exports = {
       }
     ],
     ['@vuepress/nprogress'],
-    ['@vuepress/back-to-top']
+    ['@vuepress/back-to-top'],
+    ['@vuepress/medium-zoom', true],
+    ['@vuepress/pwa', {
+      serviceWorker: true,
+      popupComponent: 'MySWUpdatePopup',
+      updatePopup: {
+        message: "新的风暴已经出现",
+        buttonText: "盘他"
+      }
+    }]
   ]
 }
