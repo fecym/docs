@@ -89,35 +89,35 @@ Nginx 配置文件主要分成四部分：main（全局设置）、server（主�
 
 > 这个模块实现的是 nginx 作为反向代理服务器的功能，包括缓存功能（[传送门](http://seanlook.com/2015/06/02/nginx-cache-check/)）
 
-- proxy_connect_timeout 60
+- _proxy_connect_timeout 60_
 
   - nginx 跟后端服务器连接超时时间(代理连接超时)
 
-- proxy_read_timeout 60
+- _proxy_read_timeout 60_
 
   - 连接成功后，与后端服务器两个成功的响应操作之间超时时间(代理接收超时)
 
-- proxy_buffer_size 4k
+- _proxy_buffer_size 4k_
 
   - 设置代理服务器（nginx）从后端 realserver 读取并保存用户头信息的缓冲区大小，默认与 proxy_buffers 大小相同，其实可以将这个指令值设的小一点
 
-- proxy_buffers 4 32k
+- _proxy_buffers 4 32k_
 
   - proxy_buffers 缓冲区，nginx 针对单个连接缓存来自后端 realserver 的响应，网页平均在 32k 以下的话，这样设置
 
-- proxy_busy_buffers_size 64k
+- _proxy_busy_buffers_size 64k_
 
   - 高负荷下缓冲大小（proxy_buffers\*2）
 
-- proxy_max_temp_file_size
+- _proxy_max_temp_file_size_
 
   - 当 proxy_buffers 放不下后端服务器的响应内容时，会将一部分保存到硬盘的临时文件中，这个值用来设置最大临时文件大小，默认 1024M，它与 proxy_cache 没有关系。大于这个值，将从 upstream 服务器传回。设置为 0 禁用。
 
-- proxy_temp_file_write_size 64k
+- _proxy_temp_file_write_size 64k_
 
   - 当缓存被代理的服务器响应到临时文件时，这个选项限制每次写临时文件的大小。proxy_temp_path（可以在编译的时候）指定写到哪那个目录。
 
-- proxy_pass，proxy_redirect 见 location 部分。
+- _proxy_pass，proxy_redirect_ 见 [location](https://cym-git.github.io/views/big-front-end/nginx/#location) 部分。
 
 ### 模块 http_gzip
 
