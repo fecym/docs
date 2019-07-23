@@ -171,6 +171,9 @@ http 服务上支持若干个虚拟主机。每个虚拟主机一个对应的 se
 - proxy_pass http://127.0.0.1:3000/api/;
 - 请求转向 _http://127.0.0.1:3000/api/_，即反向代理，对应*upstream*负载均衡器
 
+- proxy_pass http://wanfangdata.com.cn/;
+- 访问代理到 _http://wanfangdata.com.cn/_ 网站
+
 - 关于 location 匹配规则的写法，可以说尤为关键且基础的，参考文章 [nginx 配置 location 总结及 rewrite 规则写法](http://seanlook.com/2015/05/17/nginx-location-rewrite/);
 
-- [本文章参考](http://seanlook.com/2015/05/17/nginx-install-and-config/)
+- [本文章参考 _seanlook_ 的笔记](http://seanlook.com/2015/05/17/nginx-install-and-config/)
