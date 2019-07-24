@@ -12,11 +12,13 @@
   const options = {
     container: '底图容器',
     style: '您的底图json',
-    center: [108.5, 38],  // 初始化地图的中心点
-    zoom: 3.9,            // 缩放比例
-    bearing: 0,           // 地图的初始方位角（旋转度）
-    pitch: 0,             // 地图的初始倾斜度，按偏离屏幕水平面的度数计量（0-60）
-    doubleClickZoom: false
+    // 经度越大越靠左，纬度越大越靠下
+    center: [108.5, 38],    // 初始化地图的中心点
+    zoom: 3.9,              // 缩放比例
+    bearing: 0,             // 地图的初始方位角（旋转度）
+    pitch: 0,               // 地图的初始倾斜度，按偏离屏幕水平面的度数计量（0-60）
+    doubleClickZoom: false, // 取消双击缩放
+    dragRotate: false ,     // 取消地图旋转
   }
   const map = new mapboxgl.Map(options)
 ```
@@ -189,3 +191,12 @@
     }
   })
 ```
+
+### 改变鼠标手型
+
+- _map_ 的实例有个 _getCanvas()_ 方法可以获取到 _canvas_ 地图上的 _canvas_ 元素
+- 此时我们可以调用它的 _style.cursor_ 为其赋值，便可以改变地图上的鼠标手型
+```js
+  this.map.getCanvas().style.cursor = 'pointer'
+```
+- 关于鼠标手型，可以看下[这里](http://www.hangge.com/blog/cache/detail_2065.html)，这里列出来所有的鼠标手型以及长什么样子
