@@ -63,7 +63,15 @@ module.exports = {
     // 默认是 false, 设置为 true 来启用
     editLinks: true,
     // 默认为 "Edit this page"
-    editLinkText: '提出您宝贵的意见'
+    editLinkText: '提出您宝贵的意见',
+    serviceWorker: {
+      updatePopup: true // Boolean | Object, 默认值是 undefined.
+      // 如果设置为 true, 默认的文本配置将是: 
+      // updatePopup: { 
+      //    message: "New content is available.", 
+      //    buttonText: "Refresh" 
+      // }
+    }
   },
   markdown: {
     lineNumbers: true // 代码块显示行号

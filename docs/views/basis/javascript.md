@@ -112,9 +112,79 @@ function debounce(fn, step) {
 - 修改某些*Object*方法的返回结果，让其变得更合情合理。比如，*Object.defineProperty(obj, name, desc)*在无法定义属性时会抛出一个错误，而*Reflect.definProperty(obj, name, desc)*则会返回*false*
 - 让*Object*操作都变成函数行为。某些*Object*操作都是命令式，比如*name in obj*和*delete obj[name]*，而*Reflect.has(obj, name)*和*Reflect.deleteProperty(obj, name)*让他它们变成了函数行为
 - *Reflect*对象的方法与*Proxy*对象的方法一一对应，只要是*Proxy*对象的方法，就能在*Reflect*对象上找到对应的方法。这就让*Proxy*对象可以方便地调用对应的*Reflect*方法，完成默认行为，作为修改行为的基础。也就是说，**不管 Proxy 怎么修改默认行为，你总可以在 Reflect 上获取默认行为**。
-  :::
+:::
 
-## 继承
+## 原型
+<p align="center">
+  <img :src="$withBase('/imgs/basis-javascript-prototype.png')" />
+</p>
+
+### prototype
+- *prototype* 是一个显示原型属性，只有**函数才拥有该属性**，基本上所有函数都有这个属性
+- 但是也有例外，下面这种方法创建的函数不会具有 *prototype* 属性
+```js
+  let fun = Function.prototype.bind
+  let fun = Function.prototype.call
+  ...
+```
+- 当我们创建一个函数时，*prototype* 属性就被自动创建了
+- *prototype* 这个属性的值是一个对象（也就是一个原型），只有一个属性 *constructor*
+
+### constructor
+- *constructor* 是一个公有且不可枚举的属性，一旦我们改变了函数的 *prototype*，那么新对象就没有这个属性了
+- 当然可以通过原型链取到 *constructor*
+- *constructor* 属性指向了构造自己的构造函数
+
+### \_\_proto\_\_
+- *\_\_proto\_\_* 是对象的属性，当然函数也可以访问，指向了Function.prototype：**f.\_\_proto\_\_ === Function.prototype**
+- *\_\_proto\_\_* 指向了**创建该对象的构造函数的原型**
+- 不推荐使用 *\_\_proto\_\_* 来获取对象的这个属性，**Es6**提供了 *Object.getPrototypeOf(tartget-object)* 方法
+- 因为在js中没有类的概念，为了实现类似继承的方式，通过 *\_\_proto\_\_* 将对象和原型联系起来组成了原型链，得以让对象可以访问到不属于自己的属性
+- 当我们使用 *new* 操作符时，生成的实例对象就有了 *\_\_proto\_\_* 属性
+
+### new
+- *new* 一个函数经历了什么？
+  1. 新生成了一个对象
+  2. 链接到原型
+  3. 绑定this
+  4. 返回一个新对象
+- 在调用 *new* 的过程中会发生以上四件事，尝试着分析一下
+  - 新生成一个对象，比如我们生成了一个对象 *obj*
+  - 连接到原型，我们让 *obj.\_\_proto\_\_ = F.prototype*
+  - 绑定this，然后执行，*F.apply(obj)*
+  - 返回一个新的对象，此时 *obj* 对象就是你 *new* 一个函数得到的那个对象
+  - 那么我们尝试着实现一个 *new*
+  ```js
+    function _new() {
+      // 创建一个对象
+      const obj = {}
+      // 获取到我们传入的构造函数，获取arguments的第一项
+      const F = [].shift.call(arguments)
+      // 连接到原型
+      obj.__proto__ = F.prototype
+      // 执行构造函数，绑定this到新对象
+      F.apply(obj, arguments)
+      // 返回一个对象
+      return obj
+    }
+  ```
+### 总结
+- 从图中我们可以发现，所有对象都可以通过原型链最终找到 **Object.prototype**
+- **Object.prototype** 是一个对象，但是这个对象却不是 **Object** 创造的，而是引擎自己创建的
+- 所以可以这么说：**所有的实例都是对象，但是对象不一定都是实例**
+- **Function.prototype** 也是引擎自己创建的。所以 **let fun = Function.prototype.bind** 没有 **prototype** 属性
+- 引擎首先创建了 **Object.prototype**，然后创建了 **Function.prototype**，并且通过 **\_\_proto\_\_** 将两者联系了起来
+- 所以说：**不是所有的函数都是 new Function() 创造出来的**
+- **Function.\_\_proto\_\_ === Function.prototype**
+- 所有的构造函数都可以通过原型链找到 **Function.prototype**，并且 **function Function()** 本质上也是一个函数，为了不产生混乱就将 **function Function()** 的 **\_\_proto\_\_** 联系到了 **Function.prototype** 上
+- **Object** 是所有对象的父亲，所有对象都可以通过 **\_\_proto\_\_** 找到它
+- **Function** 是所有函数的父亲，所有函数都可以通过  **\_\_proto\_\_** 找到它
+- **Function.prototype** 和 **Object.prototype** 是两个特殊的对象，他们由引擎来创建
+- 除了以上两个特殊对象，其他对象都是通过构造器 **new** 出来的
+- 函数的 **prototype** 是一个对象，也就是原型
+- 对象的 **\_\_proto\_\_** 指向原型， **\_\_proto\_\_** 将对象和原型连接了起来组合成了原型链
+
+## 继承 
 
 - new 运算符的缺点
 
@@ -237,3 +307,4 @@ console.log(c1, c2)
 - **缺点**
   - 两次调用父类构造函数
   - 子类继承父类的属性, 一类是在子类的实例上, 一类是在子类的原型上(效率低)
+
