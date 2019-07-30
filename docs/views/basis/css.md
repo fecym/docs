@@ -99,9 +99,18 @@
 - 所以全局的变量通常放在根元素 *:root* 里面，确保任何选择器都可以读取它们。
 - [参考链接](https://www.ruanyifeng.com/blog/2017/05/css-variables.html)
 
+## *margin*
+
+- 关于 *margin*，有几点需要注意下
+- *margin* 的 *top和bottom* 对非替换内联元素无效（可以暂时理解为行内元素）
+- 不过对于 *display: inline-block;* 的元素设置是有效的
+- 但是 *margin: auto* 对于 *display: inline-block;* 的元素设置是无效的
+- 对于 *display: inline-block;* 的元素设置居中需要用到 *text-align: center;*
+- *margin* 塌陷暂时不提
+
 ## 居中
 
-### 利用 *absolute* 和 *负margin* 实现
+### 利用 *absolute* + *负margin* 实现
 - 要求：已知宽高
 ```html {23}
     <style>
@@ -137,7 +146,7 @@
   </body>
 ```
 
-### 利用 *position* 和 *margin auto* 实现
+### 利用 *position* + *margin auto* 实现
 - 科普一下，我以为认为这种方法是不可以实现居中，曾面试别人的时候，我还理直气壮的跟别人说，你这个根本实现不了
 - 今天，我才感觉自己当时是多么的无知，当然核心原理是**已知要居中元素的宽高**
 - 如果要居中元素的宽高**未知**，那么这么设置会让子元素的*宽高变得和父亲的宽高一样*，同时 *margin: auto* 也是无效的
@@ -257,7 +266,7 @@
   </body>
 ```
 
-### 利用 *text-aligin* 和 *lineheight* 实现
+### 利用 *text-align* + *lineheight* 实现
 
 - 这种方法，可以使元素不脱标，在标准流下实现居中
 - 但是，要求**子盒子**不能是*块级元素*（也可以转成行内或者行内块元素）
@@ -290,4 +299,160 @@
     </div>
   </body>
 ```
-### 利用 *writing-mode: vertical-lr* 来实现
+### 利用 *writing-mode* 来实现
+
+::: tip
+  介绍下*writing-mode* 属性：顾名思义是书写方式，那就是文字写书方式，就是文字是横排还是竖排。
+  - 因为 *writing-mode* 是曾经是IE私有的，后来被各大浏览器所支持，所以他有两套不同的语法
+  - css3规范的语法
+    - *writing-mode: horizontal-tb;* -> *tb（top-bottom）*，元素是从上到下堆叠的 
+    - *writing-mode: vertical-rl;*  ->  *rl（right-left）*，表示文字是垂直方向(*vertical*)展示，然后阅读顺序是从右往左
+    - *writing-mode: vertical-lr;*  ->  *lr（left-right）*，表示文字是垂直方向(*vertical*)展示，然后阅读顺序是从左往右
+    - *writing-mode: inherit;*
+    - *writing-mode: initial;*
+    - *writing-mode: unset;*
+  - *writing-mode* 使得默认的水平流改成了垂直流。具体介绍请看[张鑫旭](https://www.zhangxinxu.com/wordpress/2016/04/css-writing-mode/)大大的博客
+:::
+
+- 其实原理也是跟 *text-align* + *lineheight* 实现差不多，只不过水平流变成了垂直垂直流
+
+```html {23}
+<style>
+    /* 公共代码 */
+    .parent {
+      border: 1px solid red;
+      width: 300px;
+      height: 300px;
+    }
+    .child {
+      width: 100px;
+      height: 100px;
+      background: green;
+    }
+    /* 公共代码 */
+
+    /* 核心 */
+    .parent {
+      writing-mode: vertical-rl;
+      text-align: center;
+      line-height: 300px;
+    }
+    .child {
+      writing-mode: horizontal-tb;
+      line-height: 100px;
+      display: inline-block;
+    }
+  </style>
+  <body>
+    <div class="parent">
+      <div class="child">content</div>
+    </div>
+  </body>
+```
+- 注意高亮的弟23行，为什么又设置了一次 *line-height*，因为子元素被定义成了 *inline-block*，*inline-block* 是有一些问题的，需要特殊处理
+
+### 利用 *table* 表格布局实现
+
+- 表格布局，现在布局基本不用这种方式了，所以暂时不做介绍了
+
+### 利用 *table-cell* 来实现
+
+- 原理就是将div转换为table布局
+
+```html
+<style>
+    /* 公共代码 */
+    .parent {
+      border: 1px solid red;
+      width: 300px;
+      height: 300px;
+    }
+    .child {
+      width: 100px;
+      height: 100px;
+      background: green;
+    }
+    /* 公共代码 */
+
+    /* 核心 */
+    .parent {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .child {
+      display: inline-block;
+    }
+  </style>
+  <body>
+    <div class="parent">
+      <div class="child">content</div>
+    </div>
+  </body>
+```
+### 利用 *flex* 布局实现
+
+- *flex* 布局作为css最强大布局方式，不多做介绍
+```html {17}
+<style>
+    /* 公共代码 */
+    .parent {
+      border: 1px solid red;
+      width: 300px;
+      height: 300px;
+    }
+    .child {
+      width: 100px;
+      height: 100px;
+      background: green;
+    }
+    /* 公共代码 */
+
+    /* 核心 */
+    .parent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  <body>
+    <div class="parent">
+      <div class="child">content</div>
+    </div>
+  </body>
+```
+
+### 利用 *grid* 网格布局实现
+
+- *grid* 作为css新宠，也是很强大的，只是兼容性不好，但是写法也很简单
+
+```html {17}
+  <style>
+    /* 公共代码 */
+    .parent {
+      border: 1px solid red;
+      width: 300px;
+      height: 300px;
+    }
+    .child {
+      width: 100px;
+      height: 100px;
+      background: green;
+    }
+    /* 公共代码 */
+
+    /* 核心 */
+    .parent {
+      display: grid;
+    }
+    .child {
+      align-self: center;
+      justify-self: center;
+    }
+  </style>
+  <body>
+    <div class="parent">
+      <div class="child">content</div>
+    </div>
+  </body>
+```
