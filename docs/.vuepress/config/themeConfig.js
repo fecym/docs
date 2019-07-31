@@ -25,7 +25,7 @@ module.exports = {
     // 默认是 false, 设置为 true 来启用
     // editLinks: true,
     // 默认为 "Edit this page"
-    editLinkText: '提出您宝贵的意见',
+    // editLinkText: '提出您宝贵的意见',
     serviceWorker: {
       updatePopup: true // Boolean | Object, 默认值是 undefined.
       // 如果设置为 true, 默认的文本配置将是: 
@@ -42,7 +42,7 @@ module.exports = {
         text: '标签' // 默认 "标签"
       }
     },
-    logo: '/head.jpg',
+    logo: '/imgs/head.png',
     // 搜索设置
     search: true,
     searchMaxSuggestions: 10,
@@ -50,8 +50,6 @@ module.exports = {
     sidebar: 'auto',
     // 最后更新时间
     lastUpdated: 'Last Updated',
-    // 作者
-    author: 'chengyuming',
     // 备案号
     // record: '950417',
     // 项目开始时间

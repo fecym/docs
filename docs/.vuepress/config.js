@@ -9,6 +9,7 @@ module.exports = {
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }]
   ],
   theme: 'reco',
+  theme: diyTheme,
   serviceWorker: true, // 是否开启 PWA
   themeConfig,
   markdown: {
