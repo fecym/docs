@@ -1,3 +1,11 @@
+---
+title: vue 项目的配置 
+date: 2019-07-23
+tags:
+- webpack
+- vue
+---
+
 # vue 项目的配置
 
 ## 从 0 开始搭建 vue 项目

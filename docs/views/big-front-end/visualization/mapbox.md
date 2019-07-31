@@ -1,3 +1,10 @@
+---
+title: Mapbox GL JS   
+date: 2019-07-24
+tags:
+- Mapbox
+---
+
 # Mapbox GL JS 
 
 > [中文版](https://www.mapbox.cn/mapbox-gl-js/api/#map) [英文版](https://docs.mapbox.com/mapbox-gl-js/api/?q=addlayer&size=n_10_n)

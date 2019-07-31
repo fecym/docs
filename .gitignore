@@ -1,4 +1,1 @@
-node_modules
-/love
-/dist
-/docs/.vuepress/dist
+node_modules/

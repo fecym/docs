@@ -1,3 +1,11 @@
+---
+title: nginx   
+date: 2019-07-23
+tags:
+- nginx
+- 大前端
+---
+
 # nginx
 
 ## 安装

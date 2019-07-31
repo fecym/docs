@@ -1,3 +1,11 @@
+---
+title: mysql   
+date: 2019-07-23
+tags:
+- mysql
+- 大前端
+---
+
 # mysql
 
 ## mysql 基本语句

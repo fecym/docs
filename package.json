@@ -1,22 +1,18 @@
 {
-  "name": "docs",
+  "name": "new-blog",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "repository": "http://recoluan.gitlab.io/vuepress-theme-reco-doc",
+  "author": "chengyuming",
   "scripts": {
+    "dev": "vuepress dev docs",
     "start": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "deploy": "bash deploy.sh"
+    "build": "vuepress build docs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
-    "@vuepress/plugin-medium-zoom": "^1.0.0-rc.1",
-    "@vuepress/plugin-nprogress": "^1.0.0-rc.1",
-    "moment": "^2.24.0",
-    "vuepress": "^1.0.2"
+    "vuepress": "1.0.1",
+    "vuepress-theme-reco": "1.0.3",
+    "@vuepress/plugin-medium-zoom": "1.0.0-alpha.0",
+    "vuepress-plugin-flowchart": "1.4.3"
   },
   "dependencies": {
     "@vssue/api-github-v3": "^1.0.0",
