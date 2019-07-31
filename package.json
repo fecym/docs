@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@vssue/api-github-v3": "^1.0.0",
-    "@vssue/vuepress-plugin-vssue": "^1.0.2"
+    "@vssue/vuepress-plugin-vssue": "^1.0.2",
+    "moment": "^2.24.0"
   }
 }
