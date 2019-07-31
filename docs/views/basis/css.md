@@ -456,3 +456,174 @@
     </div>
   </body>
 ```
+
+## 层叠上下文和层叠顺序
+
+### 层叠上下文
+- 在css2.1规范中，每个盒模型的位置是三维的，分别是平面画布上的 x轴，y轴以及表示层叠的<code style="color: #ff502c">z轴</code>
+- <code style="color: #ff502c">z轴</code>：表示的是用户与屏幕的这条看不见的垂直线
+
+<p align="center">
+  <img :src="$withBase('/imgs/basis-css-z-index-0.jpg')""/>
+</p>
+
+- 一般情况下，元素在页面上沿x轴y轴平铺，我们察觉不到它们在z轴上的层叠关系。而一旦元素发生堆叠，这时就能发现某个元素可能覆盖了另一个元素或者被另一个元素覆盖。它们的层叠关系我们可称为<code>层叠上下文</code>。
+- 元素的层叠等级（谁在谁上边）是由其所在的层叠上下文决定的
+- 层叠等级的比较只有在当前层叠上下文元素中才有意义。不同层叠上下文中比较层叠等级是没有意义的。
+- 如何生成层叠上下文？
+  1. HTML中根元素本身就具有层叠上下文，称为根层叠上下文
+  2. 普通元素设置 *position* 属性为非 *static* 值并设置 *z-index* 属性为具体数值，产生层叠上下文
+  3. css3中的新属性也可以产生层叠上下文
+- 说的多不如上代码，来的直接，上代码，和效果图
+```html
+  <style>
+    div {
+      width: 300px;
+      position: relative;
+      color: white;
+    }
+    p {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+    }
+    .a {
+      z-index: 1;
+      background-color: red;
+    }
+    .b {
+      z-index: 2;
+      background-color: green;
+      top: 20px;
+      left: 20px;
+    }
+    .c {
+      z-index: 3;
+      background-color: blue;
+      top: 40px;
+      left: 40px;
+    }
+  </style>
+  <div>
+    <p class="a">我是a</p>
+    <p class="b">我是b</p>
+  </div>
+  <div>
+    <p class="c">我是c</p>
+  </div>
+```
+<p align="center">
+  <img :src="$withBase('/imgs/basis-css-z-index-1.jpg')""/>
+</p>
+
+- 还有一种情况就是，当父盒子也设置为层叠上下文，那么就会根据父盒子的 *z-index* 来处理，子盒子设置再高也不行，上代码和图
+```html {9}
+  <style>
+    div {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      color: white;
+    }
+    .box1 {
+      z-index: 2;
+    }
+    .box2 {
+      z-index: 1;
+    }
+    p {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+    }
+    .a {
+      z-index: 10;
+      background-color: red;
+    }
+    .b {
+      z-index: 20;
+      background-color: green;
+      top: 20px;
+      left: 20px;
+    }
+    .c {
+      z-index: 99999;
+      background-color: blue;
+      top: -260px;
+      left: 40px;
+    }
+  </style>
+  <div class="box1">
+    <p class="a">我是a</p>
+    <p class="b">我是b</p>
+  </div>
+  <div class="box2">
+    <p class="c">我是c</p>
+  </div>
+```
+<p align="center">
+  <img :src="$withBase('/imgs/basis-css-z-index-2.jpg')""/>
+</p>
+
+- 为什么出现这种情况？举个例子：处于层叠上下文中的元素，就像是元素当了官，等级自然比普通元素高。再想象一下，假设一个官员A是个省级领导，他下属有一个秘书a-1，家里有一个保姆a-2。另一个官员B是一个县级领导，他下属有一个秘书b-1，家里有一个保姆b-2。a-1和b-1虽然都是秘书，但是你想一个省级领导的秘书和一个县级领导的秘书之间有可比性么？甚至保姆a-2都要比秘书b-1的等级高得多。谁大谁小，谁高谁低一目了然，所以根本没有比较的意义。只有在A下属的a-1、a-2以及B下属的b-1、b-2中相互比较大小高低才有意义。
+
+### 层叠顺序
+
+<p align="center">
+  <img :src="$withBase('/imgs/basis-css-z-index-3.png')""/>
+</p>
+
+- 层叠顺序表示元素发生层叠时按照特定的顺序规则在*Z轴*上垂直显示
+  1. 左上角"层叠上下文background/border"指的是层叠上下文元素的背景和边框。
+  2. **inline/inline-block**元素的层叠顺序要高于**block(块级)/float(浮动)元素**。
+  3. 单纯考虑层叠顺序，z-index: auto和z-index: 0在同一层级，但这两个属性值本身是有根本区别的。
+- 为什么**inline/inline-block**元素的层叠顺序要高于**block(块级)/float(浮动)元素**？
+  - 网页设计之初最重要的就是文字内容，所以在发生层叠时会优先显示文字内容，保证其不背覆盖
+- 如何在遇到元素层叠时，能很清晰地判断出谁在上水在下？
+  1. 首先比较两个元素是否处于同一个层叠上下文中
+  2. 如果处于同一个层叠上下文中，谁的层级等级大谁在上面（根据图）
+  3. 如果两个元素不在统一层叠上下文中，请先比较他们所处的层叠上下文的层叠等级
+  4. 当两个元素层叠等级相同、层叠顺序相同时，在**DOM结构中后面的元素**层叠等级在前面元素之上
+- *z-index: auto*的情况下，不产生层叠上下文
+
+### css3影响层叠上下文的属性
+
+- 父元素的 *display* 属性值为 *flex|inline-flex*，子元素的 *z-index* 属性值不为 *auto* 的时候，子元素为层叠上下文元素
+- 元素的 *opacity* 属性值不是 1
+- 元素的 *transform* 属性值不是 *node*
+- 元素的 *mix-blend-mode* 属性值不是 *normal*
+- 元素的 *filter* 属性值不是 *node*
+- 元素的 *isolation* 属性值是 *isolate*
+- *will-change* 指定的属性值为上面的任意一个
+- 元素的 *-webkit-overflow-scrolling* 属性值为 *touch*
+```html {3}
+  <style>
+    .box {
+      display: flex;
+    }
+    .parent {
+      width: 200px;
+      height: 100px;
+      background-color: skyblue;
+      z-index: 1;
+    }
+    .child {
+      width: 100px;
+      height: 200px;
+      background: greenyellow;
+      position: relative;
+      z-index: -1;
+    }
+  </style>
+  <div class="box">
+    <div class="parent">
+      parent
+      <div class="child">child</div>
+    </div>
+  </div>
+```
+<p align="center">
+  <img :src="$withBase('/imgs/basis-css-z-index-4.jpg')""/>
+</p>
+
+- 参考链接，[张鑫旭大大博客](https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/)、[MagicEyeslv的彻底搞懂CSS层叠上下文...](https://juejin.im/post/5b876f86518825431079ddd6)
