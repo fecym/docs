@@ -11,7 +11,8 @@ module.exports = {
         { text: 'node简介', link: '/views/big-front-end/node/index' },
         { text: 'fs文件系统', link: '/views/big-front-end/node/fs' },
         { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
-        { text: 'nginx', link: '/views/big-front-end/nginx/index' },
+        { text: 'nginx介绍', link: '/views/big-front-end/nginx/index' },
+        { text: '必会的nginx知识', link: '/views/big-front-end/nginx/requisite' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
       ]
