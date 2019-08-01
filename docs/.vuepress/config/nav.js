@@ -13,6 +13,7 @@ module.exports = {
         { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
         { text: 'nginx', link: '/views/big-front-end/nginx/index' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
+        { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
       ]
     },
     {
