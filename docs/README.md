@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /imgs/oops.png
+heroImage: /imgs/oops.jpg
 heroImageStyle: {
   height: '180px',
   margin: '6rem auto 2rem',
