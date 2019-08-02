@@ -1,5 +1,31 @@
 # JavaScript 基础
 
+## 类型转换
+
+### 一个有趣的问题
+
+<p align="center">
+  <img :src="$withBase('/imgs/basis-javascript-type-change.jpg')" height="260" />
+</p>
+
+> 看到了这个我亲自尝试了下，结果发现自己对js基础越来越陌生了，现在好好复习下吧
+
+```js
+  0  == '0'    // true
+  0  == []     // true
+ '0' == []     // false
+```
+### 为什么 0 == [] 是 false ？
+- 首先，对象和值类型没法比较，所以需要先把对象转值类型，然后在比较
+- <code>==</code>运算符比较会做数据类型转换，数组是对象，他会根据要比较的值类型做相应的转换
+- 跟字符串<code>'0'</code>比较，那么数组<code>[]</code>会调用自身的<code>toString</code>方法
+- <code>[].toSting()</code>之后，得到一个空字符串，<code>[1, 2, 3].toString()</code>之后得到字符串<code>'1, 2, 3'</code>
+- 所以<code>'0' == []</code>得到一个**false**，因为<code>'0' != ''</code>
+### 为什么 '0' == [] 是 true？
+- <code>Number([])，Number('')，Number(' ')</code> 都会返回 **true**
+- 因为数组要和值类型进行比较，首先要把自己转换为值类型，调用自身的<code>valueOf()</code>返回了自身，那想转值类型，就需要转字符串了
+- 其实<code>0 == []</code>做了两次转换，先转成了空字符串，然后转数字<code>Number('')</code>得到一个 **0**
+
 ## 枚举
 
 - 声明一个变量然后直接赋值，会返回一个 _undefined_
