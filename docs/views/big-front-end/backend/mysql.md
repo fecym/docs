@@ -1,9 +1,9 @@
 ---
-title: mysql   
+title: mysql
 date: 2019-07-23
 tags:
-- mysql
-- 大前端
+  - mysql
+  - 大前端
 ---
 
 # mysql
@@ -119,4 +119,31 @@ tags:
   SELECT * FROM `user` WHERE realname LIKE '%%' OR realname IS NULL
   -- 同一个级别的语句要括起来
   SELECT * FROM `user` WHERE `username` LIKE '%%' AND (`realname` LIKE '%%' OR `realname` IS NULL) ORDER BY create_time desc LIMIT 0, 10
+```
+
+- 查询当天、昨天、近一周、近 30 天、本月、上月数据
+  - 在**mysql**中有**TO_DAYS(date)**函数，接受一个日期，返回一个天数，从公元 0 年到现在的天数
+  - <code>NOW()</code>返回当前的时间
+  - 根据这个我们可以拓展一下返回一个时间范围内的数据，看下面的例子
+
+```sql
+  -- @return { days: 737641 }，也就是从公元0年到今天（2019-08-05）过去的天数是 737641 天
+  SELECT TO_DAYS(NOW()) AS days;
+  -- @return { curTime: 2019-08-05 22:18:07 }
+  SELECT NOW() AS curTime;
+  -- @return { curYear: 2019.551 }
+  SELECT TO_DAYS(NOW()) / 365.25 AS curYear;
+  -- @return { tenDaysAgo: 737631 }，返回十天前的时间，比
+  SELECT TO_DAYS(NOW()) - 10 AS tenDaysAgo;
+  -- 接下来放到业务里面实践下
+  -- 返回近一周的 list 集合
+  SELECT * FROM `daily` WHERE TO_DAYS(create_time) >= (TO_DAYS(NOW()) - 7);
+  -- 也可以这么写
+  SELECT * FROM `daily` WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= DATE(create_time);
+  -- 近30天
+  SELECT * FROM `dayly` WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= DATE(create_time);
+  -- 近一个月，date_format() 接受两个参数，格式化的时间和格式
+  SELECT * FROM `daily` WHERE DATE_FORMAT(create_time, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m');
+  -- 上个月，period_diff() 时间差异函数接受两个参数，要对比的时间
+  SELECT * FROM `daily` WHERE PERIOD_DIFF(DATE_FORMAT(NOW(), '%Y%m'), DATE_FORMAT(create_time, '%Y%m')) = 1;
 ```
