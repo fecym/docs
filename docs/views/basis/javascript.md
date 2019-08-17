@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @Author: chengyuming
+ * @Date: 2019-08-01 11:28:21
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-08-17 17:33:04
+ -->
+
 # JavaScript 基础
 
 ## 类型转换
@@ -8,20 +16,24 @@
   <img :src="$withBase('/imgs/basis-javascript-type-change.jpg')" height="260" />
 </p>
 
-> 看到了这个我亲自尝试了下，结果发现自己对js基础越来越陌生了，现在好好复习下吧
+> 看到了这个我亲自尝试了下，结果发现自己对 js 基础越来越陌生了，现在好好复习下吧
 
 ```js
-  0  == '0'    // true
-  0  == []     // true
- '0' == []     // false
+0 == '0' // true
+0 == [] // true
+'0' == [] // false
 ```
+
 ### 为什么 0 == [] 是 false ？
+
 - 首先，对象和值类型没法比较，所以需要先把对象转值类型，然后在比较
 - <code>==</code>运算符比较会做数据类型转换，数组是对象，他会根据要比较的值类型做相应的转换
 - 跟字符串<code>'0'</code>比较，那么数组<code>[]</code>会调用自身的<code>toString</code>方法
 - <code>[].toSting()</code>之后，得到一个空字符串，<code>[1, 2, 3].toString()</code>之后得到字符串<code>'1, 2, 3'</code>
 - 所以<code>'0' == []</code>得到一个**false**，因为<code>'0' != ''</code>
+
 ### 为什么 '0' == [] 是 true？
+
 - <code>Number([])，Number('')，Number(' ')</code> 都会返回 **true**
 - 因为数组要和值类型进行比较，首先要把自己转换为值类型，调用自身的<code>valueOf()</code>返回了自身，那想转值类型，就需要转字符串了
 - 其实<code>0 == []</code>做了两次转换，先转成了空字符串，然后转数字<code>Number('')</code>得到一个 **0**
@@ -129,6 +141,77 @@ function debounce(fn, step) {
   }
 ```
 
+### 补充
+
+- 以前我认为防抖和节流都差不多，但是有一次在开发地图的时候发生改变
+- 需求是这样的，我们要模仿百度地图的搜索，搜索完之后，把后台返回的数据展示为一个列表，然后对应的点显示上去
+- 鼠标悬停列表后地图上的点也改变其颜色，如下图
+
+  <!-- javascript-basis-mapbox.jpg -->
+  <p align="center">
+    <img :src="$withBase('/imgs/javascript-basis-mapbox.jpg')" width="700" style="border-radius: 8px;">
+  </p>
+
+- 鼠标滑动事件是高频事件，一定需要阻止一下，否则一会页面就卡死了，我想都没有想就想到了节流，限制事件的执行频率，代码如下
+
+```html
+<!-- vue结构 -->
+<div
+  v-for="(item, idx) in aoiNameList"
+  :key="idx"
+  class="item"
+  @click="showDetails(item)"
+  @mouseover="changeMapLocationIcon(idx)"
+  @mouseout="clearTimer"
+></div>
+```
+
+```typescript
+  // 节流处理
+  protected throttle: boolean = true
+  // 根绝鼠标悬停改变mapbox中的样式
+  protected changeMapLocationIcon(idx: number) {
+    if (!this.throttle) return
+    this.throttle = false
+    setTimeout(() => {
+      this.markerList.forEach((item: any, index: number) => {
+        item._element.classList.remove('active')
+        if (idx === index) {
+          console.log(item)
+          item._element.classList.add('active')
+        }
+      })
+      this.throttle = true
+    }, 200)
+  }
+```
+
+- 我鼠标不停的滑动来切换，我发现 mapbox 上的图标颜色没有改变，
+- 我才想到，这么玩的话，在满足条件再次执行该函数的时候，永远保持上一个状态，他只会记住一次状态，所有我们应该选择防抖而不是节流
+- 于是，我把代码改了下:
+
+```ts
+  // 防抖处理高频事件
+  protected timer: any = null
+  protected changeMapLocationIcon(idx: number) {
+    clearTimeout(this.timer)
+    this.timer = setTimeout(() => {
+      this.markerList.forEach((item: any, index: number) => {
+        item._element.classList.remove('active')
+        if (idx === index) {
+          item._element.classList.add('active')
+        }
+      })
+    }, 300)
+  }
+  protected clearTimer() {
+    clearTimeout(this.timer)
+  }
+  protected beforeDestroy() {
+    clearTimeout(this.timer)
+  }
+```
+
 ## Reflect
 
 ::: tip
@@ -168,11 +251,11 @@ function debounce(fn, step) {
 
 ### \_\_proto\_\_
 
-- _\_\_proto\_\__ 是对象的属性，当然函数也可以访问，指向了 Function.prototype：**f.\_\_proto\_\_ === Function.prototype**
-- _\_\_proto\_\__ 指向了**创建该对象的构造函数的原型**
-- 不推荐使用 _\_\_proto\_\__ 来获取对象的这个属性，**Es6**提供了 _Object.getPrototypeOf(tartget-object)_ 方法
-- 因为在 js 中没有类的概念，为了实现类似继承的方式，通过 _\_\_proto\_\__ 将对象和原型联系起来组成了原型链，得以让对象可以访问到不属于自己的属性
-- 当我们使用 _new_ 操作符时，生成的实例对象就有了 _\_\_proto\_\__ 属性
+- \_\_\_proto\_\_\_ 是对象的属性，当然函数也可以访问，指向了 Function.prototype：**f.\_\_proto\_\_ === Function.prototype**
+- \_\_\_proto\_\_\_ 指向了**创建该对象的构造函数的原型**
+- 不推荐使用 \_\_\_proto\_\__ 来获取对象的这个属性，**Es6**提供了 \_Object.getPrototypeOf(tartget-object)_ 方法
+- 因为在 js 中没有类的概念，为了实现类似继承的方式，通过 \_\_\_proto\_\_\_ 将对象和原型联系起来组成了原型链，得以让对象可以访问到不属于自己的属性
+- 当我们使用 _new_ 操作符时，生成的实例对象就有了 \_\_\_proto\_\_\_ 属性
 
 ### new
 
