@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 11:28:21
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-08-17 17:33:04
+ * @LastEditTime: 2019-08-26 22:54:09
  -->
 
 # JavaScript 基础
@@ -24,19 +24,72 @@
 '0' == [] // false
 ```
 
-### 为什么 0 == [] 是 false ？
+### 为什么 '0' == [] 是 false ？
 
 - 首先，对象和值类型没法比较，所以需要先把对象转值类型，然后在比较
 - <code>==</code>运算符比较会做数据类型转换，数组是对象，他会根据要比较的值类型做相应的转换
 - 跟字符串<code>'0'</code>比较，那么数组<code>[]</code>会调用自身的<code>toString</code>方法
-- <code>[].toSting()</code>之后，得到一个空字符串，<code>[1, 2, 3].toString()</code>之后得到字符串<code>'1, 2, 3'</code>
+- <code>[].toSting()</code>之后，得到一个空字符串。举个栗子<code>[1, 2, 3].toString()</code>之后得到字符串<code>'1, 2, 3'</code>
 - 所以<code>'0' == []</code>得到一个**false**，因为<code>'0' != ''</code>
+- 对了<code>'0' == false 返回为 true</code>
 
-### 为什么 '0' == [] 是 true？
+### 为什么 0 == [] 是 true？
 
-- <code>Number([])，Number('')，Number(' ')</code> 都会返回 **true**
+- <code>Number([])，Number('')，Number(' ')</code> 都会返回 **0**
 - 因为数组要和值类型进行比较，首先要把自己转换为值类型，调用自身的<code>valueOf()</code>返回了自身，那想转值类型，就需要转字符串了
 - 其实<code>0 == []</code>做了两次转换，先转成了空字符串，然后转数字<code>Number('')</code>得到一个 **0**
+
+### 类型转换规则
+
+> 在 js 中类型转换有三种情况：转布尔值；转数字；转字符串。
+
+#### 显示数据类型转换
+
+- 转数字：**Number()**
+  - 如果是数字类型的字符串，那么转换的时候回返回自己
+  - 如果不是数字类型的字符串，那么转换结果是 **NaN**
+  - 如果是空字符串，那么转换结果是 **0**
+- 转数字：**parseInt()**
+  - 忽略掉前面的空格，直到找到第一个非空字符串，还会降后面的非数字字符串去掉
+  - 如果第一个字符不是数字符号或者负号，则返回 **NaN**
+  - 会向下取整
+- 转数字：**parseFloat**
+
+  - 同上，但是会保留小数
+
+- 转字符串：**String()**；**toString()**
+- 转 boolean：**Boolean()**
+  - 在进行转换 _boolean_ 的时候，所有的结果都为 **true**，除了 **false**、**''**、**0**、**-0**、**NaN**、**undefined**、**null**
+
+#### 隐式转换
+
+- 转 _number_：减乘除取余都可以让字符串隐式转换为 _number_
+- 转 _string_：可以通过加 <code>''</code> 字符串来转换 <code>a = a + ''</code>
+- 转 _boolean_：可以通过加 <code>!</code> 来转换 <code>a = !!a</code>
+- 在条件判断时，除了 **false**、**''**、**0**、**-0**、**NaN**、**undefined**、**null**，其他值都可以转为 **true**，包括所有对象
+
+#### 对象转原始类型
+
+- 对象转换类型的时候，会调用内置的 **[toPrimitive]** 函数，对于该函数来说，算法逻辑如下：
+  - 如果已经是原始类型了，那就不需要转换了
+  - 调用 <code>x.valueOf()</code>，如果转为基础类型，就返回转换的值
+  - 调用 <code>x.toString()</code>，如果转为基础类型，就返回转换的值
+  - 如果都没有返回原始类型，就会报错
+  - 当然也可以重写 **[Symbol.toPrimitive]**，该方法在转换原始类型时调用优先级最高
+  ```js
+  const obj = {
+    valueOf() {
+      return 0
+    },
+    toString() {
+      return '1'
+    },
+    [Symbol.toPrimitive]() {
+      return 2
+    }
+  }
+  obj + 1 // 3
+  ```
 
 ## 枚举
 
