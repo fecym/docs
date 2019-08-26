@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 11:28:21
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-08-26 22:54:09
+ * @LastEditTime: 2019-08-26 22:56:19
  -->
 
 # JavaScript 基础
@@ -77,18 +77,12 @@
   - 如果都没有返回原始类型，就会报错
   - 当然也可以重写 **[Symbol.toPrimitive]**，该方法在转换原始类型时调用优先级最高
   ```js
-  const obj = {
-    valueOf() {
-      return 0
-    },
-    toString() {
-      return '1'
-    },
-    [Symbol.toPrimitive]() {
-      return 2
+    const obj = {
+      valueOf() { return 0 },
+      toString() { return '1' },
+      [Symbol.toPrimitive]() { return 2 }
     }
-  }
-  obj + 1 // 3
+    obj + 1 // 3
   ```
 
 ## 枚举
