@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: chengyuming
+ * @Date: 2019-07-31 21:57:28
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-09-03 23:04:48
+ */
 module.exports = {
   plugins: [
     ['@vuepress/medium-zoom', 'flowchart'],
@@ -6,7 +13,7 @@ module.exports = {
         transformer: (timestamp) => {
           // 不要忘了安装 moment
           const moment = require('moment')
-          moment.locale('zh-CN')
+          // moment.locale('zh-CN')
           return moment(timestamp).format('YYYY-MM-DD h:mm:ss a')
         }
       }
@@ -15,7 +22,7 @@ module.exports = {
       '@vssue/vuepress-plugin-vssue', {
         // 设置 `platform` 而不是 `api`
         platform: 'github',
-        locale: 'zh', // 语言设置
+        // locale: 'zh', // 语言设置
         // 其他的 Vssue 配置
         owner: 'cym-git', // github账户名称
         repo: 'cym-git.github.io', // Github博客仓库
@@ -25,14 +32,9 @@ module.exports = {
     ],
     ['@vuepress/nprogress'],
     ['@vuepress/back-to-top'],
-    ['@vuepress/medium-zoom', true],
+    ['@vuepress/medium-zoom'],
     ['@vuepress/pwa', {
-      serviceWorker: true,
-      popupComponent: 'MySWUpdatePopup',
-      updatePopup: {
-        message: "新的风暴已经出现",
-        buttonText: "盘他"
-      }
+      serviceWorker: true
     }]
   ]
 }

@@ -3,10 +3,11 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 11:28:21
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-03 19:32:40
+ * @LastEditTime: 2019-09-03 23:08:01
  */
 const { themeConfig } = require('./config/themeConfig')
 const { plugins } = require('./config/plugins')
+const { chainWebpack, configureWebpack } = require('./config/webpackConfig')
 module.exports = {
   title: "chengyuming",
   description: 'Today, have you studied yet?',
@@ -22,4 +23,6 @@ module.exports = {
     lineNumbers: true
   },
   plugins,
+  // chainWebpack,
+  // configureWebpack
 }
