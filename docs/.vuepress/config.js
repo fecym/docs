@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: chengyuming
+ * @Date: 2019-08-01 11:28:21
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-09-03 19:32:40
+ */
 const { themeConfig } = require('./config/themeConfig')
 const { plugins } = require('./config/plugins')
 module.exports = {
