@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @Author: chengyuming
+ * @Date: 2019-08-01 11:28:21
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-09-03 16:57:59
+ -->
+
 # css 基础
 
 ## css 加载会造成阻塞吗
@@ -660,3 +668,93 @@ p {
 </p>
 
 - 参考链接，[张鑫旭大大博客](https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/)、[MagicEyeslv 的彻底搞懂 CSS 层叠上下文...](https://juejin.im/post/5b876f86518825431079ddd6)
+
+## css 选择器
+
+### 伪类和伪元素
+
+- 以 __:__ 开头的是伪类，比如：<code>:last-child</code>
+- 以 __::__ 开头的是伪元素，比如：<code>::after</code>
+
+### + 和 ~
+
+- **+** 选择器，被称为相邻选择符，可选择紧接在另一元素后的元素，且二者有相同父元素。如下代码，此时 _test-2_ 将会变成红色
+- **~** 选择器，被称为兄弟选择符，位置无须紧邻，只须同层级，A~B 选择 A 元素之后所有同层级 B 元素，如下，_And here is a span._ 将变成红色
+
+```html
+<!-- 相邻选择器 -->
+<style>
+  .test + li {
+    color: red;
+  }
+</style>
+<ul>
+  <li class="test">test-1</li>
+  <li>test-2</li>
+  <li>test-3</li>
+</ul>
+```
+
+```html
+<!-- 兄弟选择器 -->
+<style>
+  p ~ span {
+    color: red;
+  }
+</style>
+<span>This is not red.</span>
+<p>Here is a paragraph.</p>
+<code>Here is some code.</code>
+<span>And here is a span.</span>
+```
+
+### :not()
+
+- __:not(X)__ 被称为否定伪类，也叫 __排除选择器__。是一个简单的以选择器 _X_ 为参数的功能性标记函数。它匹配不符合参数选择器 _X_ 描述的元素。_X_ 不能包含另外一个否定选择器
+- __:not(X)__ 伪类的优先级即为它参数选择器的优先级。__:not(X)__ 伪类不像其它伪类，它不会增加选择器的优先级。
+- 如下代码，该选择可以很好的用在，排除谁在外的其他元素设置样式，比如导航栏的最后一个不需要 _margin-right_，其他都有 _margin_ 就可以这么玩
+
+```html
+  <style>
+    li:not(:last-child) {
+      margin-right: 20px;
+    }
+  </style>
+  <ul>
+    <li>首页</li>
+    <li>首页</li>
+    <li>首页</li>
+    <li>首页</li>
+    <li>首页</li>
+  </ul>
+```
+
+### ::first-line
+
+- __::first-line__ 伪元素，顾名思义是设置一个元素内的第一行的样式。第一行的长度取决于很多因素，包括元素宽度，文档宽度和文字大小。
+- __::first-line__ 只能在块元素中，所以 __::first-line__ 只能在一个 _display_ 值为 _block_, _inline-block_, _table-cell_ 或者 _table-caption_ 中有用。在其他的类型中，__::first-line__ 是不起作用的.
+- 如下代码，只有第一行会被设置为红色，但是如果没有换行的话，就是全部红色了哦
+
+```html
+  <style>
+    p::first-line {
+      color: red;
+    }
+  </style>
+  <p>
+    <span>::first-line-1</span><br>
+    <span>::first-line-2</span><br>
+    <span>::first-line-3</span><br>
+    <span>::first-line-4</span><br>
+    <span>::first-line-5</span>
+  </p>
+```
+### :nth-child(an+b)
+
+- __:nth-child(an+b)__ 首先找到所有当前元素的兄弟原色，然后按照位置的先后顺序从1开始排序，选择结果为 __(an+b)__ 个元素的集合 __(n=0, 1, 2, 3..)__
+- <code>0n+3</code>或简单<code>3</code>匹配第三个元素
+- <code>1n+0</code>或简单<code>n</code>匹配每一个元素
+- <code>2n+0</code>或简单<code>2n</code>匹配位置为 2、4、6、8...的元素
+- <code>2n+1</code>匹配位置为 1、3、5、7...的元素
+- 完整语法就是 <code>an+b</code>，我们基本使用之传入一个数字，来告诉选择器我们选择哪个元素，css的排序规则是从<code>1</code>开始的，这点跟<code>js</code>不一样
+- <code>:nth-last-child(an+b)</code> 语法跟 <code>:nth-child(an+b)</code> 基本一样，不一样的地方是，<code>:nth-last-child(an+b)</code> 是倒着数的
