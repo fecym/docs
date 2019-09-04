@@ -3,11 +3,10 @@
  * @Author: chengyuming
  * @Date: 2019-07-31 21:57:28
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-03 23:04:48
+ * @LastEditTime: 2019-09-04 09:59:14
  */
 module.exports = {
   plugins: [
-    ['@vuepress/medium-zoom', 'flowchart'],
     [
       '@vuepress/last-updated', {
         transformer: (timestamp) => {
@@ -32,7 +31,7 @@ module.exports = {
     ],
     ['@vuepress/nprogress'],
     ['@vuepress/back-to-top'],
-    ['@vuepress/medium-zoom'],
+    ['@vuepress/medium-zoom', true],
     ['@vuepress/pwa', {
       serviceWorker: true
     }]

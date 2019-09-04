@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 11:28:21
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-03 23:08:01
+ * @LastEditTime: 2019-09-04 10:01:16
  */
 const { themeConfig } = require('./config/themeConfig')
 const { plugins } = require('./config/plugins')
@@ -23,6 +23,6 @@ module.exports = {
     lineNumbers: true
   },
   plugins,
-  // chainWebpack,
-  // configureWebpack
+  chainWebpack,
+  configureWebpack
 }

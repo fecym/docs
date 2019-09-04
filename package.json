@@ -14,8 +14,7 @@
     "compression-webpack-plugin": "^3.0.0",
     "progress-bar-webpack-plugin": "^1.12.1",
     "vuepress": "1.0.1",
-    "vuepress-plugin-flowchart": "1.4.3",
-    "webpack-parallel-uglify-plugin": "^1.1.2"
+    "vuepress-plugin-flowchart": "1.4.3"
   },
   "dependencies": {
     "@vssue/api-github-v3": "^1.0.0",

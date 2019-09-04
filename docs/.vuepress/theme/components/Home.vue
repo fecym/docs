@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-09-03 18:29:25
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-03 19:35:22
+ * @LastEditTime: 2019-09-04 10:50:04
  -->
 <template>
   <div class="home" :class="recoShow?'reco-show': 'reco-hide'">
@@ -12,8 +12,7 @@
 
       <h1 v-if="data.isShowTitleInHome !== false">{{ data.heroText || $title || '午后南杂' }}</h1>
 
-      <p class="description">{{ data.tagline || $description || 'Welcome to your vuePress-theme-reco site' }}</p>
-      <p class="huawei" v-if="$themeConfig.huawei === true"><i class="iconfont reco-huawei" style="color: #fc2d38"></i>&nbsp;&nbsp;&nbsp;华为，为中华而为之！</p>
+      <p class="description">{{ data.tagline || $description || 'Welcome to your chengyuming site' }}</p>
 
       <p class="action" v-if="data.actionText && data.actionLink">
         <NavLink class="action-button" :item="actionLink"/>
@@ -29,10 +28,9 @@
 
     <Content class="home-center" custom/>
 
-    <div class="footer">
+    <div class="footer" v-if="false">
       <span>
         <i class="iconfont reco-theme"></i>
-        <!-- <a target="blank" href="https://vuepress-theme-reco.recoluan.com">VuePress-theme-reco</a> -->
         <a href="javascript: void(0)">Chengyuming's Blog</a>
       </span>
       <!-- <span>
@@ -55,6 +53,9 @@
       <span>
         <AccessNumber idVal="/"></AccessNumber>
       </span>
+    </div>
+    <div class="footer">
+      <p>MIT Licensed | Copyright © 2019-present chengyuming</p>
     </div>
   </div>
 </template>
