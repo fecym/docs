@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-09-03 18:29:25
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 10:50:04
+ * @LastEditTime: 2019-09-04 11:13:31
  -->
 <template>
   <div class="home" :class="recoShow?'reco-show': 'reco-hide'">
@@ -28,34 +28,9 @@
 
     <Content class="home-center" custom/>
 
-    <div class="footer" v-if="false">
-      <span>
-        <i class="iconfont reco-theme"></i>
-        <a href="javascript: void(0)">Chengyuming's Blog</a>
-      </span>
-      <!-- <span>
-        <i class="iconfont reco-other"></i>
-        <a>{{ $themeConfig.author || $site.title }}</a>
-      </span> -->
-      <span v-if="$themeConfig.record">
-        <i class="iconfont reco-beian"></i>
-        <a>{{ $themeConfig.record }}</a>
-      </span>
-      <span>
-        <i class="iconfont reco-copyright"></i>
-        <a>
-          <span v-if="$themeConfig.startYear">{{ $themeConfig.startYear }} - </span>
-          {{ year }}
-          &nbsp;&nbsp;
-          <span v-if="$themeConfig.author || $site.title">{{ $themeConfig.author || $site.title }}</span>
-          </a>
-      </span>
-      <span>
-        <AccessNumber idVal="/"></AccessNumber>
-      </span>
-    </div>
     <div class="footer">
-      <p>MIT Licensed | Copyright © 2019-present chengyuming</p>
+      <p v-if="data.footer">{{data.footer}}</p>
+      <p v-else>MIT Licensed | Copyright © 2019-present chengyuming</p>
     </div>
   </div>
 </template>
