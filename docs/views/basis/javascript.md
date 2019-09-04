@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-09-03 15:46:15
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-03 15:46:15
+ * @LastEditTime: 2019-09-04 14:13:03
  -->
 
 # JavaScript 基础
@@ -41,7 +41,11 @@
 
 ### 类型转换规则
 
-> 在 js 中类型转换有三种情况：转布尔值；转数字；转字符串。
+> 在 js 中类型转换有三种情况：转布尔值；转数字；转字符串。如果发生了隐式转换，那么各种类型互转符合下面的规则：
+
+<p align="center">
+  <img :src="$withBase('/imgs/js-type-transform.jpg')" width="" style="border-radius: 8px;">
+</p>
 
 #### 显示数据类型转换
 
@@ -84,6 +88,25 @@
     }
     obj + 1 // 3
   ```
+- 引用类型转换为<code>Number</code>类型，先调用<code>valueOf</code>，在调用<code>toString</code>
+- 引用类型转换为<code>String</code>类型，先调用<code>toString</code>，在调用<code>valueOf</code>
+- 若<code>valueOf</code>和<code>toString</code>都不存在，或者没有返回基本类型，则会抛出<code>TypeError</code>异常
+```js
+  // 可以转换的
+  const obj = {
+    valueOf() { console.log('valueOf'); return 123 },
+    toString() { console.log('toString'); return 'cym' }
+  }
+  console.log(obj - 1)        // valueOf 122
+  console.log(`${obj} 你好`)  // toString cym 你好
+  // 转换报错
+  const o = {
+    valueOf() { console.log('valueOf'); return {} },
+    toString() { console.log('toString'); return {} }
+  }
+  console.log(o - 1)        // Uncaught TypeError: Cannot convert object to primitive value  
+  console.log(`${o} 你好`)  // Uncaught TypeError: Cannot convert object to primitive value
+```
 
 ## 枚举
 

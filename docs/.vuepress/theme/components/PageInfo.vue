@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: chengyuming
+ * @Date: 2019-09-03 20:21:49
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-09-04 14:15:03
+ -->
 <template>
   <div>
     <i
@@ -51,7 +58,7 @@ export default {
   },
 
   mounted () {
-    console.log(1234, this.isHome)
+    // console.log(1234, this.isHome)
   },
   
   methods: {

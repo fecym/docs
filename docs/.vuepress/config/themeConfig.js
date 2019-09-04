@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: chengyuming
+ * @Date: 2019-09-03 19:43:14
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-09-04 15:00:18
+ */
 const { nav } = require('./nav')
 module.exports = {
   themeConfig: {
@@ -26,14 +33,6 @@ module.exports = {
     // editLinks: true,
     // 默认为 "Edit this page"
     // editLinkText: '提出您宝贵的意见',
-    serviceWorker: {
-      updatePopup: true // Boolean | Object, 默认值是 undefined.
-      // 如果设置为 true, 默认的文本配置将是: 
-      // updatePopup: { 
-      //    message: "New content is available.", 
-      //    buttonText: "Refresh" 
-      // }
-    },
     // 新增reco
     // 博客设置
     blogConfig: {
@@ -53,24 +52,6 @@ module.exports = {
     // 备案号
     // record: '950417',
     // 项目开始时间
-    startYear: '2019'
-    /**
-     * 密钥 (if your blog is private)
-     */
-
-    // keyPage: {
-    //   keys: ['your password'],
-    //   color: '#42b983',
-    //   lineColor: '#42b983'
-    // },
-
-    /**
-     * valine 设置 (if you need valine comment )
-     */
-
-    // valineConfig: {
-    //   appId: '...',// your appId
-    //   appKey: '...', // your appKey
-    // }
+    // startYear: '2019'
   }
 }

@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: chengyuming
+ * @Date: 2019-09-03 20:21:49
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-09-04 15:27:57
+ -->
 <template>
   <div
     class="dropdown-wrapper"
@@ -93,7 +100,7 @@ export default {
   .nav-dropdown
     .dropdown-item
       color inherit
-      line-height 1.7rem
+      line-height 1.7
       h4
         margin 0.45rem 0 0
         border-top 1px solid #eee
@@ -113,6 +120,7 @@ export default {
         padding 0 1.5rem 0 1.25rem
         &:hover
           color $accentColor
+          text-shadow: 0 .1px .2px $textColor
         &.router-link-active
           color $accentColor
           &::after

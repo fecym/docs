@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-07-31 21:57:28
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 09:59:14
+ * @LastEditTime: 2019-09-04 15:00:31
  */
 module.exports = {
   plugins: [
@@ -33,7 +33,13 @@ module.exports = {
     ['@vuepress/back-to-top'],
     ['@vuepress/medium-zoom', true],
     ['@vuepress/pwa', {
-      serviceWorker: true
+      serviceWorker: true,
+      // popupComponent: 'MySWUpdatePopup',
+      updatePopup: true
+      // updatePopup: {
+      //   message: "发现新内容可用",
+      //   buttonText: "刷新"
+      // }
     }]
   ]
 }

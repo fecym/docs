@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: chengyuming
+ * @Date: 2019-09-03 20:21:49
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-09-04 15:01:56
+ -->
 <template>
   <div
     class="theme-container"
@@ -31,7 +38,7 @@
         <Valine :isComment="isComment"></Valine>
       </div>
       
-      <BackToTop></BackToTop>
+      <!-- <BackToTop></BackToTop> -->
     </div>
   </div>
 </template>
