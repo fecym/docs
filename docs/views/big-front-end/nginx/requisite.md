@@ -1,13 +1,6 @@
-<!--
- * @Description: 
- * @Author: chengyuming
- * @Date: 2019-08-01 22:57:29
- * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-13 20:31:30
- -->
 ---
 title: 前端开发者必备的nginx知识
-date: 2019-08-02
+date: 2019-09-13
 tags:
   - nginx
   - 大前端
