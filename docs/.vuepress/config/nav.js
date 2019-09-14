@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: chengyuming
+ * @Date: 2019-08-01 22:16:17
+ * @LastEditors: chengyuming
+ * @LastEditTime: 2019-08-01 22:16:17
+ */
 module.exports = {
   nav: [
     { text: '首页', link: '/', icon: 'reco-home' },
@@ -13,6 +20,7 @@ module.exports = {
         { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
         { text: 'nginx介绍', link: '/views/big-front-end/nginx/index' },
         { text: '必会的nginx知识', link: '/views/big-front-end/nginx/requisite' },
+        { text: 'redis', link: '/views/big-front-end/redis/index' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
       ]

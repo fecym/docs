@@ -1,6 +1,6 @@
 ---
 title: nginx   
-date: 2019-07-23
+date: 2019-07-10
 tags:
 - nginx
 - 大前端

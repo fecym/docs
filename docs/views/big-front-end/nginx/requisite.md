@@ -1,9 +1,9 @@
 ---
 title: 前端开发者必备的nginx知识
-date: 2019-09-13
+date: 2019-08-16
 tags:
-  - nginx
   - 大前端
+  - nginx
 ---
 
 # 前端开发者必备的 nginx 知识
