@@ -1,11 +1,10 @@
-<!--
- * @Description: 
- * @Author: chengyuming
- * @Date: 2019-09-03 15:46:15
- * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 14:13:03
- -->
-
+---
+title: JavaScript 基础知识整理
+date: 2019-05-12
+tags:
+- JavaScript
+- 基础
+---
 # JavaScript 基础
 
 ## 类型转换

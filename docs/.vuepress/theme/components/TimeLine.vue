@@ -3,12 +3,12 @@
  * @Author: chengyuming
  * @Date: 2019-09-03 19:50:53
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-03 19:50:53
+ * @LastEditTime: 2019-09-14 15:00:23
  -->
 <template>
 <div>
   <ul class="timeline-wrapper">
-    <li class="desc">Yesterday Once More!</li>
+    <li class="desc">那年我背井离乡，导致一村子的人都没有水喝。</li>
     <li v-for="(item, index) in formatPagesArr" :key="index">
       <h3 class="year">{{item.year}}</h3>
       <ul class="year-wrapper">
