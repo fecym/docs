@@ -5,6 +5,7 @@ tags:
 - JavaScript
 - 基础
 ---
+
 # JavaScript 基础
 
 ## 类型转换
@@ -80,31 +81,50 @@ tags:
   - 如果都没有返回原始类型，就会报错
   - 当然也可以重写 **[Symbol.toPrimitive]**，该方法在转换原始类型时调用优先级最高
   ```js
-    const obj = {
-      valueOf() { return 0 },
-      toString() { return '1' },
-      [Symbol.toPrimitive]() { return 2 }
+  const obj = {
+    valueOf() {
+      return 0
+    },
+    toString() {
+      return '1'
+    },
+    [Symbol.toPrimitive]() {
+      return 2
     }
-    obj + 1 // 3
+  }
+  obj + 1 // 3
   ```
 - 引用类型转换为<code>Number</code>类型，先调用<code>valueOf</code>，在调用<code>toString</code>
 - 引用类型转换为<code>String</code>类型，先调用<code>toString</code>，在调用<code>valueOf</code>
 - 若<code>valueOf</code>和<code>toString</code>都不存在，或者没有返回基本类型，则会抛出<code>TypeError</code>异常
+
 ```js
-  // 可以转换的
-  const obj = {
-    valueOf() { console.log('valueOf'); return 123 },
-    toString() { console.log('toString'); return 'cym' }
+// 可以转换的
+const obj = {
+  valueOf() {
+    console.log('valueOf')
+    return 123
+  },
+  toString() {
+    console.log('toString')
+    return 'cym'
   }
-  console.log(obj - 1)        // valueOf 122
-  console.log(`${obj} 你好`)  // toString cym 你好
-  // 转换报错
-  const o = {
-    valueOf() { console.log('valueOf'); return {} },
-    toString() { console.log('toString'); return {} }
+}
+console.log(obj - 1) // valueOf 122
+console.log(`${obj} 你好`) // toString cym 你好
+// 转换报错
+const o = {
+  valueOf() {
+    console.log('valueOf')
+    return {}
+  },
+  toString() {
+    console.log('toString')
+    return {}
   }
-  console.log(o - 1)        // Uncaught TypeError: Cannot convert object to primitive value  
-  console.log(`${o} 你好`)  // Uncaught TypeError: Cannot convert object to primitive value
+}
+console.log(o - 1) // Uncaught TypeError: Cannot convert object to primitive value
+console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primitive value
 ```
 
 ## 枚举
@@ -290,7 +310,7 @@ function debounce(fn, step) {
 - 修改某些*Object*方法的返回结果，让其变得更合情合理。比如，*Object.defineProperty(obj, name, desc)*在无法定义属性时会抛出一个错误，而*Reflect.definProperty(obj, name, desc)*则会返回*false*
 - 让*Object*操作都变成函数行为。某些*Object*操作都是命令式，比如*name in obj*和*delete obj[name]*，而*Reflect.has(obj, name)*和*Reflect.deleteProperty(obj, name)*让他它们变成了函数行为
 - *Reflect*对象的方法与*Proxy*对象的方法一一对应，只要是*Proxy*对象的方法，就能在*Reflect*对象上找到对应的方法。这就让*Proxy*对象可以方便地调用对应的*Reflect*方法，完成默认行为，作为修改行为的基础。也就是说，**不管 Proxy 怎么修改默认行为，你总可以在 Reflect 上获取默认行为**。
-  :::
+:::
 
 ## 原型
 
@@ -494,3 +514,58 @@ console.log(c1, c2)
 - **缺点**
   - 两次调用父类构造函数
   - 子类继承父类的属性, 一类是在子类的实例上, 一类是在子类的原型上(效率低)
+
+## 发布订阅机制
+
+> 发布订阅模式也是观察者模式，它定义了一种一对多的关系，让多个订阅对象同时监听某一个主题对象，这个主题对象某一状态发生改变的时候就会通知所有订阅者。它有两类对象组成：发布者和订阅者，发布者负责发布消息，同时订阅者通过订阅这些事件来观察主题。发布者和订阅者是完全解耦的，彼此不知道对方的存在，两者仅仅共享一个自定义事件的名称。（摘自博客园）
+
+- 今天上午提到的 **Redis** 的发布订阅，就是一个发布订阅模式 [传送门](/views/big-front-end/redis/#redis-发布订阅)
+- **node** 中的 **events** 模块中的 **EventEmitter** 类就是一个发布订阅模式
+
+```js
+// 演示下node中的发布订阅
+const Emitter = require('events').EventEmitter
+const emitter = new Emitter()
+emitter.on('test', msg => {
+  console.log(msg, '第一个')
+})
+emitter.on('test', (...msg) => {
+  console.log(msg, '第二个')
+})
+emitter.on('test', msg => {
+  console.log(msg, '第三个')
+})
+emitter.emit('test', 'chengyuming')
+emitter.emit('test2', '嘿嘿嘿', '哈哈哈')
+```
+
+- 让我们来实现一个简单发布订阅模式
+  - 首先我们要有一个 __Emitter__ 类
+  - 这个类里有个属性里面用来存放我们的消息队列
+  - 这个类的实例要有两个方法，一个发布一个订阅
+
+```js
+class Emitter {
+  constructor() {
+    // 消息队列，以及消息类型
+    this.handlers = {}
+  }
+  // 订阅事件，绑定函数
+  on(eventType, handler) {
+    // 判断消息队列里面有没有该事件，有则继续push没有则赋值空[]
+    if (!(eventType in this.handlers)) {
+      this.handlers[eventType] = []
+    }
+    this.handlers[eventType].push(handler)
+  }
+  // 发布消息
+  emit(eventType) {
+    // 获取到发布的所有消息
+    const messages = Array.prototype.slice.call(arguments, 1)
+    // 触发订阅事件的函数执行
+    this.handlers[eventType].forEach(handler => {
+      handler.apply(this, messages)
+    })
+  }
+}
+```
