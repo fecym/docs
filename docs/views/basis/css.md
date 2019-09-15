@@ -5,6 +5,7 @@ tags:
 - css
 - 基础
 ---
+
 # css 基础
 
 ## css 加载会造成阻塞吗
@@ -672,8 +673,8 @@ p {
 
 ### 伪类和伪元素
 
-- 以 __:__ 开头的是伪类，比如：<code>:last-child</code>
-- 以 __::__ 开头的是伪元素，比如：<code>::after</code>
+- 以 **:** 开头的是伪类，比如：<code>:last-child</code>
+- 以 **::** 开头的是伪元素，比如：<code>::after</code>
 
 ### + 和 ~
 
@@ -709,51 +710,196 @@ p {
 
 ### :not()
 
-- __:not(X)__ 被称为否定伪类，也叫 __排除选择器__。是一个简单的以选择器 _X_ 为参数的功能性标记函数。它匹配不符合参数选择器 _X_ 描述的元素。_X_ 不能包含另外一个否定选择器
-- __:not(X)__ 伪类的优先级即为它参数选择器的优先级。__:not(X)__ 伪类不像其它伪类，它不会增加选择器的优先级。
+- **:not(X)** 被称为否定伪类，也叫 **排除选择器**。是一个简单的以选择器 _X_ 为参数的功能性标记函数。它匹配不符合参数选择器 _X_ 描述的元素。_X_ 不能包含另外一个否定选择器
+- **:not(X)** 伪类的优先级即为它参数选择器的优先级。**:not(X)** 伪类不像其它伪类，它不会增加选择器的优先级。
 - 如下代码，该选择可以很好的用在，排除谁在外的其他元素设置样式，比如导航栏的最后一个不需要 _margin-right_，其他都有 _margin_ 就可以这么玩
 
 ```html
-  <style>
-    li:not(:last-child) {
-      margin-right: 20px;
-    }
-  </style>
-  <ul>
-    <li>首页</li>
-    <li>首页</li>
-    <li>首页</li>
-    <li>首页</li>
-    <li>首页</li>
-  </ul>
+<style>
+  li:not(:last-child) {
+    margin-right: 20px;
+  }
+</style>
+<ul>
+  <li>首页</li>
+  <li>首页</li>
+  <li>首页</li>
+  <li>首页</li>
+  <li>首页</li>
+</ul>
 ```
 
 ### ::first-line
 
-- __::first-line__ 伪元素，顾名思义是设置一个元素内的第一行的样式。第一行的长度取决于很多因素，包括元素宽度，文档宽度和文字大小。
-- __::first-line__ 只能在块元素中，所以 __::first-line__ 只能在一个 _display_ 值为 _block_, _inline-block_, _table-cell_ 或者 _table-caption_ 中有用。在其他的类型中，__::first-line__ 是不起作用的.
+- **::first-line** 伪元素，顾名思义是设置一个元素内的第一行的样式。第一行的长度取决于很多因素，包括元素宽度，文档宽度和文字大小。
+- **::first-line** 只能在块元素中，所以 **::first-line** 只能在一个 _display_ 值为 _block_, _inline-block_, _table-cell_ 或者 _table-caption_ 中有用。在其他的类型中，**::first-line** 是不起作用的.
 - 如下代码，只有第一行会被设置为红色，但是如果没有换行的话，就是全部红色了哦
 
 ```html
-  <style>
-    p::first-line {
-      color: red;
-    }
-  </style>
-  <p>
-    <span>::first-line-1</span><br>
-    <span>::first-line-2</span><br>
-    <span>::first-line-3</span><br>
-    <span>::first-line-4</span><br>
-    <span>::first-line-5</span>
-  </p>
+<style>
+  p::first-line {
+    color: red;
+  }
+</style>
+<p>
+  <span>::first-line-1</span><br />
+  <span>::first-line-2</span><br />
+  <span>::first-line-3</span><br />
+  <span>::first-line-4</span><br />
+  <span>::first-line-5</span>
+</p>
 ```
+
 ### :nth-child(an+b)
 
-- __:nth-child(an+b)__ 首先找到所有当前元素的兄弟原色，然后按照位置的先后顺序从1开始排序，选择结果为 __(an+b)__ 个元素的集合 __(n=0, 1, 2, 3..)__
+- **:nth-child(an+b)** 首先找到所有当前元素的兄弟原色，然后按照位置的先后顺序从 1 开始排序，选择结果为 **(an+b)** 个元素的集合 **(n=0, 1, 2, 3..)**
 - <code>0n+3</code>或简单<code>3</code>匹配第三个元素
 - <code>1n+0</code>或简单<code>n</code>匹配每一个元素
 - <code>2n+0</code>或简单<code>2n</code>匹配位置为 2、4、6、8...的元素
 - <code>2n+1</code>匹配位置为 1、3、5、7...的元素
-- 完整语法就是 <code>an+b</code>，我们基本使用之传入一个数字，来告诉选择器我们选择哪个元素，css的排序规则是从<code>1</code>开始的，这点跟<code>js</code>不一样
+- 完整语法就是 <code>an+b</code>，我们基本使用之传入一个数字，来告诉选择器我们选择哪个元素，css 的排序规则是从<code>1</code>开始的，这点跟<code>js</code>不一样
 - <code>:nth-last-child(an+b)</code> 语法跟 <code>:nth-child(an+b)</code> 基本一样，不一样的地方是，<code>:nth-last-child(an+b)</code> 是倒着数的
+
+## 浏览器的滚动 scroll
+
+### 设置滚动条的滚动高度
+
+- 最常用的方法就是 <code>window.scrollTo(0, 100)</code>
+
+```js
+// 绝对滚动到距离上边100
+window.scrollTo(0, 100)
+// 或者传递一个对象
+window.scrollTo({
+  left: 0,
+  top: 100
+})
+```
+
+- 也可以使用相对滚动设置 <code>scrollBy</code>
+
+```js
+// 每次滚动相对于当前位置，向下滚动100
+window.scrollBy(0, 100)
+// 或者
+window.scrollBy({
+  left: 0,
+  top: 100
+})
+```
+
+- 再或者直接使用 <code>scrollTop</code> 设置
+
+```js
+document.scrollingElement.scrollTop = 100
+```
+
+### 如何指定一个元素显示在指定的位置
+
+- 最常用的方法就是：获取到元素距离文档顶部的距离，然后设置滚动条的高度过去
+
+```js
+const offsetTop = document.getElementById('scroll').offsetTop
+// 设置滚动条的高度
+window.scrollTo(0, offsetTop)
+```
+
+- 也可以使用锚点
+
+```html
+<a href="#box">我要看这个盒子</a>
+<div id="box">你要看的盒子</div>
+```
+
+- 或者直接使用 <code>scrollIntoView</code> API
+
+```js
+// 不传参数，默认跳到该元素的顶端
+document.getElementById('scroll').scrollIntoView()
+// 还可以指定元素出现在指定的位置
+document.getElementById('scroll').scrollIntoView({
+  // 不传参数默认为start
+  block: 'start' | 'center' | 'end'
+})
+```
+
+### 平滑的移动
+
+- 如果使他们平滑的移动呢，可以传递一个参数 <code>behavior</code> 设置为 <code>smooth</code>
+
+```js
+window.scrollTo({
+  // 将浏览器的行为设置为平滑的移动
+  behavior: 'smooth'
+})
+window.scrollBy({
+  behavior: 'smooth'
+})
+document.getElementById('scroll').scrollIntoView({
+  behavior: 'smooth'
+})
+```
+
+- 也可以使用 css 属性进行设置
+
+```css
+html {
+  /* 使得全局的滚动都具有平滑的效果 */
+  scroll-behavior: smooth;
+}
+/* 或者设置所有的滚动 */
+* {
+  scroll-behavior: smooth;
+}
+```
+
+### 横向滚动
+
+- 设置横向滚动其实很简单，以前我的做法是利用 js 做的，完全是因为基础不扎实的缘故
+- 其实 css 完全可以实现横线滚动，而且不需要动态的计算父盒子的宽度然后进行设置
+- 具体实现如下，我们只需要设置为超出不换行就可以了
+
+```html {5}
+  <style>
+    ul {
+      overflow-x: auto;
+      /* 超出不换行 */
+      white-space: nowrap;
+    }
+    li {
+      display: inline-block;
+      border: 3px solid #000;
+      border-radius: 4px;
+    }
+    li:not(:last-child) {
+      margin-right: 20px;
+    }
+    img {
+      display: block;
+      width: 260px;
+      height: 150px;
+    }
+  </style>
+  <ul>
+    <li><img src="./imgs/1.jpg" alt="" /></li>
+    <li><img src="./imgs/2.jpg" alt="" /></li>
+    <li><img src="./imgs/3.jpg" alt="" /></li>
+    <li><img src="./imgs/4.jpg" alt="" /></li>
+    <li><img src="./imgs/5.jpg" alt="" /></li>
+    <li><img src="./imgs/6.jpg" alt="" /></li>
+  </ul>
+```
+
+### 滑动小技巧
+
+- 之前看到别人的网站首页，滑动页面，滑动很少一部分的时候页面调回到原来的起点，滑动大于一半的时候页面跳到下个页面
+- 相信你对这个也感兴趣吧，他们是怎么实现的呢其实很简单，用css完全可是实现，看下面的代码
+```css
+  /* 还是接着上面的代码，这里只做一下补充 */
+  ul {
+    scroll-snap-type: x mandatory;
+  }
+  li {
+    scroll-snap-align: center;
+  }
+```
