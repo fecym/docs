@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 11:28:21
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 10:01:16
+ * @LastEditTime: 2019-09-15 20:00:59
  */
 const { themeConfig } = require('./config/themeConfig')
 const { plugins } = require('./config/plugins')
@@ -14,6 +14,8 @@ module.exports = {
   dest: './love',
   head: [
     ['link', { rel: 'icon', href: '/imgs/oops.png' }],
+    // 给iOS添加到主屏的图标
+    ['link', { rel: 'apple-touch-icon', href: '/imgs/iOS.jpg' }],
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }]
   ],
   theme: 'reco',
