@@ -2,8 +2,8 @@
 title: JavaScript 基础知识整理
 date: 2019-05-12
 tags:
-- JavaScript
-- 基础
+  - JavaScript
+  - 基础
 ---
 
 # JavaScript 基础
@@ -13,6 +13,7 @@ tags:
 ### 一个有趣的问题
 
 <p align="center">
+  <!-- ![类型改变]($withBase('/imgs/basis-javascript-type-change.jpg')) -->
   <img :src="$withBase('/imgs/basis-javascript-type-change.jpg')" height="260" />
 </p>
 
@@ -310,7 +311,7 @@ function debounce(fn, step) {
 - 修改某些*Object*方法的返回结果，让其变得更合情合理。比如，*Object.defineProperty(obj, name, desc)*在无法定义属性时会抛出一个错误，而*Reflect.definProperty(obj, name, desc)*则会返回*false*
 - 让*Object*操作都变成函数行为。某些*Object*操作都是命令式，比如*name in obj*和*delete obj[name]*，而*Reflect.has(obj, name)*和*Reflect.deleteProperty(obj, name)*让他它们变成了函数行为
 - *Reflect*对象的方法与*Proxy*对象的方法一一对应，只要是*Proxy*对象的方法，就能在*Reflect*对象上找到对应的方法。这就让*Proxy*对象可以方便地调用对应的*Reflect*方法，完成默认行为，作为修改行为的基础。也就是说，**不管 Proxy 怎么修改默认行为，你总可以在 Reflect 上获取默认行为**。
-:::
+  :::
 
 ## 原型
 
@@ -540,7 +541,7 @@ emitter.emit('test2', '嘿嘿嘿', '哈哈哈')
 ```
 
 - 让我们来实现一个简单发布订阅模式
-  - 首先我们要有一个 __Emitter__ 类
+  - 首先我们要有一个 **Emitter** 类
   - 这个类里有个属性里面用来存放我们的消息队列
   - 这个类的实例要有两个方法，一个发布一个订阅
 
