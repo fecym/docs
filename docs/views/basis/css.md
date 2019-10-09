@@ -2,8 +2,8 @@
 title: CSS 基础知识整理
 date: 2019-05-01
 tags:
-- css
-- 基础
+  - css
+  - 基础
 ---
 
 # css 基础
@@ -860,46 +860,139 @@ html {
 - 具体实现如下，我们只需要设置为超出不换行就可以了
 
 ```html {5}
-  <style>
-    ul {
-      overflow-x: auto;
-      /* 超出不换行 */
-      white-space: nowrap;
-    }
-    li {
-      display: inline-block;
-      border: 3px solid #000;
-      border-radius: 4px;
-    }
-    li:not(:last-child) {
-      margin-right: 20px;
-    }
-    img {
-      display: block;
-      width: 260px;
-      height: 150px;
-    }
-  </style>
-  <ul>
-    <li><img src="./imgs/1.jpg" alt="" /></li>
-    <li><img src="./imgs/2.jpg" alt="" /></li>
-    <li><img src="./imgs/3.jpg" alt="" /></li>
-    <li><img src="./imgs/4.jpg" alt="" /></li>
-    <li><img src="./imgs/5.jpg" alt="" /></li>
-    <li><img src="./imgs/6.jpg" alt="" /></li>
-  </ul>
+<style>
+  ul {
+    overflow-x: auto;
+    /* 超出不换行 */
+    white-space: nowrap;
+  }
+  li {
+    display: inline-block;
+    border: 3px solid #000;
+    border-radius: 4px;
+  }
+  li:not(:last-child) {
+    margin-right: 20px;
+  }
+  img {
+    display: block;
+    width: 260px;
+    height: 150px;
+  }
+</style>
+<ul>
+  <li><img src="./imgs/1.jpg" alt="" /></li>
+  <li><img src="./imgs/2.jpg" alt="" /></li>
+  <li><img src="./imgs/3.jpg" alt="" /></li>
+  <li><img src="./imgs/4.jpg" alt="" /></li>
+  <li><img src="./imgs/5.jpg" alt="" /></li>
+  <li><img src="./imgs/6.jpg" alt="" /></li>
+</ul>
 ```
 
 ### 滑动小技巧
 
 - 之前看到别人的网站首页，滑动页面，滑动很少一部分的时候页面调回到原来的起点，滑动大于一半的时候页面跳到下个页面
-- 相信你对这个也感兴趣吧，他们是怎么实现的呢其实很简单，用css完全可是实现，看下面的代码
+- 相信你对这个也感兴趣吧，他们是怎么实现的呢其实很简单，用 css 完全可是实现，看下面的代码
+
 ```css
-  /* 还是接着上面的代码，这里只做一下补充 */
-  ul {
-    scroll-snap-type: x mandatory;
-  }
-  li {
-    scroll-snap-align: center;
-  }
+/* 还是接着上面的代码，这里只做一下补充 */
+ul {
+  scroll-snap-type: x mandatory;
+}
+li {
+  scroll-snap-align: center;
+}
 ```
+
+## position
+
+> **position** 常用到的属性值有：_relative_、_absolute_、_fixed_，_absolute_ 相对于父元素来定位的，_fixed_ 相对于浏览器窗口定位的。那么可以改变 _fixed_ 让他相对于父元素定位嘛？
+
+### fixed 可以相对于父元素进行定位吗？
+
+- 首先，答案是可以的，而且很简单，只需要给他的父元素设置 <code>transform: translate(0, 0);</code> 即可
+- 在 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/position) 中提到 <code>当元素祖先的 transform 属性非 none 时，定位容器由视口改为该祖先。</code>
+- 其实有三种情况会发生这种情况：
+  - <code>transform</code> 属性值不为 <code>none</code> 的元素
+  - <code>perspective</code> 属性值不为 <code>none</code> 的元素
+  - 在 <code>will-change</code> 中指定了任意 CSS 属性
+- [参考文章](https://www.cnblogs.com/coco1s/p/7358830.html)
+
+### 粘性布局 sticky
+
+- 单词 <code>sticky</code> 的中文意思是"粘性的"，<code>position: sticky</code> 表现也符合这个粘性的表现。基本上，可以看出是 <code>position: relative</code> 和 <code>position: fixed</code> 的结合体——当元素在屏幕内，表现为 <code>relative</code>，就要滚出显示器屏幕的时候，表现为 <code>fixed</code>。例如，可以滚动下面这个框框感受下交互表现：
+
+<section style="width: 500px; margin: auto; height: 140px; overflow: auto; font-size: 14px;">
+  <style>
+    p.sticky--title--show {
+      position: sticky;
+      top: 0;
+      background-color: #eee;
+      line-height: 30px;
+      height: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+      padding-left: 5px;
+    }
+    div.sticky--show {
+      line-height: 22px;
+      text-indent: 1em;
+    }
+  </style>
+  <ul style="list-style: none; margin: 0">
+    <li>
+      <p class="sticky--title--show">我是标题-1</p>
+      <div class="sticky--show">我们是内容-1</div>
+      <div class="sticky--show">我们是内容-2</div>
+      <div class="sticky--show">我们是内容-3</div>
+      <div class="sticky--show">我们是内容-4</div>
+      <div class="sticky--show">我们是内容-5</div>
+    </li>
+    <li>
+      <p class="sticky--title--show">我是标题-2</p>
+      <div class="sticky--show">我们是内容-1</div>
+      <div class="sticky--show">我们是内容-2</div>
+      <div class="sticky--show">我们是内容-3</div>
+      <div class="sticky--show">我们是内容-4</div>
+      <div class="sticky--show">我们是内容-5</div>
+    </li>
+    <li>
+      <p class="sticky--title--show">我是标题-3</p>
+      <div class="sticky--show">我们是内容-1</div>
+      <div class="sticky--show">我们是内容-2</div>
+      <div class="sticky--show">我们是内容-3</div>
+      <div class="sticky--show">我们是内容-4</div>
+      <div class="sticky--show">我们是内容-5</div>
+    </li>
+    <li>
+      <p class="sticky--title--show">我是标题-4</p>
+      <div class="sticky--show">我们是内容-1</div>
+      <div class="sticky--show">我们是内容-2</div>
+      <div class="sticky--show">我们是内容-3</div>
+      <div class="sticky--show">我们是内容-4</div>
+      <div class="sticky--show">我们是内容-5</div>
+    </li>
+    <li>
+      <p class="sticky--title--show">我是标题-5</p>
+      <div class="sticky--show">我们是内容-1</div>
+      <div class="sticky--show">我们是内容-2</div>
+      <div class="sticky--show">我们是内容-3</div>
+      <div class="sticky--show">我们是内容-4</div>
+      <div class="sticky--show">我们是内容-5</div>
+    </li>
+    <li>
+      <p class="sticky--title--show">我是标题-6</p>
+      <div class="sticky--show">我们是内容-1</div>
+      <div class="sticky--show">我们是内容-2</div>
+      <div class="sticky--show">我们是内容-3</div>
+      <div class="sticky--show">我们是内容-4</div>
+      <div class="sticky--show">我们是内容-5</div>
+    </li>
+  </ul>
+</section>
+
+- 这个效果其实就是设置了 <code>position: sticky</code> 来实现的
+- 给标题设置了这个属性，然后设置 <code>top</code> 值为0，此时在标题将要滚动出在屏幕的时候自动会变成 <code>fixed</code> 的效果
+- 参考 [张鑫旭的 <code>position:sticky</code> ](https://www.zhangxinxu.com/wordpress/2018/12/css-position-sticky/)
