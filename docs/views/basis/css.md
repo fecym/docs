@@ -994,5 +994,5 @@ li {
 </section>
 
 - 这个效果其实就是设置了 <code>position: sticky</code> 来实现的
-- 给标题设置了这个属性，然后设置 <code>top</code> 值为0，此时在标题将要滚动出在屏幕的时候自动会变成 <code>fixed</code> 的效果
+- 给标题设置了这个属性，然后设置 <code>top</code> 值为 0，此时在标题将要滚动出在屏幕的时候自动会变成 <code>fixed</code> 的效果
 - 参考 [张鑫旭的 <code>position:sticky</code> ](https://www.zhangxinxu.com/wordpress/2018/12/css-position-sticky/)

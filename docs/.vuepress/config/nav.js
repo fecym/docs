@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 22:16:17
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-08-01 22:16:17
+ * @LastEditTime: 2019-10-16 23:11:39
  */
 module.exports = {
   nav: [
@@ -29,8 +29,9 @@ module.exports = {
       text: '基础',
       icon: 'reco-three',
       items: [
+        { text: 'css', link: '/views/basis/css' },
         { text: 'JavaScript', link: '/views/basis/javascript' },
-        { text: 'css', link: '/views/basis/css' }
+        { text: '继承', link: '/views/basis/inherit' }
       ]
     },
   ]
