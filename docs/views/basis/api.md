@@ -64,15 +64,119 @@ instanceOf(Function, Object) // true >> Function.__proto__.__proto__ === Object.
 
 ## call 和 apply
 
-> call 和 apply 两者很像除了传递的参数不同，一个是一个个的值，一个直接传递一个数组
+> `call` 和 `apply` 两者很像除了传递的参数不同，一个是传递的是值，一个传递的是一个数组
 
 ```js
 // call
-Function.prototype.call2 = function(context) {
+Function.prototype.call2 = function(context = window) {
   context.fn = this
   const args = [...arguments].slice(1)
   const result = context.fn(...args)
-  Reflect.deleteProperty(context, 'fn')
+  delete context.fn
   return result
+}
+// apply
+Function.prototype.apply2 = function(context = window) {
+  context.fn = this
+  let result
+  // 看是否有第二个参数，也可以不传参数
+  if (arguments[1]) {
+    // 因为传递过来的是一个数组，所以要解构一下
+    result = context.fn(...arguments[1])
+  } else {
+    result = context.fn()
+  }
+  delete context.fn
+  return result
+}
+```
+
+## 防抖和节流
+
+> scroll 事件本身会触发页面的重新渲染，同时 scroll 事件的 handler 又会被高频度的触发, 因此事件的 handler 内部不应该有复杂操作，例如 DOM 操作就不应该放在事件处理中。针对此类高频度触发事件问题（例如页面 scroll ，屏幕 resize，监听用户输入等），有两种常用的解决方法，防抖和节流。
+
+### 防抖
+
+> 每次触发高频事件都取消上次的延时操作
+
+```js
+function debounce(fn, delay) {
+  let timer = null
+  return function() {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.apply(this, arguments)
+    }, delay)
+  }
+}
+```
+
+### 节流
+
+> 每次执行函数先判断是否有还在等待执行的函数，若没有则执行
+
+```js
+function throttle(fn, delay) {
+  let canRun = true
+  return function() {
+    if (!canRun) return
+    canRun = false
+    setTimeout(() => {
+      fn.apply(this, arguments)
+      canRun = true
+    }, delay)
+  }
+}
+// 测试
+var a = 0
+setInterval(
+  throttle(() => {
+    a++
+    console.log(a)
+  }, 2000),
+  500
+)
+```
+
+## mixins 实现
+
+```js
+function mixins() {
+  const target = [].shift.call(arguments, 1)
+  const args = arguments
+  for (let i = 0, len = args.length; i < len; i++) {
+    if ([].toString.call(args[i]) !== '[object Object]')
+      throw 'The argument must be an object'
+    for (let key in args[i]) {
+      if (!(key in target)) {
+        target[key] = args[i][key]
+      }
+    }
+  }
+  return target
+}
+```
+
+## 数组的一些 api 的实现
+
+### 插入 insert
+
+```js
+function insert(arr, item, idx) {
+  for (let i = arr.length - 1; i > idx - 1; i--) {
+    arr[i + 1] = arr[i]
+  }
+  arr[idx] = item
+}
+```
+
+### 删除 remove
+
+```js
+function remove(arr, idx) {
+  for (let i = idx, len = arr.length; i < len; i++) {
+    arr[i] = arr[i + 1]
+  }
+  arr.length--
 }
 ```
