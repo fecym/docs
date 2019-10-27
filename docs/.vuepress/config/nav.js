@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 22:16:17
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-10-16 23:11:39
+ * @LastEditTime: 2019-10-27 11:47:26
  */
 module.exports = {
   nav: [
@@ -31,7 +31,8 @@ module.exports = {
       items: [
         { text: 'css', link: '/views/basis/css' },
         { text: 'JavaScript', link: '/views/basis/javascript' },
-        { text: '继承', link: '/views/basis/inherit' }
+        { text: '继承', link: '/views/basis/inherit' },
+        { text: 'js常用api的实现', link: '/views/basis/api' },
       ]
     },
   ]
