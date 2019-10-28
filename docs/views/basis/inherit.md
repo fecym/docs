@@ -41,19 +41,40 @@ var person = new Person('cym')
 
 ### 自己的理解
 
-- 所有的对象都拥有 `__proto__` 属性，指向一个对象，一个对象就意味着拥有一个 `__proto__` 属性
-- 所有的函数都拥有 `prototype` 属性，指向自己的原型对象
 ```js
-  const obj = {}
-  // 所有对象都是Object的实例，
-  obj.__proto__ === Object.prototype
-  const bar = function() {}
-  // 所有的函数都是Function的实例，包括Function本身
-  bar.__proto__ === Function.prototype
-  Function.__proto__ === Function.prototype
-  // Function的原型继承了Object
-  Function.prototype.__proto__ === Object.prototype
-  // Object是由Function构造的
-  Object.__proto__ === Function.prototype
+const obj = {}
+// 所有对象都是Object的实例，
+obj.__proto__ === Object.prototype
+const bar = function() {}
+// 所有的函数都是Function的实例，包括Function本身
+bar.__proto__ === Function.prototype
+Function.__proto__ === Function.prototype
+// Function的原型继承了Object
+Function.prototype.__proto__ === Object.prototype
+// Object是由Function构造的
+Object.__proto__ === Function.prototype
+// 函数也是对象的实例
+Function instanceof Object
+Object instanceof Function
+Function.__proto__.__proto__ === Object.prototype
 ```
+
+- 根据上面的代码，我们可以得到一些结论
+
+  - 根据（`obj.__proto__ === Object.prototype`）得出所有的对象都有 `__proto__` 属性
+  - 根据（`obj.__proto__ === Object.prototype`）还可以得出所有的对象都是 `Object` 的实例
+  - 根据（`bar.__proto__ === Function.prototype`）得出函数也是有 `__proto__` 属性
+  - 根据（`Function instanceof Object 和 Function.__proto__.__proto__ === Object.prototype`）得出函数也是对象（js 一切皆对象还是有点道理的），`Function` 也是 `Object` 的实例
+  - 而 `prototype` 是函数的属性，对象是没有的，所以说函数也是对象，但是函数却不包括对象，但是可以构造对象
+  - 根据（`bar.__proto__ === Function.prototype`）得出，所有的函数都是由 `Function` 构造出来的，所有的函数都是 `Function` 的实例
+  - 根据（`Function.__proto__ === Function.prototype`）得出， `Function` 也是 `Function` 的实例，更加证明了上句话
+  - 根据（`Object.__proto__ === Function.prototype`）得出，上句话是正确的....
+  - 根据（`Function instanceof Object`）得出，函数是对象的实例
+  - 根据（`Object instanceof Function`）得出，对象也是函数的实例
+  - 总结出来就是这么几句话
+    1. 所有的对象都是 `Object` 的实例
+    2. 函数也是对象
+    3. 所有的函数都是 `Function` 的实例，包括 `Function` 本身，当然也包括 `Object` 这个构造函数
+    4. `Object` 也是 `Function` 的实例，`Function` 也是 `Object` 的实例
+
 - 持续记录中...
