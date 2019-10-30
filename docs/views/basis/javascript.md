@@ -48,7 +48,7 @@ tags:
   <img :src="$withBase('/imgs/js-type-transform.jpg')" width="" style="border-radius: 8px;">
 </p>
 
-#### 显示数据类型转换
+### 显示数据类型转换
 
 - 转数字：**Number()**
   - 如果是数字类型的字符串，那么转换的时候回返回自己
@@ -66,14 +66,14 @@ tags:
 - 转 boolean：**Boolean()**
   - 在进行转换 _boolean_ 的时候，所有的结果都为 **true**，除了 **false**、**''**、**0**、**-0**、**NaN**、**undefined**、**null**
 
-#### 隐式转换
+### 隐式转换
 
 - 转 _number_：减乘除取余都可以让字符串隐式转换为 _number_
 - 转 _string_：可以通过加 <code>''</code> 字符串来转换 <code>a = a + ''</code>
 - 转 _boolean_：可以通过加 <code>!</code> 来转换 <code>a = !!a</code>
 - 在条件判断时，除了 **false**、**''**、**0**、**-0**、**NaN**、**undefined**、**null**，其他值都可以转为 **true**，包括所有对象
 
-#### 对象转原始类型
+### 对象转原始类型
 
 - 对象转换类型的时候，会调用内置的 **[toPrimitive]** 函数，对于该函数来说，算法逻辑如下：
   - 如果已经是原始类型了，那就不需要转换了
@@ -126,6 +126,32 @@ const o = {
 }
 console.log(o - 1) // Uncaught TypeError: Cannot convert object to primitive value
 console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primitive value
+```
+
+### 再来一张图
+
+- 这张图可能理解会更好点
+
+<p align="center">
+  <img :src="$withBase('/imgs/js-type-transform2.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+### == 和 ===
+
+> `===` 叫做严格相等，是指：左右两边不仅值要相等，类型也要相等，例如 `'1' === 1` 结果是 false，因为一边是 string，另一边是 number
+
+- `==` 不像 `===` 那样严格，对于一般情况，只要值相等，就返回 `true`，但 `==` 还涉及一些类型转换，它的转换规则如下：
+
+  - 两边类型是否相同，相同的话就比较值的大小，例如 `1 == 2`，返回 `false`
+  - 判断的值是否是 `null` 和 `undefined`，是的话就返回 `true`（js 中只有 `null == undefined`）
+  - 判断的类型是否 `String` 和 `Number`，是的话就把 `String` 转换成 `Number`，在进行比较
+  - 判断其中一方是否是 `Boolean`，是的话就把 `Boolean` 转换成 `Number`，在进行比较
+  - 判断其中一份是否是 `Object`，且另一方为 `String、Number、Symbol`，会将 `Object` 转成字符串，在进行比较
+  - 此段内容摘自[掘金 - 原生 JS 灵魂之问](https://juejin.im/post/5dac5d82e51d45249850cd20#heading-17)
+
+```js
+console.log({ a: 1 } == true) // false
+console.log({ a: 1 } == '[object Object]') // true
 ```
 
 ## 枚举
