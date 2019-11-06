@@ -23,6 +23,7 @@ module.exports = {
         { text: 'redis', link: '/views/big-front-end/redis/index' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
+        { text: '一次服务器配置', link: '/views/big-front-end/service/init' },
       ]
     },
     {
