@@ -1,5 +1,5 @@
 ---
-title: 服务器部署
+title: 记一次购买服务器
 date: 2019-11-06
 tags:
   - 大前端
@@ -14,6 +14,8 @@ tags:
 ## 安装 nginx
 
 > 买了服务器，肯定先到控制台把服务器激活，然后重置登录密码，启动服务，然后怎么访问呢，那就先装个服务器呗，我选了 `nginx`，`nginx` 做内网转发还是挺不错的，现在也特别火，毕竟是轻量级的服务器。`nginx` 有什么好处我就不多说了，可以看看[这篇文章](https://www.cnblogs.com/wcwnina/p/8728391.html)讲解的很不错了
+
+### 安装前检查
 
 - 安装 `nginx` 有两种方法，一种是源码包安装一种是 `yum` 安装，`yum` 安装可能不是最新版本的，这里我们选择了`源码包`安装
 - 首先由于 `nginx` 的一些模块依赖一些 `lib` 库，所以在安装 `nginx` 之前，必须先安装这些 `lib` 库，这些依赖库主要有 `g++`、`gcc`、`openssl-devel`、`pcre-devel` 和 `zlib-devel` 所以执行如下命令安装
@@ -33,6 +35,8 @@ tags:
   # 如果有，那么卸载掉
   yum remove nginx
 ```
+
+### 下载并安装
 
 - 我习惯在 `/usr/` 目录下新建一个 `download` 目录来保存自己下载的一些文件或者安装包之类的，所以我们新建这个文件夹，然后把下载的 `nginx` 放到这个目录下面
 - 去官网下载最新的 `nginx`
@@ -74,6 +78,8 @@ tags:
   ./nginx
 ```
 
+### 遇到的问题
+
 - 在这一步我遇到了一个问题，`nginx` 报了一个错误，意思是说端口被占用了，我天，我刚买的服务器，`80` 端口就被占用了，于是我们查看下到底是谁占了我的 `80` 端口
 
 <p align="center">
@@ -93,3 +99,36 @@ tags:
 - 使用 `curl` 却没有返回我们想要的东西，而是报 `Timed out`，很明显了，服务不通，却是想不到问题出在哪了，又重新捋了一遍，还是没有想到哪错了
 - 后来想到会不会阿里云没有开放 `80` 端口，于是回到阿里控制台，才发现原来阿里云服务器，默认情况下是没有开发 `80`，我们需要手动开放这个端口，原来阿里云这里还给你防住了，于是我们开放 `80` 端口后可以访问了
 - 需要在 云服务器 ECS -> 网络安全 -> 安全组 -> 配置规则 -> 添加安全组规则 -> 添加一条规则，开放我们想要开放的端口即可
+
+## 安装 node
+
+### 安装 nvm
+
+> `nvm` 作为 `node` 版本管理用具还是蛮好用的，我们可以先安装一个 `nvm` 再来下载不同的版本的 `node`
+
+- 在 `nvm` 的 github 上面有讲解怎么下载，[传送门](https://github.com/nvm-sh/nvm)
+
+```sh
+  # 下载方法
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+```
+
+- 下载完成之后，我们输入 `nvm list` 告诉你 nvm 命令不存在
+
+<p align="center">
+  <img :src="$withBase('/imgs/node-nvm-error.png')" height="" title="" />
+</p>
+
+- 解决方法：`source ~/.bashrc`
+- 此时再次输入 `nvm list` 就会有打印了
+
+### nvm 常用命令
+
+- `nvm list` 或者 `nvm ls` 查看 `node` 的安装版本
+- `nvm install 8.9.0` 安装一个 8.9.0 版本的 node
+- `nvm use 8.9.0` 切换到 8.9.0 版本的 node
+- `nvm uninstall 8.9.0` 删除 8.9.0 版本的 node
+- `nvm ls-remote` 查看远程的 node 版本
+- `nvm current` 查看当前正在使用的 node 版本
+- 我们安装一个 10.16.2 版本的 node 吧，`nvm install 10.16.2`
+

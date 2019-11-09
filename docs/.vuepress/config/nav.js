@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 22:16:17
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-10-27 11:47:26
+ * @LastEditTime: 2019-11-10 00:21:55
  */
 module.exports = {
   nav: [
@@ -19,7 +19,7 @@ module.exports = {
         { text: 'fs文件系统', link: '/views/big-front-end/node/fs' },
         { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
         { text: 'nginx介绍', link: '/views/big-front-end/nginx/index' },
-        { text: '必会的nginx知识', link: '/views/big-front-end/nginx/requisite' },
+        { text: '反向代理与负载均衡', link: '/views/big-front-end/nginx/requisite' },
         { text: 'redis', link: '/views/big-front-end/redis/index' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
