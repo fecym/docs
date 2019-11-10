@@ -1,9 +1,9 @@
 ---
-title: nginx   
+title: nginx
 date: 2019-07-10
 tags:
-- nginx
-- 大前端
+  - nginx
+  - 大前端
 ---
 
 # nginx
@@ -165,9 +165,10 @@ http 服务上支持若干个虚拟主机。每个虚拟主机一个对应的 se
 - root /root/project/main;
 - 定义服务器的默认网站根目录位置。如果 **location** URL 配置的是子目录或文件，root 没什么作用，一般放在*server*指令里面或者 / 下
 - 也可以写成**alias**，来匹配，alias /root/cym/project/daily-admin/，但是 location / 不可以写成 alias，否则会是 403
-  <p align="center">
-    <img :src="$withBase('/imgs/nginx-location-conf.png')" height="">
-  </p>
+
+<p align="center">
+  <img :src="$withBase('/imgs/nginx-location-conf.png')" height="">
+</p>
 
 ### index;
 

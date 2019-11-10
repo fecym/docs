@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-08-01 11:28:21
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-15 20:00:59
+ * @LastEditTime: 2019-11-10 00:35:38
  */
 const { themeConfig } = require('./config/themeConfig')
 const { plugins } = require('./config/plugins')

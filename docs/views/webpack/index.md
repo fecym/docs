@@ -1,8 +1,8 @@
 ---
-title: webpack 基础篇   
+title: webpack 基础篇
 date: 2019-05-21
 tags:
-- webpack
+  - webpack
 ---
 
 # [webpack](https://www.webpackjs.com/)
@@ -11,8 +11,9 @@ tags:
 
 ### 一、 entry 入口配置
 
-- webpack 是采用模块化的思想， 所有的文件或者配置都是一个个的模块， 同时所有模块联系在一起， 可以理解为就是一个简单的树状结构， 那么最顶层的入口是什么呢？ 答案就是[entry]()， 所以， webpack 在执行构建的时候， 第一步就是找到入口， 从入口开始， 寻找， 遍历， 递归解析出所有入口依赖的模块。
-- [entry]() 用法如下
+> webpack 是采用模块化的思想，所有的文件或者配置都是一个个的模块， 同时所有模块联系在一起，可以理解为就是一个简单的树状结构，那么最顶层的入口是什么呢？答案就是 `entry`， 所以， `webpack` 在执行构建的时候， 第一步就是找到入口，从入口开始，寻找，遍历，递归解析出所有入口依赖的模块。
+
+- `entry` 用法如下
 
 <img :src="$withBase('/imgs/base-entry.jpg')">
 
@@ -149,10 +150,10 @@ noParse 可以用于让 webpack 忽略哪些没有采用模块化的文件， �
 ### 四、 resolve
 
 ::: tip resolve
-resolve 配置 webpack 去寻找模块对应的文件， 我们平常通过 import 导入的模块， resolve 可以告诉 webpack 如何去解析导入的模块
+`resolve` 配置 `webpack` 去寻找模块对应的文件， 我们平常通过 `import` 导入的模块， `resolve` 可以告诉 `webpack` 如何去解析导入的模块
 :::
 
-#### 1. [alias： 配置路径别名](#\_1-alias： -配置路径别名)
+#### 1. alias：配置路径别名
 
 ```javascript
   resolve: {
@@ -162,47 +163,96 @@ resolve 配置 webpack 去寻找模块对应的文件， 我们平常通过 impo
   }
 ```
 
-#### 2. [extensions： 用于配置模块文件的后缀列表](#\_2-extensions： -用于配置模块文件的后缀列表)
+#### 2. extensions：用于配置模块文件的后缀列表
 
 > 用来配置文件可以不写后缀名
 
 ```javascript
 resolve: {
-  extension: ['.js', '.json']
+  extension: ['.js', '.json', '.vue', '.jsx']
 }
 ```
 
-#### 3. [modules](#_3-modules)
+#### 3. modules
 
 ::: tip
-resolve.modules 配置的 webpack 默认会去[node_modules]()目录下寻找， 假如项目中遇到一些模块大量依赖和导入由于 其他模块 的位置不定， 针对不同的文件都要计算被导入的模块文件的相对路径 ， 这个路径 有时会很长， 例如： 就像[import ······ '../../../components/button']()， 这时可以利用 [modules]() 配置项优化 。 假如那些被大量导入的模块都在./ src/components 目录下， 则将 modules 配置成这样
+`resolve.modules` 配置的 `webpack` 默认会去 `node_modules` 目录下寻找， 假如项目中遇到一些模块大量依赖和导入由于 其他模块 的位置不定， 针对不同的文件都要计算被导入的模块文件的相对路径 ，这个路径 有时会很长， 例如：就像 `import ······ '../../../components/module-a.js'`， 这时可以利用 `modules` 配置项优化。假如那些被大量导入的模块都在 `./src/components` 目录下， 则将 `modules` 配置成这样
 :::
 
-```javascript
+```js
 resolve: {
   modules: ['./src/components', 'node_modules']
 }
+// 然后引入模块就会去这两个目录中寻找
+import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
 ```
 
 ::: warning
-此时我们就可以简单的通过 [import ······ 'button']() 导入； <br/>
-注意： modules 和 alisa 的区别： modules 是用来配置一些公共模块， 这些公共模块和 nodemodules 类似， 配置以后， 我们就可以直接引用模块， 前面不需要再加路径， 而 alias 作用是配置路径别名， 目的是可以让路径简化。 两者是不一样的。 <br/>
+此时我们就可以简单的通过 `import ······ 'module-a'` 导入； <br/>
+注意： `modules` 和 `alisa` 的区别： `modules` 是用来配置一些公共模块， 这些公共模块和 `node_modules` 类似， 配置以后， 我们就可以直接引用模块， 前面不需要再加路径， 而 `alias` 作用是配置路径别名， 目的是可以让路径简化。 两者是不一样的。 <br/>
 除此之外， 还有： <br>
 
-1. descriptionFiles： 配置描述第三方模块的文件名称： 默认是 package.json
-2. enforceExtension： 配置后缀名是否必须加上
+1. `descriptionFiles`： 配置描述第三方模块的文件名称： 默认是 `package.json`
+2. `enforceExtension`： 配置后缀名是否必须加上
    :::
 
 ### 五、 plugin
 
 ::: tip plugin
 
-- plugins 其实包括 webpack 本身自带的插件， 也有开源的其他插件， 都可以使用， 它的作用就是解决 loader 之外的其他任何相关构建的事情。
-- plugin 的值是一个数组， 可以传入多个插件实例。
-- plugin 如何配置并不是难点， 难点是我们需要清楚常用的一些插件分别解决了什么样的问题， 以及这些插件的配置项
+- `plugins` 其实包括 `webpack` 本身自带的插件， 也有开源的其他插件， 都可以使用， 它的作用就是解决 `loader` 之外的其他任何相关构建的事情。
+- `plugin` 的值是一个数组， 可以传入多个插件实例，用法是直接 new 一个插件然后传入相应的配置即可
+- `plugin` 如何配置并不是难点， 难点是我们需要清楚常用的一些插件分别解决了什么样的问题， 以及这些插件的配置项
   :::
 
-### 六、 devServer
+```js
+plugins: [
+  // 处理vue
+  new VueLoaderPlugin(),
+  // 分离css，只需要传入相应的配置即可
+  new MiniCssExtractPlugin({
+    filename: 'css/[name].[hash].css',
+    chunkFilename: 'css/[id].[hash].css'
+  })
+]
+```
+
+### 六、optimization
+
+::: tip optimization
+`optimization` 很明显是优化代码的，比如说我们的压缩代码，就是在这里面配置，从 `webpack4` 开始，如果 `mode` 是 `production` 模式会默认压缩代码，具体可查看[官网文档](https://webpack.docschina.org/configuration/optimization/)
+:::
+
+```js
+  optimization: {
+    // 简单配置压缩代码
+    minimize: true,
+    // 分离代码
+    splitChunks: {
+      chunk: 'all',
+      cacheGroups: {
+        libs: {
+          name: 'chunk-libs',
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
+          chunks: 'initial' // 只打包初始时依赖的第三方
+        },
+        vue: {
+          name: 'vue',
+          test: /[\\/]node_modules[\\/]vue[\\/]/,
+          priority: 11,
+        },
+        vueRouter: {
+          name: 'vue-router',
+          test: /[\\/]node_modules[\\/]vue-router[\\/]/,
+          priority: 12,
+        }
+      }
+    }
+  }
+```
+
+### 七、 devServer
 
 ::: tip devServer
 devServer 主要用于本地开发的时候， 配置本地服务的各种特性， 常用的配置如下
@@ -220,6 +270,113 @@ devServer 主要用于本地开发的时候， 配置本地服务的各种特性
 - open //是否开启新窗口
 - devtool : 'source-map' // 配置 webpack 是否生成 source Map， 以方便调试。
 - watch： true // 默认为 true， 表示是否监听文件修改以后， 自动编译。
+
+## webpack 配置
+
+> webpack 配置只需要在项目根目录下新建一个 `webpack.config.js` 文件，然后导出一个对象或者函数都可以，如果导出为一个函数那么这个函数接受两个参数，第一个参数是环境对象（environment），第二个参数是一个 map 对象（argv）这个对象描述了传递给 webpack 的选项，并且具有 output-filename 和 optimize-minimize 等 key。
+
+来看一下这两个参数：
+
+```js
+  // 在 webpack.config.js 中输入以下代码
+  module.exports = function(env, argv) {
+    console.log(env, argv)
+  }
+  // 在控制台执行
+  webpack --env=chengyuming
+```
+
+<p align="center">
+  <img :src="$withBase('/imgs/webpack-arguments.jpg')" height="">
+</p>
+
+- 让 `webpack` 正常启动需要最少需要两个 `npm` 包，`webpack、webpack-cli`
+
+### mode
+
+> `webpack` 有三种 `mode`：`development`、`production`、`none`
+
+- development：会将 `process.env.NODE_ENV` 的值设置为 `development`，启用 `NamedChunksPlugin` 和 `NamedModulesPlugin`。代码不压缩
+- production：会将 `DefinePlugin` 中 `process.env.NODE_ENV` 的值设置为 `production`。启用 `FlagDependencyUsagePlugin`, `FlagIncludedChunksPlugin`, `ModuleConcatenationPlugin`, `NoEmitOnErrorsPlugin`, `OccurrenceOrderPlugin`, `SideEffectsFlagPlugin` 和 `TerserPlugin`。
+- none：退出任何默认优化选项
+- 如果没有设置，`webpack` 会把 `mode` 默认设置为 `production`，并发出警告。
+- 我们可以通过控制台中输入 `--mode=development` 来设置 `webpack` 的模式，也可以在 `webpack.config.js` 中设置 `mode: development`
+- 设置 `NODE_ENV` 并不会自动地设置 `mode`。
+- 如下，一个简单的 web 打包机就配置成功了，编译、优化就是 `modules`、`plugins`、`optimization` 配置的事情，配置规则在基础篇已经介绍过了
+
+```js
+const path = require('path')
+module.exports = function(env, argv) {
+  return {
+    mode: argv.mode || 'development',
+    entry: path.resolve('./src/main'),
+    output: {
+      path: path.resolve('./dist'),
+      filename: '[name].[hash].js'
+    }
+  }
+}
+```
+
+### 附上一个简单的配置
+
+```js
+const path = require('path')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+module.exports = function(env, argv) {
+  return {
+    mode: argv.mode || 'development',
+    entry: path.resolve('./src/main'),
+    output: {
+      path: path.resolve('./dist'),
+      filename: 'js/[name].[chunkHash].js',
+      publicPath: '.'
+    },
+    module: {
+      rules: [
+        // 使用MiniCssExtractPlugin插件后的配置
+        {
+          test: /\.(sa|sc|c)ss$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                reloadAll: true
+              }
+            },
+            'css-loader'
+          ]
+        }
+      ]
+    },
+    plugins: [
+      // 配置HTML
+      new HTMLWebpackPlugin({
+        // 源文件模板
+        template: path.resolve('./public/index.html'),
+        // 输出文件
+        filename: 'index.html',
+        title: '程禹铭',
+        inject: true,
+        hash: true,
+        showErrors: true
+      }),
+      // 分离css
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[hash].css',
+        chunkFilename: 'css/[id].[hash].css'
+      })
+    ],
+    optimization: {
+      minimize: true,
+      runtimeChunk: {
+        name: entryPoint => `runtime~${entryPoint.name}`
+      }
+    }
+  }
+}
+```
 
 ## webpack 一些概念
 

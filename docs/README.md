@@ -1,13 +1,13 @@
 ---
 home: true
-heroImage: /imgs/oops.jpg
+heroImage: /imgs/oops.png
 heroImageStyle: {
   height: '180px',
   margin: '6rem auto 2rem',
   background: '#fff',
   borderRadius: '1rem',
 }
-isShowTitleInHome: false
+isShowTitleInHome: true
 actionText: Guide
 actionLink: /views/other/intro
 features:
