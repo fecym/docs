@@ -31,10 +31,7 @@ function New() {
   // 绑定this，执行构造函数
   const result = F.apply(obj, arguments)
   // 看看构造函数返回了什么
-  if (
-    typeof result !== null &&
-    (typeof result === 'object' || typeof result === 'function')
-  ) {
+  if (typeof result !== null && (typeof result === 'object' || typeof result === 'function')) {
     return result
   }
   return obj
@@ -54,11 +51,9 @@ function instanceOf(left, right) {
   while (true) {
     if (left.__proto__ === null) return false
     if (left.__proto__ === right.prototype) return true
-    console.log(1)
     left.__proto__ = left.__proto__.__proto__
   }
 }
-// test
 instanceOf(Function, Object) // true >> Function.__proto__.__proto__ === Object.prototype
 ```
 
