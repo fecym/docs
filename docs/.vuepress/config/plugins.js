@@ -42,7 +42,7 @@ module.exports = {
       }
     }],
     ['@vuepress/google-analytics', {
-      ga: '151995186'  // Google Analytics ID
+      ga: 'UA-151995186-1'  // Google Analytics ID
     }],
   ]
 }
