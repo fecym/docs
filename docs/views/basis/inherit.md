@@ -77,4 +77,153 @@ Function.__proto__.__proto__ === Object.prototype
     3. 所有的函数都是 `Function` 的实例，包括 `Function` 本身，当然也包括 `Object` 这个构造函数
     4. `Object` 也是 `Function` 的实例，`Function` 也是 `Object` 的实例
 
+## 继承
+
+### 原型链继承
+
+> 原型链继承的核心是 `把子类的 prototype 对象的 设置为 父类的实例`
+
+```js {4}
+function Parent() {}
+function Child() {}
+// 继承的关键
+Child.prototype = new Parent()
+```
+特点和缺点：
+- 父类属性和方法可以被复用（优点）
+- 每个实例对 `引用类型属性` 的修改都会被其他的实例共享
+  - 不会对父类的属性造成影响，`自身属性或方法与原型链上相同会屏蔽原型链上的属性或方法`
+- 每个实例对 `非引用类型属性` 的修改不会影响其他实例
+- 子类会丢失自身的 `构造函数`
+- 在创建 `Child` 实例的时候，无法向 `Parent` 传参。这样就会使 `Child` 实例没法自定义自己的属性
+```js
+  function Parent() {
+    this.name = 'inherit'
+    this.colors = ['red', 'green']
+  }
+  Parent.prototype.sayName = function () { return this.name }
+  function Child() {}
+  // 继承的关键
+  Child.prototype = new Parent()
+  // 原型链继承会让子类丢失构造函数，所以让构造函数指向自身
+  Child.prototype.constructor = Child
+  const c1 = new Child()
+  const c2 = new Child()
+  const p = new Parent()
+  // 子类修改 引用类型
+  c1.colors.push('blue')
+  // 子类修改 非引用类型属性
+  c1.name = '哈哈哈'
+  console.log(c1.name, c2.name)           // 哈哈哈，inherit
+  console.log(c1.colors, c2.colors)       // ['red', 'green', 'blue']，['red', 'green', 'blue']
+  console.log(p.colors)                   // ['red', 'green']
+  console.log(c1.sayName === p.sayName)   // true
+```
+
+### 借用构造函数
+
+> 借用构造函数，也是经典继承，也叫作类式继承，核心是 `在子类中执行父类构造函数，并且绑定this到子类上`，此时就会把父类函数的内容复制了一份到子类。这也是所有继承中唯一用不到 `prototype` 的继承
+
+```js {6}
+  function Parent(name) {
+    this.name = name
+  }
+  function Child(name) {
+    // 继承关键
+    Parent.call(this, name)
+  }
+```
+
+特点和缺点：
+- 解决了每个实例对引用类型属性的修改都会被其他的实例共享的问题（优点）
+  - 子类之间不会在受对方的影响了
+- 子类可以向父类传参（优点）
+- 子类不会在丢失自己的构造函数了
+- 父类的方法不能复用，每次子类构造实例都得执行一次父类函数（缺点）
+
+```js
+  function Parent(name) {
+    this.name = name
+    this.colors = ['red', 'green']
+  }
+  Parent.prototype.sayName = function () { return this.name }
+  function Child(name) {
+    Parent.call(this, name)
+  }
+  // 子类可以传参
+  const c1 = new Child('小铭')
+  const c2 = new Child('小白')
+  const p = new Parent('父亲')
+  // 子类修改 引用类型
+  c1.colors.push('blue')
+  // 子类修改 非引用类型属性
+  c1.name = '哈哈哈'
+  console.log(c1.name, c2.name)       // 哈哈哈，小白
+  console.log(c1.colors, c2.colors)   // ['red', 'green', 'blue']，['red', 'green']
+  console.log(p.colors)               // ['red', 'green']
+  // 父类的方法不能复用了
+  console.log(c1.sayName())           // Uncaught TypeError: c1.sayName is not a function
+```
+
+### 组合继承
+
+> 组合继承，就是融合了原型链继承和借用构造函数两种方法，充分发挥两者的优势
+
+```js
+  function Parent(name) {
+    this.name = name
+  }
+  Parent.prototype.sayName = function () { return this.name }
+  function Child(name) {
+    // 融合两种继承继承写法
+    Parent.call(this, name)
+  }
+  // 融合两种继承继承写法
+  Child.prototype = new Parent()
+  Child.prototype.constructor = Child
+```
+
+特点和缺点：
+
+- 解决了每个实例修改引用类型会影响到其他子类的问题
+- 子类可以向父类传参
+- 可以实现父类方法的复用
+- 需执行两次父类构造函数（缺点）
+  - 一是 `Child.prototype = new Parent()`
+  - 二是 `Parent.call(this, name)`
+  - 造成不必要的浪费
+
+```js
+  function Parent(name) {
+    this.name = name
+    this.colors = ['red', 'green']
+  }
+  Parent.prototype.sayName = function() { return this.name }
+  function Child(name) {
+    Parent.call(this, name)
+  }
+  Child.prototype = new Parent()
+  Child.prototype.constructor = Child
+  const c1 = new Child('小铭')
+  const c2 = new Child('小白')
+  const p = new Parent('父亲')
+  // 修改子类的引用属性
+  c1.colors.push('blue')
+  console.log(c1.colors, c2.colors)   // ['red', 'green', 'blue']，['red', 'green']
+  console.log(p.colors)               // ['red', 'green']
+  console.log(c1.sayName())           // 小铭
+```
+
+### 原型式继承
+
+### 寄生式继承
+
+### 寄生组合继承
+
+### 混入继承
+
+### Es6继承
+
+### 其他继承
+
 - 持续记录中...
