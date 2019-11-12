@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-09-03 19:43:14
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 15:00:18
+ * @LastEditTime: 2019-11-11 22:59:22
  */
 const { nav } = require('./nav')
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
     nav,
     sidebar: 'auto',
     sidebarDepth: 4,
-    lastUpdated: 'Last Updated',
+    lastUpdated: '最后修改时间',
 
     // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
     repo: 'https://github.com/cym-git',
@@ -48,7 +48,6 @@ module.exports = {
     // 自动形成侧边导航
     sidebar: 'auto',
     // 最后更新时间
-    lastUpdated: 'Last Updated',
     // 备案号
     // record: '950417',
     // 项目开始时间

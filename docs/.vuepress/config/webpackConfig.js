@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-09-03 22:38:46
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 10:36:59
+ * @LastEditTime: 2019-11-11 23:36:01
  */
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']

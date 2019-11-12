@@ -3,7 +3,7 @@
  * @Author: chengyuming
  * @Date: 2019-07-31 21:57:28
  * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 15:00:31
+ * @LastEditTime: 2019-11-11 23:53:32
  */
 module.exports = {
   plugins: [
@@ -35,11 +35,14 @@ module.exports = {
     ['@vuepress/pwa', {
       serviceWorker: true,
       // popupComponent: 'MySWUpdatePopup',
-      updatePopup: true
-      // updatePopup: {
-      //   message: "发现新内容可用",
-      //   buttonText: "刷新"
-      // }
-    }]
+      // updatePopup: true
+      updatePopup: {
+        message: "发现新内容可用",
+        buttonText: "刷新"
+      }
+    }],
+    ['@vuepress/google-analytics', {
+      ga: '151995186'  // Google Analytics ID
+    }],
   ]
 }
