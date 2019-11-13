@@ -81,7 +81,9 @@ Function.__proto__.__proto__ === Object.prototype
 
 ### 原型链继承
 
-> 原型链继承的核心是 `把子类的 prototype 对象的 设置为 父类的实例`
+::: tip 原型链继承
+&emsp; 原型链继承的核心是 `把子类的 prototype 对象的 设置为 父类的实例`
+:::
 
 ```js {4}
 function Parent() {}
@@ -89,52 +91,61 @@ function Child() {}
 // 继承的关键
 Child.prototype = new Parent()
 ```
-特点和缺点：
+
+**特点和缺点：**
+
 - 父类属性和方法可以被复用（优点）
 - 每个实例对 `引用类型属性` 的修改都会被其他的实例共享
   - 不会对父类的属性造成影响，`自身属性或方法与原型链上相同会屏蔽原型链上的属性或方法`
 - 每个实例对 `非引用类型属性` 的修改不会影响其他实例
 - 子类会丢失自身的 `构造函数`
 - 在创建 `Child` 实例的时候，无法向 `Parent` 传参。这样就会使 `Child` 实例没法自定义自己的属性
+
 ```js
-  function Parent() {
-    this.name = 'inherit'
-    this.colors = ['red', 'green']
-  }
-  Parent.prototype.sayName = function () { return this.name }
-  function Child() {}
-  // 继承的关键
-  Child.prototype = new Parent()
-  // 原型链继承会让子类丢失构造函数，所以让构造函数指向自身
-  Child.prototype.constructor = Child
-  const c1 = new Child()
-  const c2 = new Child()
-  const p = new Parent()
-  // 子类修改 引用类型
-  c1.colors.push('blue')
-  // 子类修改 非引用类型属性
-  c1.name = '哈哈哈'
-  console.log(c1.name, c2.name)           // 哈哈哈，inherit
-  console.log(c1.colors, c2.colors)       // ['red', 'green', 'blue']，['red', 'green', 'blue']
-  console.log(p.colors)                   // ['red', 'green']
-  console.log(c1.sayName === p.sayName)   // true
+function Parent() {
+  this.name = 'inherit'
+  this.colors = ['red', 'green']
+}
+Parent.prototype.sayName = function() {
+  return this.name
+}
+function Child() {}
+// 继承的关键
+Child.prototype = new Parent()
+// 原型链继承会让子类丢失构造函数，所以让构造函数指向自身
+Child.prototype.constructor = Child
+const c1 = new Child()
+const c2 = new Child()
+const p = new Parent()
+// 子类修改 引用类型
+c1.colors.push('blue')
+// 子类修改 非引用类型属性
+c1.name = '哈哈哈'
+console.log(c1.name, c2.name) // 哈哈哈，inherit
+console.log(c1.colors, c2.colors) // ['red', 'green', 'blue']，['red', 'green', 'blue']
+// 子类修改引用类型不会对父类造成影响
+console.log(p.colors) // ['red', 'green']
+console.log(c1.sayName === p.sayName) // true
 ```
 
 ### 借用构造函数
 
-> 借用构造函数，也是经典继承，也叫作类式继承，核心是 `在子类中执行父类构造函数，并且绑定this到子类上`，此时就会把父类函数的内容复制了一份到子类。这也是所有继承中唯一用不到 `prototype` 的继承
+::: tip 借用构造函数
+&emsp; 借用构造函数，也是经典继承，也叫作类式继承，核心是 `在子类中执行父类构造函数，并且绑定this到子类上`，此时就会把父类函数的内容复制了一份到子类。这也是所有继承中唯一用不到 `prototype` 的继承
+:::
 
 ```js {6}
-  function Parent(name) {
-    this.name = name
-  }
-  function Child(name) {
-    // 继承关键
-    Parent.call(this, name)
-  }
+function Parent(name) {
+  this.name = name
+}
+function Child(name) {
+  // 继承关键
+  Parent.call(this, name)
+}
 ```
 
-特点和缺点：
+**特点和缺点：**
+
 - 解决了每个实例对引用类型属性的修改都会被其他的实例共享的问题（优点）
   - 子类之间不会在受对方的影响了
 - 子类可以向父类传参（优点）
@@ -142,48 +153,54 @@ Child.prototype = new Parent()
 - 父类的方法不能复用，每次子类构造实例都得执行一次父类函数（缺点）
 
 ```js
-  function Parent(name) {
-    this.name = name
-    this.colors = ['red', 'green']
-  }
-  Parent.prototype.sayName = function () { return this.name }
-  function Child(name) {
-    Parent.call(this, name)
-  }
-  // 子类可以传参
-  const c1 = new Child('小铭')
-  const c2 = new Child('小白')
-  const p = new Parent('父亲')
-  // 子类修改 引用类型
-  c1.colors.push('blue')
-  // 子类修改 非引用类型属性
-  c1.name = '哈哈哈'
-  console.log(c1.name, c2.name)       // 哈哈哈，小白
-  console.log(c1.colors, c2.colors)   // ['red', 'green', 'blue']，['red', 'green']
-  console.log(p.colors)               // ['red', 'green']
-  // 父类的方法不能复用了
-  console.log(c1.sayName())           // Uncaught TypeError: c1.sayName is not a function
+function Parent(name) {
+  this.name = name
+  this.colors = ['red', 'green']
+}
+Parent.prototype.sayName = function() {
+  return this.name
+}
+function Child(name) {
+  Parent.call(this, name)
+}
+// 子类可以传参
+const c1 = new Child('小铭')
+const c2 = new Child('小白')
+const p = new Parent('父亲')
+// 子类修改 引用类型
+c1.colors.push('blue')
+// 子类修改 非引用类型属性
+c1.name = '哈哈哈'
+console.log(c1.name, c2.name) // 哈哈哈，小白
+console.log(c1.colors, c2.colors) // ['red', 'green', 'blue']，['red', 'green']
+console.log(p.colors) // ['red', 'green']
+// 父类的方法不能复用了
+console.log(c1.sayName()) // Uncaught TypeError: c1.sayName is not a function
 ```
 
 ### 组合继承
 
-> 组合继承，就是融合了原型链继承和借用构造函数两种方法，充分发挥两者的优势
+::: tip 组合继承
+&emsp; 组合继承，就是融合了原型链继承和借用构造函数两种方法，充分发挥两者的优势
+:::
 
 ```js
-  function Parent(name) {
-    this.name = name
-  }
-  Parent.prototype.sayName = function () { return this.name }
-  function Child(name) {
-    // 融合两种继承继承写法
-    Parent.call(this, name)
-  }
+function Parent(name) {
+  this.name = name
+}
+Parent.prototype.sayName = function() {
+  return this.name
+}
+function Child(name) {
   // 融合两种继承继承写法
-  Child.prototype = new Parent()
-  Child.prototype.constructor = Child
+  Parent.call(this, name)
+}
+// 融合两种继承继承写法
+Child.prototype = new Parent()
+Child.prototype.constructor = Child
 ```
 
-特点和缺点：
+**特点和缺点：**
 
 - 解决了每个实例修改引用类型会影响到其他子类的问题
 - 子类可以向父类传参
@@ -194,36 +211,161 @@ Child.prototype = new Parent()
   - 造成不必要的浪费
 
 ```js
-  function Parent(name) {
-    this.name = name
-    this.colors = ['red', 'green']
-  }
-  Parent.prototype.sayName = function() { return this.name }
-  function Child(name) {
-    Parent.call(this, name)
-  }
-  Child.prototype = new Parent()
-  Child.prototype.constructor = Child
-  const c1 = new Child('小铭')
-  const c2 = new Child('小白')
-  const p = new Parent('父亲')
-  // 修改子类的引用属性
-  c1.colors.push('blue')
-  console.log(c1.colors, c2.colors)   // ['red', 'green', 'blue']，['red', 'green']
-  console.log(p.colors)               // ['red', 'green']
-  console.log(c1.sayName())           // 小铭
+function Parent(name) {
+  this.name = name
+  this.colors = ['red', 'green']
+}
+Parent.prototype.sayName = function() {
+  return this.name
+}
+function Child(name) {
+  Parent.call(this, name)
+}
+Child.prototype = new Parent()
+Child.prototype.constructor = Child
+const c1 = new Child('小铭')
+const c2 = new Child('小白')
+const p = new Parent('父亲')
+// 修改子类的引用属性
+c1.colors.push('blue')
+console.log(c1.colors, c2.colors) // ['red', 'green', 'blue']，['red', 'green']
+console.log(p.colors) // ['red', 'green']
+console.log(p.colors === c2.colors) // false
+console.log(c1.sayName()) // 小铭
 ```
 
 ### 原型式继承
 
+::: tip 原型式继承
+&emsp; 原型式继承最初由道格拉斯·克罗克福德于 2006 年在一篇题为 《Prototypal Inheritance in JavaScript》(JavaScript 中的原型式继承) 的文章中提出. 他的想法是借助原型可以基于已有的对象创建新对象， 同时还不必因此创建自定义类型 <br/>
+&emsp; 核心：在函数内部先创建一个临时性的构造函数，然后将传入的参数作为这个构造函数的原型，最后返回这个临时构造函数的实例
+:::
+
+> 原型式继承最初由道格拉斯·克罗克福德于 2006 年在一篇题为 《Prototypal Inheritance in JavaScript》(JavaScript 中的原型式继承) 的文章中提出. 他的想法是借助原型可以基于已有的对象创建新对象， 同时还不必因此创建自定义类型 <br/>
+> 核心：在函数内部先创建一个临时性的构造函数，然后将传入的参数作为这个构造函数的原型，最后返回这个临时构造函数的实例
+
+```js
+// 该函数接受一个原型作为参数
+function create(o) {
+  // 临时性构造函数
+  const F = function() {}
+  F.prototype = o
+  return new F()
+}
+```
+
+- 在 **Es5** 中新增了 `Object.create()` 方法规范了原型式继承。
+- `Object.create()` 接受两个参数
+  - 一是，继承的对象（一般传入一个原型）
+  - 二是，拓展的对象（可选）
+
+**特点和缺点：**
+
+- 父类方法可以复用（优点）
+- 父类的引用属性会被所有子类所共享，并且子类会修改父类的引用属性（同一个引用地址）
+- 子类不能向父类传参
+
+```js
+function create(o) {
+  const F = function() {}
+  F.prototype = o
+  return new F()
+}
+const parent = {
+  name: 'inherit',
+  colors: ['red', 'green']
+}
+const o1 = create(parent)
+// 自己本身没有，那么修改的是原型链上的引用
+o1.colors.push('blue')
+o1.name = '小铭'
+const o2 = create(parent)
+console.log(o1, o2) // F {name: "小铭"}，F {}
+console.log(o1.colors === o2.colors) // true
+console.log(o1.colors === parent.colors) // true
+console.log(o1.__proto__.colors === parent.colors) // true
+console.log(o1.colors) // ['red', 'green', 'blue']
+```
+
 ### 寄生式继承
+
+::: tip 寄生式继承
+&emsp; 寄生式继承，也被叫做寄生增强对象，就是在原型继承的基础上，增强对象，返回构造函数
+:::
+
+```js {4}
+  function createEnhance(o) {
+    const obj = Object.create(o)
+    // 增强对象
+    obj.sayHi = function() { return 'hi }
+    return obj
+  }
+```
+
+- 寄生式继承仅提供一种思路，没什么优点
+- 使用寄生式继承来为对象添加函数, 会由于不能做到函数复用而降低效率；这一点与构造函数模式类似。
 
 ### 寄生组合继承
 
-### 混入继承
+::: tip 寄生组合继承
+&emsp; 组合继承的时候，会调用两次父类的构造函数造成浪费，此时寄生组合式继承就完全可以解决这个问题
+:::
 
-### Es6继承
+```js
+/**
+ * @param {子类构造函数} child
+ * @param {父类构造函数} parent
+ */
+function inheritPrototype(child, parent) {
+  // 创建一个临时构造函数
+  const F = function() {}
+  // 临时类原型对象执向父类的原型对象
+  F.prototype = parent.prototype
+  // 子类原型指向 临时类的实例
+  child.prototype = new F()
+  // 为子类绑定构造函数
+  child.prototype.constructor = child
+}
+// Es5 写法
+function extend(child, parent) {
+  child.prototype = Object.create(parent.prototype)
+  child.prototype.constructor = child
+}
+```
 
-### 其他继承
+- 这是最成熟的方法，也是现在库实现的方法
+
+### Es6 继承 extends
+
+::: tip Es6 继承
+&emsp; Es6 继承的结果跟寄生组合继承相似，可以说是寄生组合继承的语法糖。<br>
+&emsp; 但是，寄生组合继承是先创建子类实例对象，然后对其增强；<br>
+&emsp; Es6 继承是先将父类实例对象的属性和方法，加到 `this` 上面（所以必须先调用 `super` 方法），然后在对子类构造函数修改 `this`
+:::
+
+```js
+class Parent {
+  constructor(name, age) {
+    this.name = name
+    this.age = age
+  }
+  sayName() {
+    return this.name
+  }
+}
+class Child extends Parent {
+  constructor(name, age) {
+    // super作为函数来用，相当于构造函数（Parent.call(name)）
+    super(name, age)
+    // super当做对象来用，相当于此时的this
+    console.log(super.sayName()) // '小铭'
+    super.sex = 'male'
+  }
+}
+
+const p = new Parent('父亲', 46)
+const c = new Child('小铭', 24)
+console.log(c, c.sex) //  Child { name: '小铭', age: 24, sex: 'male' }，'male'
+```
 
 - 持续记录中...
