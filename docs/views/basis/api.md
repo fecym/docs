@@ -31,7 +31,10 @@ function New() {
   // 绑定this，执行构造函数
   const result = F.apply(obj, arguments)
   // 看看构造函数返回了什么
-  if (typeof result !== null && (typeof result === 'object' || typeof result === 'function')) {
+  if (
+    typeof result !== null &&
+    (typeof result === 'object' || typeof result === 'function')
+  ) {
     return result
   }
   return obj
@@ -232,6 +235,33 @@ function map(arr, fn) {
     result[i] = fn.call(null, arr[i], i, arr)
   }
   return result
+}
+```
+
+### some 有一项满足返回 true
+
+```js
+function some(arr, fn) {
+  for (let i = 0, len = arr.length; i < len; i++) {
+    if (fn(arr[i], i, arr)) {
+      return true
+    }
+  }
+  return false
+}
+```
+
+### every 全部满足返回 true
+
+```js
+function every(arr, fn) {
+  for (let i = 0, len = arr.length; i < len; i++) {
+    // 有一项不满足，就要返回false
+    if (!fn(arr[i], i, arr)) {
+      return false
+    }
+  }
+  return true
 }
 ```
 
