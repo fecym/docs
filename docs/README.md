@@ -7,7 +7,7 @@ heroImageStyle: {
   background: '#fff',
   borderRadius: '1rem',
 }
-isShowTitleInHome: true
+isShowTitleInHome: false
 actionText: Guide
 actionLink: /views/other/intro
 features:

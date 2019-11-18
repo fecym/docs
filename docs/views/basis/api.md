@@ -31,10 +31,7 @@ function New() {
   // 绑定this，执行构造函数
   const result = F.apply(obj, arguments)
   // 看看构造函数返回了什么
-  if (
-    typeof result !== null &&
-    (typeof result === 'object' || typeof result === 'function')
-  ) {
+  if (typeof result !== null && (typeof result === 'object' || typeof result === 'function')) {
     return result
   }
   return obj
@@ -62,13 +59,27 @@ instanceOf(Function, Object) // true >> Function.__proto__.__proto__ === Object.
 
 ## call 和 apply
 
+::: tip call 和 apply
+  我们都知道 `js` 的函数中 `this` 是动态的，不同执行上下文会导致 `this` 执行不同的地方，总得来说 `this` 执行有四种情况
+  - 函数自执行，`this` 执行指向 `window` 
+  - 谁打点调用函数，`this` 指向这个 `谁`，也就是 . 前面的那个对象
+  - `call` 和 `apply` 的硬绑定 `this`
+  - 函数加 `new` 关键字后，`this` 执行该构造函数的实例 
+
+  那么第三条第四条规则为什么就会改变 `this` 执行，其实说白了函数中 `this` 应该都遵循 `1、2` 两条规则，`3、4` 其实都是在底层实现了，让其 `this` 执行了我们想要指向的地方，比如说 `new` 关键字，我们在本文的第一个 `api` 中就讲了他的实现，他是利用 `apply` 或者 `call` 来绑定上去的，这里我们来讲下 `call` 和 `apply` 的实现
+:::
+
+### 实现 call 和 apply
+
 > `call` 和 `apply` 两者很像除了传递的参数不同，一个是传递的是值，一个传递的是一个数组
 
 ```js
 // call
 Function.prototype.call2 = function(context = window) {
+  // example：fnA.call(obj, 1)
   context.fn = this
   const args = [...arguments].slice(1)
+  // 执行 context.fn(...args) 此时就相当于 obj.fnA(1) 
   const result = context.fn(...args)
   delete context.fn
   return result
@@ -87,6 +98,35 @@ Function.prototype.apply2 = function(context = window) {
   delete context.fn
   return result
 }
+```
+
+::: warning 解释 call 实现原理
+  举个栗子： `fnA.call(obj, 1)` <br/>
+  call2函数 第一个参数是要绑定的对象（obj）<br/>
+  我们根据谁打点调用函数 `this` 执行谁，我们在这个对象中新增一个属性 `fn`，给它赋值为此时的 __~~this~~__ <br/>
+  那么就相当于 给我们传进来的 `obj` 新增一个属性 `fn`，让他等于这个 __~~this~~__ <br/>
+  因为 `call2` 是定义在函数的原型的对象上的，那么此时这个 __~~this~~__ 就是 调用 `call2` 方法函数的实例，也就是 __~~fnA~~__ <br/>
+  也就是说 `context.fn` 就相当于 给 `obj` 新增了一个属性 `fn（fnA）`然后 `obj.fn` 执行了，那么谁打点调用 `this` 执行谁，此时 `this` 指向了 这个 `obj` <br/>
+  这就是 `call` 方法实现的基本思路 <br/>
+  <font size=2 >
+    <font color=red>注：</font>字体加粗并且有删除的 __~~this~~__ 是 在 call 函数中的 this；有背景底色的 `this` 指的是我们绑定后的 this
+  </font>
+:::
+
+### 一道有趣的面试题
+
+曾看到这么一道面试题：
+```js
+  const arrayLike = {}
+  ;[].push.call(arrayLike, 1)
+  console.log(arrayLike)  // { 0: 1, lenght: 1 }
+  // 接下来我们改成这样
+  const call = [].push.call
+  call(arrayLike, 1)
+  console.log(arrayLike)
+  // 此时会打印什么？
+  // 答案是会报错，call is not a function
+  // 为什么？给自己一个思考问题的机会吧
 ```
 
 ## 防抖和节流
