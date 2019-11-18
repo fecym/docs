@@ -11,6 +11,7 @@ export default {
   methods: {
     getIdVal (path) {
       const base = this.$site.base
+      console.log(this.$site)
       return base.slice(0, base.length - 1) + path
     }
   }

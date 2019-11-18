@@ -7,6 +7,7 @@
  -->
 <template>
   <div class="home" :class="recoShow?'reco-show': 'reco-hide'">
+	  <canvas id="canvas" width="1349" height="404"></canvas>
     <div class="hero">
       <img v-if="data.heroImage" :style="heroImageStyle" :src="$withBase(data.heroImage)" alt="hero">
 
@@ -70,13 +71,20 @@ export default {
   },
   mounted () {
     this.recoShow = true
+    require('../util/canvas')
   }
 };
 </script>
 
 <style lang="stylus">
 @require '../styles/loadMixin.styl'
-
+canvas 
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
+  z-index: 1
+  position: absolute
 .home {
   padding: $navbarHeight 2rem 0;
   max-width: 960px;
