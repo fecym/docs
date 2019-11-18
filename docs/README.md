@@ -2,7 +2,7 @@
 home: true
 heroImage: /imgs/oops.png
 heroImageStyle: {
-  height: '180px',
+  height: '160px',
   margin: '6rem auto 2rem',
   background: '#fff',
   borderRadius: '1rem',

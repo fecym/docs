@@ -7,7 +7,6 @@
  -->
 <template>
   <div class="home" :class="recoShow?'reco-show': 'reco-hide'">
-	  <canvas id="canvas" width="1349" height="404"></canvas>
     <div class="hero">
       <img v-if="data.heroImage" :style="heroImageStyle" :src="$withBase(data.heroImage)" alt="hero">
 
@@ -33,6 +32,7 @@
       <p v-if="data.footer">{{data.footer}}</p>
       <p v-else>MIT Licensed | Copyright © 2019-present chengyuming</p>
     </div>
+	  <canvas id="canvas" width="1349" height="404"></canvas>
   </div>
 </template>
 
@@ -142,6 +142,7 @@ canvas
     flex-basis: 30%;
     max-width: 30%;
     transition: all .5s
+    z-index 2
     h2 {
       font-size: 1.6rem;
       font-weight: 500;
