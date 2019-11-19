@@ -129,6 +129,20 @@ Function.prototype.apply2 = function(context = window) {
   // 为什么？给自己一个思考问题的机会吧
 ```
 
+### bind 的实现
+
+> bind 方法绑定了 `this` 并且返回了一个函数，参数和 `call、apply` 相似
+
+```js
+  Function.prototype.bind2 = function(context) {
+    const that = this
+    const args = [...arguments].slice(1)
+    return function() {
+      return that.apply(context, args.concat(...arguments))
+    }
+  }
+```
+
 ## 防抖和节流
 
 > scroll 事件本身会触发页面的重新渲染，同时 scroll 事件的 handler 又会被高频度的触发, 因此事件的 handler 内部不应该有复杂操作，例如 DOM 操作就不应该放在事件处理中。针对此类高频度触发事件问题（例如页面 scroll ，屏幕 resize，监听用户输入等），有两种常用的解决方法，防抖和节流。
