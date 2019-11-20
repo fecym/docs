@@ -132,3 +132,6 @@ tags:
 - `nvm current` 查看当前正在使用的 node 版本
 - 我们安装一个 10.16.2 版本的 node 吧，`nvm install 10.16.2`
 
+
+## 把 http 转成 https
+
