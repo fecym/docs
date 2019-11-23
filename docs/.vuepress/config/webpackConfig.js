@@ -6,34 +6,38 @@
  * @LastEditTime: 2019-11-11 23:36:01
  */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 module.exports = {
-  // css: {
-  //   // 是否使用css分离插件 ExtractTextPlugin
-  //   extract: true,
-  //   // 开启 CSS source maps?
-  //   sourceMap: false,
-  //   // css预设器配置项
-  //   loaderOptions: {},
-  //   // 启用 CSS modules for all css / pre-processor files.
-  //   modules: false
-  // },
   chainWebpack: (config, isServer) => {
     // 移除 prefetch 插件
     config.plugins.delete('prefetch')
     // 移除 preload 插件
-    // config.plugins.delete('preload');
+    config.plugins.delete('preload');
     config.module
       .rule('images')
       .use('image-webpack-loader')
       .loader('image-webpack-loader')
       .options({
-        bypassOnDebug: true
+        bypassOnDebug: true,
+        mozjpeg: {
+          progressive: true,
+          quality: 65
+        },
+        optipng: {
+          enabled: false
+        },
+        pngquant: {
+          quality: '65-90',
+          speed: 4
+        },
+        gifsicle: {
+          interlaced: false
+        }
       })
       .end()
-    if (!isServer) {
+    if (!isServer && config.mode === 'production') {
       // 分割vendor
       config.optimization.splitChunks({
         chunks: 'all',
@@ -72,27 +76,34 @@ module.exports = {
         }
       })
     }
+    config.optimization.minimize = true
   },
   configureWebpack: (config, isServer) => {
-    // 打包生产.gz包
-    config.plugins.push(
-      new CompressionWebpackPlugin({
-        algorithm: 'gzip',
-        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
-        threshold: 10240,
-        minRatio: 0.8
-      })
-    )
-    config.plugins.push(
-      new MiniCssExtractPlugin({
-        filename: 'assets/css/[name].[hash].css',
-        chunkFilename: 'assets/css/[id].[hash].css'
-      })
-    )
-    // config.plugins.push(
-    //   new BundleAnalyzerPlugin({
-    //     analyzerPort: 8989
-    //   })
-    // )
+    if (config.mode === 'production') {
+      // 打包生产.gz包
+      config.plugins.push(
+        new CompressionWebpackPlugin({
+          algorithm: 'gzip',
+          test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      )
+      config.plugins.push(
+        new MiniCssExtractPlugin({
+          filename: 'assets/css/[name].[hash].css',
+          chunkFilename: 'assets/css/[id].[hash].css'
+        })
+      )
+    }
+    if (!isServer && config.mode === 'production') {
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerHost: 'localhost',
+          analyzerPort: 8989,
+          reportFilename: 'report-client.html'
+        })
+      )
+    }
   }
 }

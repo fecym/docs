@@ -8,23 +8,20 @@
 const { themeConfig } = require('./config/themeConfig')
 const { plugins } = require('./config/plugins')
 const { chainWebpack, configureWebpack } = require('./config/webpackConfig')
+const head = require('./config/head')
+const markdown = require('./config/markdown')
 module.exports = {
   title: "chengyuming",
   description: 'Today, have you studied yet?',
   dest: './love',
-  head: [
-    ['link', { rel: 'icon', href: '/imgs/oops.png' }],
-    // 给iOS添加到主屏的图标
-    ['link', { rel: 'apple-touch-icon', href: '/imgs/iOS.jpg' }],
-    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }]
-  ],
+  head,
   theme: 'reco',
   serviceWorker: true, // 是否开启 PWA
   themeConfig,
-  markdown: {
-    lineNumbers: true
-  },
+  markdown,
   plugins,
   chainWebpack,
-  configureWebpack
+  configureWebpack,
+  // 不太在意兼容性
+  evergreen: true
 }
