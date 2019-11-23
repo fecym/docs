@@ -7,15 +7,23 @@
  -->
 <template>
   <div class="home" :class="recoShow?'reco-show': 'reco-hide'">
+    <CircleBj />
     <div class="hero">
-      <img v-if="data.heroImage" :style="heroImageStyle" :src="$withBase(data.heroImage)" alt="hero">
+      <img
+        v-if="data.heroImage"
+        :style="heroImageStyle"
+        :src="$withBase(data.heroImage)"
+        alt="hero"
+      />
 
       <h1 v-if="data.isShowTitleInHome !== false">{{ data.heroText || $title || '午后南杂' }}</h1>
 
-      <p class="description">{{ data.tagline || $description || 'Welcome to your chengyuming site' }}</p>
+      <p
+        class="description"
+      >{{ data.tagline || $description || 'Welcome to your chengyuming site' }}</p>
 
       <p class="action" v-if="data.actionText && data.actionLink">
-        <NavLink class="action-button" :item="actionLink"/>
+        <NavLink class="action-button" :item="actionLink" />
       </p>
     </div>
 
@@ -26,30 +34,30 @@
       </div>
     </div>
 
-    <Content class="home-center" custom/>
+    <Content class="home-center" custom />
 
     <div class="footer">
       <p v-if="data.footer">{{data.footer}}</p>
       <p v-else>MIT Licensed | Copyright © 2019-present chengyuming</p>
     </div>
-	  <canvas id="canvas" width="1349" height="404"></canvas>
   </div>
 </template>
 
 <script>
 import NavLink from "@theme/components/NavLink/";
-import AccessNumber from '@theme/components/Valine/AccessNumber'
+import AccessNumber from "@theme/components/Valine/AccessNumber";
+import CircleBj from '@theme/components/CircleBj'
 
 export default {
-  components: { NavLink, AccessNumber },
-  data () {
+  components: { NavLink, AccessNumber, CircleBj },
+  data() {
     return {
       recoShow: false
-    }
+    };
   },
   computed: {
-    year () {
-      return new Date().getFullYear()
+    year() {
+      return new Date().getFullYear();
     },
     data() {
       return this.$frontmatter;
@@ -62,39 +70,37 @@ export default {
       };
     },
 
-    heroImageStyle () {
-      return this.data.heroImageStyle || {
-        maxHeight: '200px',
-        margin: '6rem auto 1.5rem'
-      }
+    heroImageStyle() {
+      return (
+        this.data.heroImageStyle || {
+          maxHeight: "200px",
+          margin: "6rem auto 1.5rem"
+        }
+      );
     }
   },
-  mounted () {
-    this.recoShow = true
-    require('../util/canvas')
+  mounted() {
+    this.recoShow = true;
   }
 };
 </script>
 
 <style lang="stylus">
-@require '../styles/loadMixin.styl'
-canvas 
-  top: 0px
-  left: 0px
-  width: 100%
-  height: 100%
-  z-index: 1
-  position: absolute
+@require '../styles/loadMixin.styl';
+
 .home {
   padding: $navbarHeight 2rem 0;
   max-width: 960px;
   margin: 0px auto;
+  position: relative;
 
   .hero {
     text-align: center;
+
     img {
       background-color: $accentColor;
     }
+
     h1 {
       font-size: 2.5rem;
     }
@@ -118,7 +124,7 @@ canvas
       border-radius: 4px;
       transition: background-color 0.1s ease;
       box-sizing: border-box;
-      load-start()
+      load-start();
 
       &:hover {
         background-color: lighten($accentColor, 10%);
@@ -141,8 +147,9 @@ canvas
     flex-grow: 1;
     flex-basis: 30%;
     max-width: 30%;
-    transition: all .5s
-    z-index 2
+    transition: all 0.5s;
+    z-index: 2;
+
     h2 {
       font-size: 1.6rem;
       font-weight: 500;
@@ -156,7 +163,7 @@ canvas
     }
 
     &:hover {
-      transform scale(1.05)
+      transform: scale(1.05);
     }
   }
 
@@ -165,71 +172,87 @@ canvas
     border-top: 1px solid $borderColor;
     text-align: center;
     color: lighten($textColor, 25%);
-    load-start()
+    load-start();
+
     > span {
-      margin-left 1rem
+      margin-left: 1rem;
+
       > i {
-        margin-right .5rem
-      } 
+        margin-right: 0.5rem;
+      }
     }
   }
 
   &.reco-hide {
-  .hero {
-    img {
-      load-start()
+    .hero {
+      img {
+        load-start();
+      }
+
+      .h1 {
+        load-start();
+      }
+
+      .description {
+        load-start();
+      }
+
+      .huawei {
+        load-start();
+      }
+
+      .action-button {
+        load-start();
+      }
     }
-    .h1 {
-      load-start()
+
+    .features {
+      load-start();
     }
-    .description {
-      load-start()
+
+    .home-center {
+      load-start();
+      padding: 0;
     }
-    .huawei {
-      load-start()
-    }
-    .action-button {
-      load-start()
+
+    .footer {
+      load-start();
     }
   }
-  .features {
-    load-start()
-  }
-  .home-center {
-    load-start()
-    padding 0
-  }
-  .footer {
-    load-start()
-  }
-}
 
   &.reco-show {
     .hero {
       img {
-        load-end(0.08s)
+        load-end(0.08s);
       }
+
       .h1 {
-        load-end(0.16s)
+        load-end(0.16s);
       }
+
       .description {
-        load-end(0.24s)
+        load-end(0.24s);
       }
+
       .huawei {
-        load-end(0.32s)
+        load-end(0.32s);
       }
+
       .action-button {
-        load-end(0.4s)
+        load-end(0.4s);
       }
     }
+
     .features {
-      load-end(0.40s)
+      load-end(0.4s);
     }
+
     .home-center {
-      load-end(0.48s)
+      load-end(0.48s);
     }
+
     .footer {
-      load-end(0.56s)
+      load-end(0.56s);
     }
   }
 }
@@ -245,12 +268,14 @@ canvas
       padding: 0 2.5rem;
     }
   }
+
   .footer {
-    text-align: left!important;
+    text-align: left !important;
+
     > span {
-      display block
-      margin-left 0
-      line-height 2rem
+      display: block;
+      margin-left: 0;
+      line-height: 2rem;
     }
   }
 }
