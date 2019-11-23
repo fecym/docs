@@ -61,7 +61,6 @@ export default {
         if (desc) this.desc = desc
         return !(home == true || isTimeLine == true || date === undefined)
       })
-      console.log(this.$site.pages, tag, pages)
       // reverse()是为了按时间最近排序排序
       this.pages = pages.length == 0 ? [] : pages
       for (let i = 0, length = pages.length; i < length; i++) {
