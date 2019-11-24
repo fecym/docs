@@ -4,7 +4,7 @@ heroImage: /imgs/oops.png
 heroImageStyle: {
   height: '160px',
   margin: '6rem auto 2rem',
-  background: '#fff',
+  background: 'transparent',
   borderRadius: '1rem',
 }
 isShowTitleInHome: false
