@@ -28,7 +28,7 @@ tags:
 
 - 让 `webpack` 正常启动需要最少需要两个 `npm` 包，`webpack、webpack-cli`
 
-### 一、entry 
+### 一、entry
 
 > webpack 是采用模块化的思想，所有的文件或者配置都是一个个的模块， 同时所有模块联系在一起，可以理解为就是一个简单的树状结构，那么最顶层的入口是什么呢？答案就是 `entry`， 所以， `webpack` 在执行构建的时候， 第一步就是找到入口，从入口开始，寻找，遍历，递归解析出所有入口依赖的模块。
 
@@ -53,7 +53,7 @@ tags:
   },
 ```
 
-### 二、output 
+### 二、output
 
 - `output` 是一个对象，里面包含一些列输出配置项
 - 常用的语法如下：
@@ -69,7 +69,7 @@ tags:
   },
 ```
 
-### 三、mode 
+### 三、mode
 
 > `webpack` 有三种 `mode`：`development`、`production`、`none`
 
@@ -95,7 +95,7 @@ module.exports = function(env, argv) {
 }
 ```
 
-### 四、module 
+### 四、module
 
 #### 配置 loader
 
@@ -192,7 +192,7 @@ module.exports = function(env, argv) {
 
 - `parse` 和 `noParse` 同级的属性，当然也可以嵌套到 `rules`，表示针对与某个 `loader` 应用到该属性的规则。
 - 目前只要明白 `parse` 属性，是用于声明哪些模块语法被解析，哪些不被解析即可。
-:::
+  :::
 
 #### 单个规则配置多个 loader， 语法需要使用 use， 如图
 
@@ -261,7 +261,7 @@ import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
 
 1. `descriptionFiles`：配置描述第三方模块的文件名称：默认是 `package.json`
 2. `enforceExtension`：配置后缀名是否必须加上
-:::
+   :::
 
 ### 六、plugin
 
@@ -270,7 +270,7 @@ import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
 - `plugins` 其实包括 `webpack` 本身自带的插件，也有开源的其他插件，都可以使用，它的作用就是解决 `loader` 之外的其他任何相关构建的事情。
 - `plugin` 的值是一个数组，可以传入多个插件实例，用法是直接 `new` 一个插件然后传入相应的配置即可
 - `plugin` 如何配置并不是难点，难点是我们需要清楚常用的一些插件分别解决了什么样的问题，以及这些插件的配置项
-:::
+  :::
 
 ```js
 plugins: [
@@ -423,6 +423,7 @@ module.exports = function(env, argv) {
 ### 四、hash、chunkHash 和 contentHash
 
 > 哈希一般是结合 `CDN` 缓存来使用的。 如果文件内容改变的话， 那么对应文件哈希值也会改变， 对应的 `HTML` 引用的 `URL` 地址也会改变， 触发 `CDN` 服务器从源服务器上拉取对应数据， 进而更新本地缓存。
+
 - hash： 计算是跟整个项目的构建相关，所有的文件都用一个 `hash`，一个文件发生改变，其他都会改变，`hash` 值是一个。
 - chunkHash：跟 `hash` 差不多。区别在与 `chunkHash` 所有公共库的代码文件都用一个 `hash`，公共库的代码用一个 `hash`，当我们更新普通模块内容的时候，其他模块的 `hash` 值发生改变，但是公共模块的 `hash` 不会受到影响
 
@@ -480,3 +481,92 @@ module.exports = {
   plugins: [require('autoprefixer')]
 }
 ```
+
+## webpack 小技巧
+
+### require.context
+
+- 在平时开发项目的时候，有时候需要引入的文件太多的时候，有什么好的方法解决嘛
+- 这时我们可以用 `require.context` 函数来创建我们要引入文件的 `context`
+- 该函数接受三个参数：要搜索的目录、是否搜索子目录、匹配文件的正则表达式
+
+```js
+// 语法如下
+require.context(directory, (useSubdirectories = false), (regExp = /^\.\//))
+```
+
+- 该方法返回一个 `require` 函数，返回函数可以接受一个参数：`request`（满足 `require.context` 传参的文件地址）
+- 返回函数拥有三个属性：`resolve、keys、id`
+  - `resolve` 是一个函数，它返回 `request` 被解析后得到的模块 `id`。
+  - `keys` 也是一个函数，返回一个数组，由所有可能被上下文模块处理的请求组成（满足 `require.context` 传参的文件相对路径，但是要是传入一个文件地址还是会报错，必须传入一个满足 `require.context` 传参的文件地址）
+  - `id` 是上下文模块里面所包含的模块 `id`。它可能在你使用 `module.hot.accept` 的时候被用到
+- 举一些例子一看便知
+
+### Vue 自动引入路由
+
+> 假如以下是 Vue 项目一段目录结构，我们每开发一个新的模块需要在 `modules` 下面要简历一个 路由配置文件，然后在 `index.html` 里面要一个个的引入，这样每次定义一个都需要引入一次，这时候我们可以利用 `require.context` 方法来处理路由文件
+
+```sh
+  ├── src
+  │   ├── views
+  │   ├── components
+  │   ├── routes
+  │   │   ├── modules
+  │   │   │   ├── user.js
+  │   │   │   ├── ...
+  │   │   │   └── other.js
+  │   │   └── index.js
+  │   └── App.vue
+  └── ...
+```
+
+代码如下
+
+```js
+  // 这段代码就写在，routes/index.js 里面吧
+  const requireAllRoute = require.context('./modules', false, /\.js$/)
+  // 让返回的这个函数执行，并传入相关的每一个文件的地址（由context.keys返回的）
+  const requireAll = context => context.keys().map(context)
+  // requireAll 执行完毕其实就得到了我们要的 modules 文件下的所有文件，但是我们是 default 里面的内容
+  const routes = requireAll(requireAllRoute).map(route => route.default)
+```
+
+### Vue 全局组件注册
+
+> 全局注册组件也是利用 `require.context` 来实现的，得到一个文件数组后，利用 `Vue.component` 注册一下即可 
+
+`假如有以下目录，components` 目录下的组件在全局都可通用
+```sh
+  ├── src
+  │   ├── views
+  │   ├── routes
+  │   ├── components
+  │   │   ├── user.vue
+  │   │   ├── ...
+  │   │   └── other.vue
+  │   ├── utils
+  │   │   └── global-register-conponents.js
+  │   └── App.vue
+  └── ...
+```
+
+代码如下：
+
+```js
+  // global-register-conponents.js
+  import Vue from 'vue'
+  const requireAllComponent = require.context('../components', false, /\.vue$/)
+  const requireAll = context => context.keys().map(context)
+  // 文件名字处理为大写
+  const dealName = name => name ? name.replace(/\w/, v => v.toUpperCase()) : ''
+  requireAll(requireAllComponent).forEach(componentModule => {
+    // 因为是 export default 导出的模块
+    const component = componentModule.default
+    // 文件所在的地址，我们要取到文件的名字，来定义文件的 name
+    const file = component.__file
+    // 如果有name属性直接取name属性，没有我们需要处理文件地址的最后一段作为文件的name，且要大写
+    const name = dealName(component.name) || dealName(file.slice(file.lastIndexOf('/') + 1, -4))
+    Vue.component(name, component)
+  })
+```
+

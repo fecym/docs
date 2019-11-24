@@ -16,7 +16,7 @@
         alt="hero"
       />
 
-      <h1 v-if="data.isShowTitleInHome !== false">{{ data.heroText || $title || '午后南杂' }}</h1>
+      <h1 v-if="data.isShowTitleInHome !== false">{{ data.heroText || $title || '程禹铭' }}</h1>
 
       <p
         class="description"
@@ -98,7 +98,7 @@ export default {
     text-align: center;
 
     img {
-      background-color: $accentColor;
+      // background-color: $accentColor;
     }
 
     h1 {
