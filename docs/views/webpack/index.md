@@ -647,8 +647,13 @@ function babelLoader(ctx) {
 // 需求：把所有的引入中的静态资源 /static/ 变成 http://chengyuming.cn/imgs/
 const fs = require('fs')
 class StaticAssetsPlugin {
+  constructor(options) {
+    this.options = options
+  }
   // 在插件中 new 的时候会自动执行 apply 方法，主入口方法
   apply(complier) {
+    // 只在生产环境下执行
+    if (!this.options.isProduction) return
     // webpack 编译的生命周期
     // console.log(complier.hooks)
     // 监听过程，拿到结果
@@ -679,11 +684,12 @@ module.exports = StaticAssetsPlugin
 ```js
   // webpack.config.js
   const StaticAssetsPlugin = require('./utils/staticAssetsPlugin')
-  module.exports = function() {
+  module.exports = function(env, argv) {
+    const isProduction = argv.mode === 'production'
     return {
       ... 其他配置
       plugins: [
-        argv.mode === 'production' ? new StaticAssetsPlugin() : void 0
+        new StaticAssetsPlugin({ isProduction })
       ]
     }
   }

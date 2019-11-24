@@ -13,7 +13,7 @@ module.exports = {
       text: '大前端',
       icon: 'reco-category',
       items: [
-        { text: 'webpack简介', link: '/views/webpack/index' },
+        { text: 'webpack介绍', link: '/views/webpack/index' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         // { text: 'node简介', link: '/views/big-front-end/node/index' },
         { text: 'fs文件系统', link: '/views/big-front-end/node/fs' },
