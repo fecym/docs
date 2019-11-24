@@ -5,6 +5,7 @@ heroImageStyle: {
   height: '160px',
   margin: '6rem auto 2rem',
   background: 'transparent',
+  userSelect: 'none',
   borderRadius: '1rem',
 }
 isShowTitleInHome: false
