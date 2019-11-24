@@ -500,7 +500,7 @@ require.context(directory, (useSubdirectories = false), (regExp = /^\.\//))
   - `resolve` 是一个函数，它返回 `request` 被解析后得到的模块 `id`。
   - `keys` 也是一个函数，返回一个数组，由所有可能被上下文模块处理的请求组成（满足 `require.context` 传参的文件相对路径，但是要是传入一个文件地址还是会报错，必须传入一个满足 `require.context` 传参的文件地址）
   - `id` 是上下文模块里面所包含的模块 `id`。它可能在你使用 `module.hot.accept` 的时候被用到
-- 举一些例子一看便知
+- [内容摘自官网](https://webpack.docschina.org/guides/dependency-management/#require-context)
 
 ### Vue 自动引入路由
 
@@ -523,19 +523,20 @@ require.context(directory, (useSubdirectories = false), (regExp = /^\.\//))
 代码如下
 
 ```js
-  // 这段代码就写在，routes/index.js 里面吧
-  const requireAllRoute = require.context('./modules', false, /\.js$/)
-  // 让返回的这个函数执行，并传入相关的每一个文件的地址（由context.keys返回的）
-  const requireAll = context => context.keys().map(context)
-  // requireAll 执行完毕其实就得到了我们要的 modules 文件下的所有文件，但是我们是 default 里面的内容
-  const routes = requireAll(requireAllRoute).map(route => route.default)
+// 这段代码就写在，routes/index.js 里面吧
+const requireAllRoute = require.context('./modules', false, /\.js$/)
+// 让返回的这个函数执行，并传入相关的每一个文件的地址（由context.keys返回的）
+const requireAll = context => context.keys().map(context)
+// requireAll 执行完毕其实就得到了我们要的 modules 文件下的所有文件，但是我们是 default 里面的内容
+const routes = requireAll(requireAllRoute).map(route => route.default)
 ```
 
 ### Vue 全局组件注册
 
-> 全局注册组件也是利用 `require.context` 来实现的，得到一个文件数组后，利用 `Vue.component` 注册一下即可 
+> 全局注册组件也是利用 `require.context` 来实现的，得到一个文件数组后，利用 `Vue.component` 注册一下即可
 
 `假如有以下目录，components` 目录下的组件在全局都可通用
+
 ```sh
   ├── src
   │   ├── views
@@ -553,20 +554,148 @@ require.context(directory, (useSubdirectories = false), (regExp = /^\.\//))
 代码如下：
 
 ```js
-  // global-register-conponents.js
-  import Vue from 'vue'
-  const requireAllComponent = require.context('../components', false, /\.vue$/)
-  const requireAll = context => context.keys().map(context)
-  // 文件名字处理为大写
-  const dealName = name => name ? name.replace(/\w/, v => v.toUpperCase()) : ''
-  requireAll(requireAllComponent).forEach(componentModule => {
-    // 因为是 export default 导出的模块
-    const component = componentModule.default
-    // 文件所在的地址，我们要取到文件的名字，来定义文件的 name
-    const file = component.__file
-    // 如果有name属性直接取name属性，没有我们需要处理文件地址的最后一段作为文件的name，且要大写
-    const name = dealName(component.name) || dealName(file.slice(file.lastIndexOf('/') + 1, -4))
-    Vue.component(name, component)
-  })
+// global-register-conponents.js
+import Vue from 'vue'
+const requireAllComponent = require.context('../components', false, /\.vue$/)
+const requireAll = context => context.keys().map(context)
+// 文件名字处理为大写
+const dealName = name => (name ? name.replace(/\w/, v => v.toUpperCase()) : '')
+requireAll(requireAllComponent).forEach(componentModule => {
+  // 因为是 export default 导出的模块
+  const component = componentModule.default
+  // 文件所在的地址，我们要取到文件的名字，来定义文件的 name
+  const file = component.__file
+  // 如果有name属性直接取name属性，没有我们需要处理文件地址的最后一段作为文件的name，且要大写
+  const name =
+    dealName(component.name) ||
+    dealName(file.slice(file.lastIndexOf('/') + 1, -4))
+  Vue.component(name, component)
+})
 ```
 
+## webpack 拓展
+
+### 自定义 loader
+
+> 在 webpack 的 module 配置中，有一个属性是 rules，配置模块的读取和解析规则，通常用来配置 loader，其类型是一个数组，数组里每一项都描述了如何去处理部分文件。`loader` 的执行顺序按照从后往前的顺序逆向执行的，我们来实现一下 `移除console` 的 loader。
+
+- 新建一个 `removeConsole.js` 文件
+- `loader` 本质就是一个方法
+- 这个方法接受一个参数，参数就是 webpack 打包时的代码，我们要在这里把代码劫持到做对应的改变
+- 该方法必须有返回值，返回值就是我们最终的输出结果
+
+```js
+  // removeConsole.js 同步写法
+  module.exports = function(ctx) {
+    // ctx 就是 webpack 编译的代码
+    const reg = /console\.log\(.+?\)/g
+    // 匹配到所有的 console 然后替换为空字符串
+    return ctx.replace(reg, '')
+  }
+
+  // removeConsole.js 异步写法
+  module.exports = function(ctx) {
+    // 加上这句话就是异步写法了
+    const callback = this.async()
+    // ctx 就是 webpack 编译的代码
+    const reg = /console\.log\(.+?\)/g
+    // 匹配到所有的 console 然后替换为空字符串
+    const result = ctx.replace(reg, '')
+    // callback接受两个参数，第一个是错误，第二个是结果
+    callback(null, result)
+  }
+
+  // webpack.config.js
+  module.exports = {
+    ... // 省略其他配置
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          use: [
+            {
+              // 引入我们的 removeConsole 文件
+              loader: './utils/removeConsole'
+            }
+          ]
+        }
+      ],
+    },
+  }
+```
+
+### loader 之间的关系
+
+- 当我们编译 `js` 的时候我们会用 `babel-loader` 和 `@babel/core` 最少两个依赖，编译 `less` 的时候，会用 `less-loader` 和 `less` 最少两个包，为什么呢？
+
+- 比如说 @babel/core 和 babel-loader 的关系，@babel/core 是核心编译 babel-loader 是把接受到的 ctx 传给 @babel/core
+
+```js
+// babel-loader 和 @babel/core 的关系
+function babelLoader(ctx) {
+  return babelCore(ctx)
+}
+```
+
+### 自定义 plugins
+
+- 时间原因整个过程暂时就不说了，源码我放到 github 了，过程全部放在注释里面了
+- 源码地址 [https://github.com/cym-git/webpack-pit-2019-11-24.git](https://github.com/cym-git/webpack-pit-2019-11-24.git)
+
+```js
+// 插件核心 staticAssetsPlugin.js
+// 需求：把所有的引入中的静态资源 /static/ 变成 http://chengyuming.cn/imgs/
+const fs = require('fs')
+class StaticAssetsPlugin {
+  // 在插件中 new 的时候会自动执行 apply 方法，主入口方法
+  apply(complier) {
+    // webpack 编译的生命周期
+    // console.log(complier.hooks)
+    // 监听过程，拿到结果
+    complier.hooks.done.tap('StaticAssetsPlugin', compontion => {
+      // 得到当前目录
+      const context = complier.options.context
+      const path = context + '/love'
+      // 打包之后的文件结果
+      const assets = compontion.toJson().assets
+      assets.forEach(ast => {
+        // 现在我们得到了所有的打包后的文件信息，我们把文件中遇到的那些资源给替换掉就可以了
+        fs.readFile(path + '/' + ast.name, (err, res) => {
+          if (err) throw err
+          let result = res.toString()
+          result = result.replace(
+            /([\.\./]+)\/static\//g,
+            'http://chengyuming.cn/imgs/'
+          )
+          fs.writeFileSync(path + '/' + ast.name, result)
+        })
+      })
+    })
+  }
+}
+module.exports = StaticAssetsPlugin
+```
+
+```js
+  // webpack.config.js
+  const StaticAssetsPlugin = require('./utils/staticAssetsPlugin')
+  module.exports = function() {
+    return {
+      ... 其他配置
+      plugins: [
+        argv.mode === 'production' ? new StaticAssetsPlugin() : void 0
+      ]
+    }
+  }
+```
+
+```js
+// 测试单元
+const path = require('path')
+const requireAllImg = require.context('../../static/', false, /\.(jpg|png)$/)
+let str = ''
+requireAllImg.keys().forEach(item => {
+  str += `<img src="../../static/${item}">`
+})
+document.getElementById('root').innerHTML = str
+```
