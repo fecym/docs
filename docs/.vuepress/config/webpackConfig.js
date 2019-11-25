@@ -76,7 +76,7 @@ module.exports = {
         }
       })
     }
-    config.optimization.minimize = true
+    config.optimization.minimize(true)
   },
   configureWebpack: (config, isServer) => {
     if (config.mode === 'production') {
