@@ -100,7 +100,7 @@ module.exports = {
       config.plugins.push(
         new BundleAnalyzerPlugin({
           analyzerHost: 'localhost',
-          analyzerPort: 8989,
+          analyzerPort: 8990,
           reportFilename: 'report-client.html'
         })
       )

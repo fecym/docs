@@ -31,7 +31,10 @@ function New() {
   // 绑定this，执行构造函数
   const result = F.apply(obj, arguments)
   // 看看构造函数返回了什么
-  if (typeof result !== null && (typeof result === 'object' || typeof result === 'function')) {
+  if (
+    typeof result !== null &&
+    (typeof result === 'object' || typeof result === 'function')
+  ) {
     return result
   }
   return obj
@@ -60,13 +63,14 @@ instanceOf(Function, Object) // true >> Function.__proto__.__proto__ === Object.
 ## call 和 apply
 
 ::: tip call 和 apply
-  我们都知道 `js` 的函数中 `this` 是动态的，不同执行上下文会导致 `this` 执行不同的地方，总得来说 `this` 执行有四种情况
-  - 函数自执行，`this` 执行指向 `window` 
-  - 谁打点调用函数，`this` 指向这个 `谁`，也就是 . 前面的那个对象
-  - `call` 和 `apply` 的硬绑定 `this`
-  - 函数加 `new` 关键字后，`this` 执行该构造函数的实例 
+我们都知道 `js` 的函数中 `this` 是动态的，不同执行上下文会导致 `this` 执行不同的地方，总得来说 `this` 执行有四种情况
 
-  那么第三条第四条规则为什么就会改变 `this` 执行，其实说白了函数中 `this` 应该都遵循 `1、2` 两条规则，`3、4` 其实都是在底层实现了，让其 `this` 执行了我们想要指向的地方，比如说 `new` 关键字，我们在本文的第一个 `api` 中就讲了他的实现，他是利用 `apply` 或者 `call` 来绑定上去的，这里我们来讲下 `call` 和 `apply` 的实现
+- 函数自执行，`this` 执行指向 `window`
+- 谁打点调用函数，`this` 指向这个 `谁`，也就是 . 前面的那个对象
+- `call` 和 `apply` 的硬绑定 `this`
+- 函数加 `new` 关键字后，`this` 执行该构造函数的实例
+
+那么第三条第四条规则为什么就会改变 `this` 执行，其实说白了函数中 `this` 应该都遵循 `1、2` 两条规则，`3、4` 其实都是在底层实现了，让其 `this` 执行了我们想要指向的地方，比如说 `new` 关键字，我们在本文的第一个 `api` 中就讲了他的实现，他是利用 `apply` 或者 `call` 来绑定上去的，这里我们来讲下 `call` 和 `apply` 的实现
 :::
 
 ### 实现 call 和 apply
@@ -79,7 +83,7 @@ Function.prototype.call2 = function(context = window) {
   // example：fnA.call(obj, 1)
   context.fn = this
   const args = [...arguments].slice(1)
-  // 执行 context.fn(...args) 此时就相当于 obj.fnA(1) 
+  // 执行 context.fn(...args) 此时就相当于 obj.fnA(1)
   const result = context.fn(...args)
   delete context.fn
   return result
@@ -101,32 +105,33 @@ Function.prototype.apply2 = function(context = window) {
 ```
 
 ::: warning 解释 call 实现原理
-  举个栗子： `fnA.call(obj, 1)` <br/>
-  call2函数 第一个参数是要绑定的对象（obj）<br/>
-  我们根据谁打点调用函数 `this` 执行谁，我们在这个对象中新增一个属性 `fn`，给它赋值为此时的 __~~this~~__ <br/>
-  那么就相当于 给我们传进来的 `obj` 新增一个属性 `fn`，让他等于这个 __~~this~~__ <br/>
-  因为 `call2` 是定义在函数的原型的对象上的，那么此时这个 __~~this~~__ 就是 调用 `call2` 方法函数的实例，也就是 __~~fnA~~__ <br/>
-  也就是说 `context.fn` 就相当于 给 `obj` 新增了一个属性 `fn（fnA）`然后 `obj.fn` 执行了，那么谁打点调用 `this` 执行谁，此时 `this` 指向了 这个 `obj` <br/>
-  这就是 `call` 方法实现的基本思路 <br/>
-  <font size=2 >
-    <font color=red>注：</font>字体加粗并且有删除的 __~~this~~__ 是 在 call 函数中的 this；有背景底色的 `this` 指的是我们绑定后的 this
-  </font>
+举个栗子： `fnA.call(obj, 1)` <br/>
+call2 函数 第一个参数是要绑定的对象（obj）<br/>
+我们根据谁打点调用函数 `this` 执行谁，我们在这个对象中新增一个属性 `fn`，给它赋值为此时的 **~~this~~** <br/>
+那么就相当于 给我们传进来的 `obj` 新增一个属性 `fn`，让他等于这个 **~~this~~** <br/>
+因为 `call2` 是定义在函数的原型的对象上的，那么此时这个 **~~this~~** 就是 调用 `call2` 方法函数的实例，也就是 **~~fnA~~** <br/>
+也就是说 `context.fn` 就相当于 给 `obj` 新增了一个属性 `fn（fnA）`然后 `obj.fn` 执行了，那么谁打点调用 `this` 执行谁，此时 `this` 指向了 这个 `obj` <br/>
+这就是 `call` 方法实现的基本思路 <br/>
+<font size=2 >
+<font color=red>注：</font>字体加粗并且有删除的 **~~this~~** 是 在 call 函数中的 this；有背景底色的 `this` 指的是我们绑定后的 this
+</font>
 :::
 
 ### 一道有趣的面试题
 
 曾看到这么一道面试题：
+
 ```js
-  const arrayLike = {}
-  ;[].push.call(arrayLike, 1)
-  console.log(arrayLike)  // { 0: 1, lenght: 1 }
-  // 接下来我们改成这样
-  const call = [].push.call
-  call(arrayLike, 1)
-  console.log(arrayLike)
-  // 此时会打印什么？
-  // 答案是会报错，call is not a function
-  // 为什么？给自己一个思考问题的机会吧
+const arrayLike = {}
+;[].push.call(arrayLike, 1)
+console.log(arrayLike) // { 0: 1, lenght: 1 }
+// 接下来我们改成这样
+const call = [].push.call
+call(arrayLike, 1)
+console.log(arrayLike)
+// 此时会打印什么？
+// 答案是会报错，call is not a function
+// 为什么？给自己一个思考问题的机会吧
 ```
 
 ### bind 的实现
@@ -134,13 +139,13 @@ Function.prototype.apply2 = function(context = window) {
 > bind 方法绑定了 `this` 并且返回了一个函数，参数和 `call、apply` 相似
 
 ```js
-  Function.prototype.bind2 = function(context) {
-    const that = this
-    const args = [...arguments].slice(1)
-    return function() {
-      return that.apply(context, args.concat(...arguments))
-    }
+Function.prototype.bind2 = function(context) {
+  const that = this
+  const args = [...arguments].slice(1)
+  return function() {
+    return that.apply(context, args.concat(...arguments))
   }
+}
 ```
 
 ## 防抖和节流
@@ -268,9 +273,37 @@ function slice(arr, start = 0, end = arr.length) {
 }
 ```
 
+### push 入栈
+
+```js
+// 入栈就是在数组最后面添加元素，可能传入多个元素，我们不考虑js最大边界情况
+function push(arr, ...items) {
+  const arrLen = arr.length
+  const argsLen = items.length
+  for (let i = 0; i < argsLen; i++) {
+    // 数组最后一项加 i 项 赋值为新添加的元素
+    arr[arrLen + i] = items[i]
+  }
+  return arr.length
+}
+```
+
+### pop 出栈
+
+```js
+// 写法可能有点流氓，但是基本思路
+function pop(arr) {
+  if (!arr.length) return undefined
+  const value = arr[arr.length - 1]
+  arr.length--
+  return value
+}
+```
+
 ### forEach 迭代数组
 
 ```js
+// forEach不可以中止循环，
 function forEach(arr, fn) {
   // forEach接受一个函数作为参数，其实就是执行这个函数，与map差不多
   for (let i = 0, len = arr.length; i < len; i++) {
@@ -279,18 +312,17 @@ function forEach(arr, fn) {
 }
 ```
 
-### map 处理得到一个新的数组
+### 如何中止 forEach
 
-```js
-function map(arr, fn) {
-  // map 与 forEach 唯一的区别就是 map返回了一个新数组，所以我们可以创建一个数组，保存一下
-  const result = []
-  for (let i = 0, len = arr.length; i < len; i++) {
-    result[i] = fn.call(null, arr[i], i, arr)
-  }
-  return result
-}
-```
+在 `forEach` 中用 `return` 是不会返回任何结果的，函数还会继续执行
+
+中断方法：
+
+- 使用 `try` 监视代码，在需要中断的地方抛出已成
+- 官方推荐方法：用 `every` 和 `some` 替换 `forEach`
+  - `every` 在碰到 `return false` 的时候，中止循环
+  - `some` 在碰到 `return true` 的时候，中止循环
+- 接下来我们看看 `some` 和 `every` 的实现
 
 ### some 有一项满足返回 true
 
@@ -316,6 +348,19 @@ function every(arr, fn) {
     }
   }
   return true
+}
+```
+
+### map 处理得到一个新的数组
+
+```js
+function map(arr, fn) {
+  // map 与 forEach 唯一的区别就是 map返回了一个新数组，所以我们可以创建一个数组，保存一下
+  const result = []
+  for (let i = 0, len = arr.length; i < len; i++) {
+    result[i] = fn.call(null, arr[i], i, arr)
+  }
+  return result
 }
 ```
 
@@ -347,6 +392,45 @@ function reduce(arr, fn, init) {
   for (let i = 0, len = arr.length; i < len; i++) {
     // 把处理的结果赋值给result，result其实就是上一个值（初始值）
     result = fn.call(null, result, arr[i], i, arr)
+  }
+  return result
+}
+```
+
+### flat 扁平化
+
+```js
+function flat(arr) {
+  let result = []
+  for (let i = 0, len = arr.length; i < len; i++) {
+    // if (Object.prototype.toString.call(arr[i]) === '[object Array]') {
+    if (Array.isArray(arr[i])) {
+      result = result.concat(flat(arr[i]))
+    } else {
+      result.push(arr[i])
+    }
+  }
+  return result
+}
+```
+
+### concat 合并数组
+
+```js
+// 注意 concat 不会改变源数组哦
+function concat(originArr) {
+  const result = []
+  // 取得目标数组
+  const targetArrs = [].slice.call(arguments, 1)
+  for (let i = 0; i < targetArrs.length; i++) {
+    // 注意这里第二层循环要迭代目标数组第 i 项哦
+    for (let j = 0; j < targetArrs[i].length; j++) {
+      result.push(targetArrs[i][j])
+    }
+  }
+  for (let i = 0; i < originArr.length; i++) {
+    // 添加源数组的每一项
+    result.push(originArr[i])
   }
   return result
 }
