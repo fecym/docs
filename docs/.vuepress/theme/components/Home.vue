@@ -16,7 +16,7 @@
         alt="hero"
       />
 
-      <h1 v-if="data.isShowTitleInHome !== false">{{ data.heroText || $title || '程禹铭' }}</h1>
+      <h1 v-if="data.isShowTitleInHome !== false">{{ data.heroText || $title || 'chengyuming' }}</h1>
 
       <p
         class="description"

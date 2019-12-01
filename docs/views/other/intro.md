@@ -258,7 +258,10 @@ module.exports = {
 
 ## 添加评论系统
 
-- vuepress 是可以为自己的博客添加评论系统的，而且很简单
+### Vssue
+
+- [`Vssue`](https://vssue.js.org/zh/guide/) 是一个 Vue 组件 / 插件，可以为你的静态页面开启评论功能。
+- 具体可查看官网，这里记录基本用法
 - 首先添加评论系统授权，所以要在 **github** 中生成 **clientID** 和 **clientSecret**
 - 点击 **你的头像** -> **Settings** -> **Developer settings** -> **OAuth Apps** 里面点击 **New OAuth App** 按钮，或者直接点[这里](https://github.com/settings/applications/new)
 - 准备工作做完了，接下来我们只需要配置两步就可以了
@@ -292,7 +295,59 @@ module.exports = {
 <Vssue title="Vssue Demo" />
 ```
 
-- 此时你的博客上的就会显示，像我下面显示评论一样了
+### Valine
+
+- [`Valine`](https://valine.js.org/) 是一个第三方的评论模块，可用于集成于我们的系统
+- 这个用法就没有没有那么麻烦了，只要在 `Valine` 注册一下，申请一个 `appId` 和 `appKey`
+- 然后实例化 valine 即可
+
+```js
+  const valineConfig = this.$themeConfig.valineConfig
+    if (valineConfig) {
+      const Valine = require('valine');
+      const AV = require('leancloud-storage')
+      if (typeof window !== 'undefined') {
+        this.window = window
+        window.AV = AV
+      }
+
+      new Valine({
+        el: '#valine' ,
+        appId: valineConfig.appId, // your appId
+        appKey: valineConfig.appKey, // your appKey
+        placeholder: valineConfig.placeholder || 'just go go',
+        notify: valineConfig.notify || false,
+        verify: valineConfig.verify || false,
+        avatar: valineConfig.avatar || 'retro',
+        visitor: valineConfig.visitor || true,
+        recordIP: valineConfig.recordIP || false,
+        path: window.location.pathname
+      });
+    }
+  }
+```
+
+- 你可以做成一个组件，到时候用的地方直接引入这个组件即可
+- 或者你也可以用插件，在 plugins 中配置如下
+
+```js
+module.exports = {
+  plugins: [
+    [
+      'vuepress-plugin-comment',
+      {
+        choosen: 'valine',
+        // options选项中的所有参数，会传给Valine的配置
+        options: {
+          el: '#valine-vuepress-comment',
+          appId: 'Your own appId',
+          appKey: 'Your own appKey'
+        }
+      }
+    ]
+  ]
+}
+```
 
 :tada: :100:
 
