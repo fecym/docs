@@ -138,13 +138,46 @@ console.log(arrayLike)
 
 > bind 方法绑定了 `this` 并且返回了一个函数，参数和 `call、apply` 相似
 
+- bind 方法的实现其实蛮有意思的，因为 bind 方法返回一个函数，那么返回的这个函数如果被当做构造函数怎么办
+
 ```js
-Function.prototype.bind2 = function(context) {
+function person(name, age) {
+  console.log(name, age)
+  console.log(this)
+}
+const obj = { name: 'obj' }
+const barBind = person.bind(obj)
+// 普通调用
+barBind('cym', 24)
+// 当做构造函数来用
+new barBind('cym', 24)
+```
+
+- 打印结果如下
+
+  <p align="left">
+    <img :src="$withBase('/imgs/basis-javascript-api-bind.png')" height="160" />
+  </p>
+
+- 可以看到当做构造函数来用的时候，构造函数的 this 指向了 person 类型的对象
+- 那我们来尝试着实现一下 bind 的方法
+
+```js
+Function.prototype.bind2 = function(context = window) {
   const that = this
   const args = [...arguments].slice(1)
-  return function() {
-    return that.apply(context, args.concat(...arguments))
+  const fn = function() {
+    // this instanceof fn 为 true 表示构造函数的情况。如 new barBind2('cym', 24)
+    if (this instanceof fn) {
+      // that.apply(that.prototype, args.concat(...arguments))
+      that.apply(this, args.concat(...arguments))
+    } else {
+      that.apply(context, args.concat(...arguments))
+    }
   }
+  // 保证原函数的原型对象上的属性不丢失
+  fn.prototype = Object.create(this.prototype)
+  return fn
 }
 ```
 

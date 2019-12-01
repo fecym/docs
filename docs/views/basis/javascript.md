@@ -13,7 +13,6 @@ tags:
 ### 一个有趣的问题
 
 <p align="center">
-  <!-- ![类型改变]($withBase('/imgs/basis-javascript-type-change.jpg')) -->
   <img :src="$withBase('/imgs/basis-javascript-type-change.jpg')" height="260" />
 </p>
 
