@@ -261,7 +261,7 @@ function insert(arr, item, idx) {
 }
 ```
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-api-array-insert.jpg')" title="循环为什么要倒着写？看下面解释" />
 </p>
 

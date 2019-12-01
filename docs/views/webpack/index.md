@@ -22,7 +22,7 @@ tags:
   webpack --env=chengyuming
 ```
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/webpack-arguments.jpg')" height="">
 </p>
 
@@ -38,7 +38,7 @@ tags:
 
 - 当然也可以采用动态配置 `entry`， 采用箭头函数动态返回。
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/dynamic-entry.jpg')" height="400">
 </p>
 

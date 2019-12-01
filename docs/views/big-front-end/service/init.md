@@ -82,7 +82,7 @@ tags:
 
 - 在这一步我遇到了一个问题，`nginx` 报了一个错误，意思是说端口被占用了，我天，我刚买的服务器，`80` 端口就被占用了，于是我们查看下到底是谁占了我的 `80` 端口
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/nginx-setup-address-already.jpg')" height="" title="端口被占用" />
 </p>
 
@@ -140,6 +140,8 @@ tags:
 
 ## 安装 node
 
+> 为什么要安装 `node`，作为一个前端资深切图仔，我想不需要解释为什么了吧
+
 ### 安装 nvm
 
 > `nvm` 作为 `node` 版本管理用具还是蛮好用的，我们可以先安装一个 `nvm` 再来下载不同的版本的 `node`
@@ -153,7 +155,7 @@ tags:
 
 - 下载完成之后，我们输入 `nvm list` 告诉你 nvm 命令不存在
 
-<p align="center">
+<p align="left">
   <img :src="$withBase('/imgs/node-nvm-error.png')" height="" title="" />
 </p>
 
@@ -174,4 +176,76 @@ tags:
   nvm install 12.13.1
 ```
 
+## 安装 redis
 
+> [`redis`](http://www.redis.cn/) 是一个数据库，读写特别快，我们经常把它用来做缓存，同时它支持多种数据结构，目前稳定版本是 5.0.5
+
+### 安装
+
+老规矩，下载解压然后安装
+
+```sh
+  # 下载 5.0.5 版本到 /usr/download 目录
+  wget -P /usr/download http://download.redis.io/releases/redis-5.0.5.tar.gz
+  # 解压
+  cd /usr/download
+  tar -zxvf redis-5.0.5.tar.gz
+  # 编译
+  cd redis-5.0.5
+  make
+  # 安装
+  make install PREFIX=/usr/local/redis  # PREFIX后面是安装目录
+```
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/big-front-service-redis-make.jpg')" height="" title="redis安装成功" />
+</p>
+
+### 连接 redis
+
+此时进入 `/usr/local/redis` 目录下有个 `bin` 目录，执行 `./redis-server` 命令，看到如下图所示，说明安装成功
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/big-front-service-redis-make-success.jpg')" height="" title="redis启动成功" />
+</p>
+
+退出：`Ctrl + c` 退出
+
+### 后台启动
+
+- 把 `redis` 安装包目录下的 `redis.conf` 复制到 `/usr/local/redis/bin/` 目录下
+- 然后修改 `redis.conf` 文件，把 `daemonize` 改成 yes
+
+```sh
+cp /usr/download/redis-5.0.5/redis.conf /usr/local/redis/bin/
+vim /usr/local/redis/bin/redis.conf
+# 把 daemonize 改成 yes，然后保存并退出
+:wq
+```
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/big-front-service-redis-vim-conf.jpg')" height="" title="redis 后台启动" />
+</p>
+
+- 然后执行 `./redis-server redis.conf`，这样就后台启动了
+- 执行 `ps aux | grep redis` 查看进程，`redis` 默认端口号是 `6379`
+
+### 演示
+
+- `redis` 分客户端（redis-cli）和服务端（redis-server）
+- 启动 `redis` 服务端然后在启动客户端，就可以在客户端输入 `redis` 命令进行数据的存储了
+- 启动客户端命令：`./redis-cli`；退出客户端命令：`quit`
+- 整个启动命令如下：
+
+```sh
+  # 查看 redis 服务是否启动
+  ps aux | grep redis
+  # 返回进程 id 和端口号说明启动成功
+  # 启动客户端
+  ./redis-cli
+  # 默认得到的是本机的ip:127.0.0.1:6379>
+  ping
+  # 返回 PONG
+  # 退出进程
+  quit
+```

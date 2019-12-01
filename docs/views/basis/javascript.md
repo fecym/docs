@@ -12,7 +12,7 @@ tags:
 
 ### 一个有趣的问题
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-javascript-type-change.jpg')" height="260" />
 </p>
 
@@ -43,7 +43,7 @@ tags:
 
 > 在 js 中类型转换有三种情况：转布尔值；转数字；转字符串。如果发生了隐式转换，那么各种类型互转符合下面的规则：
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/js-type-transform.jpg')" width="" style="border-radius: 8px;">
 </p>
 
@@ -131,7 +131,7 @@ console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primi
 
 - 这张图可能理解会更好点
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/js-type-transform2.jpg')" width="" style="border-radius: 8px;">
 </p>
 
@@ -263,7 +263,7 @@ function debounce(fn, step) {
 - 鼠标悬停列表后地图上的点也改变其颜色，如下图
 
   <!-- javascript-basis-mapbox.jpg -->
-  <p align="center">
+  <p align="center" class="p-images">
     <img :src="$withBase('/imgs/javascript-basis-mapbox.jpg')" width="700" style="border-radius: 8px;">
   </p>
 
@@ -340,7 +340,7 @@ function debounce(fn, step) {
 
 ## 原型
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-javascript-prototype.png')" />
 </p>
 
@@ -436,7 +436,7 @@ function debounce(fn, step) {
   console.log(dogA, dogB)
   ```
 
-  <p align="center">
+  <p align="center" class="p-images">
     <img :src="$withBase('/imgs/basis-javascript-inherit.png')" height="">
   </p>
   - 这两个*type*属性是独立的，修改其中一个不会影响到另外一个
@@ -483,7 +483,7 @@ c2.colors = ['a', 'b', 'c', 'd']
 console.log(c2, c1)
 ```
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-javascript-prototype-inherit.png')" height="">
 </p>
 
@@ -519,7 +519,7 @@ c2.colors.push('green')
 console.log(c1, c2)
 ```
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-javascript-constructor-inherit.png')" height="">
 </p>
 

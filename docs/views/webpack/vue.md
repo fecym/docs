@@ -261,7 +261,7 @@ tags:
 
 - 编译 js 我选择了 env 插件，为什么？[传送门](https://zhuanlan.zhihu.com/p/29506685)
 - 而且我试了用了 @babel/preset-es2015 但是还是一直报找不到这个模块
-  <p align="center">
+  <p align="center" class="p-images">
     <img :src="$withBase('/imgs/error-@babelpreset-es2015.png')" />
   </p>
 - 最终选择了 @babel/preset-env 插件
@@ -273,7 +273,7 @@ tags:
 - babel-loader 默认下载就是 babel7 的插件，我们选择了 babel7 的插件，因为 babel 已经是最稳定的插件了
 - 用了 babel7 之后 babel 配置文件是 babel.config.js 和.babelrc 都无所谓了，不过.babelrc 要求必须是严格的 JSON 语法
 - 当我们配置了 babel.config.js 之后还是报了一个错
-  <p align="center">
+  <p align="center" class="p-images">
     <img :src="$withBase('/imgs/error-@babelpreset-env.png')" />
   </p>
 - 那我们按照他的提示下载并且配置该插件就好
@@ -419,7 +419,7 @@ optimization: {
 - 压缩文件出现的情况下都在生产环境下，开发环境是不需要的，所以我们可以下判断
 - OptimizeCSSAssetsWebpackPlugin 插件基本不需要配置，直接实例化传入一个空的 options 就可以
 - UgligyjsWebpackPlugin 有个坑，配置完毕后，项目打包报错了
-  <p align="center">
+  <p align="center" class="p-images">
     <img :src="$withBase('/imgs/error-uglifyjs.png')" />
   </p>
   - 他的意思说配置warnings配置出错，看下之前的配置
@@ -577,7 +577,7 @@ module.exports = getNetworkIp
 
 - 最终实现的效果如下所示
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/dev-error-info.png')""/>
 </p>
 

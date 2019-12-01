@@ -498,7 +498,7 @@ p {
 - 在 css2.1 规范中，每个盒模型的位置是三维的，分别是平面画布上的 x 轴，y 轴以及表示层叠的<code style="color: #ff502c">z 轴</code>
 - <code style="color: #ff502c">z 轴</code>：表示的是用户与屏幕的这条看不见的垂直线
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-css-z-index-0.jpg')""/>
 </p>
 
@@ -549,7 +549,7 @@ p {
 </div>
 ```
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-css-z-index-1.jpg')""/>
 </p>
 
@@ -600,7 +600,7 @@ p {
 </div>
 ```
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-css-z-index-2.jpg')""/>
 </p>
 
@@ -608,7 +608,7 @@ p {
 
 ### 层叠顺序
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-css-z-index-3.png')""/>
 </p>
 
@@ -663,7 +663,7 @@ p {
 </div>
 ```
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/basis-css-z-index-4.jpg')""/>
 </p>
 

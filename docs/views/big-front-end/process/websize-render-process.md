@@ -56,7 +56,7 @@ tags:
 > - 客户端再回传一个带**ACK=Y+1，Seq=Z**的数据包，代表握手结束（第三次握手，由浏览器发送，告诉服务器，我马上就发送了，准备接收吧）
 > - 为什么要三次握手？为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误。
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/process-tcp-three-1.png')""/>
 </p>
 
@@ -64,7 +64,7 @@ tags:
 - **服务器**监听到连接请求报文后，如同意建立连接，则向**客户端**发送确认。TCP 报文首部中的 SYN 和 ACK 都置 1 ，ack = x + 1 表示期望收到对方下一个报文段的第一个数据字节序号是 x+1，同时表明 x 为止的所有数据都已正确收到（ack=1 其实是 ack=0+1,也就是期望客户端的第 1 个帧），seq = y 表示**服务器**自己的初始序号（seq=0 就代表这是服务器这边发出的第 0 号帧）。这时服务器进入 syn_rcvd，表示服务器已经收到**客户端**的连接请求，等待**客户端**的确认。
 - **客户端**收到确认后还需再次发送确认，同时携带要发送给**服务器**的数据。ACK 置 1 表示确认号 ack= y + 1 有效（代表期望收到服务器的第 1 个帧），**客户端**自己的序号 seq= x + 1（表示这就是我的第 1 个帧，相对于第 0 个帧来说的），一旦收到**客户端**的确认之后，这个 TCP 连接就进入 Established 状态，就可以发起 http 请求了。
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/process-tcp-three-2.png')""/>
 </p>
 
@@ -139,11 +139,11 @@ tags:
 > - 被动方向发起方发送报文段，Fin、Ack、Seq，请求关闭连接。并进入 LAST_ACK 状态。(第三次挥手：由服务器发起，告诉浏览器，我响应报文发送完了，你准备关闭吧)
 > - 发起方向被动方发送报文段，Ack、Seq。然后进入等待 TIME_WAIT 状态。被动方收到发起方的报文段以后关闭连接。发起方等待一定时间未收到回复，则正常关闭。(第四次挥手：由浏览器发起，告诉服务器，我响应报文接受完了，我准备关闭了，你也准备吧)
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/process-tcp-four-1.png')""/>
 </p>
 
-<p align="center">
+<p align="center" class="p-images">
   <img :src="$withBase('/imgs/process-tcp-four-2.png')""/>
 </p>
 
