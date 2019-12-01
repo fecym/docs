@@ -7,7 +7,7 @@
 export default {
   mounted() {
     const body = document.body;
-    var num = 200;
+    var num = 300;
     let _width = window.innerWidth;
     let _height = body.offsetHeight;
     let startX = 0;
@@ -311,7 +311,7 @@ export default {
             this.$.closePath();
           }
         }
-        anim() {
+        animation() {
           window.requestAnimationFrame = (function() {
             return (
               window.requestAnimationFrame ||
@@ -320,15 +320,15 @@ export default {
               }
             );
           })();
-          const anim = function() {
+          const animation = function() {
             this.update();
             this.draw();
-            window.requestAnimationFrame(anim);
+            window.requestAnimationFrame(animation);
           }.bind(this);
-          window.requestAnimationFrame(anim);
+          window.requestAnimationFrame(animation);
         }
         run() {
-          this.anim();
+          this.animation();
           window.addEventListener(
             "mousemove",
             function(e) {
@@ -336,22 +336,23 @@ export default {
               this.toY = (e.clientY - this.canvas.height / 2) * 0.8;
             }.bind(this)
           );
-          // window.addEventListener(
-          //   'touchmove',
-          //   function(e) {
-          //     e.preventDefault()
-          //     this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8
-          //     this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8
-          //   }.bind(this)
-          // )
           window.addEventListener(
-            "mousedown",
+            'touchmove',
             function(e) {
-              for (let i = 0; i < 100; i++) {
-                this.add();
-              }
+              e.preventDefault()
+              this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8
+              this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8
             }.bind(this)
-          );
+          )
+
+          // window.addEventListener(
+          //   "mousedown",
+          //   function(e) {
+          //     for (let i = 0; i < 100; i++) {
+          //       this.add();
+          //     }
+          //   }.bind(this)
+          // );
 
           // window.addEventListener(
           //   'touchstart',

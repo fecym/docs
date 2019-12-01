@@ -47,10 +47,15 @@ module.exports = {
     searchMaxSuggestions: 10,
     // 自动形成侧边导航
     sidebar: 'auto',
-    // 最后更新时间
-    // 备案号
-    // record: '950417',
-    // 项目开始时间
-    // startYear: '2019'
+    valineConfig: {
+      appId: 'to012rhNxJibimms3TuuGA6d-gzGzoHsz',// your appId
+      appKey: 'VUz3rutrxvDjziwDisWL6DrT', // your appKey
+      verify: true,
+      placeholder: '你想说点什么...',
+      pageSize: 10,
+      // 是否记录评论者IP
+      recordIP: true
+    },
+    isComment: true
   }
 }
