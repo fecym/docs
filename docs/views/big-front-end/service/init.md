@@ -249,3 +249,163 @@ vim /usr/local/redis/bin/redis.conf
   # 退出进程
   quit
 ```
+
+## 安装 MySQL
+
+> `MySQL` 已经出到 8 版本了，并且 `8.0.18` 也在今年 `10-14` 号正式发布，那我们就安装这个版本的吧，之前我是用的 `5.7.20`，传说`8.0` 版本的 `MySQL` 比 `5.7` 版本的 `MySQL` 快 2 倍以上哦，那我们来爬下坑
+
+## 下载
+
+老规矩，下载到 `/usr/download`，解压安装，开始安装前的准备工作
+
+```sh
+  # 8.0 的下载地址
+  wget -P /usr/download https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.18-linux-glibc2.12-x86_64.tar.xz
+```
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/big-front-service-init-mysql-install.png')" height="" title="这网速..." />
+</p>
+
+- 服务器网速不好，400 多兆的东西需要下载 16h，换个方式下载吧，本地下载完传到服务器上吧
+- 那样的话需要本地上传服务器，我们先安装个上传下载工具包 `rz` 及 `sz`，此时我们就可以 `rz` 进行上传文件了
+
+```sh
+  # 安装上传下载工具包
+  yum install -y lrzsz
+```
+
+- 输入 rz 之后会有一个弹框提示你选择要添加的文件，只需要添加上你要上传的文件就可以了
+
+### 安装前
+
+- 我把 MySQL 的安装上传到了 `/usr/download` 文件夹下，此时我们解压到 `/usr/local` 目录下，然后重命名文件夹
+- 解压过程中，发现报错了，原来我们下载了一个 `xz` 的压缩包，所以解压方式要换一下了
+- 需要先把 `.xz` 结尾的文件先解压一次为 `.tar` 的打包格式，然后在用 `tar` 命令进行解压
+- 好像也可以直接使用 `tar xvJf ***.tar.xz` 来解压
+
+```sh
+  # 在 /usr/download 目录下
+  xz -d mysql-8.0.18-linux-glibc2.12-x86_64.tar.xz  # 运行该命令后会把源文件删除
+  # 解压到 /usr/local/ 目录下
+  tar -xvf mysql-8.0.18-linux-glibc2.12-x86_64.tar.xz -C /usr/local/
+  # 重命名
+  mv /usr/local/mysql-8.0.18-linux-glibc2.12-x86_64 /usr/local/mysql
+  # 在 MySQL 根目录下新建一个文件夹 data，用于存放数据
+  cd /usr/local/mysql && mkdir data
+  # 创建 MySQL 用户组和 MySQL 用户
+  groupadd mysql
+  useradd -g mysql mysql
+  # 改变 MySQL 目录权限
+  chown -R mysql.mysql /usr/local/mysql/
+  # 或者这么做
+  # chown -R mysql .
+  # chgrp -R mysql .
+```
+
+### 初始化
+
+创建 `mysql_install_db` 安装文件，然后初始化
+
+```sh
+  # 创建 mysql_install_db 安装文件
+  mkdir mysql_install_db
+  chmod 777 ./mysql_install_db
+  # 初始化数据库
+  ./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+  # 报错了？报错了看下边
+```
+
+### 遇到的问题
+
+- 初始化的时候报了一个错误 `./bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory`
+- 这个问题是缺少安装包 `libaio` 和 `libaio-devel`，安装即可
+
+```sh
+  # 自动安装这两个包
+  yum install libaio*
+  # 然后在执行 初始化数据库命令
+  ./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+```
+
+- 此时看到下面这句话，说明初始化成功了
+- 并且为你生成了临时的 `MySQL` 登录密码，一定要记下来，我们需要登录进 `MySQL`，然后修改密码
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/big-front-service-init-mysql-install-init-success.png')" height="" title="安装成功" />
+</p>
+
+### 配置
+
+```sh
+  # 接下来按照我的做
+  cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+  # 修改my.cnf文件
+  vim  /etc/my.cnf
+  # 修改为下图所示
+```
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/big-front-service-init-mysql-config-my.conf.png')" height="" title="修改配置文件" />
+</p>
+
+### 建立 MySQL 服务
+
+```sh
+  # 注意这里是 mysql 不是 mysqld 哦
+  cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+  # 赋予可执行权限
+  chmod +x /etc/init.d/mysql
+  # 添加到系统服务
+  chkconfig --add mysql
+  # 再来 mysqld 的
+  cp -a /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+  chmod +x /etc/rc.d/init.d/mysqld
+  chkconfig --add mysqld
+  # 检查是否生效
+  chkconfig  --list mysqld
+```
+
+### 配置环境
+
+老规矩，编辑 `/etc/profile` 文件，添加两句话
+
+```sh
+  vim /etc/profile
+  # 最底部添加以下两句话
+  export PATH=$PATH:/usr/local/mysql/bin:/usr/local/mysql/lib
+  export PATH
+  # 保存并退出
+  :wq
+  # 重启环境变量让其立即生效
+  source /etc/profile
+  # 启动MySQL服务
+  service mysql start
+```
+
+### 修改密码
+
+```sh
+  mysql -uroot -p
+  # 提示你输入密码或者报错
+```
+
+- 报了一个错：`log-error set to '/var/log/mariadb/mariadb.log', however file don't exists. Create writable for user 'mysql'.`
+- 这个是权限问题，应该是没有 `/var/log/mariadb/mariadb.log` 这个路径
+- 那我们就创建, 并给 `mysql` 用户授权即可
+
+```sh
+  mkdir /var/log/mariadb
+  touch /var/log/mariadb/mariadb.log
+  chown -R mysql:mysql  /var/log/mariadb/
+  # 然后查看 mysql 命令
+  mysql --version     # 返回以下命令说明可以了
+  # mysql  Ver 8.0.18 for linux-glibc2.12 on x86_64 (MySQL Community Server - GPL)
+  # 此时我们再次登录
+  mysql -uroot -p
+  # 第一次输入临时密码，进去后修改登录密码
+  # 修改登录密码，MySQL 语法都要在尾部加上 ; 哦
+  set password="你的密码";
+  flush privileges;
+  # 返回 OK, 0 rows affected (0.00 sec) 说明语句更新成功了
+```
