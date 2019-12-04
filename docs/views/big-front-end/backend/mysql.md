@@ -147,3 +147,13 @@ tags:
   -- 上个月，period_diff() 时间差异函数接受两个参数，要对比的时间
   SELECT * FROM `daily` WHERE PERIOD_DIFF(DATE_FORMAT(NOW(), '%Y%m'), DATE_FORMAT(create_time, '%Y%m')) = 1;
 ```
+
+### 导入导出SQL
+
+```sql
+  -- 导出
+  -- mysqldump -uroot -p 数据库名 > 导出到的位置
+  mysqldump -uroot -p daily > /root/project/daily.sql
+  -- 导入
+  
+```

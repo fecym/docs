@@ -409,3 +409,21 @@ vim /usr/local/redis/bin/redis.conf
   flush privileges;
   # 返回 OK, 0 rows affected (0.00 sec) 说明语句更新成功了
 ```
+
+### node 连接 MySQL8 报错
+
+> 把 MySQL 安装完毕，把之前的数据导过来，node 项目跑起来，发现 node 连接 MySQL 的时候报错了 `Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client`
+
+#### 出错原因：
+
+&emsp;导致这个错误的原因是，目前，最新的 `mysql模块` 并未完全支持 `MySQL 8` 的 `caching_sha2_password` 加密方式，而 `caching_sha2_password` 在 `MySQL 8` 中是默认的加密方式。因此，下面的方式命令是默认已经使用了 `caching_sha2_password` 加密方式，该账号、密码无法在 `mysql模块` 中使用。
+
+#### 解决方法：
+
+&emsp;解决方法是从新修改用户 root 的密码，并指定 `mysql模块` 能够支持的加密方式：
+
+```sql
+  ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你要改的密码'
+```
+
+&emsp;上述语句，显示指定了使用 `mysql_native_password` 的加密方式。这种方式是在 `mysql模块` 能够支持。
