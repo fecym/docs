@@ -6,9 +6,82 @@ tags:
   - 大前端
 ---
 
-# mysql
+# MySQL
 
-## mysql 基本语句
+## 数据库操作
+
+> 进入数据库之后，我们要先看看我们都有哪些数据库，然后要使用哪个数据库，数据库有哪些表，要对哪些表做一些操作之类，这里记录下基本操作，数据库操作结尾一定要加分号，表示一句话的结束。
+
+### 基本操作
+
+```sql
+  -- 创建数据库
+  CREATE database_name;
+  -- 查看数据库信息
+  SHOW CREATE DATABASE database_name;
+  -- 设置为 utf-8 格式的
+  SET names utf8;
+  -- 查看数据库
+  SHOW DATABASES;
+  -- 使用数据库，use 数据库名
+  USE database_name;
+  -- 创建表
+  CREATE TABLE table_name (
+    id    int(10),
+    name  varchar(20),
+    age   int(10)
+  );
+  -- 查看该数据库下所有的表
+  SHOW TABLES;
+  -- 查看表信息
+  SHOW CREATE TABLE table_name;
+  -- 修改表名
+  ALTER TABLE table_name RENAME TO table_name_1;
+  -- 不加 to 关键字也可以
+  ALTER TABLE table_name_1 RENAME table_name;
+  -- 查看字段信息
+  DESC table_name;
+  -- 添加字段，对字段操作需要加字段类型
+  ALTER TABLE table_name ADD field_name INT;
+  -- 修改字段名，以及字段类型
+  ALTER TABLE table_name CHANGE field_name field_name_1 VARCHAR(255);
+  -- 删除字段
+  ALTER TABLE table_name DROP field_name_1;
+  -- 删除表
+  DROP TABLE table_name;
+  -- 删除数据库
+  DROP DATABASE database_name;
+```
+
+### 导出数据
+
+导出数据不需要进去数据，直接在数据库外执行命令即可
+
+```sh
+  # 导出数据，mysqldump -uroot -p 数据库名 > 导出到的位置
+  mysqldump -uroot -p database_name > database_name.sql
+  # 敲回车会提示你输入密码
+```
+
+### 导入数据
+
+导入数据需要进入数据库，然后创建对应的数据库，并且设置其 `name`
+
+```sql
+  -- 创建对应的数据库
+  CREATE DATABASE database_name;
+  -- 设置其 name 属性
+  SET NAMES utf8;
+  -- 使用数据库
+  USE database_name;
+  -- 导入数据，source 导入的SQL文件地址
+  source /root/database_name.sql;
+  -- 或者直接进入 SQL 文件，全部复制，然后数据库中直接粘贴也是可以的
+  -- 再或者在 SQL 外面执行以下命令也可以 mysql -u用户名 -p密码 数据库名 < 数据库名.sql
+  mysql -uroot -p database_name < database_name.sql
+```
+
+## 数据操作
 
 ### insert 语句
 
@@ -148,12 +221,3 @@ tags:
   SELECT * FROM `daily` WHERE PERIOD_DIFF(DATE_FORMAT(NOW(), '%Y%m'), DATE_FORMAT(create_time, '%Y%m')) = 1;
 ```
 
-### 导入导出SQL
-
-```sql
-  -- 导出
-  -- mysqldump -uroot -p 数据库名 > 导出到的位置
-  mysqldump -uroot -p daily > /root/project/daily.sql
-  -- 导入
-  
-```
