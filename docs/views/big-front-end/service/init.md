@@ -254,9 +254,9 @@ vim /usr/local/redis/bin/redis.conf
 
 > `MySQL` 已经出到 8 版本了，并且 `8.0.18` 也在今年 `10-14` 号正式发布，那我们就安装这个版本的吧，之前我是用的 `5.7.20`，传说`8.0` 版本的 `MySQL` 比 `5.7` 版本的 `MySQL` 快 2 倍以上哦，那我们来爬下坑
 
-### 下载
+### 安装前准备
 
-老规矩，下载到 `/usr/download`，解压安装，开始安装前的准备工作
+老规矩，先把 `MySQL` 下载到 `/usr/download`，解压安装，开始安装前的准备工作
 
 ```sh
   # 8.0 的下载地址
@@ -276,8 +276,6 @@ vim /usr/local/redis/bin/redis.conf
 ```
 
 - 输入 rz 之后会有一个弹框提示你选择要添加的文件，只需要添加上你要上传的文件就可以了
-
-### 安装前
 
 - 我把 MySQL 的安装上传到了 `/usr/download` 文件夹下，此时我们解压到 `/usr/local` 目录下，然后重命名文件夹
 - 解压过程中，发现报错了，原来我们下载了一个 `xz` 的压缩包，所以解压方式要换一下了
@@ -335,7 +333,7 @@ vim /usr/local/redis/bin/redis.conf
   <img :src="$withBase('/imgs/big-front-service-init-mysql-install-init-success.png')" height="" title="安装成功" />
 </p>
 
-### 配置
+### 配置 my.cnf
 
 ```sh
   # 接下来按照我的做
@@ -366,7 +364,7 @@ vim /usr/local/redis/bin/redis.conf
   chkconfig  --list mysqld
 ```
 
-### 配置环境
+### 配置环境变量
 
 老规矩，编辑 `/etc/profile` 文件，添加两句话
 
