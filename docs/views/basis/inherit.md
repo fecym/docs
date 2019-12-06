@@ -42,21 +42,37 @@ var person = new Person('cym')
 ### 自己的理解
 
 ```js
+// 关于对象
 const obj = {}
 // 所有对象都是Object的实例，
 obj.__proto__ === Object.prototype
+// 原型链终点
+Object.prototype.__proto__ === null
+obj.__proto__.__proto__ === null
+
+// 关于函数
 const bar = function() {}
 // 所有的函数都是Function的实例，包括Function本身
 bar.__proto__ === Function.prototype
-Function.__proto__ === Function.prototype
 // Function的原型继承了Object
 Function.prototype.__proto__ === Object.prototype
+// 原型链终点
+Object.prototype.__proto__ === null
+
 // Object是由Function构造的
 Object.__proto__ === Function.prototype
+// Function也是由Function构造的
+Function.__proto__ === Function.prototype
+Function.__proto__.__proto__ === Object.prototype
+Function.prototype.__proto__ === Object.prototype
+Function.__proto__.__proto__ === Function.prototype.__proto__
+// 原型链终点
+Object.prototype.__proto__ === null
+
 // 函数也是对象的实例
 Function instanceof Object
 Object instanceof Function
-Function.__proto__.__proto__ === Object.prototype
+Function instanceof Function
 ```
 
 - 根据上面的代码，我们可以得到一些结论
@@ -76,6 +92,27 @@ Function.__proto__.__proto__ === Object.prototype
     2. 函数也是对象
     3. 所有的函数都是 `Function` 的实例，包括 `Function` 本身，当然也包括 `Object` 这个构造函数
     4. `Object` 也是 `Function` 的实例，`Function` 也是 `Object` 的实例
+
+### 误区
+
+一直以来我都以为 `对象的 __proto__` 和 `函数的 prototype` 属性都指向一个对象
+
+```js
+// 比如说
+function F() {}
+const f = new F()
+typeof f.__proto__ === 'object'
+typeof F.prototype === 'object'
+// f.__proto__ 是一个对象，F.prototype 是一个对象
+```
+
+但是今天在群里为群友指点原型相关的知识的时候，有个群友说，`Function.prototype` 是一个函数不是一个对象，然后我才去试了一下才发现我错了
+
+```js
+typeof Function.prototype === 'function' // true
+typeof Function.__proto__ === 'function' // true
+typeof Object.__proto__ === 'function' // true
+```
 
 ## 继承
 
