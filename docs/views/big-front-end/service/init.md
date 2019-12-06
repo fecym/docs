@@ -4,7 +4,6 @@ date: 2019-11-06
 tags:
   - 大前端
   - Linux
-  - nginx
 ---
 
 # 记一次购买服务器
@@ -137,6 +136,55 @@ tags:
 - 验证完毕，等待审核成功，我们下载审核完成的证书
 - 点击下载时会提醒你，选择对应的服务类型（Tomcat、Apache、Nginx、IIS 和其他）
 - 这里我选择了 `Nginx`，点击下载旁边的帮助查看帮助文档，里面很详细的讲了你需要把下载的证书放到服务器的那个位置，然后如何配置 `Nginx`
+
+### 配置 https
+
+简单配置如下
+
+```sh
+# 修改 nginx/conf/nginx.conf 文件
+vim /usr/local/nginx/conf/nginx.conf
+# 添加以下配置
+# https nginx配置
+server {
+  listen       443;
+  server_name  localhost;
+  ssl on;
+  # 证书的文件（绝对地址也可以）。
+  ssl_certificate      xxx.pem;
+  # 证书的密钥文件。
+  ssl_certificate_key  xxx.key;
+  ssl_session_cache    shared:SSL:1m;
+  ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_session_timeout  5m;
+  # ssl_ciphers  HIGH:!aNULL:!MD5;
+  ssl_prefer_server_ciphers  on;
+  location / {
+    # 根目录地址
+    root   /root/project/blog;
+    index  index.html index.htm;
+  }
+}
+# 保存并退出
+:wq
+# 重启nginx服务
+nginx -s reload
+```
+
+- 此时发现可能还不能访问，有可能就是防火墙的问题，去阿里云官网配置一个 `443` 端口的安全组规则即可
+- 如果想要服务的 `http` 自动转入 `https`，只需要在每一个 server 中加如一句话即可
+
+```sh
+server {
+  listen       80;
+  server_name  localhost;
+  # ...省略其他
+  # 将所有 http 请求通过 rewrite 重定向到 https。
+  rewrite ^(.*)$ https://$host$1 permanent;
+  # ...省略其他
+}
+```
 
 ## 安装 node
 
