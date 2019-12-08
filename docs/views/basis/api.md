@@ -506,10 +506,22 @@ Emitter.prototype = {
   },
   // 发布事件，订阅者执行相应的回调
   emit: function(type) {
+    if (!this.handlers[type]) return
     const args = [].slice.call(arguments, 1)
     this.handlers[type].forEach(handler => {
       handler.apply(this, args)
     })
+  },
+  off: function(type, handler) {
+    const handlers = this.handlers[type]
+    if (!handlers) return undefined
+    let result = undefined
+    for (let i = 0, len = handlers.length; i <= len; i++) {
+      if (handlers[i] === handler) {
+        result = handlers.splice(i, 1)
+      }
+    }
+    return result
   }
 }
 ```
@@ -528,9 +540,21 @@ class Emitter {
     this.handlers[type].push(handler)
   }
   emit(type) {
+    if (!this.handlers[type]) return
     const args = [...arguments].slice(1)
     this.handlers[type].forEach(handler => {
+      // 执行函数
       handler.apply(this, args)
+    })
+  }
+  off(type, handler) {
+    if (!this.handlers[type]) return undefined
+    return this.handlers[type].find((fn, idx) => {
+      if (fn === handler) {
+        return this.handlers[type].splice(idx, 1)
+      } else {
+        return undefined
+      }
     })
   }
 }
