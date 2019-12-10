@@ -15,6 +15,7 @@ module.exports = {
       items: [
         { text: 'webpack介绍', link: '/views/webpack/index' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
+        { text: 'npm', link: '/views/big-front-end/npm/init' },
         // { text: 'node简介', link: '/views/big-front-end/node/index' },
         { text: 'fs文件系统', link: '/views/big-front-end/node/fs' },
         { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
@@ -24,7 +25,6 @@ module.exports = {
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
         { text: '一次服务器配置', link: '/views/big-front-end/service/init' },
-        { text: 'npm', link: '/views/big-front-end/npm/init' },
       ]
     },
     {
