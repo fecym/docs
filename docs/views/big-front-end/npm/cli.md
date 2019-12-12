@@ -51,7 +51,7 @@ tags:
 
 ### index.js 的写法
 
-在项目根目录新建一个 `index.js` 文件作为主入口文件，我们需要在这个文件的第一行加入 `#!/usr/bin/env node` 来告诉系统执行这个文件的时候我们是以 `node` 为环境执行的，不同的系统默认执行的是不一样的，比如说 Linux 默认执行就是 bash，下面是 `index.js` 的内容
+在项目根目录新建一个 `index.js` 文件作为主入口文件，我们需要在这个文件的第一行加入 `#!/usr/bin/env node` 指定当前脚本由 `node.js` 进行解析，不同的系统默认执行的是不一样的，比如说 Linux 默认执行就是 bash，下面是 `index.js` 的内容
 
 ```js
   #!/usr/bin/env node
@@ -60,51 +60,74 @@ tags:
 
 对了我们新建一个 src 目录来开发我们的核心逻辑
 
-## 处理用户交互
+## 处理命令行
 
-首先，我们处理与用户交互的命令，代码如下
+### commander
+
+[`commander.js`](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md) 是 `github` 上一位神级人物 [`tj`](https://github.com/tj) 开发的模块，`commander.js` 可以自动的解析命令和参数，合并多选项，处理短参，等等，功能强大，上手简单。简单用法如下：
 
 ```js
-const program = require('commander')
-const symbols = require('log-symbols')
-const inquirer = require('inquirer')
-
 program
-  .command(`init <name>`)
-  .description('项目的描述')
-  .action(name => {
-    // 判断该目录是否以及使用
-    if (fs.existsSync(name)) {
-      console.log(symbols.error, chalk.red('Error：项目已存在'))
-      return process.exit(0)
-    }
-    // 处理与用户的交互
-    inquirer
-      .prompt([
-        {
-          name: 'description',
-          message: '请输入项目描述：'
-        },
-        {
-          name: 'author',
-          message: '请输入作者姓名：'
-        }
-      ])
-      .then(answers => {
-        // 得到与用户的交互逻辑
-        console.log(answers)
-      })
+  // 执行命令传入参数
+  .command(`init <option>`)
+  .action(option => {
+    // 这里可以捕获到传入的参数
+    console.log(option)
   })
-// 切记一定要 parse 到 process.argv 否则项目都无法测试
+// 可以直接执行 -v 获取当前版本号
 program.version('1.0.0', '-v, --version').parse(process.argv)
 ```
 
-## 处理模板下载
+### 命令行交互
+
+在用户执行 `init` 命令后，向用户提出问题，接收用户的输入并作出相应的处理。命令行交互利用 `inquirer` 来实现，代码如下
+
+```js
+inquirer
+  .prompt([
+    {
+      name: 'description',
+      message: '请输入项目描述：'
+    },
+    {
+      name: 'author',
+      message: '请输入作者姓名：'
+    }
+  ])
+  .then(answers => {
+    // 得到与用户的交互逻辑
+    console.log(answers)
+  })
+```
+
+### 视觉美化
+
+在用户输入之后，开始下载模板，下载过程中我们可以使用 `ora` 模块来提示用户正在下载，下载完成也提示用户
+
+```js
+const ora = require('ora')
+const loading = ora('downloading template ...')
+
+loading.start()
+//download
+loading.succeed() //或 loading.fail();
+```
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/big-front-npm-cli-beautify.png')" height="" title="美化之后的命令行" />
+</p>
+
+## 处理模板
+
+`download-git-repo` 是一个可以从远程仓库下载一个项目的插件，我们可以封装这个插件来下载我们的模板文件
+
+### 封装模板下载逻辑
+
+`download-git-repo` 用户也挺简单，用法如下：
 
 ```js
 // download.js
 const downloadGit = require('download-git-repo')
-// const { templateHerf } = require('./config')
 const templateHerf = `https://github.com/cym-git/cym-blog-template.git`
 
 module.exports = function(projectName) {
@@ -122,7 +145,9 @@ module.exports = function(projectName) {
 }
 ```
 
-## 下载模板
+### 下载模板
+
+完整的下载逻辑如下，加上 Terminal 的美化
 
 ```js
 // 测试 download.js
@@ -130,7 +155,6 @@ const ora = require('ora')
 const spinner = ora('downloading template ...')
 const symbols = require('log-symbols')
 const chalk = require('chalk')
-const rimraf = require('rimraf')
 const downloadFn = require('../src/utils/download')
 // 测试下载名
 const projectName = 'test-name'
@@ -149,6 +173,8 @@ downloadFn(projectName)
 ```
 
 ## 修改模板元信息
+
+下载完模板之后，根据用户与命令行的交互信息，修改我们的模板文件，然后重写 package.json
 
 ```js
 downloadGit(name)
@@ -183,3 +209,16 @@ downloadGit(name)
   })
 ```
 
+## 完整代码
+
+整个流程基本完毕，完整代码请移步[`这里`](https://github.com/cym-git/cym-blog.git)
+
+该脚手架已发布 `npm`，包名 [`cym-blog`](https://www.npmjs.com/package/cym-blog)
+
+## 参考链接
+
+1. [手摸手教你撸一个脚手架](https://juejin.im/post/5d37d982e51d45108c59a635)
+
+2. [基于 node.js 的脚手架工具开发经历](https://juejin.im/post/5a31d210f265da431a43330e)
+
+3. [使用 Node.js 构建交互式命令行工具](https://zhuanlan.zhihu.com/p/53902095)
