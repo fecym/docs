@@ -1,6 +1,9 @@
 // @require './config'
 
 $mobileSidebarWidth = $sidebarWidth * 0.82
+// 移动端顶部滚动条模拟宽度
+$mobileScrollHeight = 5px
+
 
 // narrow desktop / iPad
 @media (max-width: $MQNarrow)
@@ -14,6 +17,21 @@ $mobileSidebarWidth = $sidebarWidth * 0.82
 
 // wide mobile
 @media (max-width: $MQMobile)
+  body {
+    background-image: linear-gradient(to right top, #ffcc00 50%, #eee 50%);
+    background-size: 100% calc(100% - 100vh + $mobileScrollHeight);
+    background-repeat: no-repeat;
+    &::after {
+      content: '';
+      position: fixed;
+      top: $mobileScrollHeight;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #fff;
+      z-index: -1;
+    }
+  }
   .sidebar
     top 0
     padding-top $navbarHeight
