@@ -365,8 +365,33 @@ console.log(process.env.npm_package_main) // index.js
 console.log(process.env.npm_package_license) // MIT
 ```
 
+## npm 发布包
+
+### 登录发布包
+
+`npm` 发布包其实蛮简单，首先你需要有一个 `npm` 账号，然后你需要在控制台登录你的 `npm` 账号，然后直接 `npm publish` 即可发布
+
+```sh
+  # 登录 npm，根据提示输入账号、密码和邮箱即可登录
+  npm login
+  # 发布包
+  npm publish
+  # 更新包
+  npm version patch
+  npm publish
+```
+
+### npm version 说明
+
+`npm version` 后面可以跟三个参数：
+
+- `patch`：小变动，比如 bug 修复等，版本号变动 **v1.0.0 -> v1.0.1**
+- `minor`：增加新功能，不影响现有功能，版本号变动 **v1.0.0 -> v1.1.0**
+- `major`：模块大改动，可能不向后兼容，版本号变动 **v1.0.0 -> v2.0.0**
+
 ## 参考链接
-  1. [你真的懂package.json吗](https://juejin.im/post/5dea1095e51d4558083322e2)
-  2. [package.json文件](https://javascript.ruanyifeng.com/nodejs/packagejson.html)
-  3. [2018 年了，你还是只会 npm install 吗？](https://juejin.im/post/5ab3f77df265da2392364341)
-  4. [用 npm script 打造超溜的前端工作流](https://www.kancloud.cn/sllyli/npm-script/1243450)
+
+1. [你真的懂 package.json 吗](https://juejin.im/post/5dea1095e51d4558083322e2)
+2. [package.json 文件](https://javascript.ruanyifeng.com/nodejs/packagejson.html)
+3. [2018 年了，你还是只会 npm install 吗？](https://juejin.im/post/5ab3f77df265da2392364341)
+4. [用 npm script 打造超溜的前端工作流](https://www.kancloud.cn/sllyli/npm-script/1243450)

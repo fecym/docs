@@ -18,14 +18,14 @@ module.exports = {
         { text: 'npm', link: '/views/big-front-end/npm/init' },
         // { text: 'node简介', link: '/views/big-front-end/node/index' },
         { text: 'fs文件系统', link: '/views/big-front-end/node/fs' },
-        { text: '记一次开发自己的脚手架', link: '/views/big-front-end/npm/cli' },
+        { text: 'cli 的开发', link: '/views/big-front-end/npm/cli' },
         { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
         { text: 'nginx介绍', link: '/views/big-front-end/nginx/index' },
         { text: '反向代理与负载均衡', link: '/views/big-front-end/nginx/requisite' },
         { text: 'redis', link: '/views/big-front-end/redis/index' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
-        { text: '一次服务器配置', link: '/views/big-front-end/service/init' },
+        { text: '服务器的配置', link: '/views/big-front-end/service/init' },
       ]
     },
     {
