@@ -36,6 +36,7 @@ module.exports = {
         { text: 'JavaScript', link: '/views/basis/javascript' },
         { text: '继承', link: '/views/basis/inherit' },
         { text: '常用api', link: '/views/basis/api' },
+        { text: '小技巧', link: '/views/basis/issue' },
       ]
     },
   ]
