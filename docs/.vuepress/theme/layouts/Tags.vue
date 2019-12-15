@@ -44,15 +44,15 @@ export default {
 
   created () {
     if (this.$tags.list.length > 0) {
-      const currentTag = this.$route.query.tag ? this.$route.query.tag : this.$tags.list[0].name
+      const currentTag = this.$route.query.tag || '大前端' || this.$tags.list[0].name
+      // tags 随机排序
       let tags = this.$tags.list
       tags.map(item => {
         const color = this._tagColor()
         item.color = color
         return tags
       })
-      this.tags = tags
-
+      this.tags = tags.sort((a, b) => Math.random() > .5 ? 1 : -1)
       this.getPagesByTags(currentTag)
     }
   },
