@@ -628,7 +628,7 @@ requireAll(requireAllComponent).forEach(componentModule => {
 
 - 当我们编译 `js` 的时候我们会用 `babel-loader` 和 `@babel/core` 最少两个依赖，编译 `less` 的时候，会用 `less-loader` 和 `less` 最少两个包，为什么呢？
 
-- 比如说 @babel/core 和 babel-loader 的关系，@babel/core 是核心编译 babel-loader 是把接受到的 ctx 传给 @babel/core
+- 比如说 `@babel/core` 和 `babel-loader` 的关系，`@babel/core` 是核心编译 `babel-loader` 是把接受到的 `ctx` 传给` @babel/core`
 
 ```js
 // babel-loader 和 @babel/core 的关系

@@ -12,7 +12,7 @@ tags:
 
 <!-- 第一行的东西会被作为标题来展示 -->
 
-[webpack](empty)打包部署 js 项目从以下几个方面考虑：
+`webpack` 打包部署 js 项目从以下几个方面考虑：
 
 - js 的处理：转换 ES6 代码，解决浏览器兼容问题
 - css 的处理：编译 css，自动添加前缀，抽取 css 到独立文件
@@ -63,37 +63,37 @@ tags:
 
 ## 二、简单配置 webpack
 
-::: tip 简单配置 webpack
-简单配置下 webpack，先把项目跑起来，下载 webpack 依赖
+::: tip 简单配置 `webpack`
+简单配置下 `webpack，先把项目跑起来，下载` `webpack` 依赖
 :::
 
-- 首先我们需要用到 webpack、webpack-cli、webpack-dev-server，那么我们执行以下命令
+- 首先我们需要用到 `webpack、webpack-cli、webpack-dev-server`，那么我们执行以下命令
 
-  - webpack 用来打包项目，webpack-dev-server 用来本地开发，webpack-cli 必不可少
+  - `webpack` 用来打包项目，`webpack-dev-server` 用来本地开发，`webpack-cli` 必不可少
 
   ```sh
     yarn add webpack webpack-cli webpack-dev-server --save-dev
   ```
 
-- 我们要编译 html，需要用到 html-webpack-plugin 插件，每次打包我们需要在 build 之前先删除之前打包后的文件因为 hash 的存在会导致文件冲突，所以我们安装以下两个插件
+- 我们要编译 `html`，需要用到 `html-webpack-plugin` 插件，每次打包我们需要在 `build` 之前先删除之前打包后的文件因为 `hash` 的存在会导致文件冲突，所以我们安装以下两个插件
 
   ```sh
     yarn add html-webpack-plugin html-loader clean-webpack-plugin --save-dev
   ```
 
-- html-loader 是 babel 的一个 loader 用来编译 html
-- clean-webpack-plugin 用来对打包之前的删除操作，因为新版本的原因，引入方式有点不一样
+- `html-loader` 是 `babel` 的一个 `loader` 用来编译 `html`
+- `clean-webpack-plugin` 用来对打包之前的删除操作，因为新版本的原因，引入方式有点不一样
 
   ```javascript
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   ```
 
-- webpack 处理 html、css、js，就会处理路径，我们会用到 path 模块，一般会写一个 resolve 方法来处理路径
+- `webpack` 处理 `html、css、js`，就会处理路径，我们会用到 `path` 模块，一般会写一个 `resolve` 方法来处理路径
   ```javascript
     yarn add path --save-dev
     const resolve = dir => path.join(__dirname, dir)
   ```
-- webpack 必须配置的几项，entry、output
+- `webpack` 必须配置的几项，`entry、output`
   - entry 顾名思义配置文件主入口的，他的配置方式多种多样，详细了解 webpack 的介绍 [传送门](/webpack/#一、-entry-入口配置)
   - 我们先简单的配置以下，使 js 和 html 耦合到一起，entry 我们选对象语法
   ```javascript
