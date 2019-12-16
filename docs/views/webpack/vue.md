@@ -94,23 +94,23 @@ tags:
     const resolve = dir => path.join(__dirname, dir)
   ```
 - `webpack` 必须配置的几项，`entry、output`
-  - entry 顾名思义配置文件主入口的，他的配置方式多种多样，详细了解 webpack 的介绍 [传送门](/webpack/#一、-entry-入口配置)
-  - 我们先简单的配置以下，使 js 和 html 耦合到一起，entry 我们选对象语法
+  - entry 顾名思义配置文件主入口的，他的配置方式多种多样，详细了解 `webpack` 的介绍 [传送门](/webpack/#一、-entry-入口配置)
+  - 我们先简单的配置以下，使 `js` 和 `html` 耦合到一起，`entry` 我们选对象语法
   ```javascript
   entry: {
     app: resolve('./src/main.js')
   }
   ```
-  - output 就是对象语法，必要的有两个配置项，path、filename 还有一个可有可无 publicPath 打包后静态资源文件夹的目录
-  - path 是打包后的目录，若没有这个目录 webpack 会自己新建，filename 是打包后的文件名字，语法如下
-  - hash 介绍看 webpack 的介绍 [传送门](/webpack/#四、hash、-chunkhash和contenthash有什么不同？)
+  - `output` 就是对象语法，必要的有两个配置项，`path、filename` 还有一个可有可无 `publicPath` 打包后静态资源文件夹的目录
+  - `path` 是打包后的目录，若没有这个目录 `webpack` 会自己新建，`filename` 是打包后的文件名字，语法如下
+  - `hash` 介绍看 `webpack` 的介绍 [传送门](/webpack/#四、hash、-chunkhash和contenthash有什么不同？)
   ```javascript
    output: {
      path: resolve('love'),
      filename: 'js/[name].[hash].js'
    }
   ```
-  - 配置开发环境下的 node 服务器，devserver
+  - 配置开发环境下的 `node` `服务器，devserver`
   ```javascript
     devServer: {
       contentBase: resolve('public'), // 服务器根目录
@@ -145,11 +145,11 @@ tags:
         showErrors: true                         // 报错了是否展示
       })
   ```
-  ::: danger 不推荐设置 chunks
-  项目中之前设置了 chunks 打包后对应某个模块，但是我们用到了分离插件，导致分离后的东西，动态的我们不确定名字，导致不去加载那个文件，导致页面不渲染，这个属性不设置，也不会不错，他会动态的都给你加上去
+  ::: danger 不推荐设置 `chunks`
+  项目中之前设置了 `chunks` 打包后对应某个模块，但是我们用到了分离插件，导致分离后的东西，动态的我们不确定名字，导致不去加载那个文件，导致页面不渲染，这个属性不设置，也不会不错，他会动态的都给你加上去
   :::
-- 最后我们修改下 package.json 的启动脚本，然后我们可以在 main.js 下写一些执行脚本，就可以看到效果了
-- --mode development 设置 webpack 运行时的环境为 development，--progress 不用说了吧
+- 最后我们修改下 `package.json` 的启动脚本，然后我们可以在 `main.js` 下写一些执行脚本，就可以看到效果了
+- `--mode development` 设置 `webpack` 运行时的环境为 `development`，`--progress` 不用说了吧
 
 ```JSON
   "scripts": {
@@ -160,8 +160,8 @@ tags:
 
 ## 三、开始配置 vue
 
-::: tip 配置 vue
-配置 vue，需要下载 vue 核心的插件 vue-loader vue-template-compiler，以及我们将要用到的 sass 的配置
+::: tip 配置 `vue`
+配置 `vue`，需要下载 `vue` 核心的插件 `vue-loader vue-template-compiler`，以及我们将要用到的 `sass` 的配置
 :::
 
 ```sh
@@ -169,14 +169,14 @@ tags:
   yarn add vue-loader vue-template-compiler --save-dev
 ```
 
-- 配置 vue
-  - vue 核心插件下载完之后在 vue-loader 下面的 lib 里面有他的插件配置，我们取出来就可以直接用
+- 配置 `vue`
+  - `vue` 核心插件下载完之后在 `vue-loader` 下面的 `lib` 里面有他的插件配置，我们取出来就可以直接用
   ```javascript
     const VueLoaderPlugin = require('vue-loader/lib/plugin')
     ...省略上万行代码
     plugins: [ new VueLoaderPlugin() ]
   ```
-  - 然后我们配置 module，配置 vue 文件怎么执行
+  - 然后我们配置 `module`，配置 `vue` 文件怎么执行
   ```javascript
   module: {
     rules: [
@@ -188,11 +188,11 @@ tags:
   }
   ```
   - 然后我们在相应的地方写上我们改写的代码，此时就可以运行代码了
-    - 在 public 下面的 index.html 里面写下
+    - 在 `public` 下面的 `index.html` 里面写下
     ```html
     <div id="root"></div>
     ```
-    - 在 main.js 里面引入 vue，并简单配置下 vue
+    - 在 `main.js` 里面引入 `vue`，并简单配置下 `vue`
     ```js
       import Vue form 'vue'
       import App from './App.vue'
@@ -200,7 +200,7 @@ tags:
         render: h => h(App)
       }).$mount('#root')
     ```
-    - 在 App.vue 里面写下
+    - 在 `App.vue` 里面写下
     ```html
     <template>
       <div id="root">
@@ -214,11 +214,11 @@ tags:
       }
     </script>
     ```
-  - 此时 vue 最基本的功能就配置完成了
-- 接下来我们配置 css 预编译 scss，还有 css 的兼容那个 postcss 自动填充浏览器前缀
-  - css loader 介绍请看这里 [传送门](/webpack/#六、webpack处理css的一些介绍)
-  - 首先需要几个插件 style-loader css-loader postcss-loader scss-loader
-  - webpack 的模块的执行顺序是倒着来的，我们也要倒着来配置
+  - 此时 `vue` 最基本的功能就配置完成了
+- 接下来我们配置 `css` 预编译 `scss`，还有 `css` 的兼容那个 `postcss` 自动填充浏览器前缀
+  - `css loader` 介绍请看这里 [传送门](/webpack/#六、webpack处理css的一些介绍)
+  - 首先需要几个插件 `style-loader css-loader postcss-loader scss-loader`
+  - `webpack` 的模块的执行顺序是倒着来的，我们也要倒着来配置
   ```sh
     yarn add node-sass sass-loader postcss-loader style-loader css-loader --save-dev
     yarn add --dev autoprefixer
@@ -228,7 +228,7 @@ tags:
       loader: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
     }
   ```
-  - postcss 是 css 后处理器 postcss.config.js 的配置如下
+  - `postcss` 是 `css` 后处理器 `postcss.config.js` 的配置如下
   ```javascript
   module.exports = {
     plugins: {
@@ -236,7 +236,7 @@ tags:
     }
   }
   ```
-- 可能会用到对一些文件的打包，比如说图片转 base64，解析字体，我们会用到 file-loader
+- 可能会用到对一些文件的打包，比如说图片转 `base64`，解析字体，我们会用到 `file-loader`
   ```javascript
     yarn add file-loader --save-dev
     # 配置如下
@@ -259,30 +259,30 @@ tags:
 忘了重要的一项，忘记了编译 js 了，我说怎么缺点什么呢
 :::
 
-- 编译 js 我选择了 env 插件，为什么？[传送门](https://zhuanlan.zhihu.com/p/29506685)
-- 而且我试了用了 @babel/preset-es2015 但是还是一直报找不到这个模块
+- 编译 js 我选择了 `preset-env` 插件，为什么？[传送门](https://zhuanlan.zhihu.com/p/29506685)
+- 而且我试了用了 `@babel/preset-es2015` 但是还是一直报找不到这个模块
   <p align="center" class="p-images">
     <img :src="$withBase('/imgs/error-@babelpreset-es2015.png')" />
   </p>
-- 最终选择了 @babel/preset-env 插件
+- 最终选择了` @babel/preset-env` 插件
 
-```conf
+```sh
   yarn add --save-dev @babel/core @babel/preset-env babel-loader
 ```
 
-- babel-loader 默认下载就是 babel7 的插件，我们选择了 babel7 的插件，因为 babel 已经是最稳定的插件了
-- 用了 babel7 之后 babel 配置文件是 babel.config.js 和.babelrc 都无所谓了，不过.babelrc 要求必须是严格的 JSON 语法
-- 当我们配置了 babel.config.js 之后还是报了一个错
+- `babel-loader` 默认下载就是 `babel7` 的插件，我们选择了 `babel7` 的插件，因为 babel 已经是最稳定的插件了
+- 用了 `babel7` 之后 `babel` 配置文件是 `babel.config.js` 和 `.babelrc` 都无所谓了，不过 `.babelrc` 要求必须是严格的 `JSON` 语法
+- 当我们配置了 `babel.config.js` 之后还是报了一个错
   <p align="center" class="p-images">
     <img :src="$withBase('/imgs/error-@babelpreset-env.png')" />
   </p>
 - 那我们按照他的提示下载并且配置该插件就好
 
-```conf
+```sh
   yarn add @babel/plugin-syntax-dynamic-import
 ```
 
-- 并附上 babel.config.js 的配置
+- 并附上 `babel.config.js` 的配置
 
 ```javascript
 module.exports = {
@@ -291,7 +291,7 @@ module.exports = {
 }
 ```
 
-- 如果您喜欢用.babelrc 配置的话也是可以，下面是.babelrc 的配置
+- 如果您喜欢用 `.babelrc` 配置的话也是可以，下面是 `.babelrc` 的配置
 
 ```JSON
   {
@@ -300,7 +300,7 @@ module.exports = {
   }
 ```
 
-- 编译 beble 的 loader 配置如下，我们只编译 src 目录下的文件，减少文件搜索范围
+- 编译 `beble` 的 `loader` 配置如下，我们只编译 `src` 目录下的文件，减少文件搜索范围
 
 ```javascript
   {
@@ -317,7 +317,7 @@ module.exports = {
 
 ### 分离 css
 
-- 插件是 mini-css-extract-plugin，该插件必须是 webpack4.0 以上才支持
+- 插件是 `mini-css-extract-plugin`，该插件必须是 `webpack4.0` 以上才支持
 
 ```conf
   # 下载插件
@@ -325,8 +325,8 @@ module.exports = {
 ```
 
 - 插件介绍：
-  - 在 plugins 数组中直接 new MiniCSSExtractPlugin 就可以，它接受一个 options 作为一个参数
-  - filename 和 chunkFilename，这两项都是可选的，类似于 webpackOptions.output
+  - 在 `plugins` 数组中直接 `new MiniCSSExtractPlugin` 就可以，它接受一个 `options` 作为一个参数
+  - `filename` 和 `chunkFilename`，这两项都是可选的，类似于 `webpackOptions.output`
   - 简单配置如下 [传送门](https://webpack.js.org/plugins/mini-css-extract-plugin/)
   ```javascript
   new MiniCssExtractPlugin({
@@ -334,7 +334,7 @@ module.exports = {
     chunkFilename: 'css/[id].[hash].css'
   })
   ```
-  - 配置完后，需要修改 module 里面配置 css 的参数，修改为以下配置
+  - 配置完后，需要修改 `module` 里面配置 `css` 的参数，修改为以下配置
   ```javascript
     {
       test: /\.(sa|sc|c)ss$/,
@@ -355,8 +355,8 @@ module.exports = {
 
 ### 分离不常变化的文件
 
-- node_modules 下面的模块，引用别人的库，我们是不需要编译，所以我们把它们分离出来，这是我们需要配置 optimization 配置项
-- 这么配置以下，会看到项目下面会打包出一个 vendor.js 文件
+- `node_modules` 下面的模块，引用别人的库，我们是不需要编译，所以我们把它们分离出来，这是我们需要配置 `optimization` 配置项
+- 这么配置以下，会看到项目下面会打包出一个 `vendor.js` 文件
 - 具体配置参照 [传送门](https://imweb.io/topic/5b66dd601402769b60847149)
 
 ```javascript
@@ -378,9 +378,9 @@ optimization: {
 }
 ```
 
-- 如果项目使用包模块多的话，我们可以把大点的包都分离出来，cacheGroup 就是配置的关键，可以卓个分离分离
-- 比如说你想把 vue、vue-router 分离出来，或者你用了 element、echarts 因为打包后单个包太大，你想要分割代码，那就配置 cacheGroup
-- 它是 webpack 自带的插件，不需要引入直接就可以用，简单配置如下
+- 如果项目使用包模块多的话，我们可以把大点的包都分离出来，`cacheGroup` 就是配置的关键，可以卓个分离分离
+- 比如说你想把 `vue、vue-router` 分离出来，或者你用了 `element、echarts` 因为打包后单个包太大，你想要分割代码，那就配置 `cacheGroup`
+- 它是 `webpack` 自带的插件，不需要引入直接就可以用，简单配置如下
 
 ```JavaScript
   {
@@ -409,16 +409,16 @@ optimization: {
 
 ### 压缩 js 和压缩 css
 
-- 需要两个插件 optimize-css-assets-webpack-plugin 和 uglifyjs-webpack-plugin
+- 需要两个插件 `optimize-css-assets-webpack-plugin` 和 `uglifyjs-webpack-plugin`
 
-```conf
+```sh
   yarn add --save-dev uglifyjs-webpack-plugin
   yarn add optimize-css-assets-webpack-plugin
 ```
 
 - 压缩文件出现的情况下都在生产环境下，开发环境是不需要的，所以我们可以下判断
-- OptimizeCSSAssetsWebpackPlugin 插件基本不需要配置，直接实例化传入一个空的 options 就可以
-- UgligyjsWebpackPlugin 有个坑，配置完毕后，项目打包报错了
+- `OptimizeCSSAssetsWebpackPlugin` 插件基本不需要配置，直接实例化传入一个空的 `options` 就可以
+- `UgligyjsWebpackPlugin` 有个坑，配置完毕后，项目打包报错了
   <p align="center" class="p-images">
     <img :src="$withBase('/imgs/error-uglifyjs.png')" />
   </p>
@@ -468,7 +468,7 @@ optimization: {
 
 ### 去除无用的 css
 
-- 需要用到两个插件 PurgecssPlugin 和 glob
+- 需要用到两个插件 `PurgecssPlugin` 和 `glob`
 
 ```sh
   yarn add glob-all --save-dev
@@ -489,7 +489,7 @@ optimization: {
 
 ### 开启 gzip
 
-- 需要用到插件 CompressionWebpackPlugin
+- 需要用到插件 `CompressionWebpackPlugin`
 
 ```sh
   yarn add -D compression-webpack-plugin
@@ -508,7 +508,7 @@ optimization: {
 
 ### 显示打包进度和打包时间
 
-- 需要用到两个插件 progress-bar-webpack-plugin chalk
+- 需要用到两个插件 `progress-bar-webpack-plugin chalk`
 - [ProgressBarPlugin](https://www.npmjs.com/package/progress-bar-webpack-plugin) 是用来配置进度条的，[chalk](https://www.npmjs.com/package/chalk) 是用来定义展示的颜色的
 
 ```js
@@ -521,11 +521,11 @@ optimization: {
 
 ### 友好的错误提示
 
-- 在 webpack 中编译过程中终端会输出很多信息的，看着很别扭，此时可以用到一个插件来很友好的显示
-- 在开发环境下展示的 log 我们完全可以把 **devServer.quiet** 设置为 **true**，此时整个世界都安静了
-- 模拟 vue-cli 中编译过程中输出的信息，我们用到 friendly-errors-webpack-plugin 插件
-- 经测试，貌似只对开发环境管用，那么我们就模拟下 vue-cli 的展示
-- 在 plugins 添加一下代码 [传送门](https://blog.csdn.net/kai_vin/article/details/89025966)
+- 在 `webpack` 中编译过程中终端会输出很多信息的，看着很别扭，此时可以用到一个插件来很友好的显示
+- 在开发环境下展示的 `log` 我们完全可以把 **devServer.quiet** 设置为 **true**，此时整个世界都安静了
+- 模拟 `vue-cli` 中编译过程中输出的信息，我们用到 `friendly-errors-webpack-plugin` 插件
+- 经测试，貌似只对开发环境管用，那么我们就模拟下 `vue-cli` 的展示
+- 在 `plugins` 添加一下代码 [传送门](https://blog.csdn.net/kai_vin/article/details/89025966)
 
 ```js
   new FriendlyErrorsWebpackPlugin({
@@ -551,8 +551,8 @@ optimization: {
   }),
 ```
 
-- networkIp 是我们自己编写的一个利用 os 模块获取本机 ip 的方法，具体实现如下
-- 获取 networkInterfaces 对象，里面有 ip 的各种格式，筛选出我们要的那个就可以了
+- `networkIp` 是我们自己编写的一个利用 `os` 模块获取本机 `ip` 的方法，具体实现如下
+- 获取 `networkInterfaces` 对象，里面有 `ip` 的各种格式，筛选出我们要的那个就可以了
 
 ```js
 const interfaces = require('os').networkInterfaces()
@@ -583,11 +583,11 @@ module.exports = getNetworkIp
 
 ## 六、Source Map
 
-::: tip 为什么要用 source maps
-因为 webpack 对源代码进行打包后，会对源代码进行压缩、精简、甚至变量名替换，在浏览器中，无法对代码逐行打断点进行调试，所有需要使用 source maps 进行调试，它使得我们在浏览器中可以看到源代码，进而逐行打断点调试。
+::: tip 为什么要用 `source maps`
+因为 `webpack` 对源代码进行打包后，会对源代码进行压缩、精简、甚至变量名替换，在浏览器中，无法对代码逐行打断点进行调试，所有需要使用 `source maps` 进行调试，它使得我们在浏览器中可以看到源代码，进而逐行打断点调试。
 :::
 
-- 使用方法很简单，只需要在配置中添加 devtool 属性，赋值一个字符串或者布尔值即可 [传送门](https://www.webpackjs.com/configuration/devtool/)
+- 使用方法很简单，只需要在配置中添加 `devtool` 属性，赋值一个字符串或者布尔值即可 [传送门](https://www.webpackjs.com/configuration/devtool/)
 - 使用 inline-source-map 不会对生产环境造成影响
 
 ```js
