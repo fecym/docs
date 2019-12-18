@@ -79,7 +79,7 @@ tags:
   }
 ```
 
-执行 `npm start` 之后，会自动创建一个 **shell** 脚本，这个 **shell** 脚本会将当前目录的 `node_modules/.bin` 子目录加入 PATH 变量，执行结束后，再将 `PATH` 变量恢复原样。  
+执行 `npm start` 之后，会自动创建一个 **shell** 脚本，这个 **shell** 脚本会将当前目录的 `node_modules/.bin` 子目录加入 PATH 变量，执行结束后，再将 `PATH` 变量恢复原样。
 这意味着，当前目录的 `node_modules/.bin` 子目录里面的所有脚本，都可以直接用脚本名调用，而不必加上路径。
 
 ### 3. 通配符 \*
@@ -211,7 +211,7 @@ tags:
   }
 ```
 
-此时安装 `cym-cli-blog` 这个模块之后，可以看到 `node_modules/.bin` 就有了 `cym-blog` 环境变量
+此时安装 `cym-blog` 这个模块之后，可以看到 `node_modules/.bin` 就有了 `cym-blog` 环境变量
 
 <p align="center" class="p-images">
   <img :src="$withBase('/imgs/big-front-npm-init-cym-blog.png')" height="" title="node_modules/.bin 中环境变量" />
@@ -234,10 +234,10 @@ tags:
   esac
 
   if [ -x "$basedir/node" ]; then
-    "$basedir/node"  "$basedir/../cym-cli-blog/index.js" "$@"
+    "$basedir/node"  "$basedir/../cym-blog/index.js" "$@"
     ret=$?
   else
-    node  "$basedir/../cym-cli-blog/index.js" "$@"
+    node  "$basedir/../cym-blog/index.js" "$@"
     ret=$?
   fi
   exit $ret
@@ -247,11 +247,11 @@ tags:
 
 ```batch
   @IF EXIST "%~dp0\node.exe" (
-    "%~dp0\node.exe"  "%~dp0\..\cym-cli-blog\index.js" %*
+    "%~dp0\node.exe"  "%~dp0\..\cym-blog\index.js" %*
   ) ELSE (
     @SETLOCAL
     @SET PATHEXT=%PATHEXT:;.JS;=;%
-    node  "%~dp0\..\cym-cli-blog\index.js" %*
+    node  "%~dp0\..\cym-blog\index.js" %*
   )
 ```
 
@@ -289,7 +289,7 @@ tags:
 
 ## package-lock.json
 
-`package-lock.json` 是在 `npm v5` 之后增加的一个依赖锁文件，用来锁定依赖的安装结构。如果查看这个 `json` 的结构，会发现与 `node_modules` 目录的文件层级结构是一一对应的。  
+`package-lock.json` 是在 `npm v5` 之后增加的一个依赖锁文件，用来锁定依赖的安装结构。如果查看这个 `json` 的结构，会发现与 `node_modules` 目录的文件层级结构是一一对应的。
 以依赖关系为: `app{webpack}` 的 'app' 项目为例, 其 `package-lock` 文件包含了这样的片段。
 
 ```json
