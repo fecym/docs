@@ -234,10 +234,10 @@ tags:
   esac
 
   if [ -x "$basedir/node" ]; then
-    "$basedir/node"  "$basedir/../cym-blog/index.js" "$@"
+    "$basedir/node"  "$basedir/../cym-blog/bin/index.js" "$@"
     ret=$?
   else
-    node  "$basedir/../cym-blog/index.js" "$@"
+    node  "$basedir/../cym-blog/bin/index.js" "$@"
     ret=$?
   fi
   exit $ret
@@ -247,11 +247,11 @@ tags:
 
 ```batch
   @IF EXIST "%~dp0\node.exe" (
-    "%~dp0\node.exe"  "%~dp0\..\cym-blog\index.js" %*
+    "%~dp0\node.exe"  "%~dp0\..\cym-blog\bin\index.js" %*
   ) ELSE (
     @SETLOCAL
     @SET PATHEXT=%PATHEXT:;.JS;=;%
-    node  "%~dp0\..\cym-blog\index.js" %*
+    node  "%~dp0\..\cym-blog\bin\index.js" %*
   )
 ```
 
