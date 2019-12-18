@@ -169,14 +169,14 @@ Function.prototype.bind2 = function(context = window) {
   const fn = function() {
     // this instanceof fn 为 true 表示构造函数的情况。如 new barBind2('cym', 24)
     if (this instanceof fn) {
-      // that.apply(that.prototype, args.concat(...arguments))
-      that.apply(this, args.concat(...arguments))
+      that.apply(that.prototype, args.concat(...arguments))
+      // that.apply(this, args.concat(...arguments))
     } else {
       that.apply(context, args.concat(...arguments))
     }
   }
   // 保证原函数的原型对象上的属性不丢失
-  fn.prototype = Object.create(this.prototype)
+  // fn.prototype = Object.create(this.prototype)
   return fn
 }
 ```
