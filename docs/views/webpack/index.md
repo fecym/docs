@@ -89,8 +89,8 @@ module.exports = function(env, argv) {
     entry: path.resolve('./src/main'),
     output: {
       path: path.resolve('./dist'),
-      filename: '[name].[hash].js'
-    }
+      filename: '[name].[hash].js',
+    },
   }
 }
 ```
@@ -279,8 +279,8 @@ plugins: [
   // 分离css，只需要传入相应的配置即可
   new MiniCssExtractPlugin({
     filename: 'css/[name].[hash].css',
-    chunkFilename: 'css/[id].[hash].css'
-  })
+    chunkFilename: 'css/[id].[hash].css',
+  }),
 ]
 ```
 
@@ -351,7 +351,7 @@ module.exports = function(env, argv) {
     output: {
       path: path.resolve('./dist'),
       filename: 'js/[name].[chunkHash].js',
-      publicPath: '.'
+      publicPath: '.',
     },
     module: {
       rules: [
@@ -362,13 +362,13 @@ module.exports = function(env, argv) {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                reloadAll: true
-              }
+                reloadAll: true,
+              },
             },
-            'css-loader'
-          ]
-        }
-      ]
+            'css-loader',
+          ],
+        },
+      ],
     },
     plugins: [
       // 配置HTML
@@ -380,20 +380,20 @@ module.exports = function(env, argv) {
         title: '程禹铭',
         inject: true,
         hash: true,
-        showErrors: true
+        showErrors: true,
       }),
       // 分离css
       new MiniCssExtractPlugin({
         filename: 'css/[name].[hash].css',
-        chunkFilename: 'css/[id].[hash].css'
-      })
+        chunkFilename: 'css/[id].[hash].css',
+      }),
     ],
     optimization: {
       minimize: true,
       runtimeChunk: {
-        name: entryPoint => `runtime~${entryPoint.name}`
-      }
-    }
+        name: entryPoint => `runtime~${entryPoint.name}`,
+      },
+    },
   }
 }
 ```
@@ -478,7 +478,7 @@ module.exports = function(env, argv) {
 
 ```javascript
 module.exports = {
-  plugins: [require('autoprefixer')]
+  plugins: [require('autoprefixer')],
 }
 ```
 
@@ -575,32 +575,41 @@ requireAll(requireAllComponent).forEach(componentModule => {
 
 ## webpack 拓展
 
+> 记录下 `loader` 和 `plugins` 的开发过程
+
 ### 自定义 loader
 
-> 在 webpack 的 module 配置中，有一个属性是 rules，配置模块的读取和解析规则，通常用来配置 loader，其类型是一个数组，数组里每一项都描述了如何去处理部分文件。`loader` 的执行顺序按照从后往前的顺序逆向执行的，我们来实现一下 `移除console` 的 loader。
+> 在 webpack 的 module 配置中，有一个属性是 rules，配置模块的读取和解析规则，通常用来配置 loader，其类型是一个数组，数组里每一项都描述了如何去处理部分文件。`loader` 就像一个翻译员，能将源文件经过转换后输出新的结果，并且一个文件还可以链式地经过多个翻译员翻译。
+
+__概念：__
+
+- 一个 `loader` 的职责是单一的，只需要完成一种转换
+- 一个 `loader` 其实就是一个 `nodejs` 模块，这个模块需要导出一个函数
+
+`loader` 的执行顺序按照从后往前的顺序逆向执行的，我们来实现一下 `移除console` 的 loader。
 
 - 新建一个 `removeConsole.js` 文件
 - `loader` 本质就是一个方法
-- 这个方法接受一个参数，参数就是 webpack 打包时的代码，我们要在这里把代码劫持到做对应的改变
+- 这个方法接受一个参数 `source`，`source` 是 `compiler` 传递给 `loader` 的一个文件的原内容
 - 该方法必须有返回值，返回值就是我们最终的输出结果
 
 ```js
   // removeConsole.js 同步写法
-  module.exports = function(ctx) {
-    // ctx 就是 webpack 编译的代码
+  module.exports = function(source) {
+    // source 就是 webpack 编译的代码
     const reg = /console\.log\(.+?\)/g
     // 匹配到所有的 console 然后替换为空字符串
-    return ctx.replace(reg, '')
+    return source.replace(reg, '')
   }
 
   // removeConsole.js 异步写法
-  module.exports = function(ctx) {
+  module.exports = function(source) {
     // 加上这句话就是异步写法了
     const callback = this.async()
-    // ctx 就是 webpack 编译的代码
+    // source 就是 webpack 编译的代码
     const reg = /console\.log\(.+?\)/g
     // 匹配到所有的 console 然后替换为空字符串
-    const result = ctx.replace(reg, '')
+    const result = source.replace(reg, '')
     // callback接受两个参数，第一个是错误，第二个是结果
     callback(null, result)
   }
@@ -628,7 +637,7 @@ requireAll(requireAllComponent).forEach(componentModule => {
 
 - 当我们编译 `js` 的时候我们会用 `babel-loader` 和 `@babel/core` 最少两个依赖，编译 `less` 的时候，会用 `less-loader` 和 `less` 最少两个包，为什么呢？
 
-- 比如说 `@babel/core` 和 `babel-loader` 的关系，`@babel/core` 是核心编译 `babel-loader` 是把接受到的 `ctx` 传给` @babel/core`
+- 比如说 `@babel/core` 和 `babel-loader` 的关系，`@babel/core` 是核心编译 `babel-loader` 是把接受到的 `ctx` 传给`@babel/core`
 
 ```js
 // babel-loader 和 @babel/core 的关系
@@ -639,18 +648,31 @@ function babelLoader(ctx) {
 
 ### 自定义 plugins
 
-- 时间原因整个过程暂时就不说了，源码我放到 github 了，过程全部放在注释里面了
+> `plugins` 专注处理 `webpack` 编译过程中某个特定的任务的功能模块
+
+__概念：__
+
+- `plugins` 是一个独立的模块
+- 模块对外暴露一个 `js` 函数
+- 函数的原型上定义了一个注入 `compiler` 对象的 `apply` 方法
+- `apply` 函数中需要有通过 `compiler` 对象挂载的 `webpack` 事假钩子函数，钩子函数中可以拿到当前编译的 `compilation` 对象，如果是异步编译插件的话可以拿到回调的 `callback`
+- 完成自定义子编译流程并处理 `compilation` 对象的内部数据
+- 如果是异步编译插件的话，数据处理完成后执行 `callback` 的回调
+
+- 时间原因开发过程暂时就不说了，源码我放到 github 了，过程全部放在注释里面了
 - 源码地址 [https://github.com/cym-git/webpack-pit-2019-11-24.git](https://github.com/cym-git/webpack-pit-2019-11-24.git)
 
 ```js
 // 插件核心 staticAssetsPlugin.js
 // 需求：把所有的引入中的静态资源 /static/ 变成 http://chengyuming.cn/imgs/
 const fs = require('fs')
+// 对外暴露的 js 函数
 class StaticAssetsPlugin {
+  // 在构造函数中获取用户为插件传入的配置
   constructor(options) {
     this.options = options
   }
-  // 在插件中 new 的时候会自动执行 apply 方法，主入口方法
+  // 在插件中 new 的时候会自动执行 apply 方法，主入口方法，该方法被注入了 compiler 对象
   apply(complier) {
     // 只在生产环境下执行
     if (!this.options.isProduction) return
