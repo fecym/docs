@@ -358,7 +358,6 @@ function debounce(fn, step) {
 - 需求是这样的，我们要模仿百度地图的搜索，搜索完之后，把后台返回的数据展示为一个列表，然后对应的点显示上去
 - 鼠标悬停列表后地图上的点也改变其颜色，如下图
 
-  <!-- javascript-basis-mapbox.jpg -->
   <p align="center" class="p-images">
     <img :src="$withBase('/imgs/javascript-basis-mapbox.jpg')" width="700" style="border-radius: 8px;">
   </p>

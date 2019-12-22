@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: chengyuming
  * @Date: 2019-08-01 22:16:17
  * @LastEditors: chengyuming
@@ -37,6 +37,7 @@ module.exports = {
         { text: '继承', link: '/views/basis/inherit' },
         { text: '常用api', link: '/views/basis/api' },
         { text: '小技巧', link: '/views/basis/issue' },
+        { text: '浏览器缓存', link: '/views/basis/cache' },
       ]
     },
   ]
