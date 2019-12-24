@@ -96,7 +96,7 @@ tags:
     },
     [Symbol.toPrimitive]() {
       return 2
-    }
+    },
   }
   obj + 1 // 3
   ```
@@ -114,7 +114,7 @@ const obj = {
   toString() {
     console.log('toString')
     return 'cym'
-  }
+  },
 }
 console.log(obj - 1) // valueOf 122
 console.log(`${obj} 你好`) // toString cym 你好
@@ -127,7 +127,7 @@ const o = {
   toString() {
     console.log('toString')
     return {}
-  }
+  },
 }
 console.log(o - 1) // Uncaught TypeError: Cannot convert object to primitive value
 console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primitive value
@@ -155,8 +155,8 @@ console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primi
   - 此段内容摘自[掘金 - 原生 JS 灵魂之问](https://juejin.im/post/5dac5d82e51d45249850cd20#heading-17)
 
 ```js
-console.log({ a: 1 } == true) // false
-console.log({ a: 1 } == '[object Object]') // true
+console.log({a: 1} == true) // false
+console.log({a: 1} == '[object Object]') // true
 ```
 
 ## 枚举
@@ -192,13 +192,13 @@ function creatEnum(Enum = {}, args = []) {
 > 对于一个引用类型，把这个引用类型赋值给其他的引用类型的后，对该引用类型的某个属性进行修改，则另外一个也会变，但是覆盖后，则对另一个不会有影响
 
 ```js
-const obj = { a: 1, b: '我是b' }
+const obj = {a: 1, b: '我是b'}
 let b = obj
 // 对其某个属性修改，则会另外一个对象也会变，因为是同一个引用
 b.b = '我是b'
 console.log(obj, b) // {a: 1, b: "我是b"} {a: 1, b: "我是b"}
 // 对其覆盖，则不会影响另一个对象
-b = { c: '我是b的c' }
+b = {c: '我是b的c'}
 console.log(obj, b) // {a: 1, b: "我是b"} {c: "我是b的c"}
 ```
 
@@ -223,6 +223,30 @@ console.log(a) // '4, 2, 3'
 console.log(b) // '5, 6'
 ```
 
+### 如何解决函数内传址带来的影响
+
+根据上面的情况我们发现：当传递给函数参数是一个引用的时候，在函数中修改该引用会影响到外面的引用类型，因为他们是同一个地址
+
+那么我不想影响到函数外面的引用类型怎么办？
+
+在 《你不知道的 JavaScript》中卷中，有这么一句话：`如果通过值复制的方式来传递复合值（如数组），就需要为其创建一个副本，这样传递的就不再是原始值`
+
+也就是说我们传递一个引用类型的副本给函数，那么修改了也是对这个副本的引用有影响，对原来的引用值没有影响，还是不理解？那么看下面的代码：
+
+```js
+const arr = [1, 2, 3]
+function fn(arr) {
+  arr.push(8)
+}
+// 执行函数fn传递数组的副本过去，此时，我们在打印外面的 arr 发现是没有变化的
+fn(arr.slice())
+// 为什么呢？因为这么写就相当于我们用了引用覆盖了原来的引用，当然不会对原来的引用造成影响了
+// 相当于这么写
+let copyArr = arr
+copyArr = arr.slice()
+fn(copyArr)
+```
+
 ## this
 
 在《你不知道的 JavaScript》上卷中提到 `this` 绑定有四种规则，分别是默认绑定（函数自执行）、隐式绑定（对象打点调用）、显示绑定（call 之类绑定）、new 绑定（构造函数）
@@ -245,11 +269,11 @@ function print_a() {
 }
 const obj2 = {
   a: 42,
-  print_a
+  print_a,
 }
 const obj1 = {
   a: 2,
-  obj2
+  obj2,
 }
 // 最后一层调用链中起作用
 obj1.obj2.print_a() // 42
@@ -260,15 +284,15 @@ obj1.obj2.print_a() // 42
 4. 隐式绑定可能会出现丢失的情况，看以下代码：
 
 ```js
-  function print_a() {
-    console.log(this.a)
-  }
-  const obj = { a: 2, print_a }
-  // 我们把函数赋值给了一个变量来保存
-  const fn = obj.print_a
-  var a = '我是window的a'
-  // 此时执行这个函数，其实就是相当于函数的自执行的，那么就会走默认绑定的规则
-  fn()  // 我是window的a
+function print_a() {
+  console.log(this.a)
+}
+const obj = {a: 2, print_a}
+// 我们把函数赋值给了一个变量来保存
+const fn = obj.print_a
+var a = '我是window的a'
+// 此时执行这个函数，其实就是相当于函数的自执行的，那么就会走默认绑定的规则
+fn() // 我是window的a
 ```
 
 ### 显示绑定
@@ -276,13 +300,14 @@ obj1.obj2.print_a() // 42
 显示绑定分两种情况：使用 [`call、apply、bind`](/views/basis/api.html#call-和-apply) 方法绑定 `this` 和 `api` 调用的上下文
 
 ```js
-  // api 调用的上下文
-  function foo(el) {
-    console.log(el, this.id)
-  }
-  const obj = { id: 'awesome' }
+// api 调用的上下文
+function foo(el) {
+  console.log(el, this.id)
+}
+const obj = {id: 'awesome'}[
   // 调用 foo 时把 this 绑定到 obj 上
-  [1, 2, 3].forEach(foo, obj)   // 1 awesome 2 awesome 3 awesome
+  (1, 2, 3)
+].forEach(foo, obj) // 1 awesome 2 awesome 3 awesome
 ```
 
 ### new 绑定
@@ -294,23 +319,23 @@ obj1.obj2.print_a() // 42
 箭头函数不会使用 `this` 四种标准规则，而是根据外层（函数或者全局）作用域来决定 `this`，其实一个简单的理解就是我们在箭头函数出来之前经常用的一种方法，在函数外面 `var that = this`，然后在内层函数中使用 `that` 此时就保留了外层的 `this` 值
 
 ```js
-  var name = 'cym'
-  const fn = () => console.log(this.name)
-  const obj = { name: 'obj' }
-  // this 不会被改变
-  fn.call(obj)  // cym
+var name = 'cym'
+const fn = () => console.log(this.name)
+const obj = {name: 'obj'}
+// this 不会被改变
+fn.call(obj) // cym
 
-  // 来个面试题理解下
-  const obj1 = {
-    name: 'obj1',
-    print: function() {
-      return () => console.log(this.name)
-    }
-  }
-  const obj2 = { name: 'obj2' }
-  obj1.print()()            // obj1
-  obj1.print().call(obj2)   // obj1
-  obj1.print.call(obj2)()   // obj2
+// 来个面试题理解下
+const obj1 = {
+  name: 'obj1',
+  print: function() {
+    return () => console.log(this.name)
+  },
+}
+const obj2 = {name: 'obj2'}
+obj1.print()() // obj1
+obj1.print().call(obj2) // obj1
+obj1.print.call(obj2)() // obj2
 ```
 
 ## 防抖和节流
