@@ -45,6 +45,12 @@ tags:
 - `![]` 作为 Boolean 转换为 `0`
 - `'' == 0` 转换为 `0 == 0` 所以为 true
 
+```js
+  Number([])      // 0
+  Number(![])     // 0
+  Number(!![])    // 1
+```
+
 ### 类型转换规则
 
 > 在 js 中类型转换有三种情况：转布尔值；转数字；转字符串。如果发生了隐式转换，那么各种类型互转符合下面的规则：
@@ -143,20 +149,56 @@ console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primi
 
 ### == 和 ===
 
-> `===` 叫做严格相等，是指：左右两边不仅值要相等，类型也要相等，例如 `'1' === 1` 结果是 false，因为一边是 string，另一边是 number
+> `===` 叫做严格相等，是指：左右两边不仅值要相等，类型也要相等，例如 `'1' === 1` 结果是 false，因为一边是 string，另一边是 number。其实这种说法不严格，严格来说是：`== 允许在相等比较中进行强制类型转换，而 === 不允许`
 
 - `==` 不像 `===` 那样严格，对于一般情况，只要值相等，就返回 `true`，但 `==` 还涉及一些类型转换，它的转换规则如下：
 
   - 两边类型是否相同，相同的话就比较值的大小，例如 `1 == 2`，返回 `false`
   - 判断的值是否是 `null` 和 `undefined`，是的话就返回 `true`（js 中只有 `null == undefined`）
   - 判断的类型是否 `String` 和 `Number`，是的话就把 `String` 转换成 `Number`，在进行比较
-  - 判断其中一方是否是 `Boolean`，是的话就把 `Boolean` 转换成 `Number`，在进行比较
-  - 判断其中一份是否是 `Object`，且另一方为 `String、Number、Symbol`，会将 `Object` 转成字符串，在进行比较
+  - 判断其中一方是否是 `Boolean`，是的话就把 `Boolean` 转换成 `Number`，在进行比较（遇到布尔值会转换为数字进行比较）
+  - 判断其中一方是否是 `Object`，且另一方为 `String、Number、Symbol`，会将 `Object` 转成字符串，在进行比较
   - 此段内容摘自[掘金 - 原生 JS 灵魂之问](https://juejin.im/post/5dac5d82e51d45249850cd20#heading-17)
+
+- 对象的 `==` 和 `===` 比较的时候工作原理是一样的，都是判断其地址是否一致
 
 ```js
 console.log({a: 1} == true) // false
 console.log({a: 1} == '[object Object]') // true
+```
+
+### 假值常规和非常规的情况
+
+```js
+  '0' == null         // false
+  '0' == undefined    // false
+  '0' == false        // true   -- 嘿嘿
+  '0' == NaN          // false
+  '0' == 0            // true
+  '0' == ''           // false
+
+  false == null       // false
+  false == undefined  // false
+  false == NaN        // false
+  false == 0          // true   -- 嘿嘿
+  false == ''         // true   -- 嘿嘿
+  false == []         // true   -- 嘿嘿
+  false == {}         // false
+
+  '' == null          // false
+  '' == undefined     // false
+  '' == NaN           // false
+  '' == 0             // true   -- 嘿嘿
+  '' == []            // true   -- 嘿嘿
+  '' == {}            // false
+
+  0 == null           // false
+  0 == undefined      // false
+  0 == NaN            // false
+  0 == []             // true   -- 嘿嘿
+  0 == {}             // false
+
+  [] == ![]           // true   -- 嘿嘿嘿
 ```
 
 ## 枚举

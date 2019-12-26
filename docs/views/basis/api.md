@@ -496,7 +496,7 @@ function Emitter() {
   this.handlers = {}
 }
 Emitter.prototype = {
-  // 订阅事件，事件类型，事假回调
+  // 订阅事件，事件类型，事件回调
   on: function(type, handler) {
     if (!(this.handlers[type] in this.handlers)) {
       // 事件队列
@@ -548,12 +548,12 @@ class Emitter {
     })
   }
   off(type, handler) {
-    if (!this.handlers[type]) return undefined
+    if (!this.handlers[type]) return void 0
     return this.handlers[type].find((fn, idx) => {
       if (fn === handler) {
         return this.handlers[type].splice(idx, 1)
       } else {
-        return undefined
+        return void 0
       }
     })
   }
