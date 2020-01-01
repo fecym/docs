@@ -21,11 +21,11 @@ module.exports = {
         { text: 'cli 的开发', link: '/views/big-front-end/npm/cli' },
         { text: 'mysql', link: '/views/big-front-end/backend/mysql' },
         { text: 'nginx介绍', link: '/views/big-front-end/nginx/index' },
-        { text: '反向代理与负载均衡', link: '/views/big-front-end/nginx/requisite' },
         { text: 'redis', link: '/views/big-front-end/redis/index' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
         { text: '服务器的配置', link: '/views/big-front-end/service/init' },
+        { text: '反向代理与负载均衡', link: '/views/big-front-end/nginx/requisite' },
       ]
     },
     {
@@ -38,6 +38,7 @@ module.exports = {
         { text: '常用api', link: '/views/basis/api' },
         { text: '小技巧', link: '/views/basis/issue' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
+        { text: 'cookie、session 和 jwt', link: '/views/basis/jwt' },
       ]
     },
   ]
