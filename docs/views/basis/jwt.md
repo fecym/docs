@@ -200,7 +200,7 @@ jwt 全称 **JSON Web Token**，是目前最流行的跨域认证解决方案。
 
 服务端生成的一个 `jwt` 格式如下，以 `.` 分隔，token 可被解密，所以千万不要存 **敏感信息**
 
-```sh
+```conf
 # （头部）是 base64 加的密，可以使用 base64 进行解密
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.
 # （载荷 --> 保存的数据）
@@ -215,15 +215,14 @@ Y6F6_pOyDw2FMW6s9pND4n_IJTUmDQalEIZg823-Pqli-PSrKdoO0wfZTeXJawePNcceqt-wc5s37V5Z
 
 #### 1. 签发 jwt
 
-在 `jsonwebtoken` 模块中有个 sign 方法，用来签发 token，该方法接收三个参数：payload（载荷）、secret（秘钥）、其他的配置，简单写起来可能如下代码：
+在 `jsonwebtoken` 模块中有个 `sign` 方法，用来签发 `token`，该方法接收三个参数：`payload`（载荷）、`secret`（秘钥）、其他的配置，简单写起来可能如下代码：
+
+__载荷：除去协议首部之外实际传输的数据__
 
 ```js
 const jwt = require('jsonwebtoken')
 
-// 载荷：除去协议首部之外实际传输的数据
-const payload = {
-  name: 'cym',
-}
+const payload = {name: 'cym'}
 
 // 秘钥
 const secret = 'CHENGYUMING'
@@ -258,14 +257,14 @@ jwt.verify(token, secret, (err, data) => {
 在项目目录下新建一个文件夹用来存储生成的私钥和公钥
 
 ```sh
-mkdir rea_key && cd rea_key
+mkdir rsa_key && cd rsa_key
 # 先生成一个私钥
 openssl genrsa -out rsa_private_key.pem 2048
 # 在根据这个私钥生成一个公钥
 openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 ```
 
-用 RS256 算法签发 jwt 的时候需要，从读取我们创建的秘钥文件，使用的方法还是跟之前一样的，不过需要在最后一个参数里面配置一下算法的格式 `{ algorithm: 'RS256' }`，那么整个流程如下
+用 `RS256` 算法签发 `jwt` 的时候需要，从读取我们创建的秘钥文件，使用的方法还是跟之前一样的，不过需要在最后一个参数里面配置一下算法的格式 `{ algorithm: 'RS256' }`，那么整个流程如下
 
 ```js
 const fs = require('fs')
