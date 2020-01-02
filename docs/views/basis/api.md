@@ -145,7 +145,7 @@ function person(name, age) {
   console.log(name, age)
   console.log(this)
 }
-const obj = { name: 'obj' }
+const obj = {name: 'obj'}
 const barBind = person.bind(obj)
 // 普通调用
 barBind('cym', 24)
@@ -522,7 +522,7 @@ Emitter.prototype = {
       }
     }
     return result
-  }
+  },
 }
 ```
 
@@ -558,6 +558,63 @@ class Emitter {
     })
   }
 }
+```
+
+## promise 篇
+
+面试中，面试官经常会让你手撕一个 `Promise` 的实现，说句实话，这东西怪难的，考查你对异步流程语句的控制，`EventLoop` 的掌握，我打算把 promise 分段解析一下记录在此。本篇中先记录用法，在尝试实现
+
+### Promise.all 和 Promise.race 的变体
+
+#### first 与 last
+
+```js
+// first 的实现
+if (!Promise.first) {
+  Promise.first = function(prs) {
+    return new Promise((resolve, reject) => {
+      prs.forEach(pr => {
+        Promise.resolve(pr)
+          // first 只取第一次执行成功的方法
+          .then(resolve)
+      })
+    })
+  }
+}
+```
+
+```js
+// last 的实现
+if (!Promise.last) {
+  Promise.last = function(prs) {
+    return new Promise((resolve, reject) => {
+      const len = prs.length
+      let num = 0
+      prs.forEach(pr => {
+        Promise.resolve(pr).then(res => {
+          num++
+          if (num === len) {
+            // 如果是最后一项，则执行最后一下的结果
+            resolve(res)
+          }
+        })
+      })
+    })
+  }
+}
+```
+
+```js
+// 测试
+Promise.first([Promise.reject(1), Promise.resolve(2)]).then(res => {
+  console.log(res, 'first')
+})
+Promise.last([1, Promise.resolve(2)]).then(res => {
+  console.log(res, 'last')
+})
+// 测试结果：
+// 2 'first'
+// 2 'last'
 ```
 
 - 持续更新中....
