@@ -564,9 +564,7 @@ class Emitter {
 
 面试中，面试官经常会让你手撕一个 `Promise` 的实现，说句实话，这东西怪难的，考查你对异步流程语句的控制，`EventLoop` 的掌握，我打算把 promise 分段解析一下记录在此。本篇中先记录用法，在尝试实现
 
-### Promise.all 和 Promise.race 的变体
-
-#### first 与 last
+### all 和 race 的变体
 
 ```js
 // first 的实现
@@ -615,6 +613,46 @@ Promise.last([1, Promise.resolve(2)]).then(res => {
 // 测试结果：
 // 2 'first'
 // 2 'last'
+```
+
+### map 方法
+
+有时候需要在一列 `Promise` 中迭代，并对所有的 `Promise` 都执行某个任务，非常类似于数组可以做的那样（比如 forEach、map 等），如果这些任务是同步的那这些任务就可以做，但是从根本上上来说 `Promise` 任务是异步的，所以我们需要一个类似的工具方法
+
+```js
+// Promise.map 的实现
+if (!Promise.map) {
+  Promise.map = function(vals, cb) {
+    return Promise.all(
+      vals.map(val => {
+        return new Promise((resolve, reject) => {
+          cb(val, resolve, reject)
+        })
+      })
+    )
+  }
+}
+
+// 测试
+const p1 = Promise.resolve(21)
+const p2 = 42
+// const p3 = Promise.reject('failed')
+Promise.map([p1, p2], function(val, done, failed) {
+  // 保证 val 是 Promise，统一格式
+  Promise.resolve(val).then(res => {
+    done(res * 2)
+    //  捕获失败的情况
+  }, failed)
+})
+  .then(result => {
+    console.log(result, 'result')
+  })
+  .catch(error => {
+    console.log(error, 'error')
+  })
+
+// 最终输出结果是，如果加上一个失败的 promise 该函数也是可以捕获的哦
+// [42, 84]
 ```
 
 - 持续更新中....
