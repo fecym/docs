@@ -147,7 +147,7 @@ function fn(age) {
 }
 // 如上代码，我们要让 this 指向 obj
 const bindFn = fn.bind(obj)
-bindFn(24) // cym今年24岁
+bindFn(24) // cym今年24岁了
 ```
 
 ### 基本功能的实现
