@@ -134,51 +134,92 @@ console.log(arrayLike)
 // 为什么？给自己一个思考问题的机会吧
 ```
 
-### bind 的实现
+## bind
 
-> bind 方法绑定了 `this` 并且返回了一个函数，参数和 `call、apply` 相似
+### bind 用法
 
-- bind 方法的实现其实蛮有意思的，因为 bind 方法返回一个函数，那么返回的这个函数如果被当做构造函数怎么办
+> bind 用法和 call 很类似，但是 bind 不会立即执行函数，而是返回一个绑定了 this 的新函数
 
 ```js
-function person(name, age) {
-  console.log(name, age)
-  console.log(this)
+const obj = {name: 'cym'}
+function fn(age) {
+  console.log(this.name + '今年' + age + '岁了')
 }
-const obj = {name: 'obj'}
-const barBind = person.bind(obj)
-// 普通调用
-barBind('cym', 24)
-// 当做构造函数来用
-new barBind('cym', 24)
+// 如上代码，我们要让 this 指向 obj
+const bindFn = fn.bind(obj)
+bindFn(24) // cym今年24岁
 ```
 
-- 打印结果如下
+### 基本功能的实现
 
-  <p align="left">
-    <img :src="$withBase('/imgs/basis-javascript-api-bind.png')" height="160" />
-  </p>
-
-- 可以看到当做构造函数来用的时候，构造函数的 this 指向了 person 类型的对象
-- 那我们来尝试着实现一下 bind 的方法
+根据上面的用法，我们不难 `bind` 的方法不仅可以绑定 `this` 还可以绑定参数，我们来简单实现一下
 
 ```js
-Function.prototype.bind2 = function(context = window) {
-  const that = this
+Function.prototype.bind2 = function(ctx = globalThis) {
+  // 取到我们要绑定的参数
   const args = [...arguments].slice(1)
-  const fn = function() {
-    // this instanceof fn 为 true 表示构造函数的情况。如 new barBind2('cym', 24)
-    if (this instanceof fn) {
-      that.apply(that.prototype, args.concat(...arguments))
-      // that.apply(this, args.concat(...arguments))
+  // 缓存 this，因为返回一个函数 this 就会变成新的函数
+  const that = this
+  // 返回一个函数
+  return function() {
+    // 返回函数里面的 arguments 是返回函数传入的参数哦，别搞混了
+    that.apply(ctx, args.concat([...arguments]))
+  }
+}
+```
+
+### 返回函数作为构造函数
+
+`bind` 方法的实现其实蛮有意思的，因为 `bind` 方法返回一个函数，那么返回的这个函数如果被当做构造函数怎么办
+
+```js
+const obj = {name: 'cym'}
+function fn() {
+  console.log(this)
+}
+// 如上代码，我们要让 this 指向 obj
+const bindFn = fn.bind(obj)
+const instance = new bindFn(24) // fn {}
+```
+
+根据上面的代码返回结果来看，我们发现当绑定的函数作为构造函数来用的话，`this` 指向了原来的函数的实例，那么我们来实现一下完整的 `bind` 方法
+
+```js
+Function.prototype.bind2 = function(ctx = globalThis) {
+  // 取得参数
+  const args = [...arguments].slice(1)
+  // 取得函数
+  const that = this
+  // 要返回一个函数,还要判断是否有进行实例化的操作
+  function Fn() {
+    const allArgs = args.concat([...arguments])
+    // 如果被实例化了
+    if (this instanceof Fn) {
+      that.apply(this, allArgs)
     } else {
-      that.apply(context, args.concat(...arguments))
+      that.apply(ctx, allArgs)
     }
   }
-  // 保证原函数的原型对象上的属性不丢失
-  // fn.prototype = Object.create(this.prototype)
-  return fn
+  // 但是我们需要保证原型不能丢失，还得是原来函数的实例
+  // 这种写法可能不雅观，因为直接让两个原型指向了同一个地址，一般情况下我们会使用一个临时性构造函数来处理一下
+  // Fn.prototype = this.prototype
+  Fn.prototype = Object.create(this.prototype)
+  // 返回这个绑定好 this 的函数
+  return Fn
 }
+```
+
+来看下用法
+
+```js
+const obj = {name: 'cym'}
+function fn() {
+  console.log(this)
+}
+// 如上代码，我们要让 this 指向 obj
+const bindFn = fn.bind2(obj)
+const instance = new bindFn()   // fn {}
+bindFn()  // {name: 'cym'}
 ```
 
 ## 防抖和节流

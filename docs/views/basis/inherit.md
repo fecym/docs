@@ -357,9 +357,6 @@ console.log(c1.sayName()) // 小铭
 &emsp; 核心：在函数内部先创建一个临时性的构造函数，然后将传入的参数作为这个构造函数的原型，最后返回这个临时构造函数的实例
 :::
 
-> 原型式继承最初由道格拉斯·克罗克福德于 2006 年在一篇题为 《Prototypal Inheritance in JavaScript》(JavaScript 中的原型式继承) 的文章中提出. 他的想法是借助原型可以基于已有的对象创建新对象， 同时还不必因此创建自定义类型 <br/>
-> 核心：在函数内部先创建一个临时性的构造函数，然后将传入的参数作为这个构造函数的原型，最后返回这个临时构造函数的实例
-
 ```js
 // 该函数接受一个原型作为参数
 function create(o) {
@@ -389,7 +386,7 @@ function create(o) {
 }
 const parent = {
   name: 'inherit',
-  colors: ['red', 'green']
+  colors: ['red', 'green'],
 }
 const o1 = create(parent)
 // 自己本身没有，那么修改的是原型链上的引用
@@ -518,7 +515,7 @@ console.log(c, c.sex) //  Child { name: '小铭', age: 24, sex: 'male' }，'male
   function DOG(name) {
     this.name = name
   }
-  DOG.prototype = { type: '犬科' }
+  DOG.prototype = {type: '犬科'}
   var dogA = new DOG('大毛')
   var dogB = new DOG('二毛')
   DOG.prototype.type = '犬科'
