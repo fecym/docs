@@ -24,7 +24,8 @@ module.exports = {
         { text: 'redis', link: '/views/big-front-end/redis/index' },
         { text: 'mapbox', link: '/views/big-front-end/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/big-front-end/process/websize-render-process' },
-        { text: '服务器的配置', link: '/views/big-front-end/service/init' },
+        { text: '服务器的配置', link: '/views/big-front-end/system/init' },
+        { text: '虚拟机', link: '/views/big-front-end/system/vmware' },
         { text: '反向代理与负载均衡', link: '/views/big-front-end/nginx/requisite' },
       ]
     },
