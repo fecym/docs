@@ -236,9 +236,10 @@ function flatten (items, res) {
   #time-line {
     margin-top 0
     padding-top 0
-  } 
+  }
   .page-title
-    max-width: 740px;
+    // max-width: 740px;
+    max-width: $contentWidth;
     margin: 0 auto;
     padding: 0rem 2.5rem;
   .page-edit
@@ -265,7 +266,7 @@ function flatten (items, res) {
   }
   &.reco-show.page {
     load-end(0.08s)
-  }          
+  }
 
 .page-nav
   @extend $wrapper
@@ -283,7 +284,7 @@ function flatten (items, res) {
 
 @media (max-width: $MQMobile)
   .page-title
-    padding: 0 1rem;  
+    padding: 0 1rem;
   .page-edit
     .edit-link
       margin-bottom .5rem

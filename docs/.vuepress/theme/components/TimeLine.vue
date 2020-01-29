@@ -1,5 +1,5 @@
 <!--
- * @Description: 
+ * @Description:
  * @Author: chengyuming
  * @Date: 2019-09-03 19:50:53
  * @LastEditors: chengyuming
@@ -72,7 +72,7 @@ export default {
         }
       }
 
-      
+
       for(let key in this.formatPages) {
         this.formatPagesArr.unshift({
           year: key,
@@ -108,7 +108,8 @@ export default {
 
 .timeline-wrapper
   box-sizing border-box
-  max-width: 740px;
+  // max-width: 740px;
+  max-width: $contentWidth;
   margin: 0 auto;
   position relative
   list-style none
@@ -138,7 +139,7 @@ export default {
       height: 8px;
       background: #ddd;
       border-radius: 50%;
-    }  
+    }
   }
   .year {
     margin: 80px 0 0px;
@@ -160,7 +161,7 @@ export default {
           &::before {
             background $accentColor
           }
-        }  
+        }
         .title {
           color $accentColor
         }
@@ -182,7 +183,7 @@ export default {
           border-radius: 50%;
           border: 1px solid #fff;
           z-index 2
-        }  
+        }
       }
       .title {
         line-height 30px

@@ -2,21 +2,21 @@
   <div class="tags-wrapper" :class="recoShow?'reco-show': 'reco-hide'">
     <Common :sidebar="false" :isComment="false"></Common>
     <div class="tags">
-      <span 
-        v-for="(item, index) in tags" 
+      <span
+        v-for="(item, index) in tags"
         :key="index"
         :class="{'active': item.name == currentTag}"
         :style="{ 'backgroundColor': item.color }"
         @click="getPagesByTags(item.name)">{{item.name}}</span>
     </div>
-    <note-abstract 
+    <note-abstract
       class="list"
       :data="posts"
       :currentPage="currentPage"
       :currentTag="currentTag"
       @currentTag="getCurrentTag"></note-abstract>
-    
-    <pagation 
+
+    <pagation
       class="pagation"
       :data="posts"
       :currentPage="currentPage"
@@ -74,7 +74,7 @@ export default {
       })
       // reverse()是为了按时间最近排序排序
       this.posts = posts.length == 0 ? [] : posts
-      
+
       this.getCurrentPage(1);
     },
 
@@ -107,9 +107,10 @@ export default {
 <style lang="stylus" scoped>
 @require '../styles/loadMixin.styl'
 .tags-wrapper
-  max-width: 740px;
+  // max-width: 740px;
+  max-width: $contentWidth;
   margin: 0 auto;
-  padding: 4.6rem 2.5rem 0; 
+  padding: 4.6rem 2.5rem 0;
   .tags
     margin 30px 0
     span
@@ -143,7 +144,7 @@ export default {
     .pagation {
       load-end(0.24s)
     }
-  }      
+  }
 
 @media (max-width: $MQMobile)
   .tags-wrapper

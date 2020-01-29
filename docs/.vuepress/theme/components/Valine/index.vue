@@ -15,7 +15,7 @@ export default {
       const frontmatter = this.$frontmatter
       return this.isComment == false || frontmatter.isComment == false || frontmatter.home == true ? false : true
     }
-  }, 
+  },
   mounted: function(){
     this.createValine()
   },
@@ -29,7 +29,7 @@ export default {
           this.window = window
           window.AV = AV
         }
-        
+
         new Valine({
           el: '#valine' ,
           appId: valineConfig.appId,// your appId
@@ -53,7 +53,7 @@ export default {
         setTimeout(() => {
           this.createValine()
         }, 300)
-        
+
       }
     }
   },
@@ -71,7 +71,8 @@ export default {
   padding-left: 20rem;
   #valine
     padding 2rem
-    max-width: 740px;
+    // max-width: 740px;
+    max-width: $contentWidth;
     margin: 0 auto;
 @media (max-width: $MQNarrow)
   .theme-container.no-sidebar
@@ -81,5 +82,5 @@ export default {
     padding-left: 16.4rem;
 @media (max-width: $MQMobile)
   .valine-wrapper
-    padding-left: 0;    
+    padding-left: 0;
 </style>
