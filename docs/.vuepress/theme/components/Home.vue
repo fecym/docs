@@ -43,7 +43,7 @@
           class="left"
         >{{ config.footerConf.leftText || 'MIT Licensed | Copyright © '+ year +'-present ' + config.author }}</span>
         <span class="record">
-          <b v-if="screenWidth >= 768">备案号：</b>
+          <b v-if="!isMobileDevice">备案号：</b>
           <a class="record-link" :href="config.footerConf.recordLink">{{ config.footerConf.record }}</a>
         </span>
       </p>
@@ -80,8 +80,9 @@ export default {
         text: this.data.actionText
       };
     },
-    screenWidth() {
-      return document.body.clientWidth
+    isMobileDevice () {
+      const arr = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+      return arr.some(device => navigator.userAgent.indexOf(device) !== -1)
     },
 
     heroImageStyle() {
