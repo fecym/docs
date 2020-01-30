@@ -43,7 +43,7 @@
           class="left"
         >{{ config.footerConf.leftText || 'MIT Licensed | Copyright © '+ year +'-present ' + config.author }}</span>
         <span class="record">
-          <b v-if="!isMobileDevice">备案号：</b>
+          <b>备案号：</b>
           <a class="record-link" :href="config.footerConf.recordLink">{{ config.footerConf.record }}</a>
         </span>
       </p>
@@ -80,10 +80,12 @@ export default {
         text: this.data.actionText
       };
     },
+    // 服务端渲染不能用
     isMobileDevice () {
       const arr = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
-      return arr.some(device => navigator.userAgent.indexOf(device) !== -1)
+      return arr.some(device => window.navigator.userAgent.indexOf(device) !== -1)
     },
+
 
     heroImageStyle() {
       return (
@@ -202,6 +204,12 @@ export default {
     .record-link {
       cursor: pointer;
       font-weight: normal;
+    }
+  }
+
+  @media (max-width: $MQMobile) {
+    .footer .record b {
+      display none
     }
   }
 
