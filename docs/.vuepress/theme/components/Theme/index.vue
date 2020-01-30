@@ -14,7 +14,7 @@
 <script>
 import ClickOutside from 'vue-click-outside';
 import ThemeOptions from './ThemeOptions.vue';
-import recoConfig from './recoConfig.js';
+import themeConfig from './themeConfig.js';
 
 export default {
 	name: 'UserSettings',
@@ -27,7 +27,7 @@ export default {
 		ThemeOptions
 	},
 
-	mixins: [recoConfig],
+	mixins: [themeConfig],
 
 	data() {
 		return {

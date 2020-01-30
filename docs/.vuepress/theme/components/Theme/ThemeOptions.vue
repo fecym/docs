@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import recoConfig from './recoConfig.js';
+import themeConfig from './themeConfig.js';
 
 export default {
 	name: 'ThemeOptions',
 
-	mixins: [recoConfig],
+	mixins: [themeConfig],
 
 	data() {
 		return {
@@ -50,10 +50,10 @@ export default {
 				oldColor.forEach(item => {
 					classes.add(item)
 				})
-			}	
+			}
 			else {
 				classes.remove(`reco-theme-night`)
-			}	
+			}
 		},
 		setTheme(theme, moveClass = true) {
 			const colorThemes = this.reco.themes;
@@ -64,7 +64,7 @@ export default {
 			if (!theme) {
 				if (moveClass) localStorage.removeItem('cym-theme');
 				classes.remove(...themes);
-				return 
+				return
 			}
 
 			classes.remove(...themes.filter(t => t !== `reco-theme-${theme}`));

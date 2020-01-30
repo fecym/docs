@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: chengyuming
  * @Date: 2019-09-03 19:43:14
  * @LastEditors: chengyuming
@@ -56,6 +56,12 @@ module.exports = {
       // 是否记录评论者IP
       recordIP: true
     },
-    isComment: true
+    isComment: true,
+    footerConf: {
+      // 京ICP备19052475号
+      record: '京ICP备19052475号',
+      recordLink: 'http://beian.miit.gov.cn',
+      leftText: 'MIT Licensed | Copyright © 2019 - present'
+    }
   }
 }

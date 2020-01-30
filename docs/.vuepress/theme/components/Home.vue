@@ -1,5 +1,5 @@
 <!--
- * @Description: 
+ * @Description:
  * @Author: chengyuming
  * @Date: 2019-09-03 18:29:25
  * @LastEditors: chengyuming
@@ -8,6 +8,7 @@
 <template>
   <div class="home" :class="recoShow?'reco-show': 'reco-hide'">
     <CircleBj />
+    <!-- <pre>{{ config }}</pre> -->
     <div class="hero">
       <img
         v-if="data.heroImage"
@@ -37,8 +38,16 @@
     <Content class="home-center" custom />
 
     <div class="footer">
-      <p v-if="data.footer">{{data.footer}}</p>
-      <p v-else>MIT Licensed | Copyright © 2019-present chengyuming</p>
+      <p v-if="config.footerConf.record">
+        <span
+          class="left"
+        >{{ config.footerConf.leftText || 'MIT Licensed | Copyright © '+ year +'-present ' + config.author }}</span>
+        <span class="record">
+          <b v-if="screenWidth >= 768">备案号：</b>
+          <a class="record-link" :href="config.footerConf.recordLink">{{ config.footerConf.record }}</a>
+        </span>
+      </p>
+      <p v-else>{{ data.footer }}</p>
     </div>
   </div>
 </template>
@@ -62,12 +71,17 @@ export default {
     data() {
       return this.$frontmatter;
     },
-
+    config() {
+      return this.$themeConfig
+    },
     actionLink() {
       return {
         link: this.data.actionLink,
         text: this.data.actionText
       };
+    },
+    screenWidth() {
+      return document.body.clientWidth
     },
 
     heroImageStyle() {
@@ -168,18 +182,25 @@ export default {
   }
 
   .footer {
+    position: relative;
+    z-index: 2;
     padding: 2.5rem;
     border-top: 1px solid $borderColor;
     text-align: center;
     color: lighten($textColor, 25%);
     load-start();
 
-    > span {
-      margin-left: 1rem;
-
-      > i {
-        margin-right: 0.5rem;
+    .record {
+      margin-left: 1.5rem;
+      font-size: 15px;
+      b {
+        font-weight normal
       }
+    }
+
+    .record-link {
+      cursor: pointer;
+      font-weight: normal;
     }
   }
 
