@@ -14,28 +14,16 @@
       <button ref="passwordBtn" @click="inter">OK</button>
     </label>
 
-    <div class="footer">
-      <span>
-        <i class="iconfont reco-theme"></i>
-        <a target="blank" href="https://www.npmjs.com/package/vuepress-theme-reco">vuePress-theme-reco</a>
-      </span>
-      <span>
-        <i class="iconfont reco-other"></i>
-        <a>{{ $themeConfig.author || $site.title }}</a>
-      </span>
-      <span>
-        <i class="iconfont reco-copyright"></i>
-        <a>{{ year }}</a>
-      </span>
-    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Background from '@theme/components/Background'
+import Footer from '@theme/components/Footer'
 
 export default {
-  components: {Background},
+  components: {Background, Footer},
   props: {
     isPage: {
       type: Boolean,
@@ -52,7 +40,14 @@ export default {
   computed: {
     year () {
       return new Date().getFullYear()
-    }
+    },
+    data() {
+      return this.$frontmatter;
+    },
+    config() {
+      console.log(this.$frontmatter, 'this.$frontmatter')
+      return this.$themeConfig
+    },
   },
   methods: {
     inter () {
@@ -63,7 +58,7 @@ export default {
       if (!isHasKey) {
         this.warningText = 'Key Error'
         return
-      } 
+      }
       const passwordBtn = this.$refs.passwordBtn
       const width = document.getElementById('box').getClientRects()[0].width
 
@@ -94,6 +89,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+
 .theme-container.no-sidebar
   .password-shadow
     padding-left 0
@@ -219,7 +215,7 @@ export default {
       margin-left 1rem
       > i {
         margin-right .5rem
-      } 
+      }
     }
   }
   @media (max-width: $MQMobile) {

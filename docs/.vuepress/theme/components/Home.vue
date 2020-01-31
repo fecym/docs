@@ -37,28 +37,19 @@
 
     <Content class="home-center" custom />
 
-    <div class="footer">
-      <p v-if="config.footerConf.record">
-        <span
-          class="left"
-        >{{ config.footerConf.leftText || 'MIT Licensed | Copyright © '+ year +'-present ' + config.author }}</span>
-        <span class="record">
-          <b>备案号：</b>
-          <a class="record-link" :href="config.footerConf.recordLink">{{ config.footerConf.record }}</a>
-        </span>
-      </p>
-      <p v-else>{{ data.footer }}</p>
-    </div>
+    <Footer />
+
   </div>
 </template>
 
 <script>
 import NavLink from "@theme/components/NavLink/";
+import Footer from "@theme/components/Footer/";
 import AccessNumber from "@theme/components/Valine/AccessNumber";
 import CircleBj from '@theme/components/CircleBj'
 
 export default {
-  components: { NavLink, AccessNumber, CircleBj },
+  components: { NavLink, AccessNumber, CircleBj, Footer },
   data() {
     return {
       recoShow: false
@@ -72,6 +63,7 @@ export default {
       return this.$frontmatter;
     },
     config() {
+      console.log(this.$frontmatter, 'this.$frontmatter')
       return this.$themeConfig
     },
     actionLink() {
@@ -184,36 +176,7 @@ export default {
     }
   }
 
-  .footer {
-    position: relative;
-    z-index: 2;
-    padding: 2.5rem;
-    border-top: 1px solid $borderColor;
-    text-align: center;
-    color: lighten($textColor, 25%);
-    load-start();
-
-    .record {
-      margin-left: 1.5rem;
-      font-size: 15px;
-      b {
-        font-weight normal
-      }
-    }
-
-    .record-link {
-      cursor: pointer;
-      font-weight: normal;
-    }
-  }
-
-  @media (max-width: $MQMobile) {
-    .footer .record b {
-      display none
-    }
-  }
-
-  &.reco-hide {
+ &.reco-hide {
     .hero {
       img {
         load-start();

@@ -1,99 +1,85 @@
 <template>
-  <main class="page" :class="recoShow?'reco-show': 'reco-hide'">
-    <slot name="top"/>
+  <main class="page" :class="recoShow ? 'reco-show': 'reco-hide'">
+    <ModuleTransition>
+      <slot name="top" />
+    </ModuleTransition>
 
-    <div class="page-title" v-if="!(isTimeLine)">
-      <h1>{{$page.title}}</h1>
-      <hr>
-      <PageInfo :pageInfo="$page"></PageInfo>
-    </div>
-
-    <Content/>
-
-    <TimeLine v-if="isTimeLine"></TimeLine>
-
-    <footer class="page-edit">
-      <div
-        class="edit-link"
-        v-if="editLink"
-      >
-        <a
-          :href="editLink"
-          target="_blank"
-          rel="noopener noreferrer"
-        >{{ editLinkText }}</a>
-        <OutboundLink/>
+    <ModuleTransition delay="0.08">
+      <div class="page-title" v-if="!(isTimeLine)">
+        <h1>{{$page.title}}</h1>
+        <hr />
+        <PageInfo :pageInfo="$page"></PageInfo>
       </div>
+    </ModuleTransition>
 
-      <div
-        class="last-updated"
-        v-if="lastUpdated"
-      >
-        <span class="prefix">{{ lastUpdatedText }}: </span>
-        <span class="time">{{ lastUpdated }}</span>
+    <ModuleTransition delay="0.16">
+      <Content />
+    </ModuleTransition>
+
+    <ModuleTransition delay="0.24">
+      <TimeLine v-if="isTimeLine"></TimeLine>
+    </ModuleTransition>
+
+    <ModuleTransition delay="0.24">
+      <footer class="page-edit">
+        <div class="edit-link" v-if="editLink">
+          <a :href="editLink" target="_blank" rel="noopener noreferrer">{{ editLinkText }}</a>
+          <OutboundLink />
+        </div>
+
+        <div class="last-updated" v-if="lastUpdated">
+          <span class="prefix">{{ lastUpdatedText }}:</span>
+          <span class="time">{{ lastUpdated }}</span>
+        </div>
+      </footer>
+    </ModuleTransition>
+
+    <ModuleTransition delay="0.32">
+      <div class="page-nav" v-if="prev || next">
+        <p class="inner">
+          <span v-if="prev" class="prev">
+            ←
+            <router-link v-if="prev" class="prev" :to="prev.path">{{ prev.title || prev.path }}</router-link>
+          </span>
+
+          <span v-if="next" class="next">
+            <router-link v-if="next" :to="next.path">{{ next.title || next.path }}</router-link>→
+          </span>
+        </p>
       </div>
-    </footer>
-
-    <div class="page-nav" v-if="prev || next">
-      <p class="inner">
-        <span
-          v-if="prev"
-          class="prev"
-        >
-          ←
-          <router-link
-            v-if="prev"
-            class="prev"
-            :to="prev.path"
-          >
-            {{ prev.title || prev.path }}
-          </router-link>
-        </span>
-
-        <span
-          v-if="next"
-          class="next"
-        >
-          <router-link
-            v-if="next"
-            :to="next.path"
-          >
-            {{ next.title || next.path }}
-          </router-link>
-          →
-        </span>
-      </p>
-    </div>
-
-    <slot name="bottom"/>
+    </ModuleTransition>
+    <ModuleTransition delay="0.40">
+      <slot name="bottom" />
+    </ModuleTransition>
   </main>
 </template>
 
 <script>
+import ModuleTransition from '@theme/components/ModuleTransition'
 import PageInfo from '@theme/components/PageInfo'
 import { resolvePage, outboundRE, endingSlashRE } from '../util'
 import TimeLine from '@theme/components/TimeLine'
 
 export default {
-  components: { PageInfo, TimeLine},
+  components: { PageInfo, TimeLine, ModuleTransition },
 
   props: ['sidebarItems'],
 
-  data () {
+  data() {
     return {
       recoShow: false
     }
   },
 
   computed: {
-    isTimeLine () {
+    isTimeLine() {
       return this.$frontmatter.isTimeLine
     },
-    lastUpdated () {
+    lastUpdated() {
       return this.$page.lastUpdated
     },
 
-    lastUpdatedText () {
+    lastUpdatedText() {
       if (typeof this.$themeLocaleConfig.lastUpdated === 'string') {
         return this.$themeLocaleConfig.lastUpdated
       }
@@ -103,7 +89,7 @@ export default {
       return 'Last Updated'
     },
 
-    prev () {
+    prev() {
       const prev = this.$frontmatter.prev
       if (prev === false) {
         return
@@ -114,7 +100,7 @@ export default {
       }
     },
 
-    next () {
+    next() {
       const next = this.$frontmatter.next
       if (next === false) {
         return
@@ -125,7 +111,7 @@ export default {
       }
     },
 
-    editLink () {
+    editLink() {
       if (this.$frontmatter.editLink === false) {
         return
       }
@@ -142,7 +128,7 @@ export default {
       }
     },
 
-    editLinkText () {
+    editLinkText() {
       return (
         this.$themeLocaleConfig.editLinkText
         || this.$themeConfig.editLinkText
@@ -151,12 +137,12 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.recoShow = true
 
     const keys = this.$frontmatter.keys
     if (!keys) {
-      this.isHasKey =  true
+      this.isHasKey = true
       return
     }
 
@@ -164,7 +150,7 @@ export default {
   },
 
   methods: {
-    createEditLink (repo, docsRepo, docsDir, docsBranch, path) {
+    createEditLink(repo, docsRepo, docsDir, docsBranch, path) {
       const bitbucket = /bitbucket.org/
       if (bitbucket.test(repo)) {
         const base = outboundRE.test(docsRepo)
@@ -172,11 +158,11 @@ export default {
           : repo
         return (
           base.replace(endingSlashRE, '')
-           + `/src`
-           + `/${docsBranch}/`
-           + (docsDir ? docsDir.replace(endingSlashRE, '') + '/' : '')
-           + path
-           + `?mode=edit&spa=0&at=${docsBranch}&fileviewer=file-view-default`
+          + `/src`
+          + `/${docsBranch}/`
+          + (docsDir ? docsDir.replace(endingSlashRE, '') + '/' : '')
+          + path
+          + `?mode=edit&spa=0&at=${docsBranch}&fileviewer=file-view-default`
         )
       }
 
@@ -194,15 +180,15 @@ export default {
   }
 }
 
-function resolvePrev (page, items) {
+function resolvePrev(page, items) {
   return find(page, items, -1)
 }
 
-function resolveNext (page, items) {
+function resolveNext(page, items) {
   return find(page, items, 1)
 }
 
-function find (page, items, offset) {
+function find(page, items, offset) {
   const res = []
   flatten(items, res)
   for (let i = 0; i < res.length; i++) {
@@ -213,7 +199,7 @@ function find (page, items, offset) {
   }
 }
 
-function flatten (items, res) {
+function flatten(items, res) {
   for (let i = 0, l = items.length; i < l; i++) {
     if (items[i].type === 'group') {
       flatten(items[i].children || [], res)
@@ -226,71 +212,99 @@ function flatten (items, res) {
 </script>
 
 <style lang="stylus">
-@require '../styles/wrapper.styl'
-@require '../styles/loadMixin.styl'
+@require '../styles/wrapper.styl';
+@require '../styles/loadMixin.styl';
 
-.page
-  padding-top 6rem
-  padding-bottom 2rem
-  display block
+.page {
+  padding-top: 6rem;
+  padding-bottom: 2rem;
+  display: block;
+
   #time-line {
-    margin-top 0
-    padding-top 0
+    margin-top: 0;
+    padding-top: 0;
   }
-  .page-title
+
+  .page-title {
     // max-width: 740px;
     max-width: $contentWidth;
     margin: 0 auto;
     padding: 0rem 2.5rem;
-  .page-edit
-    @extend $wrapper
-    padding-top 1rem
-    padding-bottom 1rem
-    overflow auto
-    .edit-link
-      display inline-block
-      a
-        color lighten($textColor, 25%)
-        margin-right 0.25rem
-    .last-updated
-      float right
-      font-size 0.9em
-      .prefix
-        font-weight 500
-        color lighten($textColor, 25%)
-      .time
-        font-weight 400
-        color #aaa
+  }
+
+  .page-edit {
+    @extend $wrapper;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    overflow: auto;
+
+    .edit-link {
+      display: inline-block;
+
+      a {
+        color: lighten($textColor, 25%);
+        margin-right: 0.25rem;
+      }
+    }
+
+    .last-updated {
+      float: right;
+      font-size: 0.9em;
+
+      .prefix {
+        font-weight: 500;
+        color: lighten($textColor, 25%);
+      }
+
+      .time {
+        font-weight: 400;
+        color: #aaa;
+      }
+    }
+  }
+
   &.reco-hide.page {
-    load-start()
+    load-start();
   }
+
   &.reco-show.page {
-    load-end(0.08s)
+    load-end(0.08s);
+  }
+}
+
+.page-nav {
+  @extend $wrapper;
+  padding-top: 1rem;
+  padding-bottom: 0;
+
+  .inner {
+    min-height: 2rem;
+    margin-top: 0;
+    border-top: 1px solid $borderColor;
+    padding-top: 1rem;
+    overflow: auto; // clear float
   }
 
-.page-nav
-  @extend $wrapper
-  padding-top 1rem
-  padding-bottom 0
-  .inner
-    min-height 2rem
-    margin-top 0
-    border-top 1px solid $borderColor
-    padding-top 1rem
-    overflow auto // clear float
-  .next
-    float right
+  .next {
+    float: right;
+  }
+}
 
-
-@media (max-width: $MQMobile)
-  .page-title
+@media (max-width: $MQMobile) {
+  .page-title {
     padding: 0 1rem;
-  .page-edit
-    .edit-link
-      margin-bottom .5rem
-    .last-updated
-      font-size .8em
-      float none
-      text-align left
+  }
 
+  .page-edit {
+    .edit-link {
+      margin-bottom: 0.5rem;
+    }
+
+    .last-updated {
+      font-size: 0.8em;
+      float: none;
+      text-align: left;
+    }
+  }
+}
 </style>

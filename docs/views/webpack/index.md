@@ -5,8 +5,6 @@ tags:
   - webpack
 ---
 
-# [webpack](https://www.webpackjs.com/)
-
 ## webpack 基础篇
 
 > webpack 配置只需要在项目根目录下新建一个 `webpack.config.js` 文件，然后导出一个对象或者函数都可以，如果导出为一个函数那么这个函数接受两个参数，第一个参数是环境对象（environment），第二个参数是一个 map 对象（argv）这个对象描述了传递给 webpack 的选项，并且具有 output-filename 和 optimize-minimize 等 key。
@@ -581,7 +579,7 @@ requireAll(requireAllComponent).forEach(componentModule => {
 
 > 在 webpack 的 module 配置中，有一个属性是 rules，配置模块的读取和解析规则，通常用来配置 loader，其类型是一个数组，数组里每一项都描述了如何去处理部分文件。`loader` 就像一个翻译员，能将源文件经过转换后输出新的结果，并且一个文件还可以链式地经过多个翻译员翻译。
 
-__概念：__
+**概念：**
 
 - 一个 `loader` 的职责是单一的，只需要完成一种转换
 - 一个 `loader` 其实就是一个 `nodejs` 模块，这个模块需要导出一个函数
@@ -650,7 +648,7 @@ function babelLoader(ctx) {
 
 > `plugins` 专注处理 `webpack` 编译过程中某个特定的任务的功能模块
 
-__概念：__
+**概念：**
 
 - `plugins` 是一个独立的模块
 - 模块对外暴露一个 `js` 函数

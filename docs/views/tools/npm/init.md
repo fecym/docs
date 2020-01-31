@@ -6,8 +6,6 @@ tags:
   - 大前端
 ---
 
-# 你应该了解的 npm 知识
-
 ## npm init
 
 初始化一个项目的时候，我们会在控制台输入 `npm init` 执行该命令后终端会依次询问 `name, version, description` 等字段，最后会为你生成一个 `package.json` 文件
@@ -266,8 +264,8 @@ tags:
 ```json
 {
   "name": "foo",
-  "config": { "port": "8080" },
-  "scripts": { "start": "node server.js" }
+  "config": {"port": "8080"},
+  "scripts": {"start": "node server.js"}
 }
 ```
 

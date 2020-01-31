@@ -15,5 +15,7 @@ module.exports = [
   ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
   // ['link', { rel: 'mask-icon', href: '/icons/safari-pinned-tab.svg', color: '#3eaf7c' }],
   // ['meta', { name: 'msapplication-TileImage', content: '/icons/msapplication-icon-144x144.png' }],
-  ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
+  ['meta', { name: 'msapplication-TileColor', content: '#000000' }],
+  // 引入 iconfont
+  ['link', { rel: 'stylesheet', href: '//at.alicdn.com/t/font_1385737_yilz38tptbd.css' }],
 ]

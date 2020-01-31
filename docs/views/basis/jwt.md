@@ -1,5 +1,5 @@
 ---
-title: cookie、session 和 jwt
+title: 常见的 HTTP 认证方式
 date: 2019-12-31
 tags:
   - cookie
@@ -7,8 +7,6 @@ tags:
   - jwt
   - 基础
 ---
-
-# Cookie、Session、jwt
 
 还有几分钟就要跨年了，2019 即将结束，跨年夜独自一人闲来无趣，整理一下 `cookie、token` 和 `jwt` 的，记得在学校的时候我就很奇怪 `cookie` 是什么，当时老师只对我们说他就是用来存储数据的，只能存储 `4kb`，超过 `4kb` 之后就会开始删除之前的 `cookie` 值，不同浏览器删除的行为是不一样的。然后就没了。直到后来参加工作了，刚入公司没多久一次接触到了 `cookie` 让我一脸懵逼（当时带我的大佬有事回家了），项目出了 bug 因为 `cookie` 传递的不对，后台解析不了，然后我折腾了一晚上（回想当初小白的时候是真的有趣）。
 
@@ -217,7 +215,7 @@ Y6F6_pOyDw2FMW6s9pND4n_IJTUmDQalEIZg823-Pqli-PSrKdoO0wfZTeXJawePNcceqt-wc5s37V5Z
 
 在 `jsonwebtoken` 模块中有个 `sign` 方法，用来签发 `token`，该方法接收三个参数：`payload`（载荷）、`secret`（秘钥）、其他的配置，简单写起来可能如下代码：
 
-__载荷：除去协议首部之外实际传输的数据__
+**载荷：除去协议首部之外实际传输的数据**
 
 ```js
 const jwt = require('jsonwebtoken')

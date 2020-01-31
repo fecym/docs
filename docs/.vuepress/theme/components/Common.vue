@@ -1,5 +1,5 @@
 <!--
- * @Description: 
+ * @Description:
  * @Author: chengyuming
  * @Date: 2019-09-03 20:21:49
  * @LastEditors: chengyuming
@@ -30,14 +30,14 @@
         <slot
           name="sidebar-bottom"
           slot="bottom"/>
-      </Sidebar>  
+      </Sidebar>
 
       <Password v-if="!isHasPageKey" :isPage="true"></Password>
       <div v-else>
         <slot></slot>
         <Valine :isComment="isComment"></Valine>
       </div>
-      
+
       <!-- <BackToTop></BackToTop> -->
     </div>
   </div>

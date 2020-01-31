@@ -1,12 +1,10 @@
 ---
-title: fs 文件系统   
+title: fs 文件系统
 date: 2019-06-28
 tags:
-- node
-- 大前端
+  - node
+  - 大前端
 ---
-
-# fs 文件系统
 
 > fs 模块是 nodejs 的核心模块，使用该模块只需要引入而不需要下载，对文件系统的操作，不外乎增删改查，我们就从这几步来入手
 
@@ -53,7 +51,7 @@ const options = {
   mode: 0o666,
   // 文件描述符，r代表读取文件，w代表写文件，a代表追加。，默认为w
   // 'flag': 'w'
-  flag: 'a'
+  flag: 'a',
 }
 fs.writeFile(resolve('write/options.txt'), data, options, err => {
   if (err) throw err

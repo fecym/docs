@@ -10,29 +10,8 @@ module.exports = {
     { text: '首页', link: '/', icon: 'reco-home' },
     { text: '时间轴', link: '/timeLine/', icon: 'reco-date' },
     {
-      text: '大前端',
-      icon: 'reco-category',
-      items: [
-        { text: 'webpack介绍', link: '/views/webpack/index' },
-        { text: '从0搭建vue', link: '/views/webpack/vue' },
-        { text: 'npm', link: '/views/FE/npm/init' },
-        // { text: 'node简介', link: '/views/FE/node/index' },
-        { text: 'fs文件系统', link: '/views/FE/node/fs' },
-        { text: 'cli 的开发', link: '/views/FE/npm/cli' },
-        { text: 'mysql', link: '/views/FE/backend/mysql' },
-        { text: 'nginx介绍', link: '/views/FE/nginx/index' },
-        { text: 'redis', link: '/views/FE/redis/index' },
-        { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
-        { text: '网站渲染流程', link: '/views/FE/process/websize-render-process' },
-        { text: '服务器的配置', link: '/views/FE/system/init' },
-        // { text: '虚拟机', link: '/views/FE/system/vmware' },
-        { text: 'Linux命令', link: '/views/FE/system/linux' },
-        { text: '反向代理与负载均衡', link: '/views/FE/nginx/requisite' },
-      ]
-    },
-    {
       text: '基础',
-      icon: 'reco-three',
+      icon: 'reco-category',
       items: [
         { text: 'css', link: '/views/basis/css' },
         { text: 'JavaScript', link: '/views/basis/javascript' },
@@ -40,8 +19,45 @@ module.exports = {
         { text: '常用api', link: '/views/basis/api' },
         { text: '小技巧', link: '/views/basis/issue' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
-        { text: 'cookie、session 和 jwt', link: '/views/basis/jwt' },
       ]
     },
+    {
+      text: '前端',
+      icon: 'iconqianduan',
+      items: [
+        { text: 'webpack介绍', link: '/views/webpack/index' },
+        { text: '从0搭建vue', link: '/views/webpack/vue' },
+        { text: 'cli 的开发', link: '/views/tools/npm/cli' },
+        { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
+        { text: '网站渲染流程', link: '/views/FE/process/websize-render' },
+      ]
+    },
+    {
+      text: '服务端',
+      icon: 'iconxitong',
+      items: [
+        { text: 'fs文件系统', link: '/views/server-side/node/fs' },
+        { text: '服务器的配置', link: '/views/server-side/service-conf' },
+        // { text: '虚拟机', link: '/views/FE/system/vmware' },
+        { text: 'Linux命令', link: '/views/server-side/linux' },
+        { text: '负载均衡', link: '/views/tools/nginx/requisite' },
+        { text: 'HTTP认证方式', link: '/views/basis/jwt' },
+      ]
+    },
+    {
+      text: '工具',
+      icon: 'icontools-fill',
+      items: [
+        { text: 'npm', link: '/views/tools/npm/init' },
+        { text: 'mysql', link: '/views/tools/mysql' },
+        { text: 'redis', link: '/views/tools/redis/index' },
+        { text: 'nginx', link: '/views/tools/nginx/index' },
+      ]
+    },
+    {
+      text: 'GitHub',
+      icon: 'icongithub',
+      link: 'https://github.com/cym-git'
+    }
   ]
 }

@@ -6,8 +6,6 @@ tags:
   - 大前端
 ---
 
-# MySQL
-
 ## 数据库操作
 
 > 进入数据库之后，我们要先看看我们都有哪些数据库，然后要使用哪个数据库，数据库有哪些表，要对哪些表做一些操作之类，这里记录下基本操作，数据库操作结尾一定要加分号，表示一句话的结束。
@@ -220,4 +218,3 @@ tags:
   -- 上个月，period_diff() 时间差异函数接受两个参数，要对比的时间
   SELECT * FROM `daily` WHERE PERIOD_DIFF(DATE_FORMAT(NOW(), '%Y%m'), DATE_FORMAT(create_time, '%Y%m')) = 1;
 ```
-

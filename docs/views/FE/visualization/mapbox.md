@@ -1,11 +1,9 @@
 ---
-title: Mapbox GL JS   
+title: Mapbox GL JS
 date: 2019-08-24
 tags:
 - Mapbox
 ---
-
-# Mapbox GL JS 
 
 > [中文版](https://www.mapbox.cn/mapbox-gl-js/api/#map) [英文版](https://docs.mapbox.com/mapbox-gl-js/api/?q=addlayer&size=n_10_n)
 
@@ -53,7 +51,7 @@ tags:
 - 该类接受两个参数，element和options
 - 只是添加一个标记，但是添加到哪就需要你来设置了
 - 移除标记就是移除该类的实例
-```js 
+```js
   // 全局可修改的marker
   let marker = null
   function addMarker(LngLat, el, options) {

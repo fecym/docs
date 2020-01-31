@@ -1,5 +1,3 @@
-# 关于博客
-
 ## vuepress 简介
 
 - 我的博客是用 vuepress 快速搭建的
@@ -97,28 +95,28 @@ module.exports = {
   themeConfig: {
     // 导航的配置
     nav: [
-      { text: '首页', link: '/' },
+      {text: '首页', link: '/'},
       // 可下拉的导航
       {
         text: 'webpack',
         items: [
-          { text: 'webpack简介', link: '/webpack/index' },
-          { text: '从0搭建vue', link: '/webpack/vue' }
-        ]
+          {text: 'webpack简介', link: '/webpack/index'},
+          {text: '从0搭建vue', link: '/webpack/vue'},
+        ],
       },
-      { text: 'mapbox', link: '/mapbox/index' },
-      { text: 'vue', link: '/vue' }
+      {text: 'mapbox', link: '/mapbox/index'},
+      {text: 'vue', link: '/vue'},
     ],
     // 导航栏的配置，自动生成
     sidebar: 'auto',
     // 显示最后更新时间
-    lastUpdated: '最后更新时间'
+    lastUpdated: '最后更新时间',
   },
   // Markdown的配置，包括Markdown的拓展
   markdown: {
     // 代码块显示行号
-    lineNumbers: true
-  }
+    lineNumbers: true,
+  },
 }
 ```
 
@@ -284,9 +282,9 @@ module.exports = {
         owner: 'OWNER_OF_REPO', // github账户名称，登陆名字
         repo: 'NAME_OF_REPO', // Github博客仓库，仓库地址，不加要https
         clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
-        clientSecret: 'YOUR_CLIENT_SECRET' // github上面申请的clientSecret
-      }
-    ]
+        clientSecret: 'YOUR_CLIENT_SECRET', // github上面申请的clientSecret
+      },
+    ],
   ]
   ```
 - 最后在你想要显示评论的 md 文件下面，加上这句话就 ok 了
@@ -341,11 +339,11 @@ module.exports = {
         options: {
           el: '#valine-vuepress-comment',
           appId: 'Your own appId',
-          appKey: 'Your own appKey'
-        }
-      }
-    ]
-  ]
+          appKey: 'Your own appKey',
+        },
+      },
+    ],
+  ],
 }
 ```
 

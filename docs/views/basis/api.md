@@ -6,8 +6,6 @@ tags:
   - 基础
 ---
 
-# JavaScript 常用 api 的实现
-
 > 使用一个 api 我们要了解它到底做了什么才可以实现我们想要的功能，不仅要会用还要知道为什么
 
 ## 实现一个 new 操作符
@@ -218,8 +216,8 @@ function fn() {
 }
 // 如上代码，我们要让 this 指向 obj
 const bindFn = fn.bind2(obj)
-const instance = new bindFn()   // fn {}
-bindFn()  // {name: 'cym'}
+const instance = new bindFn() // fn {}
+bindFn() // {name: 'cym'}
 ```
 
 ## 防抖和节流

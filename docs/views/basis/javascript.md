@@ -1,12 +1,10 @@
 ---
-title: JavaScript 基础知识整理
+title: JavaScript 基础知识
 date: 2019-05-12
 tags:
   - JavaScript
   - 基础
 ---
-
-# JavaScript 基础
 
 ## 类型转换
 
@@ -46,9 +44,9 @@ tags:
 - `'' == 0` 转换为 `0 == 0` 所以为 true
 
 ```js
-  Number([])      // 0
-  Number(![])     // 0
-  Number(!![])    // 1
+Number([]) // 0
+Number(![]) // 0
+Number(!![]) // 1
 ```
 
 ### 类型转换规则

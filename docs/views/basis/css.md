@@ -6,8 +6,6 @@ tags:
   - 基础
 ---
 
-# css 基础
-
 ## css 加载会造成阻塞吗
 
 > js 加载会造成 _DOM_ 树的解析和渲染
@@ -772,7 +770,7 @@ window.scrollTo(0, 100)
 // 或者传递一个对象
 window.scrollTo({
   left: 0,
-  top: 100
+  top: 100,
 })
 ```
 
@@ -784,7 +782,7 @@ window.scrollBy(0, 100)
 // 或者
 window.scrollBy({
   left: 0,
-  top: 100
+  top: 100,
 })
 ```
 
@@ -819,7 +817,7 @@ document.getElementById('scroll').scrollIntoView()
 // 还可以指定元素出现在指定的位置
 document.getElementById('scroll').scrollIntoView({
   // 不传参数默认为start
-  block: 'start' | 'center' | 'end'
+  block: 'start' | 'center' | 'end',
 })
 ```
 
@@ -830,13 +828,13 @@ document.getElementById('scroll').scrollIntoView({
 ```js
 window.scrollTo({
   // 将浏览器的行为设置为平滑的移动
-  behavior: 'smooth'
+  behavior: 'smooth',
 })
 window.scrollBy({
-  behavior: 'smooth'
+  behavior: 'smooth',
 })
 document.getElementById('scroll').scrollIntoView({
-  behavior: 'smooth'
+  behavior: 'smooth',
 })
 ```
 

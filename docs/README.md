@@ -1,6 +1,8 @@
 ---
 home: true
 heroImage: /imgs/oops.png
+# keys:
+#  - '123456'
 heroImageStyle: {
   height: '160px',
   margin: '6rem auto 2rem',
