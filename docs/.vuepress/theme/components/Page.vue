@@ -219,6 +219,7 @@ function flatten(items, res) {
   padding-top: 6rem;
   padding-bottom: 2rem;
   display: block;
+  overflow-x hidden
 
   #time-line {
     margin-top: 0;
