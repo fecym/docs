@@ -42,6 +42,7 @@ module.exports = {
         { text: 'Linux命令', link: '/views/server-side/linux' },
         { text: '负载均衡', link: '/views/tools/nginx/requisite' },
         { text: 'HTTP认证方式', link: '/views/basis/jwt' },
+        { text: '加密解密', link: '/views/server-side/crypto' },
       ]
     },
     {

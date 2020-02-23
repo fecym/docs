@@ -380,6 +380,10 @@ tail -f install.log
 | 输入模式 | 编辑模式，用于输入文本   |
 | 底行模式 | 可以输入指令、搜索、保存 |
 
+<p class="p-images">
+  <img :src="$withBase('/imgs/linux-vim.png')" height="" title="Linux操作模式" />
+</p>
+
 ### 打开文件
 
 输入 `vi 文件名` 即可打开文件，默认定位到第一行，也可以输入 `vi +n 文件名` 打开文件定位到第 `n` 行
