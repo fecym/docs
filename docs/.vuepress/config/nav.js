@@ -19,6 +19,8 @@ module.exports = {
         { text: '常用api', link: '/views/basis/api' },
         { text: '小技巧', link: '/views/basis/issue' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
+        { text: '命令行参数', link: '/views/basis/command' },
+        // { text: '交接文档', link: '/views/other/doc' },
       ]
     },
     {
