@@ -17,9 +17,9 @@ module.exports = {
         { text: 'JavaScript', link: '/views/basis/javascript' },
         { text: '继承', link: '/views/basis/inherit' },
         { text: '常用api', link: '/views/basis/api' },
-        { text: '小技巧', link: '/views/basis/issue' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
         { text: '命令行参数', link: '/views/basis/command' },
+        { text: '面试题记录', link: '/views/basis/issue' },
         // { text: '交接文档', link: '/views/other/doc' },
       ]
     },
@@ -39,6 +39,7 @@ module.exports = {
       icon: 'iconxitong',
       items: [
         { text: 'fs文件系统', link: '/views/server-side/node/fs' },
+        // { text: '进程', link: '/views/server-side/node/process' },
         { text: '服务器的配置', link: '/views/server-side/service-conf' },
         // { text: '虚拟机', link: '/views/FE/system/vmware' },
         { text: 'Linux命令', link: '/views/server-side/linux' },
