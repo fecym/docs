@@ -517,4 +517,71 @@ function clone(target, map = new Map()) {
 }
 ```
 
+## 数组的扁平化和增维
+
+如下：一个多维数组，要求把数组扁平化成一个一维数组
+
+```js
+const arr = [1, 2, [21, 45, 88], 3, 4, [5, 6, [7, 8, [9, 11]]]]
+// 结果：[ 1, 2, 21, 45, 88, 3, 4, 5, 6, 7, 8, 9, 11 ]
+```
+
+### 扁平化
+
+- 扁平化有多种思路，我们可以直接暴力一点，直接用正则匹配所有的中括号然后替换为空
+
+```js
+const flatUseRegExp = arr => {
+  const str = JSON.stringify(arr).replace(/\[|\]/g, '')
+  return str.split(',').map(i => +i)
+}
+```
+
+- 也可以更直接一点，利用数组 toString 之后会去掉所有括号直接处理
+
+```js
+const flatUseToString = arr => {
+  return arr
+    .toString()
+    .split(',')
+    .map(i => +i)
+}
+```
+
+- 当然我们也可以规规矩矩的写递归，来解决这个问题
+
+```js
+const flat = arr => {
+  let result = []
+  arr.forEach(item => {
+    if (Array.isArray(item)) {
+      result = result.concat(flat(item))
+    } else {
+      result.push(item)
+    }
+  })
+  return result
+}
+```
+
+### 增维
+
+之前面试遇到一道题，有一个一维数组，我想要写个方法，方法接收两个参数，该数组和一个数字，然后得到一个根据这个数字而拆分成的多维数组，比如说我传递一个 3，那就数组中的成员就每三个成员组成一个新的数组
+
+```js
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+// 结果：[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ], [ 0 ] ]
+
+const newaxis = (arr, offset) => {
+  const len = arr.length
+  // 偏移量计算如果正好能被整除那么就取传入的偏移量，否则就向下取整后加1
+  const offsetNum = len % offset === 0 ? offset : ~~(len / offset + 1)
+  const result = []
+  for (let i = 0; i < offsetNum; i++) {
+    result.push(arr.slice(i * offset, i * offset + offset))
+  }
+  return result
+}
+```
+
 持续记录中...

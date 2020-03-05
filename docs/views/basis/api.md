@@ -49,11 +49,15 @@ function New() {
 
 ```js
 function instanceOf(left, right) {
-  while (true) {
-    if (left.__proto__ === null) return false
-    if (left.__proto__ === right.prototype) return true
-    left.__proto__ = left.__proto__.__proto__
-  }
+  // while (true) {
+  //   if (left.__proto__ === null) return false
+  //   if (left.__proto__ === right.prototype) return true
+  //   left.__proto__ = left.__proto__.__proto__
+  // }
+  if (left.__proto__ === null) return false
+  if (left.__proto__ === right.prototype) return true
+  left.__proto__ = left.__proto__.__proto__
+  instanceOf(left, right)
 }
 instanceOf(Function, Object) // true >> Function.__proto__.__proto__ === Object.prototype
 ```
