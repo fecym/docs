@@ -5,7 +5,7 @@ tags:
   - webpack
 ---
 
-## webpack 基础篇
+## webpack 介绍
 
 > webpack 配置只需要在项目根目录下新建一个 `webpack.config.js` 文件，然后导出一个对象或者函数都可以，如果导出为一个函数那么这个函数接受两个参数，第一个参数是环境对象（environment），第二个参数是一个 map 对象（argv）这个对象描述了传递给 webpack 的选项，并且具有 output-filename 和 optimize-minimize 等 key。
 
@@ -62,7 +62,7 @@ tags:
     path: path.resolve('./dist'),
     // 打包后的文件名，[name] 对应 entry 的名字
     filename: 'js/[name].[chunkHash].js',
-    // 打包后静态资源的位置
+    // 打包后静态资源的位置，cdn 的配置
     publicPath: '.'
   },
 ```
@@ -97,7 +97,7 @@ module.exports = function(env, argv) {
 
 #### 配置 loader
 
-> 先看一段代码
+> 配置 `loader` 就是配置一堆规则，所以要放在 `module.rules` 中，先看一段代码
 
 ```javascript
   module: {
