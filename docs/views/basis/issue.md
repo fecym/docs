@@ -584,4 +584,35 @@ const newaxis = (arr, offset) => {
 }
 ```
 
+## 实现一个柯利化
+
+柯利化的核心是：`只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数`
+
+比如说实现一个 add 函数
+
+```js
+const addFn = (a, b, c, d, e) => {
+  return a + b + c + d + e
+}
+const add = curry(addFn)
+add(1)(2)(3)(4, 5) // 15
+add(1)(2)(3, 4, 5) // 15
+add(1, 2, 3)(4, 5) // 15
+```
+
+面试要求就是实现这么一个函数
+
+```js
+function curry(fn, ...args) {
+  // 如果参数大于等于了要改变函数的参数了，那么直接执行就可以了
+  if (args.length >= fn.length) {
+    return fn(...args)
+  }
+  // 否则就返回一个函数，函数把所有参数都累积到一起
+  return function(...args2) {
+    return curry(fn, ...args, ...args2)
+  }
+}
+```
+
 持续记录中...

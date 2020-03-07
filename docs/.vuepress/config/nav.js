@@ -43,6 +43,7 @@ module.exports = {
         { text: '服务器的配置', link: '/views/server-side/service-conf' },
         // { text: '虚拟机', link: '/views/FE/system/vmware' },
         { text: 'Linux命令', link: '/views/server-side/linux' },
+        // { text: 'https配置', link: '/views/server-side/http' },
         { text: '负载均衡', link: '/views/tools/nginx/requisite' },
         { text: 'HTTP认证方式', link: '/views/basis/jwt' },
         { text: '加密解密', link: '/views/server-side/node/crypto' },

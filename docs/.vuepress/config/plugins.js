@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: chengyuming
  * @Date: 2019-07-31 21:57:28
  * @LastEditors: chengyuming
@@ -17,18 +17,19 @@ module.exports = {
         }
       }
     ],
-    [
-      '@vssue/vuepress-plugin-vssue', {
-        // 设置 `platform` 而不是 `api`
-        platform: 'github',
-        // locale: 'zh', // 语言设置
-        // 其他的 Vssue 配置
-        owner: 'cym-git', // github账户名称
-        repo: 'cym-git.github.io', // Github博客仓库
-        clientId: '74b59bdd634bffbe5002', // github上面申请的clientId
-        clientSecret: 'a6cf61f1223501b85583ab5a8901115e3ad0be05', // github上面申请的clientSecret
-      }
-    ],
+    // 移除 vssue
+    // [
+    //   '@vssue/vuepress-plugin-vssue', {
+    //     // 设置 `platform` 而不是 `api`
+    //     platform: 'github',
+    //     // locale: 'zh', // 语言设置
+    //     // 其他的 Vssue 配置
+    //     owner: 'cym-git', // github账户名称
+    //     repo: 'cym-git.github.io', // Github博客仓库
+    //     clientId: '74b59bdd634bffbe5002', // github上面申请的clientId
+    //     clientSecret: 'a6cf61f1223501b85583ab5a8901115e3ad0be05', // github上面申请的clientSecret
+    //   }
+    // ],
     ['@vuepress/nprogress'],
     ['@vuepress/back-to-top'],
     ['@vuepress/medium-zoom', true],
@@ -41,8 +42,9 @@ module.exports = {
         buttonText: "刷新"
       }
     }],
-    ['@vuepress/google-analytics', {
-      ga: 'UA-151995186-1'  // Google Analytics ID
-    }],
+    // 移除 Google 监控
+    // ['@vuepress/google-analytics', {
+    //   ga: 'UA-151995186-1'  // Google Analytics ID
+    // }],
   ]
 }
