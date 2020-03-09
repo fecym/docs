@@ -500,7 +500,10 @@ alias: {
 
 - 默认情况下，webpack 查找模块，会找模块下面的 package.json 中的 main 字段，main 字段指向哪个地址那就是哪个地址，这个查看顺序其实也是可以更改的，比如说 bootstrap 他会默认找 `dist/js/bootstrap`，但是我们只想用他的样式，我们就需要把它改成默认查找 style 属性 `dist/css/bootstrap.css`
 
-![bootstrap]('./images/webpack-resolve.png')
+<!-- ![bootstrap]('./images/webpack-resolve.png') -->
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/webpack-resolve.png')" />
+</p>
 
 - 此时我们可以通过 mainFileds 字段来控制查找的先后顺序
 
