@@ -28,7 +28,7 @@ module.exports = {
       icon: 'iconqianduan',
       items: [
         { text: 'webpack介绍', link: '/views/webpack/index' },
-        { text: 'webpack使用', link: '/views/webpack/base' },
+        { text: 'webpack实战', link: '/views/webpack/base' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'cli 的开发', link: '/views/tools/npm/cli' },
         { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
