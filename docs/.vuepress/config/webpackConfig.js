@@ -8,6 +8,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const webpack = require('webpack')
 const productionGzipExtensions = ['js', 'css']
 module.exports = {
   chainWebpack: (config, isServer) => {
@@ -37,7 +38,8 @@ module.exports = {
         }
       })
       .end()
-    if (!isServer && config.mode === 'production') {
+    // if (!isServer && config.mode === 'production') {
+    if (config.mode === 'production') {
       // 分割vendor
       config.optimization.splitChunks({
         chunks: 'all',
@@ -51,12 +53,12 @@ module.exports = {
           vue: {
             name: 'vue',
             test: /[\\/]node_modules[\\/]vue[\\/]/,
-            priority: 50
+            priority: 1
           },
           vueRouter: {
             name: 'vue-router',
             test: /[\\/]node_modules[\\/]vue-router[\\/]/,
-            priority: 70
+            priority: 2
           },
           common: {
             chunks: 'all',
@@ -66,6 +68,16 @@ module.exports = {
             maxInitialRequests: 5,
             minSize: 0,
             priority: 60
+          },
+          moment: {
+            name: 'moment',
+            test: /[\\/]node_modules[\\/]moment[\\/]/,
+            priority: 4
+          },
+          valine: {
+            name: 'valine',
+            test: /[\\/]node_modules[\\/]valine[\\/]/,
+            priority: 5
           },
           styles: {
             name: 'styles',
@@ -94,6 +106,9 @@ module.exports = {
           filename: 'assets/css/[name].[hash].css',
           chunkFilename: 'assets/css/[id].[hash].css'
         })
+      )
+      config.plugins.push(
+        new webpack.IgnorePlugin(/\.\/locale/, /moment/)
       )
     }
     if (!isServer && config.mode === 'production') {
