@@ -603,7 +603,7 @@ class Emitter {
 }
 ```
 
-## promise 篇
+## promise 拓展方法
 
 面试中，面试官经常会让你手撕一个 `Promise` 的实现，说句实话，这东西怪难的，考查你对异步流程语句的控制，`EventLoop` 的掌握，我打算把 promise 分段解析一下记录在此。本篇中先记录用法，在尝试实现
 
@@ -696,6 +696,280 @@ Promise.map([p1, p2], function(val, done, failed) {
 
 // 最终输出结果是，如果加上一个失败的 promise 该函数也是可以捕获的哦
 // [42, 84]
+```
+
+## promise
+
+- 既然提到了 promise，那就记录一下 promise 的实现流程吧
+- promise 核心是三种状态，pending、resolve、reject，状态一旦从 pending 变成 其他状态则不可逆
+
+### 手写 promise 基础篇
+
+- 基础篇实现我们实现函数异步函数执行的问题
+
+```js
+// 首先是三种状态
+const PENDING = 'pending'
+const RESOLVED = 'resolve'
+const REJECTED = 'reject'
+
+function Promise(execute) {
+  this.status = PENDING
+  // 存放成功时传递的值和失败传递的原因
+  this.value = null
+  this.reason = null
+  // 回调队列
+  this.onResolvedCallbacks = []
+  this.onRejectedCallbacks = []
+  const resolve = value => {
+    // 状态不可逆，只有在 pending 的时候才可以改变自身的状态
+    if (this.status === PENDING) {
+      this.status = RESOLVED
+      this.value = value
+      // 状态发生改变的时候查看异步队列里面是否有函数，如果有就执行
+      this.onResolvedCallbacks.forEach(fn => fn())
+    }
+  }
+  const reject = reason => {
+    if (this.status = PENDING) {
+      this.status = REJECTED
+      this.reason = reason
+      this.onRejectedCallbacks.forEach(fn => fn())
+    }
+  }
+  execute(resolve, reject)
+}
+
+Promise.prototype.then = function(onFulfilled, onRejected) {
+  const selt = this
+  if (selt.status === RESOLVED) {
+    onFulfilled(selt.value)
+  }
+  if (selt.status === REJECTED) {
+    onRejected(selt.reason)
+  }
+  if (selt.status === PENDING) {
+    this.onResolvedCallbacks.push(function() {
+      onFulfilled(selt.value)
+    })
+    this.onRejectedCallbacks.push(function() {
+      onRejected(selt.reason)
+    })
+  }
+}
+// 返回 Promise 便于测试
+module.exports = Promise
+```
+
+```js
+// 测试基础版本的 promise
+const Promise = require('./promise')
+const p = new Promise((resolve, reject) => {
+  // 测试异步
+  setTimeout(() => {
+    reject(1000)
+  }, 2000)
+  // 测试同步
+  // reject('异常')
+  // resolve('正常')
+})
+p.then(data => console.log(data), err => {
+  console.log(err, '出错了')
+})
+// 测试第二次 then
+p.then(data => console.log(data), err => {
+  console.log(err, '出错了')
+})
+```
+
+### promise then 方法的补充
+
+- promise 中的 then 方法必须返回一个 promise，Promise A+ 规范上 2.2.7 中有提到
+- 所以再次调用 then 后需要返回一个全新的promise
+- 所以我们需要拿到 then 方法成功或者失败后的返回值
+- 修改基础代码，把 then 方法补充完整
+
+```js
+const PENDING = 'pending'
+const RESOLVED = 'resolve'
+const REJECTED = 'reject'
+
+function Promise(execute) {
+  this.status = PENDING
+  // 存放成功时传递的值和失败传递的原因
+  this.value = null
+  this.reason = null
+  // 回调队列
+  this.onResolvedCallbacks = []
+  this.onRejectedCallbacks = []
+  const resolve = value => {
+    // 状态不可逆，只有在 pending 的时候才可以改变自身的状态
+    if (this.status === PENDING) {
+      this.status = RESOLVED
+      this.value = value
+      // 状态发生改变的时候查看异步队列里面是否有函数，如果有就执行
+      this.onResolvedCallbacks.forEach(fn => fn())
+    }
+  }
+  const reject = reason => {
+    if (this.status = PENDING) {
+      this.status = REJECTED
+      this.reason = reason
+      this.onRejectedCallbacks.forEach(fn => fn())
+    }
+  }
+  execute(resolve, reject)
+}
+
+/**
+ * 判断 x 和 promise 的关系，如果 x 和 promise 是一样的，那么抛出异常，不可以让自己等待自己完成，规范 2.3.1 提到
+ * 如果 x 是普通值的话，直接调 resolve 即可
+ * 如果 x 是一个引用类型的话，要考虑是不是 promise 函数
+ * 如果不是函数的话，直接当做普通值 resolve 即可
+ * 如果是函数的话那么就认为他是一个 promise 函数
+ * 那么此时就让这个 函数的 then 的执行并且绑定这个 x，传入两个函数，不同的函数中执行不同的结果
+ * @param {*} promise2
+ * @param {*} x
+ * @param {*} resolve
+ * @param {*} rejecte
+ */
+function resolvePromise(promise2, x, resolve, reject) {
+  if (x === promise2) return reject(new TypeError('循环引用了'))
+  // 判断是不是引用类型或者普通值，普通直接返回
+  // 引用类型在做处理
+  if ((typeof x !== null && typeof x === 'object') || typeof x === 'function') {
+    try {
+      const then = x.then
+      // 如果 x 中有 then，那么就认为这个 then 是一个 promise，规范 2.3.3.3
+      if (typeof then === 'function') {
+        then.call(x, y => {
+          // 此时 y 还可能是一个 promise，所以需要递归处理一下
+          resolvePromise(promise2, y, resolve, reject)
+        }, r => reject(r))
+      } else {
+        resolve(x)
+      }
+    } catch (error) {
+      reject(error)
+    }
+  } else {
+    resolve(x)
+  }
+}
+
+Promise.prototype.then = function(onFulfilled, onRejected) {
+  const selt = this
+  // then方法必须返回一个新的 promise
+  const _promise = new Promise((resolve, reject) => {
+    if (selt.status === RESOLVED) {
+      setTimeout(() => {
+        try {
+          const x = onFulfilled(selt.value)
+          // 需要一个方法处理 promise 中 then 方法
+          // 我们要在自身中使用自身，自身还没有创建完毕了，所以我们需要异常处理一下才可以取到 _promise
+          // 在 Notes 3.1 中提到，这种情况我们可以使用 setTimeout 来实现
+          resolvePromise(_promise, x, resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+      })
+
+    }
+    if (selt.status === REJECTED) {
+      setTimeout(() => {
+        try {
+          const x = onRejected(selt.reason)
+          resolvePromise(_promise, x, resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+      })
+    }
+    if (selt.status === PENDING) {
+      this.onResolvedCallbacks.push(function() {
+        setTimeout(() => {
+          try {
+            const x = onFulfilled(selt.value)
+            resolvePromise(_promise, x, resolve, reject)
+          } catch (error) {
+            reject(error)
+          }
+        })
+      })
+      this.onRejectedCallbacks.push(function() {
+        setTimeout(() => {
+          try {
+            const x = onRejected(selt.reason)
+            resolvePromise(_promise, x, resolve, reject)
+          } catch (error) {
+            reject(error)
+          }
+        })
+      })
+    }
+  })
+  return _promise
+}
+
+module.exports = Promise
+```
+
+```js
+// 测试代码
+const Promise = require('./promise')
+
+const p = new Promise((resolve, reject) => {
+  // setTimeout(() => {
+  //   // resolve('情人节到了')
+  //   // resolve(1000)
+  //   reject(1000)
+  // }, 2000)
+  // reject('情人节到了')
+  resolve('情人节到了')
+})
+p.then(data => console.log(data), err => {
+  console.log(err, '出错了')
+})
+// p.then(data => console.log(data))
+
+// let p2 = p.then(data => {
+//   // return data
+//   // throw data
+//   // 如果自己返回自己，自己等待着自己完成，那么当前就应该走向失败
+//   // return p2
+//   return new Promise((resolve, reject) => {
+//     setTimeout(function() {
+//       // reject(1000)
+//       resolve(10000)
+//     }, 2000)
+//   })
+// })
+
+const p2 = p.then(data => {
+  // 可能有人会这么做
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      resolve(
+        new Promise((resolve, reject) => {
+          setTimeout(function() {
+            resolve(
+              new Promise((resolve, reject) => {
+                resolve(3000)
+              })
+            )
+          }, 1000)
+        })
+      )
+    }, 1000)
+  })
+})
+
+p2.then(data => {
+  console.log(data, '???')
+}, err => {
+  console.log(err, '失败？？？')
+})
+
 ```
 
 - 持续更新中....
