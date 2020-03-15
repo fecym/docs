@@ -16,7 +16,7 @@ module.exports = {
         { text: 'css', link: '/views/basis/css' },
         { text: 'JavaScript', link: '/views/basis/javascript' },
         { text: '继承', link: '/views/basis/inherit' },
-        { text: '常用api', link: '/views/basis/api' },
+        { text: '常用 Api', link: '/views/basis/api' },
         { text: '实现 Promise', link: '/views/basis/promise' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
         { text: '命令行参数', link: '/views/basis/command' },

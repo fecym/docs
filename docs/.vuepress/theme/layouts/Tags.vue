@@ -45,6 +45,7 @@ export default {
   created () {
     if (this.$tags.list.length > 0) {
       const currentTag = this.$route.query.tag || '大前端' || this.$tags.list[0].name
+      console.log(this.$tags)
       // tags 随机排序
       let tags = this.$tags.list
       tags.map(item => {
@@ -89,7 +90,8 @@ export default {
 
     _tagColor () {
       // 红、蓝、绿、橙、灰
-      const tagColorArr = ['#f26d6d', '#3498db', '#67cc86', '#fb9b5f', '#838282']
+      // , '#838282'
+      const tagColorArr = ['#f26d6d', '#3498db', '#67cc86', '#fb9b5f']
       const index = Math.floor(Math.random() * tagColorArr.length)
       return tagColorArr[index]
     },

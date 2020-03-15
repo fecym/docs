@@ -1,5 +1,5 @@
 ---
-title: Promise
+title: 实现一个 Promise
 date: 2020-03-14
 tags:
   - Promise
@@ -7,9 +7,9 @@ tags:
   - 基础
 ---
 
-> 曾面试自己心仪的公司，要求手写一个 Promise，当时未能解出，很是遗憾，如今整理一下这个异步的解决方案。
+> 曾面试自己心仪的公司，要求手写一个 `Promise`，当时未能解出，很是遗憾，如今整理一下这个异步的解决方案。
 
-promise 的出现改变了以前 js 的回调风格。promise 核心是三种状态，pending、resolve、reject，状态一旦从 pending 变成责状态则不可逆，其他用法细节将在实现 promise 的过程中一步步记录
+`promise` 的出现改变了以前 js 的回调风格。`promise` 核心是三种状态，`pending、resolve、reject`，状态一旦从 `pending` 变成其他状态则不可逆，其他用法细节将在实现 `promise` 的过程中一步步记录
 
 ## 简单版 promise
 
@@ -45,6 +45,7 @@ function Promise(execute) {
       this.onRejectedCallbacks.forEach(fn => fn())
     }
   }
+  // Promise 内部的默认执行函数
   execute(resolve, reject)
 }
 
@@ -68,6 +69,8 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
 // 返回 Promise 便于测试
 module.exports = Promise
 ```
+
+测试基本版的 `promise`
 
 ```js
 // 测试基础版本的 promise
@@ -96,7 +99,7 @@ p.then(
 )
 ```
 
-## then 方法的补充
+## then 方法补充
 
 - promise 中的 then 方法必须返回一个 promise，Promise A+ 规范上 2.2.7 中有提到
 - 所以再次调用 then 后需要返回一个全新的 promise
@@ -119,6 +122,10 @@ function Promise(execute) {
   const resolve = value => {
     // 状态不可逆，只有在 pending 的时候才可以改变自身的状态
     if (this.status === PENDING) {
+      // 如果 resolve 里面值还是一个 promise 的话，那就递归处理一下
+      if (value instanceof Promise) {
+        return value.then(resolve, reject)
+      }
       this.status = RESOLVED
       this.value = value
       // 状态发生改变的时候查看异步队列里面是否有函数，如果有就执行
@@ -176,12 +183,18 @@ function resolvePromise(promise2, x, resolve, reject) {
 }
 
 Promise.prototype.then = function(onFulfilled, onRejected) {
+  // 参数的可选性
+  // 如果没有传递成功的值，那么我们给自动传递过去，这个叫做值得穿透，保证可以在后面捕获到异常
+  onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val
+  // 如果错误没有传递，那我们手动传递过去
+  onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err }
   const selt = this
   // then方法必须返回一个新的 promise
   const _promise = new Promise((resolve, reject) => {
     if (selt.status === RESOLVED) {
       setTimeout(() => {
         try {
+          // then 方法中可能直接出现异常，所以 trycatch 下
           const x = onFulfilled(selt.value)
           // 需要一个方法处理 promise 中 then 方法
           // 我们要在自身中使用自身，自身还没有创建完毕了，所以我们需要异常处理一下才可以取到 _promise
@@ -230,6 +243,8 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
 
 module.exports = Promise
 ```
+
+测试 `promise`
 
 ```js
 // 测试代码
@@ -296,7 +311,7 @@ p2.then(
 
 ## catch 方法
 
-其实 catch 方法就是 是一个 `p.then(null, err => console.log(err)` 的语法糖，所以 catch 的实现也很简单
+其实 `catch` 方法就是 是一个 `p.then(null, err => console.log(err)` 的语法糖，所以 `catch` 的实现也很简单
 
 ```js
 Promise.prototype.catch = function(errCallback) {
@@ -305,6 +320,8 @@ Promise.prototype.catch = function(errCallback) {
 ```
 
 ## 静态方法
+
+在 `Promise` 的构造函数中提供了几个静态函数，可以直接来处理值，实现如下
 
 ### resolve
 
@@ -342,9 +359,13 @@ Promise.all = function(prs) {
     prs.forEach((p, i) => {
       const then = p.then
       if (then && typeof then === 'function') {
-        then.call(p, y => {
-          processData(i, y)
-        }, reject)
+        then.call(
+          p,
+          y => {
+            processData(i, y)
+          },
+          reject
+        )
       } else {
         processData(i, p)
       }
@@ -355,9 +376,9 @@ Promise.all = function(prs) {
 
 ### race
 
-race 是一个赛跑方法，在 promise 中被称为竞态，谁先有结果要谁，不管成功还是失败只要第一个有结果的
+`race` 是一个赛跑方法，在 `promise` 中被称为竞态，谁先有结果要谁，不管成功还是失败只要第一个有结果的
 
-传入值如果是一个空数组的话，promise 永远不会有结果，而不是立刻就有结果
+传入值如果是一个空数组的话，`promise` 永远不会有结果，而不是立刻就有结果
 
 ```js
 Promise.race = function(prs) {
@@ -365,9 +386,13 @@ Promise.race = function(prs) {
     prs.forEach((pr, i) => {
       const then = pr.then
       if (then && typeof then === 'function') {
-        then.call(pr, y => {
-          resolve(y)
-        }, reject)
+        then.call(
+          pr,
+          y => {
+            resolve(y)
+          },
+          reject
+        )
       } else {
         resolve(pr)
       }
@@ -376,9 +401,9 @@ Promise.race = function(prs) {
 }
 ```
 
-## Promise.deferred
+## deferred
 
-有个测试 promise 的库 `promises-aplus-tests`，需要我们提供这么一个方法，然后用来测试 promise 是否符合规范
+有个测试 `promise` 的库 `promises-aplus-tests`，需要我们提供这么一个方法，然后用来测试 `promise` 是否符合规范
 
 ```js
 Promise.deferred = function() {
@@ -417,9 +442,11 @@ read(url).then(
 
 ## promise 拓展方法
 
-面试中，面试官经常会让你手撕一个 `Promise` 的实现，说句实话，这东西怪难的，考查你对异步流程语句的控制，`EventLoop` 的掌握，我打算把 promise 分段解析一下记录在此。本篇中先记录用法，在尝试实现
+虽然 `Promise` 中提供了 `all` 和 `race` 两个模式，但是很可以拓展其他的变体
 
-### all 和 race 的变体
+### first
+
+只要第一个 `Promise` 完成，它就会忽略后续的任何拒绝和完成
 
 ```js
 // first 的实现
@@ -435,6 +462,10 @@ if (!Promise.first) {
   }
 }
 ```
+
+### last
+
+`last` 类似于 `first`，但是是取最后一个完成的结果
 
 ```js
 // last 的实现
@@ -470,7 +501,7 @@ Promise.last([1, Promise.resolve(2)]).then(res => {
 // 2 'last'
 ```
 
-### map 方法
+### map
 
 有时候需要在一列 `Promise` 中迭代，并对所有的 `Promise` 都执行某个任务，非常类似于数组可以做的那样（比如 forEach、map 等），如果这些任务是同步的那这些任务就可以做，但是从根本上上来说 `Promise` 任务是异步的，所以我们需要一个类似的工具方法
 
@@ -512,9 +543,9 @@ Promise.map([p1, p2], function(val, done, failed) {
 
 ## promisify
 
-在 node 中，所有方法都是错误优先，所以在核心模块 `util` 中有个 promisify 方法，来把 node 中的异步方法处理成 promise
+在 `node` 中，所有方法都是错误优先，所以在核心模块 `util` 中有个 `promisify` 方法，来把 `node` 中的异步方法处理成 `promise`
 
-比如有以下场景：我不可能每次写一个方法都这么封装一次 promise，太麻烦了，所以出现了一个把函数 promise 化
+比如有以下场景：我不可能每次写一个方法都这么封装一次 `promise`，太麻烦了，所以出现了一个把函数 `promise` 化
 
 ```js
 function read(url) {
@@ -529,9 +560,9 @@ function read(url) {
 
 模拟以下实现过程：
 
-1. 首先 promisify 是把一个函数 promise 化，那么肯定接受一个函数为参数
-2. 然后 promise 化之后应该首先返回一个函数，然后可以调 then 方法
-3. 也就是说应该先返回一个函数，然后函数中返回一个 promise
+1. 首先 `promisify` 是把一个函数 `promise` 化，那么肯定接受一个函数为参数
+2. 然后 `promise` 化之后应该首先返回一个函数，然后可以调 `then` 方法
+3. 也就是说应该先返回一个函数，然后函数中返回一个 `promise`
 
 ```js
 function promisify(fn) {
@@ -545,3 +576,8 @@ function promisify(fn) {
   }
 }
 ```
+
+## 参考文献
+
+- 珠峰培训架构课程
+- 《你不知道的 JavaScript》中卷
