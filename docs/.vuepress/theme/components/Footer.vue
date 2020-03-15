@@ -32,6 +32,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@require '../styles/loadMixin.styl';
+// @require '../styles/loadMixin.styl';
 @require '../styles/footer.styl';
 </style>

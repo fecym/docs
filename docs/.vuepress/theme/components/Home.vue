@@ -1,117 +1,101 @@
-<!--
- * @Description:
- * @Author: chengyuming
- * @Date: 2019-09-03 18:29:25
- * @LastEditors: chengyuming
- * @LastEditTime: 2019-09-04 11:13:31
- -->
 <template>
-  <div class="home" :class="recoShow?'reco-show': 'reco-hide'">
-    <CircleBj />
-    <!-- <pre>{{ config }}</pre> -->
+  <div class="home">
     <div class="hero">
-      <img
-        v-if="data.heroImage"
-        :style="heroImageStyle"
-        :src="$withBase(data.heroImage)"
-        alt="hero"
-      />
-
-      <h1 v-if="data.isShowTitleInHome !== false">{{ data.heroText || $title || 'chengyuming' }}</h1>
-
-      <p
-        class="description"
-      >{{ data.tagline || $description || 'Welcome to your chengyuming site' }}</p>
-
-      <p class="action" v-if="data.actionText && data.actionLink">
-        <NavLink class="action-button" :item="actionLink" />
-      </p>
+      <CircleBj />
+      <ModuleTransition>
+        <img
+          v-if="recoShowModule && $frontmatter.heroImage"
+          :style="heroImageStyle || {}"
+          :src="$withBase($frontmatter.heroImage)"
+          alt="hero"
+        />
+      </ModuleTransition>
+      <ModuleTransition delay="0.04">
+        <h1
+          v-if="recoShowModule && $frontmatter.isShowTitleInHome !== false"
+        >{{ $frontmatter.heroText || $title || '午后南杂' }}</h1>
+      </ModuleTransition>
+      <ModuleTransition delay="0.08">
+        <p
+          v-show="recoShowModule"
+          class="description"
+        >{{ $description || 'Welcome to your vuePress-theme-reco site' }}</p>
+      </ModuleTransition>
+      <ModuleTransition delay="0.16">
+        <p class="huawei" v-if="recoShowModule && $themeConfig.huawei === true">
+          <i class="iconfont reco-huawei" style="color: #fc2d38"></i>
+          &nbsp;&nbsp;&nbsp;华为，为中华而为之！
+        </p>
+      </ModuleTransition>
+      <ModuleTransition delay="0.24">
+        <p
+          class="action"
+          v-if="recoShowModule && $frontmatter.actionText && $frontmatter.actionLink"
+        >
+          <NavLink class="action-button" :item="actionLink" />
+        </p>
+      </ModuleTransition>
     </div>
 
-    <div class="features" v-if="data.features && data.features.length">
-      <div v-for="(feature, index) in data.features" :key="index" class="feature">
-        <h2>{{ feature.title }}</h2>
-        <p>{{ feature.details }}</p>
+    <ModuleTransition delay="0.32">
+      <div
+        class="features"
+        v-if="recoShowModule && $frontmatter.features && $frontmatter.features.length"
+      >
+        <div v-for="(feature, index) in $frontmatter.features" :key="index" class="feature">
+          <h2>{{ feature.title }}</h2>
+          <p>{{ feature.details }}</p>
+        </div>
       </div>
-    </div>
-
-    <Content class="home-center" custom />
-
-    <Footer />
-
+    </ModuleTransition>
+    <ModuleTransition delay="0.4">
+      <Content class="home-center" v-show="recoShowModule" custom />
+    </ModuleTransition>
   </div>
 </template>
 
 <script>
-import NavLink from "@theme/components/NavLink/";
-import Footer from "@theme/components/Footer/";
-import AccessNumber from "@theme/components/Valine/AccessNumber";
+import NavLink from '@theme/components/NavLink'
+import ModuleTransition from '@theme/components/ModuleTransition'
+import moduleTransitonMixin from '@theme/mixins/moduleTransiton'
 import CircleBj from '@theme/components/CircleBj'
 
 export default {
-  components: { NavLink, AccessNumber, CircleBj, Footer },
-  data() {
-    return {
-      recoShow: false
-    };
-  },
+  mixins: [moduleTransitonMixin],
+  components: { NavLink, ModuleTransition, CircleBj },
   computed: {
-    year() {
-      return new Date().getFullYear();
-    },
-    data() {
-      return this.$frontmatter;
-    },
-    config() {
-      // console.log(this.$frontmatter, 'this.$frontmatter')
-      return this.$themeConfig
-    },
+
     actionLink() {
       return {
-        link: this.data.actionLink,
-        text: this.data.actionText
-      };
+        link: this.$frontmatter.actionLink,
+        text: this.$frontmatter.actionText
+      }
     },
-    // 服务端渲染不能用
-    isMobileDevice () {
-      const arr = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
-      return arr.some(device => window.navigator.userAgent.indexOf(device) !== -1)
-    },
-
 
     heroImageStyle() {
-      return (
-        this.data.heroImageStyle || {
-          maxHeight: "200px",
-          margin: "6rem auto 1.5rem"
-        }
-      );
+      return this.$frontmatter.heroImageStyle || {
+        maxHeight: '200px',
+        margin: '6rem auto 1.5rem'
+      }
     }
-  },
-  mounted() {
-    this.recoShow = true;
   }
-};
+}
 </script>
 
 <style lang="stylus">
-@require '../styles/loadMixin.styl';
+@require '../styles/mode.styl';
 
 .home {
   padding: $navbarHeight 2rem 0;
   max-width: 960px;
   margin: 0px auto;
-  position: relative;
 
   .hero {
     text-align: center;
 
-    img {
-      // background-color: $accentColor;
-    }
-
     h1 {
       font-size: 2.5rem;
+      color: var(--text-color);
     }
 
     h1, .description, .action {
@@ -121,7 +105,7 @@ export default {
     .description {
       font-size: 1.6rem;
       line-height: 1.3;
-      color: lighten($textColor, 20%);
+      color: var(--text-color);
     }
 
     .action-button {
@@ -130,7 +114,7 @@ export default {
       color: #fff;
       background-color: $accentColor;
       padding: 0.6rem 1.2rem;
-      border-radius: 4px;
+      border-radius: $borderRadius;
       transition: background-color 0.1s ease;
       box-sizing: border-box;
       load-start();
@@ -142,7 +126,7 @@ export default {
   }
 
   .features {
-    border-top: 1px solid $borderColor;
+    border-top: 1px solid var(--border-color);
     padding: 1.2rem 0;
     margin-top: 2.5rem;
     display: flex;
@@ -157,95 +141,17 @@ export default {
     flex-basis: 30%;
     max-width: 30%;
     transition: all 0.5s;
-    z-index: 2;
+    color: var(--text-color);
 
     h2 {
       font-size: 1.6rem;
       font-weight: 500;
       border-bottom: none;
       padding-bottom: 0;
-      color: lighten($textColor, 10%);
-    }
-
-    p {
-      color: lighten($textColor, 20%);
     }
 
     &:hover {
       transform: scale(1.05);
-    }
-  }
-
- &.reco-hide {
-    .hero {
-      img {
-        load-start();
-      }
-
-      .h1 {
-        load-start();
-      }
-
-      .description {
-        load-start();
-      }
-
-      .huawei {
-        load-start();
-      }
-
-      .action-button {
-        load-start();
-      }
-    }
-
-    .features {
-      load-start();
-    }
-
-    .home-center {
-      load-start();
-      padding: 0;
-    }
-
-    .footer {
-      load-start();
-    }
-  }
-
-  &.reco-show {
-    .hero {
-      img {
-        load-end(0.08s);
-      }
-
-      .h1 {
-        load-end(0.16s);
-      }
-
-      .description {
-        load-end(0.24s);
-      }
-
-      .huawei {
-        load-end(0.32s);
-      }
-
-      .action-button {
-        load-end(0.4s);
-      }
-    }
-
-    .features {
-      load-end(0.4s);
-    }
-
-    .home-center {
-      load-end(0.48s);
-    }
-
-    .footer {
-      load-end(0.56s);
     }
   }
 }
@@ -259,16 +165,6 @@ export default {
     .feature {
       max-width: 100%;
       padding: 0 2.5rem;
-    }
-  }
-
-  .footer {
-    text-align: left !important;
-
-    > span {
-      display: block;
-      margin-left: 0;
-      line-height: 2rem;
     }
   }
 }

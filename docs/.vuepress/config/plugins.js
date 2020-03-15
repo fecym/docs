@@ -17,6 +17,25 @@ module.exports = {
         }
       }
     ],
+    ['@vuepress/plugin-blog', {
+      permalink: '/:regular',
+      frontmatters: [
+        {
+          id: 'tags',
+          keys: ['tags'],
+          path: '/tag/',
+          layout: 'Tags',
+          scopeLayout: 'Tag'
+        },
+        {
+          id: 'timeline',
+          keys: ['timeline'],
+          path: '/timeline/',
+          layout: 'TimeLine',
+          scopeLayout: 'TimeLine'
+        }
+      ]
+    }],
     // 移除 vssue
     // [
     //   '@vssue/vuepress-plugin-vssue', {

@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: chengyuming
  * @Date: 2019-08-01 11:28:21
  * @LastEditors: chengyuming
@@ -15,7 +15,9 @@ module.exports = {
   description: 'Today, have you studied yet?',
   dest: './love',
   head,
-  theme: 'reco',
+  // theme: 'reco',
+  // theme: '@vuepress/theme-blog',
+  theme: require.resolve('./theme'),
   serviceWorker: true, // 是否开启 PWA
   themeConfig,
   markdown,
