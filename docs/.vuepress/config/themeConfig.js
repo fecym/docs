@@ -52,7 +52,7 @@ module.exports = {
       appKey: 'VUz3rutrxvDjziwDisWL6DrT', // your appKey
       verify: true,
       placeholder: '你想说点什么...',
-      pageSize: 10,
+      pageSize: 5,
       // 是否记录评论者IP
       recordIP: true
     },

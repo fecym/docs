@@ -15,8 +15,6 @@ module.exports = {
   description: 'Today, have you studied yet?',
   dest: './love',
   head,
-  // theme: 'reco',
-  // theme: '@vuepress/theme-blog',
   theme: require.resolve('./theme'),
   serviceWorker: true, // 是否开启 PWA
   themeConfig,

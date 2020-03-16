@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Author: chengyuming
- * @Date: 2019-07-31 21:57:28
- * @LastEditors: chengyuming
- * @LastEditTime: 2019-11-11 23:53:32
- */
 module.exports = {
   plugins: [
     [
@@ -26,6 +19,13 @@ module.exports = {
           path: '/tag/',
           layout: 'Tags',
           scopeLayout: 'Tag'
+        },
+        {
+          id: 'categories',
+          keys: ['categories'],
+          path: '/categories/',
+          layout: 'Categories',
+          scopeLayout: 'Category'
         },
         {
           id: 'timeline',

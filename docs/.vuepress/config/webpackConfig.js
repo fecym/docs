@@ -6,7 +6,7 @@
  * @LastEditTime: 2019-11-11 23:36:01
  */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const webpack = require('webpack')
 const productionGzipExtensions = ['js', 'css']
@@ -112,13 +112,13 @@ module.exports = {
       )
     }
     if (!isServer && config.mode === 'production') {
-      config.plugins.push(
-        new BundleAnalyzerPlugin({
-          analyzerHost: 'localhost',
-          analyzerPort: 8990,
-          reportFilename: 'report-client.html'
-        })
-      )
+      // config.plugins.push(
+      //   new BundleAnalyzerPlugin({
+      //     analyzerHost: 'localhost',
+      //     analyzerPort: 8990,
+      //     reportFilename: 'report-client.html'
+      //   })
+      // )
     }
   }
 }
