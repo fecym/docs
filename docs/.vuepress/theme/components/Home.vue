@@ -13,7 +13,7 @@
       <ModuleTransition delay="0.04">
         <h1
           v-if="recoShowModule && $frontmatter.isShowTitleInHome !== false"
-        >{{ $frontmatter.heroText || $title || '午后南杂' }}</h1>
+        >{{ $frontmatter.heroText || $title }}</h1>
       </ModuleTransition>
       <ModuleTransition delay="0.08">
         <p

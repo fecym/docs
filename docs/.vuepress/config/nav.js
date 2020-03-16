@@ -20,7 +20,7 @@ module.exports = {
         { text: '实现 Promise', link: '/views/basis/promise' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
         { text: '命令行参数', link: '/views/basis/command' },
-        { text: '面试题记录', link: '/views/basis/issue' },
+        { text: '面试题记录', link: '/views/basis/issue' }
         // { text: '交接文档', link: '/views/other/doc' },
       ]
     },
@@ -33,7 +33,7 @@ module.exports = {
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'cli 的开发', link: '/views/tools/npm/cli' },
         { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
-        { text: '网站渲染流程', link: '/views/FE/process/websize-render' },
+        { text: '网站渲染流程', link: '/views/FE/process/websize-render' }
       ]
     },
     {
@@ -43,12 +43,13 @@ module.exports = {
         { text: 'fs文件系统', link: '/views/server-side/node/fs' },
         // { text: '进程', link: '/views/server-side/node/process' },
         { text: '服务器的配置', link: '/views/server-side/service-conf' },
-        // { text: '虚拟机', link: '/views/FE/system/vmware' },
+        { text: '虚拟机', link: '/views/FE/system/vmware' },
         { text: 'Linux命令', link: '/views/server-side/linux' },
-        // { text: 'https配置', link: '/views/server-side/http' },
+        { text: 'http笔记', link: '/views/server-side/http' },
+        { text: 'https笔记', link: '/views/server-side/https' },
         { text: '负载均衡', link: '/views/tools/nginx/requisite' },
         { text: 'HTTP认证方式', link: '/views/basis/jwt' },
-        { text: '加密解密', link: '/views/server-side/node/crypto' },
+        { text: '加密解密', link: '/views/server-side/node/crypto' }
       ]
     },
     {
@@ -58,7 +59,7 @@ module.exports = {
         { text: 'npm', link: '/views/tools/npm/init' },
         { text: 'mysql', link: '/views/tools/mysql' },
         { text: 'redis', link: '/views/tools/redis/index' },
-        { text: 'nginx', link: '/views/tools/nginx/index' },
+        { text: 'nginx', link: '/views/tools/nginx/index' }
       ]
     },
     {

@@ -16,13 +16,13 @@
           @keyup.enter="inter"
           @focus="inputFocus"
           @blur="inputBlur">
-        <span>{{warningText}}</span>
+        <span style="width: 300px">{{warningText}}</span>
         <button ref="passwordBtn" @click="inter">OK</button>
       </label>
     </ModuleTransition>
 
     <ModuleTransition delay="0.24">
-      <div v-show="recoShowModule" class="footer">
+      <!-- <div v-show="recoShowModule" class="footer">
         <span>
           <i class="iconfont reco-theme"></i>
           <a target="blank" href="https://vuepress-theme-reco.recoluan.com">vuePress-theme-reco</a>
@@ -36,7 +36,8 @@
             {{ year }}
           </a>
         </span>
-      </div>
+      </div> -->
+      <Footer v-show="recoShowModule" class="footer"/>
     </ModuleTransition>
   </div>
 </template>
@@ -45,10 +46,19 @@
 import md5 from 'md5'
 import ModuleTransition from '@theme/components/ModuleTransition'
 import moduleTransitonMixin from '@theme/mixins/moduleTransiton'
+import Footer from '@theme/components/Footer'
+
+const warningText = {
+  hintText: '此文章需要密码访问！',
+  error: '密码错误',
+  success: '密码正确',
+  inputFocus: '请输入密码',
+  inputBlur: '请输入密码后访问'
+}
 
 export default {
   mixins: [moduleTransitonMixin],
-  components: { ModuleTransition },
+  components: { ModuleTransition, Footer },
   props: {
     isPage: {
       type: Boolean,
@@ -58,7 +68,7 @@ export default {
   name: 'Password',
   data () {
     return {
-      warningText: 'Konck! Knock!',
+      warningText: warningText.hintText,
       key: ''
     }
   },
@@ -82,11 +92,11 @@ export default {
       sessionStorage.setItem(keyName, keyVal)
       const isKeyTrue = isPage ? isHasPageKey() : isHasKey()
       if (!isKeyTrue) {
-        this.warningText = 'Key Error'
+        this.warningText = warningText.error
         return
       }
 
-      this.warningText = 'Key Success'
+      this.warningText = warningText.success
 
       const width = document.getElementById('box').style.width
 
@@ -97,10 +107,10 @@ export default {
       }, 800)
     },
     inputFocus () {
-      this.warningText = 'Input Your Key'
+      this.warningText = warningText.inputFocus
     },
     inputBlur () {
-      this.warningText = 'Konck! Knock!'
+      this.warningText = warningText.inputBlur
     },
     isHasKey () {
       let { keys } = this.$themeConfig.keyPage
