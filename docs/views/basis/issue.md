@@ -158,7 +158,7 @@ JSON.stringify(true) // "true"
 JSON.stringify(undefined) // null
 JSON.stringify(function() {}) // null
 JSON.stringify([1, undefined, 2, function() {}, 3]) // "1, null, 2, null, 3"
-JSON.stringify({a: 2, b: function() {}}) // "{"a":2}"
+JSON.stringify({ a: 2, b: function() {} }) // "{"a":2}"
 ```
 
 ### toJSON 方法
@@ -171,8 +171,8 @@ JSON.stringify({a: 2, b: function() {}}) // "{"a":2}"
 const o = {
   a: 'cym',
   toJSON() {
-    return {c: 'b'}
-  },
+    return { c: 'b' }
+  }
 }
 
 JSON.stringify(o) // {"c":"b"}
@@ -188,7 +188,7 @@ JSON.stringify(o) // {"c":"b"}
 const obj = {
   a: 42,
   b: 30,
-  c: 100,
+  c: 100
 }
 JSON.stringify(obj, ['a', 'c']) // {"a":42,"c":100}
 ```
@@ -199,7 +199,7 @@ JSON.stringify(obj, ['a', 'c']) // {"a":42,"c":100}
 const obj = {
   a: 42,
   b: 30,
-  c: 100,
+  c: 100
 }
 JSON.stringify(obj, (k, v) => {
   // 注意：第一次 k 是 undefined，v 是原对象
@@ -401,7 +401,7 @@ const a = {
   val: 1,
   toString() {
     return this.val++
-  },
+  }
 }
 if (a == 1 && a == 2 && a == 3) {
   console.log('ok')
@@ -415,7 +415,7 @@ var i = 1
 Object.defineProperty(window, 'a', {
   get() {
     return i++
-  },
+  }
 })
 
 if (a == 1 && a == 2 && a == 3) {
@@ -462,7 +462,7 @@ if (a == 1 && a == 2 && a == 3) {
 ```js
 // 可以直接使用 Es6 的 rest 语法实现
 function copy(targte) {
-  return {...targte}
+  return { ...targte }
 }
 // 也可以使用 for in 实现
 function copy(target) {
@@ -497,9 +497,9 @@ function deepClone(target) {
 const obj = {
   name: 'cym',
   age: 25,
-  home: {name: '北京'},
+  home: { name: '北京' },
   hobbies: ['抽烟', '喝酒', '打游戏'],
-  sayHi: () => 'Hi',
+  sayHi: () => 'Hi'
 }
 // 循环引用
 obj.obj = obj
@@ -612,6 +612,148 @@ function curry(fn, ...args) {
   return function(...args2) {
     return curry(fn, ...args, ...args2)
   }
+}
+```
+
+## Generator
+
+### 对象增加迭代器
+
+类数组对象的特征：必须有长度、索引、能够被迭代，否则这个对象不可以使用 `...` 语法转数组，我们可以使用 Array.from 转，当然我们也可以给对象添加一个迭代器
+
+```js
+const obj = {
+  0: 1,
+  1: 2,
+  2: 3,
+  3: 4,
+  length: 4,
+  [Symbol.iterator]() {
+    let idx = 0
+    return {
+      next() {
+        value: obj[idx],
+        done: idx++ >= obj.length
+      }
+    }
+  }
+}
+// 此时对象就被添加了迭代器
+[...obj]  // 1 2 3 4
+for (const val of obj) {
+  console.log(val)  // 1 2 3 4
+}
+```
+
+上面的问题可以字节使用生成器来实现，生成器返回一个迭代器，迭代器有 next 方法，调用 next 方法可以返回 value 和 done
+
+```js
+const obj = {
+  0: 1,
+  1: 2,
+  2: 3,
+  3: 4,
+  length: 4,
+  [Symbol.iterator]: function* () {
+    let idx = 0
+    whele (idx !== this.length) {
+      yield this[idx++]
+    }
+  }
+```
+
+### 实现一个字符串的迭代器
+
+实现一个字符串的迭代器：传入一组字符串并返回单个字符的范例。一旦更新的字符串，输出也跟着替换掉旧的
+
+```js
+function generator(str) {
+  let idx = 0
+  return {
+    next() {
+      return {
+        value: str[idx],
+        done: idx++ >= str.length
+      }
+    }
+  }
+}
+// 测试
+const str = 'as'
+let gen = generator(str)
+console.log(gen.next())
+console.log(gen.next())
+console.log(gen.next())
+console.log(gen.next())
+gen = generator('str')
+console.log(gen.next())
+console.log(gen.next())
+console.log(gen.next())
+console.log(gen.next())
+// { value: 'a', done: false }
+// { value: 's', done: false }
+// { value: undefined, done: true }
+// { value: undefined, done: true }
+// { value: 's', done: false }
+// { value: 't', done: false }
+// { value: 'r', done: false }
+// { value: undefined, done: true }
+```
+
+### 简单模拟 co
+
+模拟一下 co 的实现
+
+首先来看一则例子
+
+```js
+const fs = require('fs')
+const path = require('path')
+const { promisify } = require('util')
+const readFile = promisify(fs.readFile)
+
+function* read() {
+  const name = yield readFile(path.resolve(__dirname, 'name.txt'), 'utf8')
+  const age = yield readFile(path.resolve(__dirname, name), 'utf8')
+  return age
+}
+
+const it = read()
+
+let { value, done } = it.next()
+value.then(data => {
+  let { value, done } = it.next(data)
+  // console.log(data, '???')
+  value.then(data => {
+    let { value, done } = it.next(data)
+    console.log(value)
+  })
+})
+```
+
+使用 co 库可以很容易解决这个问题
+
+```js
+const co = require('co')
+// co 接受一个生成器
+co(read()).then(data => {
+  console.log(data)
+})
+// 那模拟一下
+function _co(it) {
+  // 首先返回一个 promise
+  return new Promise((resolve, reject) => {
+    // 因为可以传值的原因，不可以直接使用循环实现，需要使用 递归
+    function next(data) {
+      const { value, done } = it.next(data)
+      if (done) return resolve(value)
+      // 保证值是一个 promise
+      Promise.resolve(value).then(data => {
+        next(data)
+      }, reject)
+    }
+    next()
+  })
 }
 ```
 
