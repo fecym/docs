@@ -188,7 +188,12 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
   // 如果没有传递成功的值，那么我们给自动传递过去，这个叫做值得穿透，保证可以在后面捕获到异常
   onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val
   // 如果错误没有传递，那我们手动传递过去
-  onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err }
+  onRejected =
+    typeof onRejected === 'function'
+      ? onRejected
+      : err => {
+          throw err
+        }
   const selt = this
   // then方法必须返回一个新的 promise
   const _promise = new Promise((resolve, reject) => {
@@ -576,6 +581,25 @@ function promisify(fn) {
     })
   }
 }
+```
+
+## promisifyAll
+
+如上的 promisify 我们可以把一个对象里面的所有方法转换成 promise，所以可以写一个 promisifyAll 方法来处理
+
+```js
+// 不常用
+function promisifyAll(obj) {
+  if (typeof obj[key] === 'function') {
+    obj[key + 'Async'] = promisify(obj[key])
+  }
+}
+
+// 使用
+promisifyAll(fs)
+fs.readFileAsync(url, 'utf8').then(res => {
+  console.log(res, 'promisifyAll')
+})
 ```
 
 ## 参考文献
