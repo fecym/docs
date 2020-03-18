@@ -87,8 +87,8 @@ module.exports = function(env, argv) {
     entry: path.resolve('./src/main'),
     output: {
       path: path.resolve('./dist'),
-      filename: '[name].[hash].js',
-    },
+      filename: '[name].[hash].js'
+    }
   }
 }
 ```
@@ -136,7 +136,7 @@ module.exports = function(env, argv) {
 3. `cacheDirectory`： 表示传给 `babel-loader` 的参数， 用于缓存 `babel` 的编译结果， 加快编译速度。
 4. `enforce`：`post` 表示将改 `loader` 的执行顺序放到最前面，`pre` 则相反.
 5. 多个 `loader` 时处理顺序：从后到前，即先交给 `sass-loader` 处理， 再将结果交给 `css-loader`, 最后交给 `style-loader`
-   :::
+:::
 
 #### 配置 noParse
 
@@ -158,7 +158,7 @@ module.exports = function(env, argv) {
 
 - `noParse` 的值可以是正则表达式， 也可以是一个函数；
 - 被忽略的文件里不应该包含 `import、require、define` 等模块化语句， 不然会导致在构建出的代码中包含无法在浏览器环境下执行的模块化语句
-  :::
+:::
 
 #### 配置 parser
 
@@ -190,7 +190,7 @@ module.exports = function(env, argv) {
 
 - `parse` 和 `noParse` 同级的属性，当然也可以嵌套到 `rules`，表示针对与某个 `loader` 应用到该属性的规则。
 - 目前只要明白 `parse` 属性，是用于声明哪些模块语法被解析，哪些不被解析即可。
-  :::
+:::
 
 #### 单个规则配置多个 loader， 语法需要使用 use， 如图
 
@@ -259,7 +259,7 @@ import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
 
 1. `descriptionFiles`：配置描述第三方模块的文件名称：默认是 `package.json`
 2. `enforceExtension`：配置后缀名是否必须加上
-   :::
+:::
 
 ### 六、plugin
 
@@ -268,7 +268,7 @@ import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
 - `plugins` 其实包括 `webpack` 本身自带的插件，也有开源的其他插件，都可以使用，它的作用就是解决 `loader` 之外的其他任何相关构建的事情。
 - `plugin` 的值是一个数组，可以传入多个插件实例，用法是直接 `new` 一个插件然后传入相应的配置即可
 - `plugin` 如何配置并不是难点，难点是我们需要清楚常用的一些插件分别解决了什么样的问题，以及这些插件的配置项
-  :::
+:::
 
 ```js
 plugins: [
@@ -277,8 +277,8 @@ plugins: [
   // 分离css，只需要传入相应的配置即可
   new MiniCssExtractPlugin({
     filename: 'css/[name].[hash].css',
-    chunkFilename: 'css/[id].[hash].css',
-  }),
+    chunkFilename: 'css/[id].[hash].css'
+  })
 ]
 ```
 
@@ -349,7 +349,7 @@ module.exports = function(env, argv) {
     output: {
       path: path.resolve('./dist'),
       filename: 'js/[name].[chunkHash].js',
-      publicPath: '.',
+      publicPath: '.'
     },
     module: {
       rules: [
@@ -360,13 +360,13 @@ module.exports = function(env, argv) {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                reloadAll: true,
-              },
+                reloadAll: true
+              }
             },
-            'css-loader',
-          ],
-        },
-      ],
+            'css-loader'
+          ]
+        }
+      ]
     },
     plugins: [
       // 配置HTML
@@ -378,20 +378,20 @@ module.exports = function(env, argv) {
         title: '程禹铭',
         inject: true,
         hash: true,
-        showErrors: true,
+        showErrors: true
       }),
       // 分离css
       new MiniCssExtractPlugin({
         filename: 'css/[name].[hash].css',
-        chunkFilename: 'css/[id].[hash].css',
-      }),
+        chunkFilename: 'css/[id].[hash].css'
+      })
     ],
     optimization: {
       minimize: true,
       runtimeChunk: {
-        name: entryPoint => `runtime~${entryPoint.name}`,
-      },
-    },
+        name: entryPoint => `runtime~${entryPoint.name}`
+      }
+    }
   }
 }
 ```
@@ -476,7 +476,7 @@ module.exports = function(env, argv) {
 
 ```javascript
 module.exports = {
-  plugins: [require('autoprefixer')],
+  plugins: [require('autoprefixer')]
 }
 ```
 

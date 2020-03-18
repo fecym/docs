@@ -11,7 +11,8 @@ module.exports = {
     { text: '时间轴', link: '/timeLine/', icon: 'reco-date' },
     {
       text: '基础',
-      icon: 'reco-category',
+      // icon: 'reco-category',
+      icon: 'reco-api',
       items: [
         { text: 'css', link: '/views/basis/css' },
         { text: 'JavaScript', link: '/views/basis/javascript' },
@@ -38,12 +39,12 @@ module.exports = {
     },
     {
       text: '服务端',
-      icon: 'iconxitong',
+      icon: 'reco-beian',
       items: [
         { text: 'fs文件系统', link: '/views/server-side/node/fs' },
         // { text: '进程', link: '/views/server-side/node/process' },
         { text: '服务器的配置', link: '/views/server-side/service-conf' },
-        { text: '虚拟机', link: '/views/FE/system/vmware' },
+        { text: '虚拟机', link: '/views/server-side/vmware' },
         { text: 'Linux命令', link: '/views/server-side/linux' },
         { text: 'http笔记', link: '/views/server-side/http' },
         { text: 'https笔记', link: '/views/server-side/https' },
@@ -54,7 +55,7 @@ module.exports = {
     },
     {
       text: '工具',
-      icon: 'icontools-fill',
+      icon: 'reco-npm',
       items: [
         { text: 'npm', link: '/views/tools/npm/init' },
         { text: 'mysql', link: '/views/tools/mysql' },

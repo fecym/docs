@@ -83,7 +83,7 @@ tags:
 - `clean-webpack-plugin` 用来对打包之前的删除操作，因为新版本的原因，引入方式有点不一样
 
   ```javascript
-  const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   ```
 
 - `webpack` 处理 `html、css、js`，就会处理路径，我们会用到 `path` 模块，一般会写一个 `resolve` 方法来处理路径
@@ -180,8 +180,8 @@ tags:
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-      },
+        loader: 'vue-loader'
+      }
     ]
   }
   ```
@@ -208,7 +208,7 @@ tags:
     </template>
     <script>
       export default {
-        name: 'app',
+        name: 'app'
       }
     </script>
     ```
@@ -230,8 +230,8 @@ tags:
   ```javascript
   module.exports = {
     plugins: {
-      autoprefixer: {},
-    },
+      autoprefixer: {}
+    }
   }
   ```
 - 可能会用到对一些文件的打包，比如说图片转 `base64`，解析字体，我们会用到 `file-loader`
@@ -285,7 +285,7 @@ tags:
 ```javascript
 module.exports = {
   presets: ['@babel/preset-env'],
-  plugins: ['@babel/plugin-syntax-dynamic-import'],
+  plugins: ['@babel/plugin-syntax-dynamic-import']
 }
 ```
 
@@ -329,7 +329,7 @@ module.exports = {
   ```javascript
   new MiniCssExtractPlugin({
     filename: 'css/[name].[hash].css',
-    chunkFilename: 'css/[id].[hash].css',
+    chunkFilename: 'css/[id].[hash].css'
   })
   ```
   - 配置完后，需要修改 `module` 里面配置 `css` 的参数，修改为以下配置
@@ -368,9 +368,9 @@ optimization: {
             name: 'vendor',
             test: /[\\/]node_modules[\\/]/,
             priority: 10,
-            chunks: 'initial', // 只打包初始时依赖的第三方
-          },
-        },
+            chunks: 'initial' // 只打包初始时依赖的第三方
+          }
+        }
       }
     : undefined
 }
