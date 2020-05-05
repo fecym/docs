@@ -16,28 +16,28 @@ module.exports = {
     config.plugins.delete('prefetch')
     // 移除 preload 插件
     config.plugins.delete('preload');
-    config.module
-      .rule('images')
-      .use('image-webpack-loader')
-      .loader('image-webpack-loader')
-      .options({
-        bypassOnDebug: true,
-        mozjpeg: {
-          progressive: true,
-          quality: 65
-        },
-        optipng: {
-          enabled: false
-        },
-        pngquant: {
-          quality: '65-90',
-          speed: 4
-        },
-        gifsicle: {
-          interlaced: false
-        }
-      })
-      .end()
+    // config.module
+    //   .rule('images')
+    //   .use('image-webpack-loader')
+    //   .loader('image-webpack-loader')
+    //   .options({
+    //     bypassOnDebug: true,
+    //     mozjpeg: {
+    //       progressive: true,
+    //       quality: 65
+    //     },
+    //     optipng: {
+    //       enabled: false
+    //     },
+    //     pngquant: {
+    //       quality: '65-90',
+    //       speed: 4
+    //     },
+    //     gifsicle: {
+    //       interlaced: false
+    //     }
+    //   })
+    //   .end()
     // if (!isServer && config.mode === 'production') {
     if (config.mode === 'production') {
       // 分割vendor
