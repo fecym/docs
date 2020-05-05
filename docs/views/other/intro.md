@@ -146,7 +146,7 @@ module.exports = {
   git add -A
   git commit -m 'deploy'
   # 如果发布到 https://<USERNAME>.github.io
-  git push -f https://github.com/cym-git/cym-git.github.io.git master
+  git push -f https://github.com/fecym/fecym.github.io.git master
   # git push -f https://${blog}@${address} master:master
   # 如果发布到 https://<USERNAME>.github.io/<REPO>
   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages

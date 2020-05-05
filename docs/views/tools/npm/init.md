@@ -25,7 +25,7 @@ tags:
 ```sh
   npm config set init.author.email "yumingtarget@gmail.com"
   npm config set init.author.name "chengyuming"
-  npm config set init.author.url "https://github.com/cym-git"
+  npm config set init.author.url "https://github.com/fecym"
   npm config set init.license "MIT"
   # 默认版本是 0.0.1
   npm config set init.version "1.0.0"
@@ -43,7 +43,7 @@ tags:
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "chengyuming <yumingtarget@gmail.com> (https://github.com/cym-git)",
+  "author": "chengyuming <yumingtarget@gmail.com> (https://github.com/fecym)",
   "license": "MIT"
 }
 ```

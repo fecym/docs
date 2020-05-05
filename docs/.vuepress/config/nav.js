@@ -66,7 +66,7 @@ module.exports = {
     {
       text: 'GitHub',
       icon: 'icongithub',
-      link: 'https://github.com/cym-git'
+      link: 'https://github.com/fecym'
     }
   ]
 }

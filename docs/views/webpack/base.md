@@ -307,7 +307,7 @@ externals: {
 
 ## 代码地址 - 基础相关
 
-代码以存放到 github，[地址](https://github.com/cym-git/relearn-webpack.git)，分支是 basis
+代码以存放到 github，[地址](https://github.com/fecym/relearn-webpack.git)，分支是 basis
 
 基础暂时完结，下面是常用配置篇
 
@@ -601,7 +601,7 @@ module.exports = smart(baseConf, {
 
 ## 代码地址 - 配置相关
 
-代码以存放到 github，[地址](https://github.com/cym-git/relearn-webpack.git)，分支是 config
+代码以存放到 github，[地址](https://github.com/fecym/relearn-webpack.git)，分支是 config
 
 常用配置篇暂时完结，下面是项目优化篇
 
@@ -866,6 +866,6 @@ app-63bb3ae5.js:1 [HMR]  - ./optimizers/src/source.js
 
 ## 源码地址 - 优化相关
 
-代码以存放到 github，[地址](https://github.com/cym-git/relearn-webpack.git)，分支是 optimizers
+代码以存放到 github，[地址](https://github.com/fecym/relearn-webpack.git)，分支是 optimizers
 
 本篇到此基本也就告一段落了

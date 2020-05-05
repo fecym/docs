@@ -658,7 +658,7 @@ function babelLoader(ctx) {
 - 如果是异步编译插件的话，数据处理完成后执行 `callback` 的回调
 
 - 时间原因开发过程暂时就不说了，源码我放到 github 了，过程全部放在注释里面了
-- 源码地址 [https://github.com/cym-git/webpack-pit-2019-11-24.git](https://github.com/cym-git/webpack-pit-2019-11-24.git)
+- 源码地址 [https://github.com/fecym/webpack-pit-2019-11-24.git](https://github.com/fecym/webpack-pit-2019-11-24.git)
 
 ```js
 // 插件核心 staticAssetsPlugin.js

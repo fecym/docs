@@ -126,7 +126,7 @@ loading.succeed() //或 loading.fail();
 ```js
 // download.js
 const downloadGit = require('download-git-repo')
-const templateHerf = `https://github.com/cym-git/cym-blog-template.git`
+const templateHerf = `https://github.com/fecym/cym-blog-template.git`
 
 module.exports = function(projectName) {
   return new Promise((resolve, reject) => {
@@ -209,7 +209,7 @@ downloadGit(name)
 
 ## 完整代码
 
-整个流程基本完毕，完整代码请移步[`这里`](https://github.com/cym-git/cym-blog.git)
+整个流程基本完毕，完整代码请移步[`这里`](https://github.com/fecym/cym-blog.git)
 
 该脚手架已发布 `npm`，包名 [`cym-blog`](https://www.npmjs.com/package/cym-blog)
 

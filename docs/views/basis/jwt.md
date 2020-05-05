@@ -96,7 +96,7 @@ app.listen(3000)
 
 ### 代码实现
 
-接下来我们用 `koa` 来实现一个 `session`，需求如下当用户登录之后，点击用户中心则可以跳转用户中心，然后返回到其他页面之后在再次点击用户中心也可以进去用户中心，没有登陆过则不可以跳转到用户中心，让他跳转登录页，退出后清空 `session`，使其不能进入用户中心页面。完整代码已上传 `github` [传送门](https://github.com/cym-git/sesssion.git)
+接下来我们用 `koa` 来实现一个 `session`，需求如下当用户登录之后，点击用户中心则可以跳转用户中心，然后返回到其他页面之后在再次点击用户中心也可以进去用户中心，没有登陆过则不可以跳转到用户中心，让他跳转登录页，退出后清空 `session`，使其不能进入用户中心页面。完整代码已上传 `github` [传送门](https://github.com/fecym/sesssion.git)
 
 <p align="left" class="p-images">
   <img :src="$withBase('/imgs/basis-session-demo.jpg')" alt="登录校验" title="登录校验">
@@ -300,4 +300,4 @@ jwt.verify(tokenRS256, publicKey, (err, data) => {
 
 ### 前后端交互代码实现
 
-想了想呢，还是把代码放到 `github` 上吧，虽然是一个简单的前后端使用 `jwt` 进行交互，但是代码还是有点多，涉及到两端交互使用 `Authorization` 进行前后端校验，[代码地址](https://github.com/cym-git/jwt-flow.git)
+想了想呢，还是把代码放到 `github` 上吧，虽然是一个简单的前后端使用 `jwt` 进行交互，但是代码还是有点多，涉及到两端交互使用 `Authorization` 进行前后端校验，[代码地址](https://github.com/fecym/jwt-flow.git)
