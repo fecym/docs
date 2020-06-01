@@ -7,8 +7,7 @@ npm install -g vuepress@next
 npm run build
 
 # 进入生成的文件夹
-# cd love
-cd docs/.vuepress/love
+cd love
 
 # 如果是发布到自定义域名
 # echo 'www.example.com' > CNAME
