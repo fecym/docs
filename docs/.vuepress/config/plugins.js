@@ -43,8 +43,8 @@ module.exports = {
     //     platform: 'github',
     //     // locale: 'zh', // 语言设置
     //     // 其他的 Vssue 配置
-    //     owner: 'cym-git', // github账户名称
-    //     repo: 'cym-git.github.io', // Github博客仓库
+    //     owner: 'fecym', // github账户名称
+    //     repo: 'fecym.github.io', // Github博客仓库
     //     clientId: '74b59bdd634bffbe5002', // github上面申请的clientId
     //     clientSecret: 'a6cf61f1223501b85583ab5a8901115e3ad0be05', // github上面申请的clientSecret
     //   }
