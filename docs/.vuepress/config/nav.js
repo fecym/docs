@@ -30,6 +30,7 @@ module.exports = {
       items: [
         { text: 'webpack介绍', link: '/views/webpack/index' },
         { text: 'webpack实战', link: '/views/webpack/base' },
+        { text: 'AST团队分享', link: '/views/webpack/AST' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'cli 的开发', link: '/views/tools/npm/cli' },
         { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
