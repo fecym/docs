@@ -11,7 +11,6 @@ module.exports = {
     { text: '时间轴', link: '/timeLine/', icon: 'reco-date' },
     {
       text: '基础',
-      // icon: 'reco-category',
       icon: 'reco-api',
       items: [
         { text: 'css', link: '/views/basis/css' },
