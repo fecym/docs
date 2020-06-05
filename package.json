@@ -4,8 +4,9 @@
   "author": "chengyuming",
   "scripts": {
     "dev": "vuepress dev docs",
-    "start": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "start": "vuepress dev docs --temp .temp",
+    "build": "vuepress build docs",
+    "deploy": "bash deploy.sh"
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
@@ -13,7 +14,7 @@
     "@vuepress/plugin-medium-zoom": "^1.0.0-rc.1",
     "compression-webpack-plugin": "^3.0.0",
     "mini-css-extract-plugin": "^0.8.0",
-    "vuepress": "1.0.1",
+    "vuepress": "^1.5.0",
     "vuepress-plugin-flowchart": "1.4.3",
     "webpack-bundle-analyzer": "^3.6.0"
   },

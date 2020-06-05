@@ -8,8 +8,8 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const webpack = require('webpack')
-
 const productionGzipExtensions = ['js', 'css']
+
 module.exports = {
   chainWebpack: (config, isServer) => {
     // 移除 prefetch 插件
@@ -21,6 +21,7 @@ module.exports = {
       config.optimization.minimize(true)
       config.optimization.runtimeChunk('single')
     }
+
   },
   configureWebpack: (config, isServer) => {
     if (config.mode === 'production') {

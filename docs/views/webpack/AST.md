@@ -10,9 +10,22 @@ tags:
 
 ## 什么是 AST
 
-抽象语法树（`Abstract Syntax Tree`）简称 `AST`，是源代码的抽象语法结构的树状表现形式。`webpack` 和 `Lint` 等很多工具库的核心都是通过 `Abstract Syntax Tree` 抽象语法书这个概念来实现对代码的检查、分析等操作。了解了抽象语法树的概念，我们也可以编写类似的工具
+抽象语法树（`Abstract Syntax Tree`）简称 `AST`，是源代码的抽象语法结构的树状表现形式。`webpack` 和 `eslint` 等很多工具库的核心都是通过 `Abstract Syntax Tree` 抽象语法书这个概念来实现对代码的检查、分析等操作。了解了抽象语法树的概念，我们也可以编写类似的工具
 
 ## 词法分析和语法分析
+
+词法分析：是将字符流转换为记号流(`tokens`)，它会读取我们的代码然后按照一定的规则合成一个个的标识记号
+
+比如说：`var a = 2` ，这段代码通常会被分解成 `var、a、=、2`
+
+```js
+[
+  { type: 'Keyword', value: 'var' },
+  { type: 'Identifier', value: 'a' },
+  { type: 'Punctuator', value: '=' },
+  { type: 'Numeric', value: '2' }
+]
+```
 
 ## 有什么用
 
@@ -79,7 +92,7 @@ estraverse.traverse(ast, {
   <img :src="$withBase('/imgs/ast-flow.jpg')" width="" style="border-radius: 8px;">
 </p>
 
-此时我们发现函数的名字在 type 为 Identifier 的时候就是该函数的名字，我们就可以直接修改它便可实现一个更改函数名字的 AST 工具
+此时我们发现函数的名字在 `type` 为 `Identifier` 的时候就是该函数的名字，我们就可以直接修改它便可实现一个更改函数名字的 `AST` 工具
 
 ```js
 // 转换树
@@ -97,15 +110,14 @@ estraverse.traverse(ast, {
 })
 // 生成新的代码
 const result = escodegen.generate(ast)
-
 ```
 
 ### 用法
 
 <!-- 只会遍历 type 属性 -->
 
-## babel工作原理
+## babel 工作原理
 
-## babel插件的简单实现
+## babel 插件的简单实现
 
 ## 具体语法书
