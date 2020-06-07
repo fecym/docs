@@ -1,6 +1,6 @@
 ---
 title: 实现一个 Promise
-date: 2020-03-14
+date: 2020-03-22
 author: 程禹铭
 tags:
   - Promise

@@ -1,12 +1,13 @@
 ---
 title: AST 团队分享
 date: 2020-06-05
+author: 程禹铭
 tags:
-  - webpack
+  - babel
   - ast
 ---
 
-## 背景
+<!-- ## 背景 -->
 
 ## 什么是 AST
 
@@ -47,9 +48,9 @@ tags:
 
 语法分析成 AST ，我们可以在这里在线看到效果 [http://esprima.org](https://esprima.org/demo/parse.html)
 
-## 有什么用
+## AST 能做什么
 
-- 代码语法检查、代码风格检查、代码格式化、代码高亮、代码错误提示、自动补全等
+- 语法检查、代码风格检查、格式化代码、语法高亮、错误提示、自动补全等
 - 代码混淆压缩
 - 优化变更代码，改变代码结构等
 
@@ -103,7 +104,13 @@ estraverse.traverse(ast, {
   <img :src="$withBase('/imgs/ast-flow.jpg')" width="" style="border-radius: 8px;">
 </p>
 
+## 修改函数名字
+
 此时我们发现函数的名字在 `type` 为 `Identifier` 的时候就是该函数的名字，我们就可以直接修改它便可实现一个更改函数名字的 `AST` 工具
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast-flow-fn-name.jpg')" width="" style="border-radius: 8px;">
+</p>
 
 ```js
 // 转换树
@@ -121,6 +128,8 @@ estraverse.traverse(ast, {
 })
 // 生成新的代码
 const result = escodegen.generate(ast)
+console.log(result)
+// function hello() {}
 ```
 
 ## babel 工作原理
@@ -133,6 +142,8 @@ const result = escodegen.generate(ast)
 
 当我们配置 babel 的时候，不管是在 `.babelrc` 或者 `babel.config.js` 文件里面配置的都有 `presets` 和 `plugins` 两个配置项（还有其他配置项，这里不做介绍）
 
+### 插件和预设的区别
+
 ```json
 // .babelrc
 {
@@ -142,6 +153,10 @@ const result = escodegen.generate(ast)
 ```
 
 当我们配置了 `presets` 中有 `@babel/preset-env`，那么 `@babel/core` 就会去找 `preset-env` 预设的插件包，它是一套
+
+babel 核心包并不会去转换代码，核心包只提供一些核心 API，真正的代码转换工作由插件或者预设来完成，比如要转换箭头函数，会用到这个 plugin，`@babel/plugin-transform-arrow-functions`，当需要转换的要求增加时，我们不可能去一一配置相应的 plugin，这个时候就可以用到预设了，也就是 presets。presets 是 plugins 的集合，一个 presets 内部包含了很多 plugin。
+
+### babel 插件的使用
 
 现在我们有一个箭头函数，要想把它转成普通函数，我们就可以直接这么写：
 
@@ -175,8 +190,6 @@ console.log(r.code)
 
 > 此时，我们就可以自己来写一些插件，来实现代码的转换，中间处理代码的过程就是使用前面提到的 AST 的处理逻辑
 
-### 箭头函数转普通函数
-
 现在我们来个实战把 `const fn = (a, b) => a + b` 转换为 `const fn = function(a, b) { return a + b }`
 
 ### 分析 AST 结构
@@ -189,7 +202,7 @@ console.log(r.code)
 
 根据我们分析可得：
 
-1. 变成普通函数之后他就不叫箭头函数了，而是函数表达式了
+1. 变成普通函数之后他就不叫箭头函数了 `ArrowFunctionExpression`，而是函数表达式了 `FunctionExpression`
 2. 所以首先我们要把 `箭头函数表达式(ArrowFunctionExpression)` 转换为 `函数表达式(FunctionExpression)`
 3. 要把 `二进制表达式(BinaryExpression)` 放到一个 `代码块中(BlockStatement)`
 4. 其实我们要做就是把一棵树变成另外一颗树，说白了其实就是拼成另一颗树的结构，然后生成新的代码，就可以完成代码的转换
@@ -288,6 +301,199 @@ const r = babel.transform(code, {
 console.log(r.code) // const fn = function (a, b) { return a + b; };
 ```
 
+### 特殊情况
+
+我们知道在剪头函数中是可以省略 `return` 关键字，我们上面是处理了省略关键字的写法，但是如果用户写了 return 关键字后，我们写的这个插件就有问题了，所以我们可以在优化一下
+
+`const fn = (a, b) => { retrun a + b }` -> `const fn = function(a, b) { return a + b }`
+
+观察代码我们发现，我们就不需要把 body 转换成 blockStatement 了，直接放过去就可以了，那么我们就可以这么写
+
+```js
+ArrowFunctionExpression(path) {
+  // 拿到节点然后替换节点
+  const node = path.node
+  console.log("ArrowFunctionExpression -> node", node)
+  // 拿到函数的参数
+  const params = node.params
+  let body = node.body
+  // 判断是不是 blockStatement，不是的话让他变成 blockStatement
+  if (!t.isBlockStatement(body)) {
+    body = t.blockStatement([body])
+  }
+  const functionExpression = t.functionExpression(null, params, body)
+  // 替换原来的函数
+  path.replaceWith(functionExpression)
+}
+```
+
+## 按需引入
+
+在开发中，我们引入 UI 框架，比如 vue 中用到的 `element-ui`，`vant` 或者 `React` 中的 `antd` 都支持全局引入和按需引入，默认是全局引入，如果需要按需引入就需要安装一个 `babel-plugin-import` 的插件，将全局的写法变成按需引入的写法。
+
+就拿我最近开发移动端用的 vant 为例， `import { Button } from 'vant'` 这种写法经过这个插件之后会变成 `import Button from 'vant/lib/Button'` 这种写法，引用整个 vant 变成了我只用了 vant 下面的某一个文件，打包后的文件会比全部引入的文件大小要小很多
+
+### 分析语法树
+
+> `import { Button, Icon } from 'vant'` 写法转换为 `import Button from 'vant/lib/Button'; import Icon from 'vant/lib/Icon'`
+
+看一下两个语法树的区别
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast-import-plugins.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+根据两张图分析我们可以得到一些信息：
+
+1. 我们发现解构方式引入的模块只有 import 声明，第二张图是两个 import 声明
+2. 解构方式引入的详细说明里面(`specifiers`)是两个 `ImportSpecifier`，第二张图里面是分开的，而且都是 `ImportDefaultSpecifier`
+3. 他们引入的 `source` 也不一样
+4. 那我们要做的其实就是要把单个的 `ImportDeclaration` 变成多个 `ImportDeclaration`, 然后把单个 import 解构引入的 `specifiers` 部分 `ImportSpecifier` 转换成多个 `ImportDefaultSpecifier` 并修改对应的 `source` 即可
+
+### 分析类型
+
+为了方便传递参数，这次我们写到一个函数里面，可以方便传递转换后拼接的目录
+
+这里我们需要用到的几个类型，也需要在 types 官网上找对应的解释
+
+- 首先我们要生成多个 `importDeclaration` 类型
+
+  ```js
+  /**
+   * @param {Array<ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier>} specifiers  (required)
+   * @param {StringLiteral} source (required)
+   */
+  t.importDeclaration(specifiers, source)
+  ```
+
+- 在 `importDeclaration` 中需要生成 `ImportDefaultSpecifier`
+
+  ```js
+  /**
+   * @param {Identifier} local  (required)
+   */
+  t.importDefaultSpecifier(local)
+  ```
+
+- 在 `importDeclaration` 中还需要生成一个 `StringLiteral`
+
+  ```js
+  /**
+   * @param {string} value  (required)
+   */
+  t.stringLiteral(value)
+  ```
+
+### 上代码
+
+按照上面的分析，我们开始上代码
+
+```js
+const babel = require('@babel/core')
+const t = require('@babel/types')
+const code = `import { Button, Icon } from 'vant'`
+// import Button from 'vant/lib/Button'
+// import Icon from 'vant/lib/Icon'
+function importPlugin(opt) {
+  const { libraryDir } = opt
+  return {
+    visitor: {
+      ImportDeclaration(path) {
+        const node = path.node
+        // console.log("ImportDeclaration -> node", node)
+        // 得到节点的详细说明，然后转换成多个的 import 声明
+        const specifiers = node.specifiers
+        // 要处理这个我们做一些判断，首先判断不是默认导出我们才处理，要考虑 import vant, { Button, Icon } from 'vant' 写法
+        // 还要考虑 specifiers 的长度，如果长度不是 1 并且不是默认导出我们才需要转换
+        if (
+          !(
+            specifiers.length === 1 && t.isImportDefaultSpecifier(specifiers[0])
+          )
+        ) {
+          const result = specifiers.map((specifier) => {
+            const local = specifier.local
+            const source = t.stringLiteral(
+              `${node.source.value}/${libraryDir}/${specifier.local.name}`
+            )
+            // console.log("ImportDeclaration -> specifier", specifier)
+            return t.importDeclaration(
+              [t.importDefaultSpecifier(local)],
+              source
+            )
+          })
+          console.log('ImportDeclaration -> result', result)
+          // 因为这次要替换的 AST 不是一个，而是多个的，所以需要 `path.replaceWithMultiple(result)` 来替换，但是一执行发现死循环了
+          path.replaceWithMultiple(result)
+        }
+      },
+    },
+  }
+}
+const r = babel.transform(code, {
+  plugins: [importPlugin({ libraryDir: 'lib' })],
+})
+console.log(r.code)
+```
+
+看打印结果和转换结果似乎没什么问题，这个插件几乎就实现了
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast-import-plugins-result_1.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+### 特殊情况
+
+但是我们考虑一种情况，如果用户不全部按需加载了，按需加载只是一种选择，如果用户这么写了 `import vant, { Button, Icon } from 'vant'`，那么我们这个插件就出现问题了
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast-import-plugins-result_2.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+如果遇到这种写法，那么默认导入的他的 `source` 应该是不变的，我们要把原来的 `source` 拿出来
+
+所以还需要判断一下，每一个 `specifier` 是不是一个 `ImportDefaultSpecifier` 然后处理不同的 `source`，完整处理逻辑应该如下
+
+```js
+function importPlugin(opt) {
+  const { libraryDir } = opt
+  return {
+    visitor: {
+      ImportDeclaration(path) {
+        const node = path.node
+        // console.log("ImportDeclaration -> node", node)
+        // 得到节点的详细说明，然后转换成多个的 import 声明
+        const specifiers = node.specifiers
+        // 要处理这个我们做一些判断，首先判断不是默认导出我们才处理，要考虑 import vant, { Button, Icon } from 'vant' 写法
+        // 还要考虑 specifiers 的长度，如果长度不是 1 并且不是默认导出我们才需要转换
+        if (
+          !(
+            specifiers.length === 1 && t.isImportDefaultSpecifier(specifiers[0])
+          )
+        ) {
+          const result = specifiers.map((specifier) => {
+            let local = specifier.local,
+              source
+            // 判断是否存在默认导出的情况
+            if (t.isImportDefaultSpecifier(specifier)) {
+              source = t.stringLiteral(node.source.value)
+            } else {
+              source = t.stringLiteral(
+                `${node.source.value}/${libraryDir}/${specifier.local.name}`
+              )
+            }
+            return t.importDeclaration(
+              [t.importDefaultSpecifier(local)],
+              source
+            )
+          })
+          path.replaceWithMultiple(result)
+        }
+      },
+    },
+  }
+}
+```
+
 ## 具体语法书
 
 和抽象语法树相对的是具体语法树（通常称作分析树）。一般的，在源代码的翻译和编译过程中，语法分析器创建出分析树。一旦 AST 被创建出来，在后续的处理过程中，比如语义分析阶段，会添加一些信息。
@@ -300,8 +506,13 @@ console.log(r.code) // const fn = function (a, b) { return a + b; };
 (parameter) node: Identifier | SimpleLiteral | RegExpLiteral | Program | FunctionDeclaration | FunctionExpression | ArrowFunctionExpression | SwitchCase | CatchClause | VariableDeclarator | ExpressionStatement | BlockStatement | EmptyStatement | DebuggerStatement | WithStatement | ReturnStatement | LabeledStatement | BreakStatement | ContinueStatement | IfStatement | SwitchStatement | ThrowStatement | TryStatement | WhileStatement | DoWhileStatement | ForStatement | ForInStatement | ForOfStatement | VariableDeclaration | ClassDeclaration | ThisExpression | ArrayExpression | ObjectExpression | YieldExpression | UnaryExpression | UpdateExpression | BinaryExpression | AssignmentExpression | LogicalExpression | MemberExpression | ConditionalExpression | SimpleCallExpression | NewExpression | SequenceExpression | TemplateLiteral | TaggedTemplateExpression | ClassExpression | MetaProperty | AwaitExpression | Property | AssignmentProperty | Super | TemplateElement | SpreadElement | ObjectPattern | ArrayPattern | RestElement | AssignmentPattern | ClassBody | MethodDefinition | ImportDeclaration | ExportNamedDeclaration | ExportDefaultDeclaration | ExportAllDeclaration | ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier | ExportSpecifier
 ```
 
+## 配套源码地址
+
+代码以存放到 GitHub，[地址](https://github.com/fecym/ast-share.git)
+
 ## 参考链接
 
 1. [JavaScript 语法解析、AST、V8、JIT](https://cheogo.github.io/learn-javascript/201709/runtime.html)
 2. [详解 AST 抽象语法树](https://blog.csdn.net/huangpb123/article/details/84799198)
-3. [@babel/types](https://babeljs.io/docs/en/babel-types)
+3. [AST 抽象语法树](https://segmentfault.com/a/1190000016706589?utm_medium=referral&utm_source=tuicool) ps: 这个里面还有 class 转 Es5 构造函数的过程，有兴趣可以看一下
+4. [@babel/types](https://babeljs.io/docs/en/babel-types)
