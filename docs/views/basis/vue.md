@@ -1,7 +1,7 @@
 ---
 title: Vue 2.x 版本源码分析
 date: 2020-06-21
-author: 程禹铭
+author: chengyuming
 tags:
   - vue
 ---

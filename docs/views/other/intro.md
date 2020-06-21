@@ -1,6 +1,6 @@
-## vuepress 简介
+## 关于博客
 
-- 我的博客是用 vuepress 快速搭建的
+- 本博客是用 vuepress 快速搭建的
 - 如果你发现现在布局跟我介绍的不一样了，请不要方，我是换了主题重构了整个博客
 - vuepress 是一个 Vue 驱动的静态网站生成器，利用 Markdown 语法来快速书写
 - 以 Markdown 为中心的项目结构，以最少的配置帮助你专注于写作。
@@ -167,7 +167,7 @@ module.exports = {
 
 ::: tip 关于线上自动化部署
 
-- 关于线上部署，这里你需要额外在创建一个 git 项目，然后放到 git 上面你的项目名字要定义为：git 用户名 + github.io 组成，比如说，你的 github 用户名叫做 chengyuming，那么你就需要定义项目名称为 **chengyuming.github.io** 作为项目名字，这也将会是你的博客地址<br>
+- 关于线上部署，这里你需要额外在创建一个 git 项目，然后放到 git 上面你的项目名字要定义为：git 用户名 + github.io 组成，比如说，你的 github 用户名叫做 fecym，那么你就需要定义项目名称为 **fecym.github.io** 作为项目名字，这也将会是你的博客地址<br>
 - 然后你需要配置一下 **Travis**，不了解 **Travis** 的话可以先简单了解下 [传送门](http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html)
   :::
 

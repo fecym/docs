@@ -116,7 +116,7 @@ tags:
 -- 基本写法
   SELECT realname, username FROM `user`
   SELECT * FROM `user`
-  SELECT * FROM `user` WHERE realname='程禹铭' AND username='cym'
+  SELECT * FROM `user` WHERE realname='小铭' AND username='cym'
 ```
 
 - 查询总条数：**SELECT COUNT(expr) FROM table_name**

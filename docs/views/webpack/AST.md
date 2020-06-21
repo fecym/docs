@@ -13,6 +13,41 @@ tags:
 
 抽象语法树（`Abstract Syntax Tree`）简称 `AST`，是源代码的抽象语法结构的树状表现形式。`webpack`、`eslint` 等很多工具库的核心都是通过抽象语法书这个概念来实现对代码的检查、分析等操作。今天我为大家分享一下 JavaScript 这类解释型语言的抽象语法树的概念
 
+我们常用的浏览器就是通过将 js 代码转化为抽象语法树来进行下一步的分析等其他操作。所以将 js 转化为抽象语法树更利于程序的分析。
+
+<!-- ast -->
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+如上图中变量声明语句，转换为 AST 之后就是右图中显示的样式
+
+左图中对应的：
+
+- `var` 是一个关键字
+- `AST` 是一个定义者
+- `=` 是 Equal 等号的叫法有很多形式，在后面我们还会看到
+- `is tree` 是一个字符串
+- `;` 就是 Semicoion
+
+首先一段代码转换成的抽象语法树是一个对象，该对象会有一个顶级的 type 属性 `Program`；第二个属性是 `body` 是一个数组。
+
+`body` 数组中存放的每一项都是一个对象，里面包含了所有的对于该语句的描述信息
+
+```sh
+type:         描述该语句的类型  --> 变量声明的语句
+kind:         变量声明的关键字  --> var
+declaration:  声明内容的数组，里面每一项也是一个对象
+            type: 描述该语句的类型
+            id:   描述变量名称的对象
+                type: 定义
+                name: 变量的名字
+            init: 初始化变量值的对象
+                type:   类型
+                value:  值 "is tree" 不带引号
+                row:    "\"is tree"\" 带引号
+```
+
 ## 词法分析和语法分析
 
 `JavaScript` 是解释型语言，一般通过 词法分析 -> 语法分析 -> 语法树，就可以开始解释执行了
@@ -494,9 +529,128 @@ function importPlugin(opt) {
 }
 ```
 
+## babylon
+
+> 在 babel 官网上有一句话 [Babylon is a JavaScript parser used in Babel](https://babeljs.io/docs/en/babylon).
+
+### babylon 与 babel 的关系
+
+`babel` 使用的引擎是 `babylon`，`Babylon` 并非 `babel` 团队自己开发的，而是 fork 的 `acorn` 项目，`acorn` 的项目本人在很早之前在兴趣部落 1.0 在构建中使用，为了是做一些代码的转换，是很不错的一款引擎，不过 `acorn` 引擎只提供基本的解析 `ast` 的能力，遍历还需要配套的 `acorn-travesal`, 替换节点需要使用 acorn-，而这些开发，在 Babel 的插件体系开发下，变得一体化了（摘自 AlloyTeam 团队的[剖析 babel](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/)）
+
+### 使用 babylon
+
+使用 babylon 编写一个数组 rest 转 Es5 语法的插件
+
+把 `const arr = [ ...arr1, ...arr2 ]` 转成 `var arr = [].concat(arr1, arr2)`
+
+我们使用 babylon 的话就不需要使用 `@babel/core` 了，只需要用到他里面的 `traverse` 和 `generator`，用到的包有 `babylon、@babel/traverse、@babel/generator、@babel/types`
+
+### 分析语法树
+
+先来看一下两颗语法树的区别
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast-rest-to-concat.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+根据上图我们分析得出：
+
+1. 两棵树都是变量声明的方式，不同的是他们声明的关键字不一样
+2. 他们初始化变量值的时候是不一样的，一个数组表达式（ArrayExpression）另一个是调用表达式（CallExpression）
+3. 那我们要做的就很简单了，就是把 数组表达式转换为调用表达式就可以
+
+### 分析类型
+
+这段代码的核心生成一个 callExpression 调用表达式，所以对应官网上的类型，我们分析需要用到的 api
+
+- 先来分析 init 里面的，首先是 callExpression
+
+  ```js
+  /**
+   * @param {Expression} callee  (required)
+   * @param {Array<Expression | SpreadElement | JSXNamespacedName>} source (required)
+   */
+  t.callExpression(callee, arguments)
+  ```
+
+- 对应语法树上 callee 是一个 MemberExpression，所以要生成一个成员表达式
+
+  ```js
+  /**
+   * @param {Expression} object  (required)
+   * @param {if computed then Expression else Identifier} property (required)
+   * @param {boolean} computed (default: false)
+   * @param {boolean} optional (default: null)
+   */
+  t.memberExpression(object, property, computed, optional)
+  ```
+
+- 在 callee 的 object 是一个 ArrayExpression 数组表达式，是一个空数组
+
+  ```js
+  /**
+   * @param {Array<null | Expression | SpreadElement>} elements  (default: [])
+   */
+  t.arrayExpression(elements)
+  ```
+
+- 对了里面的东西分析完了，我们还要生成 VariableDeclarator 和 VariableDeclaration 最终生成新的语法树
+
+  ```js
+  /**
+   * @param {LVal} id  (required)
+   * @param {Expression} init (default: null)
+   */
+  t.variableDeclarator(id, init)
+
+  /**
+   * @param {"var" | "let" | "const"} kind  (required)
+   * @param {Array<VariableDeclarator>} declarations (required)
+   */
+  t.variableDeclaration(kind, declarations)
+  ```
+
+- 其实倒着分析语法树，分析完怎么写也就清晰了，那么我们开始上代码吧
+
+### 上代码
+
+```js
+const babylon = require('babylon')
+// 使用 babel 提供的包，traverse 和 generator 都是被暴露在 default 对象上的
+const traverse = require('@babel/traverse').default
+const generator = require('@babel/generator').default
+const t = require('@babel/types')
+
+const code = `const arr = [ ...arr1, ...arr2 ]` // var arr = [].concat(arr1, arr2)
+
+const ast = babylon.parse(code, {
+  sourceType: 'module',
+})
+
+// 转换树
+traverse(ast, {
+  VariableDeclaration(path) {
+    const node = path.node
+    const declarations = node.declarations
+    console.log('VariableDeclarator -> declarations', declarations)
+    const kind = 'var'
+    // 边界判定
+    if (node.kind !== kind && declarations.length === 1 && t.isArrayExpression(declarations[0].init)) {
+      // 取得之前的 elements
+      const args = declarations[0].init.elements.map((item) => item.argument)
+      const callee = t.memberExpression(t.arrayExpression(), t.identifier('concat'), false)
+      const init = t.callExpression(callee, args)
+      const declaration = t.variableDeclarator(declarations[0].id, init)
+      const variableDeclaration = t.variableDeclaration(kind, [declaration])
+      path.replaceWith(variableDeclaration)
+    }
+  },
+})
+```
+
 ## 具体语法书
 
-和抽象语法树相对的是具体语法树（通常称作分析树）。一般的，在源代码的翻译和编译过程中，语法分析器创建出分析树。一旦 AST 被创建出来，在后续的处理过程中，比如语义分析阶段，会添加一些信息。
+和抽象语法树相对的是具体语法树（`Concrete Syntax Tree`）简称 `CST`（通常称作分析树）。一般的，在源代码的翻译和编译过程中，语法分析器创建出分析树。一旦 AST 被创建出来，在后续的处理过程中，比如语义分析阶段，会添加一些信息。可参考[抽象语法树和具体语法树有什么区别？](https://www.it-swarm.dev/zh/parsing/%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91%E5%92%8C%E5%85%B7%E4%BD%93%E8%AF%AD%E6%B3%95%E6%A0%91%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/968637142/)
 
 ## 补充
 
@@ -506,6 +660,8 @@ function importPlugin(opt) {
 (parameter) node: Identifier | SimpleLiteral | RegExpLiteral | Program | FunctionDeclaration | FunctionExpression | ArrowFunctionExpression | SwitchCase | CatchClause | VariableDeclarator | ExpressionStatement | BlockStatement | EmptyStatement | DebuggerStatement | WithStatement | ReturnStatement | LabeledStatement | BreakStatement | ContinueStatement | IfStatement | SwitchStatement | ThrowStatement | TryStatement | WhileStatement | DoWhileStatement | ForStatement | ForInStatement | ForOfStatement | VariableDeclaration | ClassDeclaration | ThisExpression | ArrayExpression | ObjectExpression | YieldExpression | UnaryExpression | UpdateExpression | BinaryExpression | AssignmentExpression | LogicalExpression | MemberExpression | ConditionalExpression | SimpleCallExpression | NewExpression | SequenceExpression | TemplateLiteral | TaggedTemplateExpression | ClassExpression | MetaProperty | AwaitExpression | Property | AssignmentProperty | Super | TemplateElement | SpreadElement | ObjectPattern | ArrayPattern | RestElement | AssignmentPattern | ClassBody | MethodDefinition | ImportDeclaration | ExportNamedDeclaration | ExportDefaultDeclaration | ExportAllDeclaration | ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier | ExportSpecifier
 ```
 
+Babel 有文档对 AST 树的详细定义，可参考[这里](https://github.com/babel/babylon/blob/master/ast/spec.md)
+
 ## 配套源码地址
 
 代码以存放到 GitHub，[地址](https://github.com/fecym/ast-share.git)
@@ -514,5 +670,6 @@ function importPlugin(opt) {
 
 1. [JavaScript 语法解析、AST、V8、JIT](https://cheogo.github.io/learn-javascript/201709/runtime.html)
 2. [详解 AST 抽象语法树](https://blog.csdn.net/huangpb123/article/details/84799198)
-3. [AST 抽象语法树](https://segmentfault.com/a/1190000016706589?utm_medium=referral&utm_source=tuicool) ps: 这个里面还有 class 转 Es5 构造函数的过程，有兴趣可以看一下
-4. [@babel/types](https://babeljs.io/docs/en/babel-types)
+3. [AST 抽象语法树](https://segmentfault.com/a/1190000016706589?utm_medium=referral&utm_source=tuicool) ps: 这个里面有 class 转 Es5 构造函数的过程，有兴趣可以看一下
+4. [剖析 Babel——Babel 总览 | AlloyTeam](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview)
+5. [@babel/types](https://babeljs.io/docs/en/babel-types)
