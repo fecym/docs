@@ -547,7 +547,7 @@ function importPlugin(opt) {
 
 ### 分析语法树
 
-先来看一下两颗语法树的区别
+先来看一下两棵语法树的区别
 
 <p align="left" class="p-images">
   <img :src="$withBase('/imgs/ast-rest-to-concat.jpg')" width="" style="border-radius: 8px;">
