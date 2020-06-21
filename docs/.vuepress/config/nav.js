@@ -20,7 +20,7 @@ module.exports = {
         { text: '实现 Promise', link: '/views/basis/promise' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
         { text: '命令行参数', link: '/views/basis/command' },
-        { text: '面试题记录', link: '/views/basis/issue' }
+        { text: '面试题记录', link: '/views/basis/issue' },
         // { text: '交接文档', link: '/views/other/doc' },
       ]
     },
@@ -30,8 +30,9 @@ module.exports = {
       items: [
         { text: 'webpack介绍', link: '/views/webpack/index' },
         { text: 'webpack实战', link: '/views/webpack/base' },
-        { text: 'AST团队分享', link: '/views/webpack/AST' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
+        { text: 'AST团队分享', link: '/views/webpack/AST' },
+        { text: 'Vue源码分析', link: '/views/basis/vue' },
         { text: 'cli 的开发', link: '/views/tools/npm/cli' },
         { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/FE/process/websize-render' }
