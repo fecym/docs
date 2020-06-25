@@ -224,6 +224,84 @@ const instance = new bindFn() // fn {}
 bindFn() // {name: 'cym'}
 ```
 
+## 柯利化
+
+柯利化的核心是：`只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数`
+
+比如说实现一个 add 函数
+
+```js
+const addFn = (a, b, c, d, e) => {
+  return a + b + c + d + e
+}
+const add = curry(addFn)
+add(1)(2)(3)(4, 5) // 15
+add(1)(2)(3, 4, 5) // 15
+add(1, 2, 3)(4, 5) // 15
+```
+
+面试要求就是实现这么一个函数
+
+```js
+function curry(fn, ...args) {
+  // 如果参数大于等于了要改变函数的参数了，那么直接执行就可以了
+  if (args.length >= fn.length) {
+    return fn(...args)
+  }
+  // 否则就返回一个函数，函数把所有参数都累积到一起
+  return function(...args2) {
+    return curry(fn, ...args, ...args2)
+  }
+}
+```
+
+## Number.isNaN
+
+`NaN` 是一个特殊值，他和自身不相等，是一个非自反值（自反，reflexive，即 x === x 不成立）的值。但是 `NaN != NaN` 为 `true`
+
+```js
+// 根据此特性我们可以实现一下 Number.isNaN
+if (!Number.isNaN) {
+  Number.isNaN = function(n) {
+    return n !== n
+  }
+}
+// 也可以使用window.isNaN来实现
+if (!Number.isNaN) {
+  Number.isNaN = function(n) {
+    // window.isNaN(n) 不判断数据类型
+    return typeof n === 'number' && window.isNaN(n)
+  }
+}
+```
+
+对了，在 `JavaScript` 中 `1 / 0` 返回的不是 `NaN` 而是 `Infinity`，但是 `Infinity / Infinity` 返回 `NaN`
+
+## Object.is
+
+ES6 新增了一个工具方法，判断两个值是否绝对相等，可以用来处理 `-0` 的情况，因为 `-0 === 0`
+
+```js
+// Object.is 的实现
+if (!Object.is) {
+  Object.is = function(v1, v2) {
+    // 判断是否为 -0，因为-0 === 0
+    if (v1 === 0 && v2 === 0) {
+      // 因为 1 / 0 === Infinity，1 / -0 === -Infinity
+      return 1 / v1 === 1 / v2
+    }
+    // 判断是否是 NaN
+    if (v1 !== v1) {
+      return v2 !== v2
+    }
+    // 其他情况
+    return v1 === v2
+  }
+}
+```
+
+Object.is 主要用来处理一些特殊情况的，所以效率并不是很高，能使用 `==` 或 `===` 尽量使用。
+
 ## 防抖和节流
 
 > scroll 事件本身会触发页面的重新渲染，同时 scroll 事件的 handler 又会被高频度的触发, 因此事件的 handler 内部不应该有复杂操作，例如 DOM 操作就不应该放在事件处理中。针对此类高频度触发事件问题（例如页面 scroll ，屏幕 resize，监听用户输入等），有两种常用的解决方法，防抖和节流。
@@ -473,23 +551,6 @@ function reduce(arr, fn, init) {
 }
 ```
 
-### flat 扁平化
-
-```js
-function flat(arr) {
-  let result = []
-  for (let i = 0, len = arr.length; i < len; i++) {
-    // if (Object.prototype.toString.call(arr[i]) === '[object Array]') {
-    if (Array.isArray(arr[i])) {
-      result = result.concat(flat(arr[i]))
-    } else {
-      result.push(arr[i])
-    }
-  }
-  return result
-}
-```
-
 ### concat 合并数组
 
 ```js
@@ -512,19 +573,140 @@ function concat(originArr) {
 }
 ```
 
-## 菲波那切数列
+## 数组的扁平化和增维
 
-- 今天新东方的面试还提到了菲波那切数列，其实这个东西蛮很有趣，简单介绍一下
-- 1、1、2、3、5、8、13、21、34 ....
-- 这道题有个规律，第一项加上第二项永远等于第三项：1 + 1 = 2；1 + 2 = 3；2 + 3 = 5；3 + 5 = 8 ....
-- 要求是传入第几项，得到该值，根据这个规律来实现一下
+如下：一个多维数组，要求把数组扁平化成一个一维数组
 
 ```js
-function fibonacci(len) {
-  // 第一项和第二项都返回1
-  if (len === 1 || len === 2) return 1
-  // 我们只要返回 len - 1（len的前一项）与 len - 2（len的前两项）的和便是我们要的值
-  return fibonacci(len - 1) + fibonacci(len - 2)
+const arr = [1, 2, [21, 45, 88], 3, 4, [5, 6, [7, 8, [9, 11]]]]
+// 结果：[ 1, 2, 21, 45, 88, 3, 4, 5, 6, 7, 8, 9, 11 ]
+```
+
+### 扁平化
+
+- 扁平化有多种思路，我们可以直接暴力一点，直接用正则匹配所有的中括号然后替换为空
+
+```js
+const flatUseRegExp = (arr) => {
+  const str = JSON.stringify(arr).replace(/\[|\]/g, '')
+  return str.split(',').map((i) => +i)
+}
+```
+
+- 也可以更直接一点，利用数组 toString 之后会去掉所有括号直接处理
+
+```js
+const flatUseToString = (arr) => {
+  return arr
+    .toString()
+    .split(',')
+    .map((i) => +i)
+}
+```
+
+- 当然我们也可以规规矩矩的写递归，来解决这个问题
+
+```js
+const flat = (arr) => {
+  let result = []
+  arr.forEach((item) => {
+    if (Array.isArray(item)) {
+      result = result.concat(flat(item))
+    } else {
+      result.push(item)
+    }
+  })
+  return result
+}
+```
+
+### 增维
+
+之前面试遇到一道题，有一个一维数组，我想要写个方法，方法接收两个参数，该数组和一个数字，然后得到一个根据这个数字而拆分成的多维数组，比如说我传递一个 3，那就数组中的成员就每三个成员组成一个新的数组
+
+```js
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+// 结果：[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ], [ 0 ] ]
+
+const newaxis = (arr, offset) => {
+  const len = arr.length
+  // 偏移量计算如果正好能被整除那么就取传入的偏移量，否则就向下取整后加1
+  const offsetNum = len % offset === 0 ? offset : ~~(len / offset + 1)
+  const result = []
+  for (let i = 0; i < offsetNum; i++) {
+    result.push(arr.slice(i * offset, i * offset + offset))
+  }
+  return result
+}
+```
+
+## 深浅拷贝
+
+深拷贝问题一直是面试过程中被问到频率特别高的问题
+
+拷贝分两种，浅拷贝和深拷贝，分别来实现一下
+
+工作中遇到深拷贝的问题的话，我们一般会选择 `lodash` 库中的 `deepClone` 来处理
+
+### 浅拷贝
+
+浅拷贝很简单只要第一层地址不一样便可以
+
+```js
+// 可以直接使用 Es6 的 rest 语法实现
+function copy(target) {
+  return { ...target }
+}
+// 也可以使用 for in 实现
+function copy(target) {
+  const result = {}
+  for (let key in target) {
+    result[key] = target[key]
+  }
+  return result
+}
+```
+
+### 深拷贝
+
+深拷贝要求所有引用类型的地址都不是一个地址都是复制的值，那可以考虑使用递归来实现
+
+```js
+function deepClone(target) {
+  if (typeof target !== 'object') return target
+  const result = Array.isArray(target) ? [] : {}
+  for (let key in target) {
+    result[key] = deepClone(target[key])
+  }
+  return result
+}
+```
+
+### 循环引用
+
+但是上面的方法如果对象中出现循环引用了，那么就不能用了，需要单独考虑，考虑以下对象
+
+```js
+const obj = {
+  name: 'cym',
+  age: 25,
+  home: { name: '北京' },
+  hobbies: ['抽烟', '喝酒', '打游戏'],
+  sayHi: () => 'Hi',
+}
+// 循环引用
+obj.obj = obj
+
+// 可以使用 Map 对象对一层比较即可处理这个问题
+function clone(target, map = new Map()) {
+  if (typeof target !== 'object') return target
+  if (map.get(target)) return map.get(target)
+  const result = Array.isArray(target) ? [] : {}
+  map.set(target, result)
+  for (let key in target) {
+    result[key] = clone(target[key], map)
+  }
+  return result
 }
 ```
 
@@ -551,7 +733,7 @@ Emitter.prototype = {
   emit: function(type) {
     if (!this.handlers[type]) return
     const args = [].slice.call(arguments, 1)
-    this.handlers[type].forEach(handler => {
+    this.handlers[type].forEach((handler) => {
       handler.apply(this, args)
     })
   },
@@ -565,7 +747,7 @@ Emitter.prototype = {
       }
     }
     return result
-  }
+  },
 }
 ```
 
@@ -585,7 +767,7 @@ class Emitter {
   emit(type) {
     if (!this.handlers[type]) return
     const args = [...arguments].slice(1)
-    this.handlers[type].forEach(handler => {
+    this.handlers[type].forEach((handler) => {
       // 执行函数
       handler.apply(this, args)
     })

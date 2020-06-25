@@ -2,7 +2,7 @@
 title: 虚拟机 日记
 date: 2020-01-26
 tags:
-  - 操作系统
+  - os
   - Linux
 keys:
   - 'VMware-cym'

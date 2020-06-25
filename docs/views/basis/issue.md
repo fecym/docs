@@ -41,7 +41,7 @@ function getMonthLength(month) {
 ;(() => 1).length ===
   0(
     // 输出 true
-    a => a
+    (a) => a
   ).length // 输出 1
 ```
 
@@ -59,53 +59,6 @@ arr['cym'] = 'cym'
 console.log(arr) // [1, '嘿嘿', cym: 'cym']
 console.log(arr.length) // 2
 ```
-
-## NaN（not a number）
-
-`NaN` 是一个特殊值，他和自身不相等，是一个非自反值（自反，reflexive，即 x === x 不成立）的值。但是 `NaN != NaN` 为 `true`
-
-```js
-// 根据此特性我们可以实现一下 Number.isNaN
-if (!Number.isNaN) {
-  Number.isNaN = function(n) {
-    return n !== n
-  }
-}
-// 也可以使用window.isNaN来实现
-if (!Number.isNaN) {
-  Number.isNaN = function(n) {
-    // window.isNaN(n) 不判断数据类型
-    return typeof n === 'number' && window.isNaN(n)
-  }
-}
-```
-
-对了，在 `JavaScript` 中 `1 / 0` 返回的不是 `NaN` 而是 `Infinity`，但是 `Infinity / Infinity` 返回 `NaN`
-
-## Object.is
-
-ES6 新增了一个工具方法，判断两个值是否绝对相等，可以用来处理 `-0` 的情况，因为 `-0 === 0`
-
-```js
-// Object.is 的实现
-if (!Object.is) {
-  Object.is = function(v1, v2) {
-    // 判断是否为 -0，因为-0 === 0
-    if (v1 === 0 && v2 === 0) {
-      // 因为 1 / 0 === Infinity，1 / -0 === -Infinity
-      return 1 / v1 === 1 / v2
-    }
-    // 判断是否是 NaN
-    if (v1 !== v1) {
-      return v2 !== v2
-    }
-    // 其他情况
-    return v1 === v2
-  }
-}
-```
-
-Object.is 主要用来处理一些特殊情况的，所以效率并不是很高，能使用 `==` 或 `===` 尽量使用。
 
 ## void 运算符
 
@@ -171,7 +124,7 @@ const o = {
   a: 'cym',
   toJSON() {
     return { c: 'b' }
-  }
+  },
 }
 
 JSON.stringify(o) // {"c":"b"}
@@ -187,7 +140,7 @@ JSON.stringify(o) // {"c":"b"}
 const obj = {
   a: 42,
   b: 30,
-  c: 100
+  c: 100,
 }
 JSON.stringify(obj, ['a', 'c']) // {"a":42,"c":100}
 ```
@@ -198,7 +151,7 @@ JSON.stringify(obj, ['a', 'c']) // {"a":42,"c":100}
 const obj = {
   a: 42,
   b: 30,
-  c: 100
+  c: 100,
 }
 JSON.stringify(obj, (k, v) => {
   // 注意：第一次 k 是 undefined，v 是原对象
@@ -308,7 +261,7 @@ function getData(url) {
 }
 function getMultiData(urls) {
   // Promise.all 接受一个包含 promise 的数组，如果不是 promise 数组会被转成 promise
-  Promise.all(urls.map(url => getData(url))).then(results => {
+  Promise.all(urls.map((url) => getData(url))).then((results) => {
     console.log(results)
   })
 }
@@ -345,7 +298,7 @@ function getAllDate(urls, cd) {
   urls.forEach((url, idx) => getData(url, idx))
 }
 // 使用
-getAllDate(urls, data => {
+getAllDate(urls, (data) => {
   console.log(data)
 })
 ```
@@ -358,10 +311,10 @@ getAllDate(urls, data => {
 function getGroupData(urls, cb) {
   const results = []
   let count = 0
-  const getData = url => {
+  const getData = (url) => {
     const xhr = new XMLHttpRequest()
     xhr.responseType = 'json'
-    xhr.onreadystatechange = _ => {
+    xhr.onreadystatechange = (_) => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           results.push(xhr.response)
@@ -374,10 +327,10 @@ function getGroupData(urls, cb) {
     xhr.open('GET', url, true)
     xhr.send(null)
   }
-  urls.forEach(url => getData(url))
+  urls.forEach((url) => getData(url))
 }
 
-getGroupData(urls, data => {
+getGroupData(urls, (data) => {
   console.log(data)
 })
 ```
@@ -400,7 +353,7 @@ const a = {
   val: 1,
   toString() {
     return this.val++
-  }
+  },
 }
 if (a == 1 && a == 2 && a == 3) {
   console.log('ok')
@@ -414,7 +367,7 @@ var i = 1
 Object.defineProperty(window, 'a', {
   get() {
     return i++
-  }
+  },
 })
 
 if (a == 1 && a == 2 && a == 3) {
@@ -444,174 +397,6 @@ if (a == 1 && a == 2 && a == 3) {
 1.toString()     // Uncaught SyntaxError: Invalid or unexpected token
 1..toString()    // '1'
 1.2.toString()   // '1.2'
-```
-
-## 深拷贝问题
-
-深拷贝问题一直是面试过程中被问到频率特别高的问题
-
-拷贝分两种，浅拷贝和深拷贝，分别来实现一下
-
-工作中遇到深拷贝的问题的话，我们一般会选择 `lodash` 库中的 `deepClone` 来处理
-
-### 浅拷贝
-
-浅拷贝很简单只要第一层地址不一样便可以
-
-```js
-// 可以直接使用 Es6 的 rest 语法实现
-function copy(targte) {
-  return { ...targte }
-}
-// 也可以使用 for in 实现
-function copy(target) {
-  const result = {}
-  for (let key in target) {
-    result[key] = target[key]
-  }
-  return result
-}
-```
-
-### 深拷贝
-
-深拷贝要求所有引用类型的地址都不是一个地址都是复制的值，那可以考虑使用递归来实现
-
-```js
-function deepClone(target) {
-  if (typeof target !== 'object') return target
-  const result = Array.isArray(target) ? [] : {}
-  for (let key in target) {
-    result[key] = deepClone(target[key])
-  }
-  return result
-}
-```
-
-### 循环引用
-
-但是上面的方法如果对象中出现循环引用了，那么就不能用了，需要单独考虑，考虑以下对象
-
-```js
-const obj = {
-  name: 'cym',
-  age: 25,
-  home: { name: '北京' },
-  hobbies: ['抽烟', '喝酒', '打游戏'],
-  sayHi: () => 'Hi'
-}
-// 循环引用
-obj.obj = obj
-
-// 可以使用 Map 对象对一层比较即可处理这个问题
-function clone(target, map = new Map()) {
-  if (typeof target !== 'object') return target
-  if (map.get(target)) return map.get(target)
-  const result = Array.isArray(target) ? [] : {}
-  map.set(target, result)
-  for (let key in target) {
-    result[key] = clone(target[key], map)
-  }
-  return result
-}
-```
-
-## 数组的扁平化和增维
-
-如下：一个多维数组，要求把数组扁平化成一个一维数组
-
-```js
-const arr = [1, 2, [21, 45, 88], 3, 4, [5, 6, [7, 8, [9, 11]]]]
-// 结果：[ 1, 2, 21, 45, 88, 3, 4, 5, 6, 7, 8, 9, 11 ]
-```
-
-### 扁平化
-
-- 扁平化有多种思路，我们可以直接暴力一点，直接用正则匹配所有的中括号然后替换为空
-
-```js
-const flatUseRegExp = arr => {
-  const str = JSON.stringify(arr).replace(/\[|\]/g, '')
-  return str.split(',').map(i => +i)
-}
-```
-
-- 也可以更直接一点，利用数组 toString 之后会去掉所有括号直接处理
-
-```js
-const flatUseToString = arr => {
-  return arr
-    .toString()
-    .split(',')
-    .map(i => +i)
-}
-```
-
-- 当然我们也可以规规矩矩的写递归，来解决这个问题
-
-```js
-const flat = arr => {
-  let result = []
-  arr.forEach(item => {
-    if (Array.isArray(item)) {
-      result = result.concat(flat(item))
-    } else {
-      result.push(item)
-    }
-  })
-  return result
-}
-```
-
-### 增维
-
-之前面试遇到一道题，有一个一维数组，我想要写个方法，方法接收两个参数，该数组和一个数字，然后得到一个根据这个数字而拆分成的多维数组，比如说我传递一个 3，那就数组中的成员就每三个成员组成一个新的数组
-
-```js
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-// 结果：[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ], [ 0 ] ]
-
-const newaxis = (arr, offset) => {
-  const len = arr.length
-  // 偏移量计算如果正好能被整除那么就取传入的偏移量，否则就向下取整后加1
-  const offsetNum = len % offset === 0 ? offset : ~~(len / offset + 1)
-  const result = []
-  for (let i = 0; i < offsetNum; i++) {
-    result.push(arr.slice(i * offset, i * offset + offset))
-  }
-  return result
-}
-```
-
-## 实现一个柯利化
-
-柯利化的核心是：`只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数`
-
-比如说实现一个 add 函数
-
-```js
-const addFn = (a, b, c, d, e) => {
-  return a + b + c + d + e
-}
-const add = curry(addFn)
-add(1)(2)(3)(4, 5) // 15
-add(1)(2)(3, 4, 5) // 15
-add(1, 2, 3)(4, 5) // 15
-```
-
-面试要求就是实现这么一个函数
-
-```js
-function curry(fn, ...args) {
-  // 如果参数大于等于了要改变函数的参数了，那么直接执行就可以了
-  if (args.length >= fn.length) {
-    return fn(...args)
-  }
-  // 否则就返回一个函数，函数把所有参数都累积到一起
-  return function(...args2) {
-    return curry(fn, ...args, ...args2)
-  }
-}
 ```
 
 ## Generator
@@ -655,7 +440,7 @@ const obj = {
   length: 4,
   [Symbol.iterator]: function* () {
     let idx = 0
-    whele (idx !== this.length) {
+    while (idx !== this.length) {
       yield this[idx++]
     }
   }
@@ -672,9 +457,9 @@ function generator(str) {
     next() {
       return {
         value: str[idx],
-        done: idx++ >= str.length
+        done: idx++ >= str.length,
       }
-    }
+    },
   }
 }
 // 测试
@@ -720,10 +505,10 @@ function* read() {
 const it = read()
 
 let { value, done } = it.next()
-value.then(data => {
+value.then((data) => {
   let { value, done } = it.next(data)
   // console.log(data, '???')
-  value.then(data => {
+  value.then((data) => {
     let { value, done } = it.next(data)
     console.log(value)
   })
@@ -735,7 +520,7 @@ value.then(data => {
 ```js
 const co = require('co')
 // co 接受一个生成器
-co(read()).then(data => {
+co(read()).then((data) => {
   console.log(data)
 })
 // 那模拟一下
@@ -747,7 +532,7 @@ function _co(it) {
       const { value, done } = it.next(data)
       if (done) return resolve(value)
       // 保证值是一个 promise
-      Promise.resolve(value).then(data => {
+      Promise.resolve(value).then((data) => {
         next(data)
       }, reject)
     }
@@ -766,16 +551,47 @@ function _co(it) {
 
 ```js
 function exportTxt(text, filename) {
-  const eleLink = document.createElement("a");
-  eleLink.download = filename;
-  eleLink.style.display = "none";
+  const eleLink = document.createElement('a')
+  eleLink.download = filename
+  eleLink.style.display = 'none'
   // 将内容转为 blob
-  const blob = new Blob([text]);
-  eleLink.href = URL.createObjectURL(blob);
-  document.body.appendChild(eleLink);
-  eleLink.click();
-  document.body.removeChild(eleLink);
+  const blob = new Blob([text])
+  eleLink.href = URL.createObjectURL(blob)
+  document.body.appendChild(eleLink)
+  eleLink.click()
+  document.body.removeChild(eleLink)
 }
 ```
+
+## 菲波那切数列
+
+- 今天新东方的面试还提到了菲波那切数列，其实这个东西蛮很有趣，简单介绍一下
+- 1、1、2、3、5、8、13、21、34 ....
+- 这道题有个规律，第一项加上第二项永远等于第三项：1 + 1 = 2；1 + 2 = 3；2 + 3 = 5；3 + 5 = 8 ....
+- 要求是传入第几项，得到该值，根据这个规律来实现一下
+
+### 简单写法
+
+```js
+function fibonacci(n) {
+  // 第一项和第二项都返回1
+  if (n === 1 || n === 2) return 1
+  // 我们只要返回 n - 1（n的前一项）与 n - 2（n的前两项）的和便是我们要的值
+  return fibonacci(n - 1) + fibonacci(n - 2)
+}
+```
+
+### 优化版本
+
+上面的写法，求 20 次以内的总和运行会很快，50 次以上特别慢，100 次 以上可能就爆栈了，所以我们需要优化写法，缓存每次计算后的值
+
+```js
+function feibo(n, sum1 = 1, sum2 = 1) {
+  if (n === 1 || n === 2) return sum2
+  return feibo(n - 1, sum2, sum1 + sum2)
+}
+```
+
+这种写法缓存了，每次计算后的值，执行效率会很高，100 次以上也会秒返回结果，这个也叫作尾递归优化
 
 持续记录中...
