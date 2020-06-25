@@ -3,7 +3,6 @@ title: 你应该了解的npm知识
 date: 2019-12-09
 tags:
   - npm
-  - 大前端
 ---
 
 ## npm init

@@ -2,7 +2,6 @@
 title: 虚拟机 日记
 date: 2020-01-26
 tags:
-  - 大前端
   - 操作系统
   - Linux
 keys:

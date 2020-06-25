@@ -32,6 +32,7 @@ module.exports = {
         { text: 'webpack实战', link: '/views/webpack/base' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'AST团队分享', link: '/views/webpack/AST' },
+        { text: 'eslint 工作流', link: '/views/FE/lint/index' },
         { text: 'Vue源码分析', link: '/views/basis/vue' },
         { text: 'cli 的开发', link: '/views/tools/npm/cli' },
         { text: 'mapbox', link: '/views/FE/visualization/mapbox' },

@@ -3,7 +3,6 @@ title: Liunx 常用命令
 date: 2020-01-27
 tags:
   - Linux
-  - 大前端
 # keys:
 #  - '123456'
 ---

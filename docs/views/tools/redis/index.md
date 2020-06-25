@@ -3,7 +3,6 @@ title: Redis 小记
 date: 2019-09-14
 tags:
   - redis
-  - 大前端
 ---
 
 ## 安装

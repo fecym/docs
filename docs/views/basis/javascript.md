@@ -2,7 +2,6 @@
 title: JavaScript 基础知识
 date: 2019-05-12
 tags:
-  - JavaScript
   - 基础
 ---
 

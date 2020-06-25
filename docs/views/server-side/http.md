@@ -2,7 +2,6 @@
 title: HTTP 日记
 date: 2020-02-18
 tags:
-  - 大前端
   - HTTP
 keys:
   - 'http-cym'
