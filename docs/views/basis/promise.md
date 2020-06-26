@@ -18,86 +18,86 @@ tags:
 
 ```js
 // 首先是三种状态
-const PENDING = 'pending'
-const RESOLVED = 'resolve'
-const REJECTED = 'reject'
+const PENDING = 'pending';
+const RESOLVED = 'resolve';
+const REJECTED = 'reject';
 
 function Promise(execute) {
-  this.status = PENDING
+  this.status = PENDING;
   // 存放成功时传递的值和失败传递的原因
-  this.value = null
-  this.reason = null
+  this.value = null;
+  this.reason = null;
   // 回调队列
-  this.onResolvedCallbacks = []
-  this.onRejectedCallbacks = []
+  this.onResolvedCallbacks = [];
+  this.onRejectedCallbacks = [];
   const resolve = value => {
     // 状态不可逆，只有在 pending 的时候才可以改变自身的状态
     if (this.status === PENDING) {
-      this.status = RESOLVED
-      this.value = value
+      this.status = RESOLVED;
+      this.value = value;
       // 状态发生改变的时候查看异步队列里面是否有函数，如果有就执行
-      this.onResolvedCallbacks.forEach(fn => fn())
+      this.onResolvedCallbacks.forEach(fn => fn());
     }
-  }
+  };
   const reject = reason => {
     if ((this.status = PENDING)) {
-      this.status = REJECTED
-      this.reason = reason
-      this.onRejectedCallbacks.forEach(fn => fn())
+      this.status = REJECTED;
+      this.reason = reason;
+      this.onRejectedCallbacks.forEach(fn => fn());
     }
-  }
+  };
   // Promise 内部的默认执行函数
-  execute(resolve, reject)
+  execute(resolve, reject);
 }
 
 Promise.prototype.then = function(onFulfilled, onRejected) {
-  const selt = this
+  const selt = this;
   if (selt.status === RESOLVED) {
-    onFulfilled(selt.value)
+    onFulfilled(selt.value);
   }
   if (selt.status === REJECTED) {
-    onRejected(selt.reason)
+    onRejected(selt.reason);
   }
   if (selt.status === PENDING) {
     this.onResolvedCallbacks.push(function() {
-      onFulfilled(selt.value)
-    })
+      onFulfilled(selt.value);
+    });
     this.onRejectedCallbacks.push(function() {
-      onRejected(selt.reason)
-    })
+      onRejected(selt.reason);
+    });
   }
-}
+};
 // 返回 Promise 便于测试
-module.exports = Promise
+module.exports = Promise;
 ```
 
 测试基本版的 `promise`
 
 ```js
 // 测试基础版本的 promise
-const Promise = require('./promise')
+const Promise = require('./promise');
 const p = new Promise((resolve, reject) => {
   // 测试异步
   setTimeout(() => {
-    reject(1000)
-  }, 2000)
+    reject(1000);
+  }, 2000);
   // 测试同步
   // reject('异常')
   // resolve('正常')
-})
+});
 p.then(
   data => console.log(data),
   err => {
-    console.log(err, '出错了')
+    console.log(err, '出错了');
   }
-)
+);
 // 测试第二次 then
 p.then(
   data => console.log(data),
   err => {
-    console.log(err, '出错了')
+    console.log(err, '出错了');
   }
-)
+);
 ```
 
 ## then 方法补充
@@ -108,39 +108,39 @@ p.then(
 - 修改基础代码，把 then 方法补充完整
 
 ```js
-const PENDING = 'pending'
-const RESOLVED = 'resolve'
-const REJECTED = 'reject'
+const PENDING = 'pending';
+const RESOLVED = 'resolve';
+const REJECTED = 'reject';
 
 function Promise(execute) {
-  this.status = PENDING
+  this.status = PENDING;
   // 存放成功时传递的值和失败传递的原因
-  this.value = null
-  this.reason = null
+  this.value = null;
+  this.reason = null;
   // 回调队列
-  this.onResolvedCallbacks = []
-  this.onRejectedCallbacks = []
+  this.onResolvedCallbacks = [];
+  this.onRejectedCallbacks = [];
   const resolve = value => {
     // 状态不可逆，只有在 pending 的时候才可以改变自身的状态
     if (this.status === PENDING) {
       // 如果 resolve 里面值还是一个 promise 的话，那就递归处理一下
       if (value instanceof Promise) {
-        return value.then(resolve, reject)
+        return value.then(resolve, reject);
       }
-      this.status = RESOLVED
-      this.value = value
+      this.status = RESOLVED;
+      this.value = value;
       // 状态发生改变的时候查看异步队列里面是否有函数，如果有就执行
-      this.onResolvedCallbacks.forEach(fn => fn())
+      this.onResolvedCallbacks.forEach(fn => fn());
     }
-  }
+  };
   const reject = reason => {
     if ((this.status = PENDING)) {
-      this.status = REJECTED
-      this.reason = reason
-      this.onRejectedCallbacks.forEach(fn => fn())
+      this.status = REJECTED;
+      this.reason = reason;
+      this.onRejectedCallbacks.forEach(fn => fn());
     }
-  }
-  execute(resolve, reject)
+  };
+  execute(resolve, reject);
 }
 
 /**
@@ -153,108 +153,108 @@ function Promise(execute) {
  * @param {*} promise2
  * @param {*} x
  * @param {*} resolve
- * @param {*} rejecte
+ * @param {*} reject
  */
 function resolvePromise(promise2, x, resolve, reject) {
-  if (x === promise2) return reject(new TypeError('循环引用了'))
+  if (x === promise2) return reject(new TypeError('循环引用了'));
   // 判断是不是引用类型或者普通值，普通直接返回
   // 引用类型在做处理
-  if ((typeof x !== null && typeof x === 'object') || typeof x === 'function') {
+  if ((typeof x === 'object' && x !== null) || typeof x === 'function') {
     try {
-      const then = x.then
+      const then = x.then;
       // 如果 x 中有 then，那么就认为这个 then 是一个 promise，规范 2.3.3.3
       if (typeof then === 'function') {
         then.call(
           x,
           y => {
             // 此时 y 还可能是一个 promise，所以需要递归处理一下
-            resolvePromise(promise2, y, resolve, reject)
+            resolvePromise(promise2, y, resolve, reject);
           },
           r => reject(r)
-        )
+        );
       } else {
-        resolve(x)
+        resolve(x);
       }
-    } catch (error) {
-      reject(error)
+    } catch (e) {
+      reject(e);
     }
   } else {
-    resolve(x)
+    resolve(x);
   }
 }
 
 Promise.prototype.then = function(onFulfilled, onRejected) {
   // 参数的可选性
   // 如果没有传递成功的值，那么我们给自动传递过去，这个叫做值得穿透，保证可以在后面捕获到异常
-  onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val
+  onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val;
   // 如果错误没有传递，那我们手动传递过去
   onRejected =
     typeof onRejected === 'function'
       ? onRejected
       : err => {
-          throw err
-        }
-  const selt = this
+          throw err;
+        };
+  const selt = this;
   // then方法必须返回一个新的 promise
   const _promise = new Promise((resolve, reject) => {
     if (selt.status === RESOLVED) {
       setTimeout(() => {
         try {
           // then 方法中可能直接出现异常，所以 trycatch 下
-          const x = onFulfilled(selt.value)
+          const x = onFulfilled(selt.value);
           // 需要一个方法处理 promise 中 then 方法
           // 我们要在自身中使用自身，自身还没有创建完毕了，所以我们需要异常处理一下才可以取到 _promise
           // 在 Notes 3.1 中提到，这种情况我们可以使用 setTimeout 来实现
-          resolvePromise(_promise, x, resolve, reject)
-        } catch (error) {
-          reject(error)
+          resolvePromise(_promise, x, resolve, reject);
+        } catch (e) {
+          reject(e);
         }
-      })
+      });
     }
     if (selt.status === REJECTED) {
       setTimeout(() => {
         try {
-          const x = onRejected(selt.reason)
-          resolvePromise(_promise, x, resolve, reject)
-        } catch (error) {
-          reject(error)
+          const x = onRejected(selt.reason);
+          resolvePromise(_promise, x, resolve, reject);
+        } catch (e) {
+          reject(e);
         }
-      })
+      });
     }
     if (selt.status === PENDING) {
       this.onResolvedCallbacks.push(function() {
         setTimeout(() => {
           try {
-            const x = onFulfilled(selt.value)
-            resolvePromise(_promise, x, resolve, reject)
-          } catch (error) {
-            reject(error)
+            const x = onFulfilled(selt.value);
+            resolvePromise(_promise, x, resolve, reject);
+          } catch (e) {
+            reject(e);
           }
-        })
-      })
+        });
+      });
       this.onRejectedCallbacks.push(function() {
         setTimeout(() => {
           try {
-            const x = onRejected(selt.reason)
-            resolvePromise(_promise, x, resolve, reject)
-          } catch (error) {
-            reject(error)
+            const x = onRejected(selt.reason);
+            resolvePromise(_promise, x, resolve, reject);
+          } catch (e) {
+            reject(e);
           }
-        })
-      })
+        });
+      });
     }
-  })
-  return _promise
-}
+  });
+  return _promise;
+};
 
-module.exports = Promise
+module.exports = Promise;
 ```
 
 测试 `promise`
 
 ```js
 // 测试代码
-const Promise = require('./promise')
+const Promise = require('./promise');
 
 const p = new Promise((resolve, reject) => {
   // setTimeout(() => {
@@ -263,14 +263,14 @@ const p = new Promise((resolve, reject) => {
   //   reject(1000)
   // }, 2000)
   // reject('情人节到了')
-  resolve('情人节到了')
-})
+  resolve('情人节到了');
+});
 p.then(
   data => console.log(data),
   err => {
-    console.log(err, '出错了')
+    console.log(err, '出错了');
   }
-)
+);
 // p.then(data => console.log(data))
 
 // let p2 = p.then(data => {
@@ -295,24 +295,24 @@ const p2 = p.then(data => {
           setTimeout(function() {
             resolve(
               new Promise((resolve, reject) => {
-                resolve(3000)
+                resolve(3000);
               })
-            )
-          }, 1000)
+            );
+          }, 1000);
         })
-      )
-    }, 1000)
-  })
-})
+      );
+    }, 1000);
+  });
+});
 
 p2.then(
   data => {
-    console.log(data, '???')
+    console.log(data, '???');
   },
   err => {
-    console.log(err, '失败？？？')
+    console.log(err, '失败？？？');
   }
-)
+);
 ```
 
 ## catch 方法
@@ -321,8 +321,8 @@ p2.then(
 
 ```js
 Promise.prototype.catch = function(errCallback) {
-  return this.then(null, errCallback)
-}
+  return this.then(null, errCallback);
+};
 ```
 
 ## 静态方法
@@ -334,9 +334,9 @@ Promise.prototype.catch = function(errCallback) {
 ```js
 Promise.resolve = function(value) {
   return new Promise((resolve, reject) => {
-    resolve(value)
-  })
-}
+    resolve(value);
+  });
+};
 ```
 
 ### reject
@@ -344,9 +344,9 @@ Promise.resolve = function(value) {
 ```js
 Promise.reject = function(reason) {
   return new Promise((resolve, reject) => {
-    reject(reason)
-  })
-}
+    reject(reason);
+  });
+};
 ```
 
 ### all
@@ -356,28 +356,22 @@ Promise.all 方法的可处理并发问题，而且返回值会保证代码的�
 ```js
 Promise.all = function(prs) {
   return new Promise((resolve, reject) => {
-    const result = []
-    let count = 0
+    const result = [];
+    let count = 0;
     const processData = (idx, val) => {
-      result[idx] = val
-      if (++count === prs.length) resolve(result)
-    }
+      result[idx] = val;
+      if (++count === prs.length) resolve(result);
+    };
     prs.forEach((p, i) => {
-      const then = p.then
+      const then = p.then;
       if (then && typeof then === 'function') {
-        then.call(
-          p,
-          y => {
-            processData(i, y)
-          },
-          reject
-        )
+        then.call(p, y => processData(i, y), reject);
       } else {
-        processData(i, p)
+        processData(i, p);
       }
-    })
-  })
-}
+    });
+  });
+};
 ```
 
 ### race
@@ -389,22 +383,16 @@ Promise.all = function(prs) {
 ```js
 Promise.race = function(prs) {
   return new Promise((resolve, reject) => {
-    prs.forEach((pr, i) => {
-      const then = pr.then
+    prs.forEach(pr => {
+      const then = pr.then;
       if (then && typeof then === 'function') {
-        then.call(
-          pr,
-          y => {
-            resolve(y)
-          },
-          reject
-        )
+        then.call(pr, y => resolve(y), reject);
       } else {
-        resolve(pr)
+        resolve(pr);
       }
-    })
-  })
-}
+    });
+  });
+};
 ```
 
 ## deferred
@@ -413,13 +401,13 @@ Promise.race = function(prs) {
 
 ```js
 Promise.deferred = function() {
-  const dfd = {}
+  const dfd = {};
   dfd.promise = new Promise((resolve, reject) => {
-    dfd.resolve = resolve
-    dfd.reject = reject
-  })
-  return dfd
-}
+    dfd.resolve = resolve;
+    dfd.reject = reject;
+  });
+  return dfd;
+};
 ```
 
 这个方法有什么用？其实这个方法可以用来做延迟函数
@@ -427,23 +415,23 @@ Promise.deferred = function() {
 ```js
 // deferred 的使用
 function read(url) {
-  const defer = Promise.deferred()
+  const defer = Promise.deferred();
   fs.readFile(url, 'utf8', (err, data) => {
-    if (err) return defer.reject(err)
-    defer.resolve(data)
-  })
-  return defer.promise
+    if (err) return defer.reject(err);
+    defer.resolve(data);
+  });
+  return defer.promise;
 }
 
-const url = path.resolve(__dirname, './name.txt')
+const url = path.resolve(__dirname, './name.txt');
 read(url).then(
   data => {
-    console.log(data)
+    console.log(data);
   },
   err => {
-    console.log(err)
+    console.log(err);
   }
-)
+);
 ```
 
 ## promise 拓展方法
@@ -462,10 +450,10 @@ if (!Promise.first) {
       prs.forEach(pr => {
         Promise.resolve(pr)
           // first 只取第一次执行成功的方法
-          .then(resolve)
-      })
-    })
-  }
+          .then(resolve);
+      });
+    });
+  };
 }
 ```
 
@@ -478,30 +466,30 @@ if (!Promise.first) {
 if (!Promise.last) {
   Promise.last = function(prs) {
     return new Promise((resolve, reject) => {
-      const len = prs.length
-      let num = 0
+      const len = prs.length;
+      let num = 0;
       prs.forEach(pr => {
         Promise.resolve(pr).then(res => {
-          num++
+          num++;
           if (num === len) {
             // 如果是最后一项，则执行最后一下的结果
-            resolve(res)
+            resolve(res);
           }
-        })
-      })
-    })
-  }
+        });
+      });
+    });
+  };
 }
 ```
 
 ```js
 // 测试
 Promise.first([Promise.reject(1), Promise.resolve(2)]).then(res => {
-  console.log(res, 'first')
-})
+  console.log(res, 'first');
+});
 Promise.last([1, Promise.resolve(2)]).then(res => {
-  console.log(res, 'last')
-})
+  console.log(res, 'last');
+});
 // 测试结果：
 // 2 'first'
 // 2 'last'
@@ -518,30 +506,30 @@ if (!Promise.map) {
     return Promise.all(
       vals.map(val => {
         return new Promise((resolve, reject) => {
-          cb(val, resolve, reject)
-        })
+          cb(val, resolve, reject);
+        });
       })
-    )
-  }
+    );
+  };
 }
 
 // 测试
-const p1 = Promise.resolve(21)
-const p2 = 42
+const p1 = Promise.resolve(21);
+const p2 = 42;
 // const p3 = Promise.reject('failed')
 Promise.map([p1, p2], function(val, done, failed) {
   // 保证 val 是 Promise，统一格式
   Promise.resolve(val).then(res => {
-    done(res * 2)
+    done(res * 2);
     //  捕获失败的情况
-  }, failed)
+  }, failed);
 })
   .then(result => {
-    console.log(result, 'result')
+    console.log(result, 'result');
   })
-  .catch(error => {
-    console.log(error, 'error')
-  })
+  .catch(e => {
+    console.log(e, 'e');
+  });
 
 // 最终输出结果是，如果加上一个失败的 promise 该函数也是可以捕获的哦
 // [42, 84]
@@ -557,10 +545,10 @@ Promise.map([p1, p2], function(val, done, failed) {
 function read(url) {
   return new Promise((resolve, reject) => {
     fs.readFile(url, 'utf8', (err, data) => {
-      if (err) return reject(err)
-      resolve(data)
-    })
-  })
+      if (err) return reject(err);
+      resolve(data);
+    });
+  });
 }
 ```
 
@@ -575,11 +563,11 @@ function promisify(fn) {
   return function() {
     return new Promise((resolve, reject) => {
       fn(...arguments, (err, data) => {
-        if (err) reject(err)
-        resolve(data)
-      })
-    })
-  }
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  };
 }
 ```
 
@@ -591,15 +579,15 @@ function promisify(fn) {
 // 不常用
 function promisifyAll(obj) {
   if (typeof obj[key] === 'function') {
-    obj[key + 'Async'] = promisify(obj[key])
+    obj[key + 'Async'] = promisify(obj[key]);
   }
 }
 
 // 使用
-promisifyAll(fs)
+promisifyAll(fs);
 fs.readFileAsync(url, 'utf8').then(res => {
-  console.log(res, 'promisifyAll')
-})
+  console.log(res, 'promisifyAll');
+});
 ```
 
 ## 参考文献
