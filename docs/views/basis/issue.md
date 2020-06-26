@@ -541,28 +541,6 @@ function _co(it) {
 }
 ```
 
-## 将一串字符串导出为一个 txt 文件
-
-有个要求：纯前端实现，不可以使用 `node`
-
-实现原理也很简单，就像我们平时下载一个本地文件一样，可以动态的创建一个可以下载的 `a` 标签，给它设置 `download` 属性，然后把下载的内容转 `blob` 创建下载链接下载即可
-
-具体实现如下：
-
-```js
-function exportTxt(text, filename) {
-  const eleLink = document.createElement('a')
-  eleLink.download = filename
-  eleLink.style.display = 'none'
-  // 将内容转为 blob
-  const blob = new Blob([text])
-  eleLink.href = URL.createObjectURL(blob)
-  document.body.appendChild(eleLink)
-  eleLink.click()
-  document.body.removeChild(eleLink)
-}
-```
-
 ## 菲波那切数列
 
 - 今天新东方的面试还提到了菲波那切数列，其实这个东西蛮很有趣，简单介绍一下
@@ -593,5 +571,27 @@ function feibo(n, sum1 = 1, sum2 = 1) {
 ```
 
 这种写法缓存了，每次计算后的值，执行效率会很高，100 次以上也会秒返回结果，这个也叫作尾递归优化
+
+## 字符串转 txt 文件（blob）
+
+有个要求：纯前端实现，不可以使用 `node`
+
+实现原理也很简单，就像我们平时下载一个本地文件一样，可以动态的创建一个可以下载的 `a` 标签，给它设置 `download` 属性，然后把下载的内容转 `blob` 创建下载链接下载即可
+
+具体实现如下：
+
+```js
+function exportTxt(text, filename) {
+  const eleLink = document.createElement('a')
+  eleLink.download = filename
+  eleLink.style.display = 'none'
+  // 将内容转为 blob
+  const blob = new Blob([text])
+  eleLink.href = URL.createObjectURL(blob)
+  document.body.appendChild(eleLink)
+  eleLink.click()
+  document.body.removeChild(eleLink)
+}
+```
 
 持续记录中...
