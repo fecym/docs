@@ -14,15 +14,15 @@ tags:
 其中当我们把 `date` 设置为 `0` 的时候，可以直接通过 `getDate()` 获取到最后一天的日期然后得到我们要的最后一天
 
 ```js
-new Date(2019, 12, 0).getDate() // 31
-new Date(2018, 2, 0).getDate() // 28
+new Date(2019, 12, 0).getDate(); // 31
+new Date(2018, 2, 0).getDate(); // 28
 // 根据这个我们可以得到一个方法
 function getMonthLength(month) {
-  const date = new Date(month)
-  const year = date.getFullYear()
+  const date = new Date(month);
+  const year = date.getFullYear();
   // 月份是从 0 开始计算的
-  const _month = date.getMonth() + 1
-  return new Date(year, _month, 0).getDate()
+  const _month = date.getMonth() + 1;
+  return new Date(year, _month, 0).getDate();
 }
 ```
 
@@ -31,18 +31,18 @@ function getMonthLength(month) {
 今天 360 面试过程遇到一个很有趣的问题，是关于函数的 length 属性的，题简写如下
 
 ```js
-;(() => 1).length === 0 // 输出什么
+(() => 1).length === 0; // 输出什么
 ```
 
 我所理解的拥有 `length` 的对象一般都是数组或者类数组对象，或者定义了 `length` 属性的对象，所以我回答说这个应该是 `false` 吧，后来面试告诉我函数是有 `length` 属性的，函数的 `length` 属性就是函数参数的个数，瞬间我恍然大悟，函数的参数就是 `arguments`，而 `arguments` 也是一个类数组对象所以他是有 `length` 属性的
 
 ```js
 // so
-;(() => 1).length ===
+(() => 1).length ===
   0(
     // 输出 true
-    (a) => a
-  ).length // 输出 1
+    a => a
+  ).length; // 输出 1
 ```
 
 ## 数组中字符串键值的处理
@@ -52,12 +52,12 @@ function getMonthLength(month) {
 如果字符串键值能够被强制类型转换为十进制数字的话，它就会被当做数字索引来处理
 
 ```js
-const arr = []
-arr[0] = 1
-arr['1'] = '嘿嘿'
-arr['cym'] = 'cym'
-console.log(arr) // [1, '嘿嘿', cym: 'cym']
-console.log(arr.length) // 2
+const arr = [];
+arr[0] = 1;
+arr['1'] = '嘿嘿';
+arr['cym'] = 'cym';
+console.log(arr); // [1, '嘿嘿', cym: 'cym']
+console.log(arr.length); // 2
 ```
 
 ## void 运算符
@@ -67,8 +67,8 @@ console.log(arr.length) // 2
 在 `void` 之后的语句或表达式都将返回 `undefined`。`void` 并不会改变表达式的结果，只是让表达式不返回值
 
 ```js
-void true // undefined
-void 0 // undefined
+void true; // undefined
+void 0; // undefined
 ```
 
 `void` 运算符在其他地方也可以派上用场，比如不让表达式返回任何结果。
@@ -77,14 +77,14 @@ void 0 // undefined
 // 该函数不需要有任何返回结果
 function doSomething(sign) {
   if (!sign) {
-    return void setTimeout(doSomething, 100)
+    return void setTimeout(doSomething, 100);
   }
 }
 // 或许你经常向下面一样这么写
 function doSomething(sign) {
   if (!sign) {
-    setTimeout(doSomething, 100)
-    return
+    setTimeout(doSomething, 100);
+    return;
   }
 }
 ```
@@ -94,10 +94,10 @@ function doSomething(sign) {
 `JSON.stringify` 和 `toString()` 效果基本相同，只不过序列化的结果总是字符串
 
 ```js
-JSON.stringify(42) // "42"
-JSON.stringify('42') // ""42""（含有双引号的字符串）
-JSON.stringify(null) // "null"
-JSON.stringify(true) // "true"
+JSON.stringify(42); // "42"
+JSON.stringify('42'); // ""42""（含有双引号的字符串）
+JSON.stringify(null); // "null"
+JSON.stringify(true); // "true"
 ```
 
 ### 不安全的 JSON 值
@@ -107,10 +107,10 @@ JSON.stringify(true) // "true"
 在对象中遇到这些不安全的 `JSON` 值的时候会自动将其忽略，在数组中遇到则会返回 `null`，以保证数组成员位置不变
 
 ```js
-JSON.stringify(undefined) // null
-JSON.stringify(function() {}) // null
-JSON.stringify([1, undefined, 2, function() {}, 3]) // "1, null, 2, null, 3"
-JSON.stringify({ a: 2, b: function() {} }) // "{"a":2}"
+JSON.stringify(undefined); // null
+JSON.stringify(function() {}); // null
+JSON.stringify([1, undefined, 2, function() {}, 3]); // "1, null, 2, null, 3"
+JSON.stringify({ a: 2, b: function() {} }); // "{"a":2}"
 ```
 
 ### toJSON 方法
@@ -123,11 +123,11 @@ JSON.stringify({ a: 2, b: function() {} }) // "{"a":2}"
 const o = {
   a: 'cym',
   toJSON() {
-    return { c: 'b' }
+    return { c: 'b' };
   },
-}
+};
 
-JSON.stringify(o) // {"c":"b"}
+JSON.stringify(o); // {"c":"b"}
 ```
 
 ### JSON.stringify 的第二个参数
@@ -141,8 +141,8 @@ const obj = {
   a: 42,
   b: 30,
   c: 100,
-}
-JSON.stringify(obj, ['a', 'c']) // {"a":42,"c":100}
+};
+JSON.stringify(obj, ['a', 'c']); // {"a":42,"c":100}
 ```
 
 2. 当 `replacer` 是一个函数时，他会对对象本身调用一次，然后在对对象中的每个属性各调用一次。每次传递两个参数（对象的键和值）。如果要忽略某个键就返回 `undecided`，否则就返回指定的值
@@ -152,11 +152,11 @@ const obj = {
   a: 42,
   b: 30,
   c: 100,
-}
+};
 JSON.stringify(obj, (k, v) => {
   // 注意：第一次 k 是 undefined，v 是原对象
-  if (k !== 'c') return v
-}) // "{"a":42,"b":30}"
+  if (k !== 'c') return v;
+}); // "{"a":42,"b":30}"
 ```
 
 ## 一元运算符
@@ -177,7 +177,7 @@ JSON.stringify(obj, (k, v) => {
 `~` 返回 2 的补码，`~x` 大致等同于 `-(x+1)`
 
 ```js
-~42 // -(42+1) ===> -43
+~42; // -(42+1) ===> -43
 ```
 
 在 `-(x+1)` 中唯一能够得到 0（或者严格来说时候 -0）的 x 值是 -1，也就是说 ~ 和一些数字在一起会返回一个假值 0，其他情况下则返回真值
@@ -191,14 +191,14 @@ JSON.stringify(obj, (k, v) => {
 我们知道在 JavaScript 中假值有：`undefined、null、false、+0、-0、NaN、''`，其他都为真值，所以负数也是真值，那么我们就可以拿着 `~` 和 `indexOf` 一起检结果强制类型转换为 真/假 值
 
 ```js
-const str = 'hello world'
-~str.indexOf('lo') // -4，真值
+const str = 'hello world';
+~str.indexOf('lo'); // -4，真值
 if (~str.indexOf('lo')) {
   // true
   // 找到匹配
 }
-~str.indexOf('ol') // 0，假值
-!~str.indexOf('ol') // true
+~str.indexOf('ol'); // 0，假值
+!~str.indexOf('ol'); // true
 if (!~str.indexOf('ol')) {
   // true
   // 没有找到匹配
@@ -216,21 +216,21 @@ if (!~str.indexOf('ol')) {
 `~~` 只适用于 32 位的数字，更重要的是他对负数的处理与 Math.floor 不同，所以使用时要多加注意
 
 ```js
-Math.floor(1.9) // 1
-~~1.9 // 1
+Math.floor(1.9); // 1
+~~1.9; // 1
 // 操作负数
-Math.floor(-1.9) // -2
-~~-1.9 // -1
+Math.floor(-1.9); // -2
+~~-1.9; // -1
 ```
 
 `~~x` 能将值截除为一个 32 位的整数，`x | 0` 也可以，而且看起来更简洁哦，不过出于对运算符优先级的考虑，我们更倾向于使用 `~~x`
 
 ```js
-~~1.9 // 1
-1.9 | 0 // 1
+~~1.9; // 1
+1.9 | 0; // 1
 
-~~-1.9 // -1
-;-1.9 | 0 // -1
+~~-1.9; // -1
+-1.9 | 0; // -1
 ```
 
 ## 给定一组 url 实现并发请求
@@ -242,28 +242,28 @@ Math.floor(-1.9) // -2
 首先我们可以想到的是利用 `Promise.all` 来实现，代码实现如下
 
 ```js
-const urls = ['./1.json', './2.json', './3.json']
+const urls = ['./1.json', './2.json', './3.json'];
 function getData(url) {
   // 返回一个 Promise 利用 Promise.all 接受
   return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    xhr.responseType = 'json'
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          resolve(xhr.response)
+          resolve(xhr.response);
         }
       }
-    }
-    xhr.open('GET', url, true)
-    xhr.send(null)
-  })
+    };
+    xhr.open('GET', url, true);
+    xhr.send(null);
+  });
 }
 function getMultiData(urls) {
   // Promise.all 接受一个包含 promise 的数组，如果不是 promise 数组会被转成 promise
-  Promise.all(urls.map((url) => getData(url))).then((results) => {
-    console.log(results)
-  })
+  Promise.all(urls.map(url => getData(url))).then(results => {
+    console.log(results);
+  });
 }
 ```
 
@@ -274,33 +274,33 @@ function getMultiData(urls) {
 #### 使用对象做映射
 
 ```js
-const urls = ['./1.json', './2.json', './3.json']
+const urls = ['./1.json', './2.json', './3.json'];
 function getAllDate(urls, cd) {
-  const result = {}
+  const result = {};
   function getData(url, idx) {
-    const xhr = new XMLHttpRequest()
-    xhr.responseType = 'json'
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          result[idx] = xhr.response
+          result[idx] = xhr.response;
           // 如果两者 length 相等说明都请求完成了
           if (Object.keys(result).length === urls.length) {
             // 给对象添加length属性，方便转换数组
-            result.length = urls.length
-            cd && cd(Array.from(result))
+            result.length = urls.length;
+            cd && cd(Array.from(result));
           }
         }
       }
-    }
+    };
   }
   // 触发函数执行
-  urls.forEach((url, idx) => getData(url, idx))
+  urls.forEach((url, idx) => getData(url, idx));
 }
 // 使用
-getAllDate(urls, (data) => {
-  console.log(data)
-})
+getAllDate(urls, data => {
+  console.log(data);
+});
 ```
 
 #### 使用数组实现
@@ -309,30 +309,30 @@ getAllDate(urls, (data) => {
 
 ```js
 function getGroupData(urls, cb) {
-  const results = []
-  let count = 0
-  const getData = (url) => {
-    const xhr = new XMLHttpRequest()
-    xhr.responseType = 'json'
-    xhr.onreadystatechange = (_) => {
+  const results = [];
+  let count = 0;
+  const getData = url => {
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.onreadystatechange = _ => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          results.push(xhr.response)
+          results.push(xhr.response);
           if (++count === urls.length) {
-            cb && cb(results)
+            cb && cb(results);
           }
         }
       }
-    }
-    xhr.open('GET', url, true)
-    xhr.send(null)
-  }
-  urls.forEach((url) => getData(url))
+    };
+    xhr.open('GET', url, true);
+    xhr.send(null);
+  };
+  urls.forEach(url => getData(url));
 }
 
-getGroupData(urls, (data) => {
-  console.log(data)
-})
+getGroupData(urls, data => {
+  console.log(data);
+});
 ```
 
 ## 类型转换问题
@@ -352,26 +352,26 @@ getGroupData(urls, (data) => {
 const a = {
   val: 1,
   toString() {
-    return this.val++
+    return this.val++;
   },
-}
+};
 if (a == 1 && a == 2 && a == 3) {
-  console.log('ok')
+  console.log('ok');
 }
 ```
 
 还有一种方法实现
 
 ```js
-var i = 1
+var i = 1;
 Object.defineProperty(window, 'a', {
   get() {
-    return i++
+    return i++;
   },
-})
+});
 
 if (a == 1 && a == 2 && a == 3) {
-  console.log('OK')
+  console.log('OK');
 }
 ```
 
@@ -416,8 +416,10 @@ const obj = {
     let idx = 0
     return {
       next() {
-        value: obj[idx],
-        done: idx++ >= obj.length
+        return {
+          value: obj[idx],
+          done: idx++ >= obj.length,
+        }
       }
     }
   }
@@ -452,28 +454,28 @@ const obj = {
 
 ```js
 function generator(str) {
-  let idx = 0
+  let idx = 0;
   return {
     next() {
       return {
         value: str[idx],
         done: idx++ >= str.length,
-      }
+      };
     },
-  }
+  };
 }
 // 测试
-const str = 'as'
-let gen = generator(str)
-console.log(gen.next())
-console.log(gen.next())
-console.log(gen.next())
-console.log(gen.next())
-gen = generator('str')
-console.log(gen.next())
-console.log(gen.next())
-console.log(gen.next())
-console.log(gen.next())
+const str = 'as';
+let gen = generator(str);
+console.log(gen.next());
+console.log(gen.next());
+console.log(gen.next());
+console.log(gen.next());
+gen = generator('str');
+console.log(gen.next());
+console.log(gen.next());
+console.log(gen.next());
+console.log(gen.next());
 // { value: 'a', done: false }
 // { value: 's', done: false }
 // { value: undefined, done: true }
@@ -491,53 +493,53 @@ console.log(gen.next())
 首先来看一则例子
 
 ```js
-const fs = require('fs')
-const path = require('path')
-const { promisify } = require('util')
-const readFile = promisify(fs.readFile)
+const fs = require('fs');
+const path = require('path');
+const { promisify } = require('util');
+const readFile = promisify(fs.readFile);
 
 function* read() {
-  const name = yield readFile(path.resolve(__dirname, 'name.txt'), 'utf8')
-  const age = yield readFile(path.resolve(__dirname, name), 'utf8')
-  return age
+  const name = yield readFile(path.resolve(__dirname, 'name.txt'), 'utf8');
+  const age = yield readFile(path.resolve(__dirname, name), 'utf8');
+  return age;
 }
 
-const it = read()
+const it = read();
 
-let { value, done } = it.next()
-value.then((data) => {
-  let { value, done } = it.next(data)
+let { value, done } = it.next();
+value.then(data => {
+  let { value, done } = it.next(data);
   // console.log(data, '???')
-  value.then((data) => {
-    let { value, done } = it.next(data)
-    console.log(value)
-  })
-})
+  value.then(data => {
+    let { value, done } = it.next(data);
+    console.log(value);
+  });
+});
 ```
 
 使用 co 库可以很容易解决这个问题
 
 ```js
-const co = require('co')
+const co = require('co');
 // co 接受一个生成器
-co(read()).then((data) => {
-  console.log(data)
-})
+co(read()).then(data => {
+  console.log(data);
+});
 // 那模拟一下
 function _co(it) {
   // 首先返回一个 promise
   return new Promise((resolve, reject) => {
     // 因为可以传值的原因，不可以直接使用循环实现，需要使用 递归
     function next(data) {
-      const { value, done } = it.next(data)
-      if (done) return resolve(value)
+      const { value, done } = it.next(data);
+      if (done) return resolve(value);
       // 保证值是一个 promise
-      Promise.resolve(value).then((data) => {
-        next(data)
-      }, reject)
+      Promise.resolve(value).then(data => {
+        next(data);
+      }, reject);
     }
-    next()
-  })
+    next();
+  });
 }
 ```
 
@@ -553,9 +555,9 @@ function _co(it) {
 ```js
 function fibonacci(n) {
   // 第一项和第二项都返回1
-  if (n === 1 || n === 2) return 1
+  if (n === 1 || n === 2) return 1;
   // 我们只要返回 n - 1（n的前一项）与 n - 2（n的前两项）的和便是我们要的值
-  return fibonacci(n - 1) + fibonacci(n - 2)
+  return fibonacci(n - 1) + fibonacci(n - 2);
 }
 ```
 
@@ -565,8 +567,8 @@ function fibonacci(n) {
 
 ```js
 function feibo(n, sum1 = 1, sum2 = 1) {
-  if (n === 1 || n === 2) return sum2
-  return feibo(n - 1, sum2, sum1 + sum2)
+  if (n === 1 || n === 2) return sum2;
+  return feibo(n - 1, sum2, sum1 + sum2);
 }
 ```
 
@@ -582,15 +584,15 @@ function feibo(n, sum1 = 1, sum2 = 1) {
 
 ```js
 function exportTxt(text, filename) {
-  const eleLink = document.createElement('a')
-  eleLink.download = filename
-  eleLink.style.display = 'none'
+  const eleLink = document.createElement('a');
+  eleLink.download = filename;
+  eleLink.style.display = 'none';
   // 将内容转为 blob
-  const blob = new Blob([text])
-  eleLink.href = URL.createObjectURL(blob)
-  document.body.appendChild(eleLink)
-  eleLink.click()
-  document.body.removeChild(eleLink)
+  const blob = new Blob([text]);
+  eleLink.href = URL.createObjectURL(blob);
+  document.body.appendChild(eleLink);
+  eleLink.click();
+  document.body.removeChild(eleLink);
 }
 ```
 
