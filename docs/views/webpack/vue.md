@@ -92,7 +92,7 @@ tags:
     const resolve = dir => path.join(__dirname, dir)
   ```
 - `webpack` 必须配置的几项，`entry、output`
-  - entry 顾名思义配置文件主入口的，他的配置方式多种多样，详细了解 `webpack` 的介绍 [传送门](/webpack/#一、entry)
+  - entry 顾名思义配置文件主入口的，他的配置方式多种多样，详细了解 `webpack` 的介绍 [传送门](/views/webpack/#一、entry)
   - 我们先简单的配置以下，使 `js` 和 `html` 耦合到一起，`entry` 我们选对象语法
   ```javascript
   entry: {
@@ -101,7 +101,7 @@ tags:
   ```
   - `output` 就是对象语法，必要的有两个配置项，`path、filename` 还有一个可有可无 `publicPath` 打包后静态资源文件夹的目录
   - `path` 是打包后的目录，若没有这个目录 `webpack` 会自己新建，`filename` 是打包后的文件名字，语法如下
-  - `hash` 介绍看 `webpack` 的介绍 [传送门](/webpack/#四、hash、-chunkhash和contenthash有什么不同？)
+  - `hash` 介绍看 `webpack` 的介绍 [传送门](/views/webpack/#四、hash、chunkhash-和-contenthash)
   ```javascript
    output: {
      path: resolve('love'),
