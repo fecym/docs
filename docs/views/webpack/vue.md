@@ -214,7 +214,7 @@ tags:
     ```
   - 此时 `vue` 最基本的功能就配置完成了
 - 接下来我们配置 `css` 预编译 `scss`，还有 `css` 的兼容那个 `postcss` 自动填充浏览器前缀
-  - `css loader` 介绍请看这里 [传送门](/webpack/#六、webpack处理css的一些介绍)
+  - `css loader` 介绍请看这里 [传送门](/views/webpack/#六、webpack-处理-css-的一些介绍)
   - 首先需要几个插件 `style-loader css-loader postcss-loader scss-loader`
   - `webpack` 的模块的执行顺序是倒着来的，我们也要倒着来配置
   ```sh
