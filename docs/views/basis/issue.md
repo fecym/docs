@@ -574,6 +574,80 @@ function feibo(n, sum1 = 1, sum2 = 1) {
 
 这种写法缓存了，每次计算后的值，执行效率会很高，100 次以上也会秒返回结果，这个也叫作尾递归优化
 
+## 观察者与发布订阅
+
+> 一直以来，我以为发布订阅和观察者是一个思路，一次偶然的机会我发现他们是两种不同的设计思路
+
+虽然他们都是`实现了对象的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖它的对象都将得倒通知，然后自动更新`。但是他们之间是有一定区别的。
+
+### 观察者模式
+
+观察者模式会有 `观察者` 与 `被观察者(观察目标)` 两个对象存在，观察者可以有多个，观察目标可以添加多个观察者，可以通知观察者。观察者模式是面向与目标和观察者编程的，耦合目标和观察者
+
+```js
+// 被观察者
+class Subject {
+  constructor() {
+    this.subs = [];
+  }
+  add(observer) {
+    this.subs.push(observer);
+  }
+  notify(...args) {
+    this.subs.forEach(ob => ob.update(...args));
+  }
+}
+// 观察者
+class Observer {
+  update(...args) {
+    console.log('Observer -> update -> args', args);
+  }
+}
+
+// 使用
+const o1 = new Observer();
+const o2 = new Observer();
+const o3 = new Observer();
+const o5 = new Observer();
+const sub = new Subject();
+// 添加观察者
+sub.add(o1);
+sub.add(o2);
+sub.add(o3);
+// 通知观察者
+sub.notify('嘿嘿嘿');
+```
+
+### 发布订阅模式
+
+发布订阅模式会有一个调度中心的概念。是面向调度中心编程的，对发布者与订阅者解耦
+
+```js
+class PubSub {
+  constructor() {
+    this.handlers = {};
+  }
+  subscribe(type, fn) {
+    if (!this.handlers[type]) {
+      this.handlers[type] = [];
+    }
+    this.handlers[type].push(fn);
+  }
+  publish(type, ...args) {
+    if (!this.handlers[type]) return;
+    this.handlers[type].forEach(fn => fn(...args));
+  }
+}
+
+const ps = new PubSub();
+
+ps.subscribe('a', console.log);
+ps.subscribe('a', console.log);
+ps.subscribe('a', console.log);
+ps.subscribe('a', console.log);
+ps.publish('a', 'hello world');
+```
+
 ## 字符串转 txt 文件（blob）
 
 有个要求：纯前端实现，不可以使用 `node`
