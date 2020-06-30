@@ -299,63 +299,43 @@ t.functionExpression(id, params, body, generator, async)
 t.blockStatement(body, directives)
 ```
 
-看文档说明，blockStatement 接受一个 body，那我们把之前的 body 拿过来就可以直接用，不过这里 body 接受一个数组
+看文档说明，`blockStatement` 接受一个 body，那我们把之前的 body 拿过来就可以直接用，不过这里 body 接受一个数组
 
-我们细看 AST 结构，函数表达式中的 `BlockStatement` 中的 `body` 是一个 `ReturnStatement` 组成的集合，所以我们还需要生成一个 `ReturnStatement`
+我们在看 AST 结构，函数表达式中的 `BlockStatement` 中的 `body` 是一个 `ReturnStatement` 组成的集合，所以还需要生成一个 `ReturnStatement`
 
 现在我们就可以改写 AST 了
 
 ```js
-const babel = require('@babel/core')
-const t = require('@babel/types')
-const code = `const fn = (a, b) => a + b` // const fn = function(a, b) { return a + b }
-const arrowFnPlugin = {
-  // 访问者模式
-  visitor: {
-    // 当访问到某个路径的时候进行匹配
-    ArrowFunctionExpression(path) {
-      // 拿到节点然后替换节点
-      const node = path.node;
-      // 拿到函数的参数
-      const params = node.params;
-      const returnStatement = t.returnStatement(node.body);
-      const blockStatement = t.blockStatement([returnStatement]);
-      const functionExpression = t.functionExpression(null, params, blockStatement);
-      // 替换原来的函数
-      path.replaceWith(functionExpression);
-    },
-  },
-}
-const r = babel.transform(code, {
-  plugins: [arrowFnPlugin],
-})
-console.log(r.code) // const fn = function (a, b) { return a + b; };
-```
-
-### 特殊情况
-
-我们知道在剪头函数中是可以省略 `return` 关键字，我们上面是处理了省略关键字的写法，但是如果用户写了 return 关键字后，我们写的这个插件就有问题了，所以我们可以在优化一下
-
-`const fn = (a, b) => { retrun a + b }` -> `const fn = function(a, b) { return a + b }`
-
-观察代码我们发现，我们就不需要把 body 转换成 blockStatement 了，直接放过去就可以了，那么我们就可以这么写
-
-```js
 ArrowFunctionExpression(path) {
   // 拿到节点然后替换节点
-  const node = path.node
-  console.log("ArrowFunctionExpression -> node", node)
+  const node = path.node;
   // 拿到函数的参数
-  const params = node.params
-  let body = node.body
-  // 判断是不是 blockStatement，不是的话让他变成 blockStatement
-  if (!t.isBlockStatement(body)) {
-    body = t.blockStatement([body])
-  }
-  const functionExpression = t.functionExpression(null, params, body)
+  const params = node.params;
+  const returnStatement = t.returnStatement(node.body);
+  const blockStatement = t.blockStatement([returnStatement]);
+  const functionExpression = t.functionExpression(null, params, blockStatement);
   // 替换原来的函数
-  path.replaceWith(functionExpression)
-}
+  path.replaceWith(functionExpression);
+},
+// 结果 const fn = function (a, b) { return a + b; };
+```
+
+当然如果没有返回语句的话我们也可以生成一个 `ExpressionStatement`，只需要把 `returnStatement` 改为 `ExpressionStatement` 其他逻辑不变
+
+```js{7}
+ArrowFunctionExpression(path) {
+  // 拿到节点然后替换节点
+  const node = path.node;
+  // 拿到函数的参数
+  const params = node.params;
+  // 把 returnStatement 换成 expressionStatement 即可
+  const expressionStatement = t.expressionStatement(node.body);
+  const blockStatement = t.blockStatement([expressionStatement]);
+  const functionExpression = t.functionExpression(null, params, blockStatement);
+  // 替换原来的函数
+  path.replaceWith(functionExpression);
+},
+// 结果 const fn = function (a, b) { a + b; };
 ```
 
 ## 按需引入
