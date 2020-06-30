@@ -239,7 +239,7 @@ console.log(r.code)
 
 1. 变成普通函数之后他就不叫箭头函数了 `ArrowFunctionExpression`，而是函数表达式了 `FunctionExpression`
 2. 所以首先我们要把 `箭头函数表达式(ArrowFunctionExpression)` 转换为 `函数表达式(FunctionExpression)`
-3. 要把 `二进制表达式(BinaryExpression)` 放到一个 `代码块中(BlockStatement)`
+3. 要把 `二进制表达式(BinaryExpression)` 包裹在 `返回语句中(ReturnStatement)` 然后 push 到 `代码块中(BlockStatement)`，
 4. 其实我们要做就是把一棵树变成另外一颗树，说白了其实就是拼成另一颗树的结构，然后生成新的代码，就可以完成代码的转换
 
 ### 访问者模式
@@ -301,7 +301,7 @@ t.blockStatement(body, directives)
 
 看文档说明，blockStatement 接受一个 body，那我们把之前的 body 拿过来就可以直接用，不过这里 body 接受一个数组
 
-我们细看 AST 结构，函数表达式中的 `BlockStatement` 中的 `body` 是一个 `ReturnStatement`，所以我们还需要生成一个 `ReturnStatement`
+我们细看 AST 结构，函数表达式中的 `BlockStatement` 中的 `body` 是一个 `ReturnStatement` 组成的集合，所以我们还需要生成一个 `ReturnStatement`
 
 现在我们就可以改写 AST 了
 
@@ -315,18 +315,14 @@ const arrowFnPlugin = {
     // 当访问到某个路径的时候进行匹配
     ArrowFunctionExpression(path) {
       // 拿到节点然后替换节点
-      const node = path.node
-      console.log('ArrowFunctionExpression -> node', node)
+      const node = path.node;
       // 拿到函数的参数
-      const params = node.params
-      const body = node.body
-      const functionExpression = t.functionExpression(
-        null,
-        params,
-        t.blockStatement([body])
-      )
+      const params = node.params;
+      const returnStatement = t.returnStatement(node.body);
+      const blockStatement = t.blockStatement([returnStatement]);
+      const functionExpression = t.functionExpression(null, params, blockStatement);
       // 替换原来的函数
-      path.replaceWith(functionExpression)
+      path.replaceWith(functionExpression);
     },
   },
 }
