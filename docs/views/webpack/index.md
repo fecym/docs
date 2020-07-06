@@ -80,17 +80,17 @@ tags:
 - 如下，一个简单的 web 打包机就配置成功了，编译、优化就是 `modules`、`plugins`、`optimization` 配置的事情，配置规则在基础篇已经介绍过了
 
 ```js
-const path = require('path')
+const path = require('path');
 module.exports = function(env, argv) {
   return {
     mode: argv.mode || 'development',
     entry: path.resolve('./src/main'),
     output: {
       path: path.resolve('./dist'),
-      filename: '[name].[hash].js'
-    }
-  }
-}
+      filename: '[name].[hash].js',
+    },
+  };
+};
 ```
 
 ### 四、module
@@ -136,7 +136,7 @@ module.exports = function(env, argv) {
 3. `cacheDirectory`： 表示传给 `babel-loader` 的参数， 用于缓存 `babel` 的编译结果， 加快编译速度。
 4. `enforce`：`post` 表示将改 `loader` 的执行顺序放到最前面，`pre` 则相反.
 5. 多个 `loader` 时处理顺序：从后到前，即先交给 `sass-loader` 处理， 再将结果交给 `css-loader`, 最后交给 `style-loader`
-:::
+   :::
 
 #### 配置 noParse
 
@@ -158,7 +158,7 @@ module.exports = function(env, argv) {
 
 - `noParse` 的值可以是正则表达式， 也可以是一个函数；
 - 被忽略的文件里不应该包含 `import、require、define` 等模块化语句， 不然会导致在构建出的代码中包含无法在浏览器环境下执行的模块化语句
-:::
+  :::
 
 #### 配置 parser
 
@@ -190,7 +190,7 @@ module.exports = function(env, argv) {
 
 - `parse` 和 `noParse` 同级的属性，当然也可以嵌套到 `rules`，表示针对与某个 `loader` 应用到该属性的规则。
 - 目前只要明白 `parse` 属性，是用于声明哪些模块语法被解析，哪些不被解析即可。
-:::
+  :::
 
 #### 单个规则配置多个 loader， 语法需要使用 use， 如图
 
@@ -234,7 +234,7 @@ module.exports = function(env, argv) {
 
 ```javascript
 resolve: {
-  extension: ['.js', '.json', '.vue', '.jsx']
+  extension: ['.js', '.json', '.vue', '.jsx'];
 }
 ```
 
@@ -246,10 +246,10 @@ resolve: {
 
 ```js
 resolve: {
-  modules: ['./src/components', 'node_modules']
+  modules: ['./src/components', 'node_modules'];
 }
 // 然后引入模块就会去这两个目录中寻找
-import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
+import moduleA from 'module-a'; // module-a.js 在 ./src/components 目录下
 ```
 
 ::: warning
@@ -259,7 +259,7 @@ import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
 
 1. `descriptionFiles`：配置描述第三方模块的文件名称：默认是 `package.json`
 2. `enforceExtension`：配置后缀名是否必须加上
-:::
+   :::
 
 ### 六、plugin
 
@@ -268,7 +268,7 @@ import moduleA from 'module-a' // module-a.js 在 ./src/components 目录下
 - `plugins` 其实包括 `webpack` 本身自带的插件，也有开源的其他插件，都可以使用，它的作用就是解决 `loader` 之外的其他任何相关构建的事情。
 - `plugin` 的值是一个数组，可以传入多个插件实例，用法是直接 `new` 一个插件然后传入相应的配置即可
 - `plugin` 如何配置并不是难点，难点是我们需要清楚常用的一些插件分别解决了什么样的问题，以及这些插件的配置项
-:::
+  :::
 
 ```js
 plugins: [
@@ -277,9 +277,9 @@ plugins: [
   // 分离css，只需要传入相应的配置即可
   new MiniCssExtractPlugin({
     filename: 'css/[name].[hash].css',
-    chunkFilename: 'css/[id].[hash].css'
-  })
-]
+    chunkFilename: 'css/[id].[hash].css',
+  }),
+];
 ```
 
 ### 七、optimization
@@ -339,9 +339,9 @@ plugins: [
 ### 附上一个简单的配置
 
 ```js
-const path = require('path')
-const HTMLWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = function(env, argv) {
   return {
     mode: argv.mode || 'development',
@@ -349,7 +349,7 @@ module.exports = function(env, argv) {
     output: {
       path: path.resolve('./dist'),
       filename: 'js/[name].[chunkHash].js',
-      publicPath: '.'
+      publicPath: '.',
     },
     module: {
       rules: [
@@ -360,13 +360,13 @@ module.exports = function(env, argv) {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                reloadAll: true
-              }
+                reloadAll: true,
+              },
             },
-            'css-loader'
-          ]
-        }
-      ]
+            'css-loader',
+          ],
+        },
+      ],
     },
     plugins: [
       // 配置HTML
@@ -378,22 +378,22 @@ module.exports = function(env, argv) {
         title: '程禹铭',
         inject: true,
         hash: true,
-        showErrors: true
+        showErrors: true,
       }),
       // 分离css
       new MiniCssExtractPlugin({
         filename: 'css/[name].[hash].css',
-        chunkFilename: 'css/[id].[hash].css'
-      })
+        chunkFilename: 'css/[id].[hash].css',
+      }),
     ],
     optimization: {
       minimize: true,
       runtimeChunk: {
-        name: entryPoint => `runtime~${entryPoint.name}`
-      }
-    }
-  }
-}
+        name: entryPoint => `runtime~${entryPoint.name}`,
+      },
+    },
+  };
+};
 ```
 
 ## webpack 一些概念
@@ -476,8 +476,8 @@ module.exports = function(env, argv) {
 
 ```javascript
 module.exports = {
-  plugins: [require('autoprefixer')]
-}
+  plugins: [require('autoprefixer')],
+};
 ```
 
 ## webpack 小技巧
@@ -490,7 +490,7 @@ module.exports = {
 
 ```js
 // 语法如下
-require.context(directory, (useSubdirectories = false), (regExp = /^\.\//))
+require.context(directory, (useSubdirectories = false), (regExp = /^\.\//));
 ```
 
 - 该方法返回一个 `require` 函数，返回函数可以接受一个参数：`request`（满足 `require.context` 传参的文件地址）
@@ -522,11 +522,11 @@ require.context(directory, (useSubdirectories = false), (regExp = /^\.\//))
 
 ```js
 // 这段代码就写在，routes/index.js 里面吧
-const requireAllRoute = require.context('./modules', false, /\.js$/)
+const webpackContext = require.context('./modules', false, /\.js$/);
 // 让返回的这个函数执行，并传入相关的每一个文件的地址（由context.keys返回的）
-const requireAll = context => context.keys().map(context)
+const requireAll = ctx => context.keys().map(ctx);
 // requireAll 执行完毕其实就得到了我们要的 modules 文件下的所有文件，但是我们是 default 里面的内容
-const routes = requireAll(requireAllRoute).map(route => route.default)
+const routes = requireAll(webpackContext).map(route => route.default);
 ```
 
 ### Vue 全局组件注册
@@ -544,7 +544,7 @@ const routes = requireAll(requireAllRoute).map(route => route.default)
   │   │   ├── ...
   │   │   └── other.vue
   │   ├── utils
-  │   │   └── global-register-conponents.js
+  │   │   └── global-register-components.js
   │   └── App.vue
   └── ...
 ```
@@ -552,23 +552,21 @@ const routes = requireAll(requireAllRoute).map(route => route.default)
 代码如下：
 
 ```js
-// global-register-conponents.js
-import Vue from 'vue'
-const requireAllComponent = require.context('../components', false, /\.vue$/)
-const requireAll = context => context.keys().map(context)
+// global-register-components.js
+import Vue from 'vue';
+const webpackContext = require.context('../components', false, /\.vue$/);
+const requireAll = ctx => ctx.keys().map(ctx);
 // 文件名字处理为大写
-const dealName = name => (name ? name.replace(/\w/, v => v.toUpperCase()) : '')
-requireAll(requireAllComponent).forEach(componentModule => {
+const dealName = name => (name ? name.replace(/\w/, v => v.toUpperCase()) : '');
+requireAll(webpackContext).forEach(componentModule => {
   // 因为是 export default 导出的模块
-  const component = componentModule.default
+  const { default: component } = componentModule;
   // 文件所在的地址，我们要取到文件的名字，来定义文件的 name
-  const file = component.__file
+  const { __file: file } = component;
   // 如果有name属性直接取name属性，没有我们需要处理文件地址的最后一段作为文件的name，且要大写
-  const name =
-    dealName(component.name) ||
-    dealName(file.slice(file.lastIndexOf('/') + 1, -4))
-  Vue.component(name, component)
-})
+  const name = dealName(component.name) || dealName(file.slice(file.lastIndexOf('/') + 1, -4));
+  Vue.component(name, component);
+});
 ```
 
 ## webpack 拓展
@@ -640,7 +638,7 @@ requireAll(requireAllComponent).forEach(componentModule => {
 ```js
 // babel-loader 和 @babel/core 的关系
 function babelLoader(ctx) {
-  return babelCore(ctx)
+  return babelCore(ctx);
 }
 ```
 
@@ -663,42 +661,39 @@ function babelLoader(ctx) {
 ```js
 // 插件核心 staticAssetsPlugin.js
 // 需求：把所有的引入中的静态资源 /static/ 变成 http://chengyuming.cn/imgs/
-const fs = require('fs')
+const fs = require('fs');
 // 对外暴露的 js 函数
 class StaticAssetsPlugin {
   // 在构造函数中获取用户为插件传入的配置
   constructor(options) {
-    this.options = options
+    this.options = options;
   }
   // 在插件中 new 的时候会自动执行 apply 方法，主入口方法，该方法被注入了 compiler 对象
   apply(complier) {
     // 只在生产环境下执行
-    if (!this.options.isProduction) return
+    if (!this.options.isProduction) return;
     // webpack 编译的生命周期
     // console.log(complier.hooks)
     // 监听过程，拿到结果
     complier.hooks.done.tap('StaticAssetsPlugin', compontion => {
       // 得到当前目录
-      const context = complier.options.context
-      const path = context + '/love'
+      const context = complier.options.context;
+      const path = context + '/love';
       // 打包之后的文件结果
-      const assets = compontion.toJson().assets
+      const assets = compontion.toJson().assets;
       assets.forEach(ast => {
         // 现在我们得到了所有的打包后的文件信息，我们把文件中遇到的那些资源给替换掉就可以了
         fs.readFile(path + '/' + ast.name, (err, res) => {
-          if (err) throw err
-          let result = res.toString()
-          result = result.replace(
-            /([\.\./]+)\/static\//g,
-            'http://chengyuming.cn/imgs/'
-          )
-          fs.writeFileSync(path + '/' + ast.name, result)
-        })
-      })
-    })
+          if (err) throw err;
+          let result = res.toString();
+          result = result.replace(/([\.\./]+)\/static\//g, 'http://chengyuming.cn/imgs/');
+          fs.writeFileSync(path + '/' + ast.name, result);
+        });
+      });
+    });
   }
 }
-module.exports = StaticAssetsPlugin
+module.exports = StaticAssetsPlugin;
 ```
 
 ```js
@@ -717,11 +712,11 @@ module.exports = StaticAssetsPlugin
 
 ```js
 // 测试单元
-const path = require('path')
-const requireAllImg = require.context('../../static/', false, /\.(jpg|png)$/)
-let str = ''
+const path = require('path');
+const requireAllImg = require.context('../../static/', false, /\.(jpg|png)$/);
+let str = '';
 requireAllImg.keys().forEach(item => {
-  str += `<img src="../../static/${item}">`
-})
-document.getElementById('root').innerHTML = str
+  str += `<img src="../../static/${item}">`;
+});
+document.getElementById('root').innerHTML = str;
 ```
