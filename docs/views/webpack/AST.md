@@ -793,7 +793,7 @@ AwaitExpression(path) {
 
 Babel 有文档对 AST 树的详细定义，可参考[这里](https://github.com/babel/babylon/blob/master/ast/spec.md)
 
-## 配套源码地址
+## 代码地址
 
 代码以存放到 GitHub，[地址](https://github.com/fecym/ast-share.git)
 
@@ -803,4 +803,5 @@ Babel 有文档对 AST 树的详细定义，可参考[这里](https://github.com
 2. [详解 AST 抽象语法树](https://blog.csdn.net/huangpb123/article/details/84799198)
 3. [AST 抽象语法树](https://segmentfault.com/a/1190000016706589?utm_medium=referral&utm_source=tuicool) ps: 这个里面有 class 转 Es5 构造函数的过程，有兴趣可以看一下
 4. [剖析 Babel——Babel 总览 | AlloyTeam](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview)
-5. [@babel/types](https://babeljs.io/docs/en/babel-types)
+5. [不要给 async 函数写那么多 try/catch 了](https://juejin.im/post/5d25b39bf265da1bb67a4176)
+6. [@babel/types](https://babeljs.io/docs/en/babel-types)
