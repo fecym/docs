@@ -57,12 +57,12 @@ declaration:  声明内容的数组，里面每一项也是一个对象
 比如说：`var a = 2` ，这段代码通常会被分解成 `var、a、=、2`
 
 ```js
-;[
+[
   { type: 'Keyword', value: 'var' },
   { type: 'Identifier', value: 'a' },
   { type: 'Punctuator', value: '=' },
   { type: 'Numeric', value: '2' },
-]
+];
 ```
 
 当词法分析源代码的时候，它会一个一个字符的读取代码，所以很形象地称之为扫描 - `scans`。当它遇到空格、操作符，或者特殊符号的时候，它会认为一个话已经完成了。
@@ -110,21 +110,21 @@ declaration:  声明内容的数组，里面每一项也是一个对象
 看以下代码，简单说明 `AST` 遍历流程
 
 ```js
-const esprima = require('esprima')
-const estraverse = require('estraverse')
-const code = `function getUser() {}`
+const esprima = require('esprima');
+const estraverse = require('estraverse');
+const code = `function getUser() {}`;
 // 生成 AST
-const ast = esprima.parseScript(code)
+const ast = esprima.parseScript(code);
 // 转换 AST，只会遍历 type 属性
 // traverse 方法中有进入和离开两个钩子函数
 estraverse.traverse(ast, {
   enter(node) {
-    console.log('enter -> node.type', node.type)
+    console.log('enter -> node.type', node.type);
   },
   leave(node) {
-    console.log('leave -> node.type', node.type)
+    console.log('leave -> node.type', node.type);
   },
-})
+});
 ```
 
 输出结果如下：
@@ -152,18 +152,18 @@ estraverse.traverse(ast, {
 estraverse.traverse(ast, {
   // 进入离开修改都是可以的
   enter(node) {
-    console.log('enter -> node.type', node.type)
+    console.log('enter -> node.type', node.type);
     if (node.type === 'Identifier') {
-      node.name = 'hello'
+      node.name = 'hello';
     }
   },
   leave(node) {
-    console.log('leave -> node.type', node.type)
+    console.log('leave -> node.type', node.type);
   },
-})
+});
 // 生成新的代码
-const result = escodegen.generate(ast)
-console.log(result)
+const result = escodegen.generate(ast);
+console.log(result);
 // function hello() {}
 ```
 
@@ -196,13 +196,13 @@ babel 核心包并不会去转换代码，核心包只提供一些核心 API，�
 现在我们有一个箭头函数，要想把它转成普通函数，我们就可以直接这么写：
 
 ```js
-const babel = require('@babel/core')
-const code = `const fn = (a, b) => a + b`
+const babel = require('@babel/core');
+const code = `const fn = (a, b) => a + b`;
 // babel 有 transform 方法会帮我们自动遍历，使用相应的预设或者插件转换相应的代码
 const r = babel.transform(code, {
   presets: ['@babel/preset-env'],
-})
-console.log(r.code)
+});
+console.log(r.code);
 // 打印结果如下
 // "use strict";
 // var fn = function fn() { return a + b; };
@@ -213,8 +213,8 @@ console.log(r.code)
 ```js
 const r = babel.transform(code, {
   plugins: ['@babel/plugin-transform-arrow-functions'],
-})
-console.log(r.code)
+});
+console.log(r.code);
 // 打印结果如下
 // const fn = function () { return a + b; };
 ```
@@ -249,25 +249,25 @@ console.log(r.code)
 那么我们就可以这么写：
 
 ```js
-const babel = require('@babel/core')
-const code = `const fn = (a, b) => a + b` // 转换后 const fn = function(a, b) { return a + b }
+const babel = require('@babel/core');
+const code = `const fn = (a, b) => a + b`; // 转换后 const fn = function(a, b) { return a + b }
 const arrowFnPlugin = {
   // 访问者模式
   visitor: {
     // 当访问到某个路径的时候进行匹配
     ArrowFunctionExpression(path) {
       // 拿到节点
-      const node = path.node
-      console.log('ArrowFunctionExpression -> node', node)
+      const node = path.node;
+      console.log('ArrowFunctionExpression -> node', node);
     },
   },
-}
+};
 
 const r = babel.transform(code, {
   plugins: [arrowFnPlugin],
-})
+});
 
-console.log(r)
+console.log(r);
 ```
 
 ### 修改 AST 结构
@@ -284,7 +284,7 @@ console.log(r)
 那么接下来我们就开始生成一个 `FunctionExpression`，然后把之前的 `ArrowFunctionExpression` 替换掉，我们可以看 `types` 文档，找到 `functionExpression`，该方法接受相应的参数我们传递过去即可生成一个 `FunctionExpression`
 
 ```js
-t.functionExpression(id, params, body, generator, async)
+t.functionExpression(id, params, body, generator, async);
 ```
 
 - id: Identifier (default: null) id 可传递 null
@@ -296,7 +296,7 @@ t.functionExpression(id, params, body, generator, async)
 还需要生成一个 `BlockStatement`，我们接着看文档找到 `BlockStatement` 接受的参数
 
 ```js
-t.blockStatement(body, directives)
+t.blockStatement(body, directives);
 ```
 
 看文档说明，`blockStatement` 接受一个 body，那我们把之前的 body 拿过来就可以直接用，不过这里 body 接受一个数组
@@ -374,7 +374,7 @@ ArrowFunctionExpression(path) {
    * @param {Array<ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier>} specifiers  (required)
    * @param {StringLiteral} source (required)
    */
-  t.importDeclaration(specifiers, source)
+  t.importDeclaration(specifiers, source);
   ```
 
 - 在 `importDeclaration` 中需要生成 `ImportDefaultSpecifier`
@@ -383,7 +383,7 @@ ArrowFunctionExpression(path) {
   /**
    * @param {Identifier} local  (required)
    */
-  t.importDefaultSpecifier(local)
+  t.importDefaultSpecifier(local);
   ```
 
 - 在 `importDeclaration` 中还需要生成一个 `StringLiteral`
@@ -392,7 +392,7 @@ ArrowFunctionExpression(path) {
   /**
    * @param {string} value  (required)
    */
-  t.stringLiteral(value)
+  t.stringLiteral(value);
   ```
 
 ### 上代码
@@ -400,50 +400,43 @@ ArrowFunctionExpression(path) {
 按照上面的分析，我们开始上代码
 
 ```js
-const babel = require('@babel/core')
-const t = require('@babel/types')
-const code = `import { Button, Icon } from 'vant'`
+const babel = require('@babel/core');
+const t = require('@babel/types');
+const code = `import { Button, Icon } from 'vant'`;
 // import Button from 'vant/lib/Button'
 // import Icon from 'vant/lib/Icon'
 function importPlugin(opt) {
-  const { libraryDir } = opt
+  const { libraryDir } = opt;
   return {
     visitor: {
       ImportDeclaration(path) {
-        const node = path.node
+        const node = path.node;
         // console.log("ImportDeclaration -> node", node)
         // 得到节点的详细说明，然后转换成多个的 import 声明
-        const specifiers = node.specifiers
+        const specifiers = node.specifiers;
         // 要处理这个我们做一些判断，首先判断不是默认导出我们才处理，要考虑 import vant, { Button, Icon } from 'vant' 写法
         // 还要考虑 specifiers 的长度，如果长度不是 1 并且不是默认导出我们才需要转换
-        if (
-          !(
-            specifiers.length === 1 && t.isImportDefaultSpecifier(specifiers[0])
-          )
-        ) {
-          const result = specifiers.map((specifier) => {
-            const local = specifier.local
+        if (!(specifiers.length === 1 && t.isImportDefaultSpecifier(specifiers[0]))) {
+          const result = specifiers.map(specifier => {
+            const local = specifier.local;
             const source = t.stringLiteral(
               `${node.source.value}/${libraryDir}/${specifier.local.name}`
-            )
+            );
             // console.log("ImportDeclaration -> specifier", specifier)
-            return t.importDeclaration(
-              [t.importDefaultSpecifier(local)],
-              source
-            )
-          })
-          console.log('ImportDeclaration -> result', result)
+            return t.importDeclaration([t.importDefaultSpecifier(local)], source);
+          });
+          console.log('ImportDeclaration -> result', result);
           // 因为这次要替换的 AST 不是一个，而是多个的，所以需要 `path.replaceWithMultiple(result)` 来替换，但是一执行发现死循环了
-          path.replaceWithMultiple(result)
+          path.replaceWithMultiple(result);
         }
       },
     },
-  }
+  };
 }
 const r = babel.transform(code, {
   plugins: [importPlugin({ libraryDir: 'lib' })],
-})
-console.log(r.code)
+});
+console.log(r.code);
 ```
 
 看打印结果和转换结果似乎没什么问题，这个插件几乎就实现了
@@ -466,42 +459,35 @@ console.log(r.code)
 
 ```js
 function importPlugin(opt) {
-  const { libraryDir } = opt
+  const { libraryDir } = opt;
   return {
     visitor: {
       ImportDeclaration(path) {
-        const node = path.node
+        const node = path.node;
         // console.log("ImportDeclaration -> node", node)
         // 得到节点的详细说明，然后转换成多个的 import 声明
-        const specifiers = node.specifiers
+        const specifiers = node.specifiers;
         // 要处理这个我们做一些判断，首先判断不是默认导出我们才处理，要考虑 import vant, { Button, Icon } from 'vant' 写法
         // 还要考虑 specifiers 的长度，如果长度不是 1 并且不是默认导出我们才需要转换
-        if (
-          !(
-            specifiers.length === 1 && t.isImportDefaultSpecifier(specifiers[0])
-          )
-        ) {
-          const result = specifiers.map((specifier) => {
+        if (!(specifiers.length === 1 && t.isImportDefaultSpecifier(specifiers[0]))) {
+          const result = specifiers.map(specifier => {
             let local = specifier.local,
-              source
+              source;
             // 判断是否存在默认导出的情况
             if (t.isImportDefaultSpecifier(specifier)) {
-              source = t.stringLiteral(node.source.value)
+              source = t.stringLiteral(node.source.value);
             } else {
               source = t.stringLiteral(
                 `${node.source.value}/${libraryDir}/${specifier.local.name}`
-              )
+              );
             }
-            return t.importDeclaration(
-              [t.importDefaultSpecifier(local)],
-              source
-            )
-          })
-          path.replaceWithMultiple(result)
+            return t.importDeclaration([t.importDefaultSpecifier(local)], source);
+          });
+          path.replaceWithMultiple(result);
         }
       },
     },
-  }
+  };
 }
 ```
 
@@ -546,7 +532,7 @@ function importPlugin(opt) {
    * @param {Expression} callee  (required)
    * @param {Array<Expression | SpreadElement | JSXNamespacedName>} source (required)
    */
-  t.callExpression(callee, arguments)
+  t.callExpression(callee, arguments);
   ```
 
 - 对应语法树上 callee 是一个 MemberExpression，所以要生成一个成员表达式
@@ -558,7 +544,7 @@ function importPlugin(opt) {
    * @param {boolean} computed (default: false)
    * @param {boolean} optional (default: null)
    */
-  t.memberExpression(object, property, computed, optional)
+  t.memberExpression(object, property, computed, optional);
   ```
 
 - 在 callee 的 object 是一个 ArrayExpression 数组表达式，是一个空数组
@@ -567,7 +553,7 @@ function importPlugin(opt) {
   /**
    * @param {Array<null | Expression | SpreadElement>} elements  (default: [])
    */
-  t.arrayExpression(elements)
+  t.arrayExpression(elements);
   ```
 
 - 对了里面的东西分析完了，我们还要生成 VariableDeclarator 和 VariableDeclaration 最终生成新的语法树
@@ -577,13 +563,13 @@ function importPlugin(opt) {
    * @param {LVal} id  (required)
    * @param {Expression} init (default: null)
    */
-  t.variableDeclarator(id, init)
+  t.variableDeclarator(id, init);
 
   /**
    * @param {"var" | "let" | "const"} kind  (required)
    * @param {Array<VariableDeclarator>} declarations (required)
    */
-  t.variableDeclaration(kind, declarations)
+  t.variableDeclaration(kind, declarations);
   ```
 
 - 其实倒着分析语法树，分析完怎么写也就清晰了，那么我们开始上代码吧
@@ -591,37 +577,206 @@ function importPlugin(opt) {
 ### 上代码
 
 ```js
-const babylon = require('babylon')
+const babylon = require('babylon');
 // 使用 babel 提供的包，traverse 和 generator 都是被暴露在 default 对象上的
-const traverse = require('@babel/traverse').default
-const generator = require('@babel/generator').default
-const t = require('@babel/types')
+const traverse = require('@babel/traverse').default;
+const generator = require('@babel/generator').default;
+const t = require('@babel/types');
 
-const code = `const arr = [ ...arr1, ...arr2 ]` // var arr = [].concat(arr1, arr2)
+const code = `const arr = [ ...arr1, ...arr2 ]`; // var arr = [].concat(arr1, arr2)
 
 const ast = babylon.parse(code, {
   sourceType: 'module',
-})
+});
 
 // 转换树
 traverse(ast, {
   VariableDeclaration(path) {
-    const node = path.node
-    const declarations = node.declarations
-    console.log('VariableDeclarator -> declarations', declarations)
-    const kind = 'var'
+    const node = path.node;
+    const declarations = node.declarations;
+    console.log('VariableDeclarator -> declarations', declarations);
+    const kind = 'var';
     // 边界判定
-    if (node.kind !== kind && declarations.length === 1 && t.isArrayExpression(declarations[0].init)) {
+    if (
+      node.kind !== kind &&
+      declarations.length === 1 &&
+      t.isArrayExpression(declarations[0].init)
+    ) {
       // 取得之前的 elements
-      const args = declarations[0].init.elements.map((item) => item.argument)
-      const callee = t.memberExpression(t.arrayExpression(), t.identifier('concat'), false)
-      const init = t.callExpression(callee, args)
-      const declaration = t.variableDeclarator(declarations[0].id, init)
-      const variableDeclaration = t.variableDeclaration(kind, [declaration])
-      path.replaceWith(variableDeclaration)
+      const args = declarations[0].init.elements.map(item => item.argument);
+      const callee = t.memberExpression(t.arrayExpression(), t.identifier('concat'), false);
+      const init = t.callExpression(callee, args);
+      const declaration = t.variableDeclarator(declarations[0].id, init);
+      const variableDeclaration = t.variableDeclaration(kind, [declaration]);
+      path.replaceWith(variableDeclaration);
     }
   },
-})
+});
+```
+
+## 优雅处理 async await
+
+异步终极解决方案：`async + await` 以同步的写法处理异步代码。一切都好，唯一有问题的就是要想捕获代码出现的问题需要使用 `try/catch` 包裹 await 代码片段。为了程序的健壮性，就可能需要在 async 中频繁的书写 `try/catch` 逻辑，此时我们可以就可以使用 ast 捕获到相应的代码然后处理没有被 `try/catch` 的 `await` 语句
+
+```js
+// 转换前
+async function func() {
+  await asyncFn();
+}
+```
+
+```js
+// 转换后
+async function func() {
+  try {
+    await asyncFn();
+  } catch (e) {}
+}
+```
+
+### 分析语法树
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast-async-try-catch.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+我们发现我们要做的就是在 `AwaitExpression` await 表达式外层包裹一层 `TryStatement` try 语句
+
+### 分析类型
+
+那我们要做的就是生成一个 tryStatement，查看对应的 api
+
+```js
+/**
+ * @param {BlockStatement} block  (required)
+ * @param {CatchClause} handler  (default: null)
+ * @param {BlockStatement} finalizer (default: null)
+ */
+t.tryStatement(block, handler, finalizer);
+```
+
+暂时先不考虑 CatchClause，先生成 try
+
+```js
+/**
+ * @param {Array<Statement>} body  (required)
+ * @param {Array<Directive>} directives  (default: [])
+ */
+t.blockStatement(body, directives);
+```
+
+再根据 ast 树结构中得到，body 是由表达式语句（ExpressionStatement）组成
+
+```js
+/**
+ * @param {Expression} expression  (required)
+ */
+t.expressionStatement(expression);
+```
+
+在 expressionStatement 中需要的 expression 就是我们的当前捕获到的节点，那么我们就可以开始写代码了
+
+### 代码
+
+我们要在 AwaitExpression 中捕获代码，还需要判断该代码段的父节点没有被 try/catch 包裹，可以利用 path 参数的 findParent 方法向上遍历所有父节点，判断是否被 try/catch 的 Node 包裹
+
+```js
+AwaitExpression(path) {
+  // 首先保证 await 语句没有被 try/catch 包裹
+  if (path.findParent(path => t.isTryStatement(path.node))) return;
+  const expression = t.expressionStatement(path.node);
+  const tryBlock = t.blockStatement([expression]);
+  // 生成 catch --> console.log(e)
+  const paramsE = t.identifier('e');
+  const memberExpression = t.MemberExpression(t.identifier('console'), t.identifier('log'));
+  const consoleExpression = t.expressionStatement(t.callExpression(memberExpression, [paramsE]));
+  const catchClause = t.catchClause(paramsE, t.blockStatement([consoleExpression]));
+  const tryStatement = t.tryStatement(tryBlock, catchClause);
+  // 数组
+  path.replaceWithMultiple([tryStatement]);
+}
+// 得到的结果：
+// async function func() {
+//   try {
+//     await asyncFn();
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
+```
+
+### 其他情况
+
+另外我们要考虑到 await 表达式可能出现其他情况，可以直接声明变量赋值，可以直接赋值，然后就是刚刚处理的直接一个表达式
+
+```js
+// 声明变量赋值
+const r = await asyncFn();
+// 赋值
+r = await asyncFn();
+// 就是一个表达式
+await asyncFn();
+```
+
+此时我们可以区分不同的情况做不同的处理，再次观察语法树，发现他们的区别在 blockStatement 节点下面，那么我们就可以直接替换这一级就可以，顺便把 catch 语句补充完整
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/ast-async-try-catch-all.jpg')" width="" style="border-radius: 8px;">
+</p>
+
+此时我们输入的代码如下：
+
+```js
+async function func() {
+  const r = await asyncFn1();
+  res = await asyncFn2();
+  await asyncFn3();
+}
+```
+
+处理过程：
+
+```js
+AwaitExpression(path) {
+  // 首先保证 await 语句没有被 try/catch 包裹
+  if (path.findParent(path => t.isTryStatement(path.node))) return;
+  const parent = path.parent;
+  let replacePath = null;
+  if (t.isVariableDeclarator(parent) || t.isAssignmentExpression(parent)) {
+    // 赋值和声明的方式结构类似，都是在 AwaitExpression 中 path 的 parentPath.parentPath 上的节点就是 blockStatement 所需要的的参数，可以直接这么替换
+    replacePath = path.parentPath.parentPath;
+  } else {
+    // 如果只是表达式的话，path.parentPath.node 就是 blockStatement 参数
+    replacePath = path.parentPath;
+  }
+  const tryBlock = t.blockStatement([replacePath.node]);
+  // 生成 catch --> new Error(e)
+  const paramsE = t.identifier('e');
+  const throwStatement = t.throwStatement(t.newExpression(t.identifier('Error'), [paramsE]));
+  const catchClause = t.catchClause(paramsE, t.blockStatement([throwStatement]));
+  const tryStatement = t.tryStatement(tryBlock, catchClause);
+  replacePath.replaceWithMultiple([tryStatement]);
+},
+// 得到结果
+// async function func() {
+//   try {
+//     const r = await asyncFn1();
+//   } catch (e) {
+//     throw new Error(e);
+//   }
+
+//   try {
+//     res = await asyncFn2();
+//   } catch (e) {
+//     throw new Error(e);
+//   }
+
+//   try {
+//     await asyncFn3();
+//   } catch (e) {
+//     throw new Error(e);
+//   }
+// }
 ```
 
 ## 具体语法书
