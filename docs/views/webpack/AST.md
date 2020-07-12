@@ -797,7 +797,7 @@ Babel 有文档对 AST 树的详细定义，可参考[这里](https://github.com
 
 代码以存放到 GitHub，[地址](https://github.com/fecym/ast-share.git)
 
-## 参考链接
+## 相关链接
 
 1. [JavaScript 语法解析、AST、V8、JIT](https://cheogo.github.io/learn-javascript/201709/runtime.html)
 2. [详解 AST 抽象语法树](https://blog.csdn.net/huangpb123/article/details/84799198)
@@ -805,3 +805,4 @@ Babel 有文档对 AST 树的详细定义，可参考[这里](https://github.com
 4. [剖析 Babel——Babel 总览 | AlloyTeam](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview)
 5. [不要给 async 函数写那么多 try/catch 了](https://juejin.im/post/5d25b39bf265da1bb67a4176)
 6. [@babel/types](https://babeljs.io/docs/en/babel-types)
+7. [文章已同步掘金](https://juejin.im/post/5eef4b416fb9a058583e7d71)
