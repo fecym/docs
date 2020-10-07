@@ -5,8 +5,6 @@ tags:
   - webpack
 ---
 
-> 最近重学 webpack，顺便把学习的核心笔记记录一下，以后在完善
-
 ## 安装
 
 - 推荐本地安装，不推荐全局安装
@@ -163,7 +161,7 @@ npm install --save @babel/polyfill
 
 ### 三方模块的处理
 
-- loader 有几种类型，pre 在前面执行的 loader、normal 普通的 loader、内联 loader、后置 loader（postloader）
+- loader 有几种类型，pre 在前面执行的 loader、normal 普通的 loader、内联 loader、后置 loader（postoader）
 - 内联 loader ，比如说 jQuery 模块，我们想把 & 暴露到全局，比如说 window 对象上面，此时我们可以使用 expose-loader
 
 ```js
@@ -226,9 +224,9 @@ externals: {
 
 - 如果在 HTML 中引入图片，但是打包完图片之后原 HTML 中的图片是找不到的，此时我们可以用 html-withimg-loader 来编译
 
-  - 在这里可能会出一个问题 file-laoder 4.2 的时候是没有这个问题的，但是 file-loader 5.0 以上会出现，图片地址返回了一个对象
+  - 在这里可能会出一个问题 file-loader 4.2 的时候是没有这个问题的，但是 file-loader 5.0 以上会出现，图片地址返回了一个对象
   - `<img src={"default":"3e5e5663e90681a73033ca3e3ac17655.png"} alt="">`
-  - 此时我们需要在 file-laoder 中配置 options: {esModule: false} 便可以[解决这个问题](https://blog.csdn.net/qq_38702877/article/details/103384626)
+  - 此时我们需要在 file-loader 中配置 options: {esModule: false} 便可以[解决这个问题](https://blog.csdn.net/qq_38702877/article/details/103384626)
 
   ```js
   {
@@ -237,7 +235,7 @@ externals: {
   }
   ```
 
-### url-laoder
+### url-loader
 
 - 一般情况下图片处理不会使用 file-loader，我们一般使用 url-loader
 - url-loader 可以做一个限制，当图片小于多少 k 的时候我们可以减少 http 请求，只用使用 base64 来转换图片，可用通过 name 来控制图片打包完后放到哪
@@ -406,7 +404,7 @@ new CopyWebpackPlugin([
 - 该插件是 webpack 内置的插件
 
 ```js
-new webapc.BannerPlugin('make 2020 by chengyuming')
+new webpack.BannerPlugin('make 2020 by chengyuming')
 ```
 
 ## 解决跨越
@@ -521,7 +519,7 @@ alias: {
   <img :src="$withBase('/imgs/webpack-resolve.png')" />
 </p>
 
-- 此时我们可以通过 mainFileds 字段来控制查找的先后顺序
+- 此时我们可以通过 mainFields 字段来控制查找的先后顺序
 
 ```js
 resolve: {
@@ -565,8 +563,8 @@ plugins: [
     // DEV: '"dev"'
     DEV: JSON.stringify('dev'), // 'dev'
     FLAG: 'true',   // true
-    EXPORESSION: '1+1', // 2
-    EXPORESSION2: JSON.stringify('1+1'), // '1+1'
+    EXPRESSION: '1+1', // 2
+    EXPRESSION2: JSON.stringify('1+1'), // '1+1'
   }),
 ],
 ```
@@ -832,7 +830,7 @@ vender: {
 
 ## 懒加载
 
-- webpack 提供了懒加载语法，在 Es 新版本中该语法也成为了规范 `import('./moduel.js').then(res => {})`
+- webpack 提供了懒加载语法，在 Es 新版本中该语法也成为了规范 `import('./modules.js').then(res => {})`
 
 ```js
 const btn = document.createElement('button')

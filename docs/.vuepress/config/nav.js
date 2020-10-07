@@ -28,8 +28,9 @@ module.exports = {
       text: '前端',
       icon: 'iconqianduan',
       items: [
-        { text: 'webpack介绍', link: '/views/webpack/index' },
-        { text: 'webpack实战', link: '/views/webpack/base' },
+        { text: 'webpack介绍', link: '/views/webpack/webpack-1' },
+        { text: 'webpack实战', link: '/views/webpack/webpack-2' },
+        { text: 'webpack拓展', link: '/views/webpack/webpack-3' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'AST团队分享', link: '/views/webpack/AST' },
         { text: 'eslint 工作流', link: '/views/FE/lint/index' },
