@@ -531,7 +531,7 @@ Compiler 对象的事件钩子以及作用
 | run             | 在读取记录之前             | compiler          | async |
 | compile         | 在创建新 compilation 之前  | compilationParams | sync  |
 | compilation     | compilation 创建完成       | compilation       | sync  |
-| .               | 在生成资源并输出到目录之前 | compilation       | async |
+| emit            | 在生成资源并输出到目录之前 | compilation       | async |
 | after-emit      | 在生成资源并输出到目录之后 | compilation       | async |
 | done            | 完成编译                   | stats             | sync  |
 
