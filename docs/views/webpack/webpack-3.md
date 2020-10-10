@@ -690,9 +690,9 @@ webpack 的 plugin 功能很强大，当然学习成本比较大，当你熟悉�
 
 代码以存放到 github，[地址](https://github.com/fecym/webpack-share)
 
-## 参考链接
+## 相关链接
 
-1. 珠峰培训
+1. [珠峰架构课内容](http://www.zhufengpeixun.cn/)
 2. [webpack loader](https://www.webpackjs.com/concepts/loaders/)
 3. [webpack plugins](https://www.webpackjs.com/concepts/plugins/)
 4. [Webpack 之 loader 配置详解](https://juejin.im/post/6847902222873788430)
