@@ -28,7 +28,7 @@ function getMonthLength(month) {
 
 ## 关于函数的 length 属性
 
-今天 360 面试过程遇到一个很有趣的问题，是关于函数的 length 属性的，题简写如下
+360 面试过程遇到一个很有趣的问题，是关于函数的 length 属性的，题简写如下
 
 ```js
 (() => 1).length === 0; // 输出什么
@@ -38,11 +38,8 @@ function getMonthLength(month) {
 
 ```js
 // so
-(() => 1).length ===
-  0(
-    // 输出 true
-    a => a
-  ).length; // 输出 1
+(() => 1).length === 0; // 输出 true
+(a => a).length; // 输出 1
 ```
 
 ## 数组中字符串键值的处理
@@ -668,6 +665,118 @@ function exportTxt(text, filename) {
   eleLink.click();
   document.body.removeChild(eleLink);
 }
+```
+
+## 奇偶数判断
+
+可能会遇到一个做奇偶数判断的方法吧，反正我遇到了，一句话搞定
+
+```js
+const isEven = num => num % 2 === 0;
+```
+
+## 格式化金钱
+
+项目中我们经常会遇到金钱格式化需求，或者说数字格式化一下，方便阅读（数字比较大的情况下）
+
+比如说 `999999999`，直接阅读很不直观，格式化后 `999,999,999`
+
+通常我们会使用正则来处理
+
+```js
+function formatPrice(price) {
+  return String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+```
+
+也可以不使用正则然后优雅的处理
+
+```js
+function formatPrice(price) {
+  return String(price)
+    .split('')
+    .reverse()
+    .reduce((prev, next, index) => {
+      return (index % 3 ? next : next + ',') + prev;
+    });
+}
+```
+
+上面是两种提到的比较常用的方案，但是 js 还有个比较牛逼的 API 可以直接实现这个需求哦，它就是 `toLocaleString`，我们可以直接数字调用这个方法就可以实现，金额的格式化
+
+```js
+(999999999).toLocaleString(); // 999,999,999
+// 当然还可以更秀一点
+const options = {
+  style: 'currency',
+  currency: 'CNY',
+};
+(123456).toLocaleString('zh-CN', options); // ¥123,456.00
+```
+
+`toLocaleString` 可以接收两个可选参数：`locales` 和 `options`，而且这个 api 在各大浏览器通用不存在兼容问题并且这个 `api` 不止存在 Number 的原型上，Array、Object、Date 原型上都有这个 api，并且格式化出来的值可以根据我们传入的参数出现各种结果
+
+[参数及用法可以参考 MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString)
+
+## 深度冻结对象
+
+在 vue 项目开发中，有些不变的常量，我们不想 vue 为他做双向绑定，以减少一些性能上消耗，我们可以把使用 `Object.freeze` 将对象冻结，此时 vue 将不会对这个对象进行冻结，但是这个冻结只是冻结对象第一层，所以遇到对象层级比较深的话，我们可以写个深度冻结的 api，来对常量对象做一些冻结优化
+
+```js
+const deepFreeze = o => {
+  const propNames = Object.getOwnPropertyNames(o);
+  propNames.forEach(name => {
+    const prop = o[name];
+    if (typeof prop === 'object' && prop !== null) {
+      deepFreeze(prop);
+    }
+  });
+  return Object.freeze(o);
+};
+```
+
+## 脱敏处理
+
+在一些涉及到用户隐私情况下，可能会遇到对用户的手机号身份证号之类的信息脱敏，但是这个脱敏数据的规则是根据用户信息要脱敏字段动态的生成的，此时我们动态拼接正则来实现一个动态脱敏规则
+
+```js
+const encryptReg = (before = 3, after = 4) => {
+  return new RegExp('(\\d{' + before + '})\\d*(\\d{' + after + '})');
+};
+// 使用：'13456789876'.replace(encryptReg(), '$1****$2') -> "134****9876"
+```
+
+## 树遍历
+
+## 数组分组
+
+## 下划线与驼峰
+
+```js
+/**
+ * @description {下划线转换驼峰}
+ * @param {string} name
+ */
+export function toHump(name) {
+  return name.replace(/\_(\w)/g, function(all, letter) {
+    return letter.toUpperCase();
+  });
+}
+/**
+ * @description {驼峰转换下划线}
+ * @param {要转换的驼峰格式名字} name
+ */
+export function toLine(name) {
+  return name.replace(/([A-Z])/g, '_$1').toLowerCase();
+}
+```
+
+## 校验时间
+
+```js
+const isDate = str => {
+  return typeof str !== 'number' && str !== null && new Date(str) != 'Invalid Date';
+};
 ```
 
 持续记录中...
