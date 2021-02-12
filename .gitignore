@@ -4,3 +4,4 @@ love/
 dist/
 .temp
 .DS_Store
+.idea/
