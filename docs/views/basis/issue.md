@@ -748,34 +748,88 @@ const encryptReg = (before = 3, after = 4) => {
 
 ## 树遍历
 
+对于树结构的遍历一般有深度优先和广度优先
+
+广度优先和深度优先的概念很简单，区别如下：
+- 深度优先，访问完一颗子树再去访问后面的子树，而访问子树的时候，先访问根再访问根的子树，称为先序遍历；先访问子树再访问根，称为后序遍历。
+- 广度优先，即访问树结构的第 n+1 层前必须先访问完第 n 层
+
+1. 深度优先
+
+先序遍历
+
+```js
+const treeForEach = (tree, func) => {
+  tree.forEach(data => {
+    func(data);
+    data.children && treeForEach(data.children, func);
+  });
+};
+```
+
+后序遍历，只需要调换一下节点遍历和子树遍历的顺序即可
+
+```js
+const treeForEach = (tree, func) => {
+  tree.forEach(data => {
+    data.children && treeForEach(data.children, func);
+    func(data);
+  });
+};
+```
+
+2. 广度优先
+
+广度优先的思路是，维护一个队列，队列的初始值为树结构根节点组成的列表，重复执行以下步骤直到队列为空。取出队列中的第一个元素，进行访问相关操作，然后将其后代元素（如果有）全部追加到队列最后。
+
+```js
+const treeForEach = (tree, func) => {
+  let node, list = [...tree]
+  while (node = list.shift()) {
+    func(node)
+    node.children && list.push(...node.children)
+  }
+}
+```
+
+
+
 ## 数组分组
+开发移动端的时候，遇到一个首页菜单改版的需求，首页菜单根据权限控制显隐，而菜单每页展示八个小菜单，超过八个做 swipe 滑动切换，当时项目用了 vant 做的UI框架，菜单那模块就选择了他的轮播插件，菜单做成了一个扁平化的list配置，首先根据权限过滤出所有有权限的菜单项，然后每八个一分组，处理成一个二维数据来遍历菜单
+
+```js
+const arrayGroupBySize = (arr, size = 2) => {
+  const result = [];
+  for (let i = 0, len = arr.length; i < len; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+};
+```
 
 ## 下划线与驼峰
 
+做一些数据持久化的工作的时候经常会出现下划线命名和驼峰命名的转化，因为在前端处理中规范是驼峰命名，而像 mysql 之类的规范是下划线命名，所以在处理后返回给前端的数据需要转换为驼峰命名，而对数据库的读写需要下划线命名
+
 ```js
-/**
- * @description {下划线转换驼峰}
- * @param {string} name
- */
-export function toHump(name) {
+const toHump = (name) => {
   return name.replace(/\_(\w)/g, function(all, letter) {
     return letter.toUpperCase();
   });
 }
-/**
- * @description {驼峰转换下划线}
- * @param {要转换的驼峰格式名字} name
- */
-export function toLine(name) {
+
+const toLine = (name) => {
   return name.replace(/([A-Z])/g, '_$1').toLowerCase();
 }
 ```
 
-## 校验时间
+## 校验时间格式
+
+业务中遇到一个校验一下传入时间格式是否为一个时间格式，下面的方法可以完美校验
 
 ```js
 const isDate = str => {
-  return typeof str !== 'number' && str !== null && new Date(str) != 'Invalid Date';
+  return typeof str !== 'number' && str !== null && new Date(str) !== 'Invalid Date';
 };
 ```
 
