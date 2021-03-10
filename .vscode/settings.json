@@ -13,6 +13,7 @@
     "repos",
     "sysconfig",
     "tapable",
-    "vant"
+    "vant",
+    "vuex"
   ]
 }

@@ -27,15 +27,22 @@ require.context(directory, (useSubdirectories = false), (regExp = /^\.\//));
   - `id` 是上下文模块里面所包含的模块 `id`。它可能在你使用 `module.hot.accept` 的时候被用到
 - [内容摘自 webpack 官网](https://webpack.docschina.org/guides/dependency-management/#require-context)
 
-### Vue 自动引入路由
-
-> 假如以下是 Vue 项目一段目录结构，我们每开发一个新的模块需要在 `modules` 下面要简历一个 路由配置文件，然后在 `index.html` 里面要一个个的引入，这样每次定义一个都需要引入一次，这时候我们可以利用 `require.context` 方法来处理路由文件
+拿 vue 项目来说，有下面目录结构我们来自动引入 route、store 以及自动注册全局组件
 
 ```sh
   ├── src
   │   ├── views
   │   ├── components
+  │   │   ├── Header.vue
+  │   │   ├── ...
+  │   │   └── other.vue
   │   ├── routes
+  │   │   ├── modules
+  │   │   │   ├── user.js
+  │   │   │   ├── ...
+  │   │   │   └── other.js
+  │   │   └── index.js
+  │   ├── stores
   │   │   ├── modules
   │   │   │   ├── user.js
   │   │   │   ├── ...
@@ -45,41 +52,34 @@ require.context(directory, (useSubdirectories = false), (regExp = /^\.\//));
   └── ...
 ```
 
-代码如下
+### 路由自动引入
+
+自动引入路由，我们可以在 routes 目录下新建一个 requireAll.js，用来写引入路由逻辑
 
 ```js
-// 这段代码就写在，routes/index.js 里面吧
 const webpackContext = require.context('./modules', false, /\.js$/);
 // 让返回的这个函数执行，并传入相关的每一个文件的地址（由ctx.keys返回的）
 const requireAll = ctx => ctx.keys().map(ctx);
 // requireAll 执行完毕其实就得到了我们要的 modules 文件下的所有文件，但是我们是 default 里面的内容
-const routes = requireAll(webpackContext).map(route => route.default);
+const moduleRoutes = requireAll(webpackContext).map(route => route.default);
+// 考虑到有的路由可能定义为对象的情况
+const routes = [];
+moduleRoutes.forEach(moduleRoute => {
+  // 考虑路由定义为对象的情况
+  const moduleRoutes = Array.isArray(moduleRoute) ? moduleRoute : [moduleRoute];
+  routes.push(...moduleRoutes);
+});
+// 最后暴露出去
+export default routes;
 ```
 
-### Vue 全局组件注册
+### 全局组件注册
 
 > 全局注册组件也是利用 `require.context` 来实现的，得到一个文件数组后，利用 `Vue.component` 注册一下即可
 
 `假如有以下目录，components` 目录下的组件在全局都可通用
 
-```sh
-  ├── src
-  │   ├── views
-  │   ├── routes
-  │   ├── components
-  │   │   ├── user.vue
-  │   │   ├── ...
-  │   │   └── other.vue
-  │   ├── utils
-  │   │   └── register-components.js
-  │   └── App.vue
-  └── ...
-```
-
-代码如下：
-
 ```js
-// register-components.js
 import Vue from 'vue';
 const webpackContext = require.context('../components', false, /\.vue$/);
 const requireAll = ctx => ctx.keys().map(ctx);
@@ -94,6 +94,25 @@ requireAll(webpackContext).forEach(componentModule => {
   const name = dealName(component.name) || dealName(file.slice(file.lastIndexOf('/') + 1, -4));
   Vue.component(name, component);
 });
+```
+
+### 自动引入 vuex
+
+```js
+// 获取文件
+const modulesFiles = require.context('./modules', false, /\.js$/);
+// 处理 modules
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  // set './app.js' => 'app'
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1');
+  // 获取模块
+  const value = modulesFiles(modulePath);
+  // 最终得到我们要的结果
+  modules[moduleName] = value.default;
+  return modules;
+}, {});
+
+export default modules;
 ```
 
 ## webpack loader
