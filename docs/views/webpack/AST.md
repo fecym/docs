@@ -1,7 +1,7 @@
 ---
 title: AST 团队分享
 date: 2020-06-05
-author: 程禹铭
+author: fecym
 tags:
   - babel
   - ast

@@ -34,8 +34,10 @@ module.exports = {
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'AST团队分享', link: '/views/webpack/AST' },
         { text: 'eslint 工作流', link: '/views/FE/lint/index' },
-        { text: 'Vue源码分析', link: '/views/basis/vue' },
-        { text: 'cli 的开发', link: '/views/tools/npm/cli' },
+        { text: 'Vue 源码分析', link: '/views/basis/vue' },
+        { text: 'cli 开发', link: '/views/tools/npm/cli' },
+        { text: 'vscode 开发记录', link: '/views/plugins/vscode' },
+        { text: 'Chrome 开发记录', link: '/views/plugins/chrome' },
         { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
         { text: '网站渲染流程', link: '/views/FE/process/websize-render' }
       ]
