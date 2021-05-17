@@ -843,4 +843,174 @@ const emptyReg = /^\s{0}$/;
 emptyReg.test(''); // true
 ```
 
+## 值的映射
+
+开发 echarts 的时候会遇到一个所有的 y 轴展示多条数据，类似于堆叠图，但是要保持每条线的高度保持统一，就是每条线的最大值和最小值在每个范围内都保持统一的比值，此时我们可以对坐标轴上的数据映射一边来保证展示出来的数据一致性（用户关注的是趋势）
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/mapRange.png')" height="260" />
+</p>
+
+```js
+/**
+ * 值映射
+ * @param {*} from  原始值的范围 [min, max]
+ * @param {*} to    映射后的范围 [min, max]
+ * @param {*} arr   要映射的数据
+ * @returns
+ */
+export function mapRange(from, to, arr) {
+  const _mapRange = s => {
+    return to[0] + ((s - from[0]) * (to[1] - to[0])) / (from[1] - from[0]);
+  };
+  return arr.map(_mapRange);
+}
+
+const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+mapRange([0, 10], [-1, 0], arr);
+// [-1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.30000000000000004, -0.19999999999999996, -0.09999999999999998, 0]
+```
+
+## 根据时间间隔生成 X 轴的数据
+
+在开发 echarts 过程中，需要快速模拟数据，我们可以快速根据时间间隔，开始时间结束时间来快速生成一组 x 轴线的数据，用到 dayjs 库
+
+```js
+export function generatorXAxisData(options) {
+  options.interval = options.interval || 5 * 60 * 1000;
+  options.template = options.template || 'YYYY-MM-DD HH:mm:ss';
+  options.startTime =
+    options.startTime ||
+    dayjs()
+      .startOf('d')
+      .valueOf();
+  options.endTime =
+    options.endTime ||
+    dayjs()
+      .endOf('d')
+      .valueOf();
+  const { interval, template, startTime, endTime } = options;
+  const result = [];
+  const timeRange = endTime - startTime;
+  const count = Math.floor(timeRange / interval); //时间间隔 （五分钟：5*60*1000）
+  for (let i = 0; i <= count; i++) {
+    const modTine = dayjs(startTime + interval * i).format(template);
+    result.push(modTine);
+  }
+  if (startTime + count * interval !== endTime) {
+    result.push(dayjs().format(template));
+  }
+  return result;
+}
+```
+
+## 生成随机数据
+
+同样开发 echarts 中需要快速生成一组数据
+
+```js
+/**
+ * 随机数生成，图表模拟数据用
+ * @param len
+ * @param range
+ * @returns {number[]}
+ */
+export function generatorRandomValue(len = 20, range = 50) {
+  const arr = Array(len).fill(0);
+  return arr.map(() => {
+    return (Math.random() * range) >>> 0;
+  });
+}
+```
+
+## base64 转文件预览地址
+
+base64 文件可以直接预览，但是有些三方库可能需要一个真实预览地址，我们可以把 base64 转成文件预览地址来使用
+
+```js
+/**
+ * base64 转文件预览地址
+ * @param base64
+ * @param contentType 类型
+ * @param includeHead 是否包含base64头
+ * @returns {string}
+ */
+export function base64ToUrl(base64, contentType = 'image/png', includeHead = false) {
+  if (includeHead) {
+    // 如果包含 base64 头，要去掉
+    base64 = base64.split(',')[1];
+  }
+  const bstr = window.atob(base64);
+  let len = bstr.length;
+  const uint8Arr = new Uint8Array(len);
+  while (len--) {
+    // 返回指定位置的字符的 Unicode 编码
+    uint8Arr[len] = bstr.charCodeAt(len);
+  }
+  const blob = new Blob([uint8Arr], { type: contentType });
+  return URL.createObjectURL(blob);
+}
+```
+
+## 根据 url 下载文件
+
+```js
+/**
+ * 可以下载的URL包括base64
+ * @param url
+ * @param downloadName 可以不加后缀名
+ * @param cb 下载完之后的回调函数
+ */
+export const downloadByUrl = (url, downloadName = '', cb) => {
+  const eleLink = document.createElement('a');
+  eleLink.setAttribute('download', downloadName);
+  eleLink.setAttribute('href', url);
+  document.body.appendChild(eleLink);
+  eleLink.click();
+  document.body.removeChild(eleLink);
+  cb && cb();
+};
+```
+
+## 打印 dom
+
+工作中可能会遇到打印的需求，我们可以直接使用 `window.print` API，但是打印的是整个页面，并且不能是单页面应用程序，此时我们想打印某个 dom 的话，就需要利用这个 api，然后动态生成一个 iframe，在 iframe 中插入要打印的 dom 直接在内嵌的 iframe 中调用打印方法既可实现这个功能（一般用来打印图片，其他 dom 的话需要自己加上样式）
+
+```js
+/**
+ * 打印dom
+ * @param dom
+ * @param isCenter
+ */
+export const printPageByDom = (dom = null, isCenter = true) => {
+  if (!dom) return;
+  const printFrameId = 'print-frame';
+  let printFrame = document.getElementById(printFrameId);
+  if (printFrame) {
+    document.body.removeChild(printFrame);
+  }
+  printFrame = document.createElement('iframe');
+  printFrame.name = printFrameId;
+  printFrame.setAttribute('id', printFrameId);
+  printFrame.setAttribute('width', '100%');
+  printFrame.setAttribute('height', '100%');
+  printFrame.setAttribute('style', 'position:absolute;width:0px;height:0px');
+  if (isCenter) {
+    const parentEl = document.createElement('div');
+    parentEl.style.textAlign = 'center';
+    // parentEl.style.height = "100vh";
+    parentEl.style.display = 'flex';
+    parentEl.style.alignItems = 'center';
+    parentEl.style.justifyContent = 'center';
+    parentEl.innerHTML = dom.outerHTML;
+    printFrame.srcdoc = parentEl.outerHTML;
+  } else {
+    printFrame.srcdoc = dom.outerHTML;
+  }
+  document.body.appendChild(printFrame);
+  printFrame.contentWindow.focus();
+  printFrame.contentWindow.print();
+};
+```
+
 持续记录中...
