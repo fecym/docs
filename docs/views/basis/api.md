@@ -45,18 +45,33 @@ function New() {
 - 尝试着实现下
 
 ```js
-function instanceOf(left, right) {
-  // while (true) {
-  //   if (left.__proto__ === null) return false
-  //   if (left.__proto__ === right.prototype) return true
-  //   left.__proto__ = left.__proto__.__proto__
-  // }
-  if (left.__proto__ === null) return false;
-  if (left.__proto__ === right.prototype) return true;
-  left.__proto__ = left.__proto__.__proto__;
-  instanceOf(left, right);
+function instance(L, R) {
+  if (L.__proto__ === null) {
+    return false;
+  }
+  if (L.__proto__ === R.prototype) {
+    return true;
+  }
+  return instance(L.__proto__, R);
 }
-instanceOf(Function, Object); // true >> Function.__proto__.__proto__ === Object.prototype
+instance(p, Function); // false
+instance(Function, Object); // true >> Function.__proto__.__proto__ === Object.prototype
+```
+
+还有种写法是直接把`L.__proto__` 直接赋值为 `L.__proto__.__proto__`，但是这样写会影响到原型，导致如果查询不到则会抛出异常，不推荐下面的写法
+
+```js
+function instance(L, R) {
+  while (true) {
+    if (L.__proto__ === null) {
+      return false;
+    }
+    if (L.__proto__ === R.prototype) {
+      return true;
+    }
+    L.__proto__ = L.__proto__.__proto__;
+  }
+}
 ```
 
 ## call 和 apply
