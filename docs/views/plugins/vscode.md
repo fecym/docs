@@ -1,8 +1,10 @@
 ---
-title: vscode插件开发
+title: vscode 插件开发
 date: 2021-03-20
+keys:
+  - 'vscode-cym'
 tags:
-	- vscode
+  - vscode
   - plugin
 ---
 
@@ -53,10 +55,8 @@ yo 也提供了一系列指令供我们使用
 
 package.json 是整个插件工程的配置文件，extension.js 则是工程的入口文件。
 
-<!-- ![]('../../.vuepress/public/imgs/vscode-plugin-bootstrap.jpg') -->
-
 <p align="center">
-  <img :src="$withBase('/imgs/vscode-plugin-bootstrap.jpg)""/>
+  <img :src="$withBase('/imgs/vscode-plugin-bootstrap.jpg')"/>
 </p>
 
 ### package.json 介绍
