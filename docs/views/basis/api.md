@@ -384,7 +384,7 @@ function mixins() {
 ### 插入 insert
 
 ```js
-function insert(arr, item, idx) {
+function insert(arr, idx, item) {
   // 循环为什么要倒着写？看下面解释
   for (let i = arr.length - 1; i > idx - 1; i--) {
     arr[i + 1] = arr[i];
@@ -412,11 +412,11 @@ function remove(arr, idx) {
 ### 转字符串 join
 
 ```js
-function join(arr, chart = '') {
+function join(arr, symbol = '') {
   // 核心思想是拼接字符串
   let result = arr[0];
   for (let i = 1, len = arr.length; i < len; i++) {
-    result += chart + arr[i];
+    result += symbol + arr[i];
   }
   return result;
 }
@@ -427,10 +427,11 @@ function join(arr, chart = '') {
 ```js
 function slice(arr, start = 0, end = arr.length) {
   // 核心思想就是循环数组的start项到end项添加到一个数组里面
+  end = end > this.length ? this.length : end;
   const result = [];
   for (let i = start; i < end; i++) {
     // 可以直接调用我们之前写好的insert
-    insert(result, arr[i], result.length);
+    insert(result, result.length, arr[i]);
     // 也可以调用push
     // result.push(arr[i])
   }
@@ -458,7 +459,7 @@ function push(arr, ...items) {
 ```js
 // 写法可能有点流氓，但是基本思路
 function pop(arr) {
-  if (!arr.length) return undefined;
+  if (!arr.length) return void 0;
   const value = arr[arr.length - 1];
   arr.length--;
   return value;
@@ -566,25 +567,26 @@ function reduce(arr, fn, init) {
 
 ```js
 // 注意 concat 不会改变源数组哦
-function concat(originArr) {
+function concat(arr, ...target) {
   const result = [];
-  // 取得目标数组
-  const targetArrs = [].slice.call(arguments, 1);
-  for (let i = 0; i < targetArrs.length; i++) {
-    // 注意这里第二层循环要迭代目标数组第 i 项哦
-    for (let j = 0; j < targetArrs[i].length; j++) {
-      result.push(targetArrs[i][j]);
-    }
+  for (let i = 0; i < arr.length; i++) {
+    insert(result, result.length, arr[i]);
   }
-  for (let i = 0; i < originArr.length; i++) {
-    // 添加源数组的每一项
-    result.push(originArr[i]);
+  for (let i = 0; i < target.length; i++) {
+    const item = target[i];
+    if (Array.isArray(item)) {
+      for (let j = 0; j < item.length; j++) {
+        insert(result, result.length, item[j]);
+      }
+    } else {
+      insert(result, result.length, item);
+    }
   }
   return result;
 }
 ```
 
-## 数组的扁平化和增维
+### 扁平化 flat
 
 如下：一个多维数组，要求把数组扁平化成一个一维数组
 
@@ -592,8 +594,6 @@ function concat(originArr) {
 const arr = [1, 2, [21, 45, 88], 3, 4, [5, 6, [7, 8, [9, 11]]]];
 // 结果：[ 1, 2, 21, 45, 88, 3, 4, 5, 6, 7, 8, 9, 11 ]
 ```
-
-### 扁平化
 
 - 扁平化有多种思路，我们可以直接暴力一点，直接用正则匹配所有的中括号然后替换为空
 
@@ -631,7 +631,7 @@ const flat = arr => {
 };
 ```
 
-### 增维
+### 增维面试思考
 
 之前面试遇到一道题，有一个一维数组，我想要写个方法，方法接收两个参数，该数组和一个数字，然后得到一个根据这个数字而拆分成的多维数组，比如说我传递一个 3，那就数组中的成员就每三个成员组成一个新的数组
 
@@ -639,7 +639,7 @@ const flat = arr => {
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 // 结果：[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ], [ 0 ] ]
 
-const newaxis = (arr, offset) => {
+const addAxis = (arr, offset) => {
   const len = arr.length;
   // 偏移量计算如果正好能被整除那么就取传入的偏移量，否则就向下取整后加1
   const offsetNum = len % offset === 0 ? offset : ~~(len / offset + 1);
@@ -649,6 +649,199 @@ const newaxis = (arr, offset) => {
   }
   return result;
 };
+```
+
+### 数组原型拓展
+
+根据上面的思路，这里直接给数组原型实现一波常用 api，代码较长，比较完整，细细评阅
+
+```js
+function insert(arr, index, item) {
+  for (let i = arr.length - 1; i > index - 1; i--) {
+    arr[i + 1] = arr[i];
+  }
+  arr[index] = item;
+  return arr.length;
+}
+
+Array.prototype.insert = function(index, item) {
+  return insert(this, index, item);
+};
+
+Array.prototype.remove = function(index) {
+  const removeItem = this[index];
+  for (let i = index; i < this.length; i++) {
+    this[i] = this[i + 1];
+  }
+  this.length--;
+  return removeItem;
+};
+
+Array.prototype.join2 = function(symbol = ',') {
+  let str = this[0] || '';
+  for (let i = 1; i < this.length; i++) {
+    str += symbol + this[i];
+  }
+  return str;
+};
+
+Array.prototype.slice2 = function(start = 0, end = this.length) {
+  end = end > this.length ? end : this.length;
+  let r = [];
+  for (let i = start; i < end; i++) {
+    insert(r, r.length, this[i]);
+  }
+  return r;
+};
+
+Array.prototype.push2 = function(...args) {
+  const len = this.length;
+  for (let i = 0; i < args.length; i++) {
+    insert(this, len + i, args[i]);
+  }
+  return this.length;
+};
+
+Array.prototype.pop2 = function() {
+  const len = this.length;
+  if (!len) return void 0;
+  const popValue = this[len - 1];
+  this.length--;
+  return popValue;
+};
+
+Array.prototype.forEach2 = function(callback, ctx = null) {
+  for (let i = 0; i < this.length; i++) {
+    callback.call(ctx, this[i], i, this);
+  }
+};
+
+Array.prototype.map2 = function(callback, ctx = null) {
+  const r = [];
+  for (let i = 0; i < this.length; i++) {
+    r.push(callback.call(ctx, this[i], i, this));
+  }
+  return r;
+};
+
+Array.prototype.filter2 = function(callback, ctx = null) {
+  const r = [];
+  for (let i = 0; i < this.length; i++) {
+    if (callback.call(ctx, this[i], i, this)) {
+      r.push(this[i]);
+    }
+  }
+  return r;
+};
+
+Array.prototype.some2 = function(callback, ctx = null) {
+  for (let i = 0; i < this.length; i++) {
+    if (callback.call(ctx, this[i], i, this)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+Array.prototype.every2 = function(callback, ctx = null) {
+  for (let i = 0; i < this.length; i++) {
+    if (!callback.call(ctx, this[i], i, this)) {
+      return false;
+    }
+  }
+  return true;
+};
+
+Array.prototype.reduce2 = function(callback, init, ctx) {
+  // 初始值的初始化??
+  let r = init;
+  for (let i = 0; i < this.length; i++) {
+    r = callback.call(ctx, r, this[i], i, this);
+  }
+  return r;
+};
+
+Array.prototype.concat2 = function(...target) {
+  // 不改变原数组
+  const r = [];
+  for (let i = 0; i < this.length; i++) {
+    insert(r, r.length, this[i]);
+  }
+  for (let i = 0; i < target.length; i++) {
+    const item = target[i];
+    if (Array.isArray(item)) {
+      for (let j = 0; j < item.length; j++) {
+        insert(r, r.length, item[j]);
+      }
+    } else {
+      insert(r, r.length, item);
+    }
+  }
+  return r;
+};
+
+Array.prototype.flat2 = function() {
+  // 不改变原数组
+  let r = [];
+  for (let i = 0; i < this.length; i++) {
+    const item = this[i];
+    if (Array.isArray(item)) {
+      r = r.concat([].flat2.apply(item));
+    } else {
+      r.push(item);
+    }
+  }
+  return r;
+};
+
+// 测试
+var arr = [1, 2, 3, 4, 5];
+
+const len = arr.insert(3, '你好');
+console.log(len, arr);
+
+const removeItem = arr.remove(3);
+console.log(removeItem, arr);
+
+console.log(arr.join2());
+console.log(arr.slice2(2, 4));
+console.log(arr.push2('你好', '不好'), arr);
+console.log(arr.pop(), arr);
+console.log(arr.pop(), arr);
+
+console.log('???');
+arr.forEach2(console.log);
+console.log('???');
+
+console.log(
+  arr.map2(x => x * 2),
+  'map'
+);
+
+console.log(
+  arr.filter2(x => x > 3),
+  'filter'
+);
+
+console.log(
+  arr.some2(x => x === 2),
+  'some'
+);
+console.log(
+  arr.every2(x => x > 2),
+  'every'
+);
+
+console.log(
+  arr.reduce2((x, y) => x + y, 0),
+  'reduce'
+);
+
+console.log(arr.concat2(6, 7, 8, [9, 10]), 'concat');
+
+var arr2 = [1, 2, [3, 4, [5, 6]]];
+
+console.log(arr2.flat2(), 'flat');
 ```
 
 ## 深浅拷贝
