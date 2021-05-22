@@ -181,6 +181,36 @@ function forEach(arr, cb, ctx = null) {
   - `some` 在碰到 `return true` 的时候，中止循环
 - 接下来我们看看 `some` 和 `every` 的实现
 
+### some
+
+`some` 函数是一个很好用的函数，判断数组成员有任意一项满足条件则返回 true
+
+```js
+function some(arr, cb, ctx = null) {
+  for (let i = 0; i < arr.length; i++) {
+    if (cb.call(ctx, arr[i], i, arr)) {
+      return true;
+    }
+  }
+  return false;
+}
+```
+
+### every
+
+`every` 与 `some` 正好相反，数组成员都满足条件返回 true，否则返回 false
+
+```js
+function every(arr, cb, ctx = null) {
+  for (let i = 0; i < arr.length; i++) {
+    if (!cb.call(ctx, arr[i], i, arr)) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
 ### map
 
 `map` 会对数组成员进行处理，返回一个与原数组长度一致的新数组，如果使用中没有返回结果则与 forEach 的效果一致
@@ -251,36 +281,6 @@ function reduce(arr, cb, init, ctx = null) {
     r = cb.call(ctx, r, arr[i], i, arr);
   }
   return r;
-}
-```
-
-### some
-
-`some` 函数是一个很好用的函数，判断数组成员有任意一项满足条件则返回 true
-
-```js
-function some(arr, cb, ctx = null) {
-  for (let i = 0; i < arr.length; i++) {
-    if (cb.call(ctx, arr[i], i, arr)) {
-      return true;
-    }
-  }
-  return false;
-}
-```
-
-### every
-
-`every` 与 `some` 正好相反，数组成员都满足条件返回 true，否则返回 false
-
-```js
-function every(arr, cb, ctx = null) {
-  for (let i = 0; i < arr.length; i++) {
-    if (!cb.call(ctx, arr[i], i, arr)) {
-      return false;
-    }
-  }
-  return true;
 }
 ```
 
