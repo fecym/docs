@@ -8,7 +8,7 @@
 const { nav } = require('./nav')
 module.exports = {
   themeConfig: {
-    author: 'chengyuming',
+    author: 'fecym',
     // type: 'blog',
     nav,
     sidebar: 'auto',

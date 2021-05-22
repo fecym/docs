@@ -15,6 +15,7 @@
     "repos",
     "sysconfig",
     "tapable",
+    "unshift",
     "vant",
     "vuex"
   ]
