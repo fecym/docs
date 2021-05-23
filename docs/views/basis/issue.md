@@ -396,6 +396,54 @@ if (a == 1 && a == 2 && a == 3) {
 1.2.toString()   // '1.2'
 ```
 
+## 如何让 (a == 1 && a == 2 && a == 3) 的值为 true
+
+- 这是一道经典的面试题，主要考察是数据类型转换，我们重写 toString 或者 valueOf 方法即可解决
+
+```js
+const n = {
+  i: 1,
+  toString() {
+    return n.i++;
+  },
+  // 两个写一个即可
+  valueOf() {
+    return n.i++;
+  },
+};
+
+if (n == 1 && n == 2 && n == 3) {
+  console.log('通过');
+}
+```
+
+- 当然也有其他解决技巧
+
+```js
+const n = 0;
+!(n == 1 && n == 2 && n == 3); // true
+```
+
+- 利用数组 `toString` 方法会调用本身的 `join` 方法，这里把自己的 `join` 方法改写为 `shift` 方法，每次返回第一个元素，而且每次数组删除第一个值，正好可以使判断成立。
+
+```js
+var n = [1, 2, 3];
+n.join = n.shift;
+if (n == 1 && n == 2 && n == 3) {
+  console.log('通过');
+}
+```
+
+- 还有一个没看懂的技巧
+
+```js
+var aﾠ= 1;
+var a = 2;
+// 声明的地方加个空格
+var ﾠa = 3;
+console.log(aﾠ== 1 && a == 2 && ﾠa == 3);
+```
+
 ## Generator
 
 ### 对象增加迭代器
