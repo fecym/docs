@@ -434,15 +434,30 @@ if (n == 1 && n == 2 && n == 3) {
 }
 ```
 
-- 还有一个没看懂的技巧
+- 还有一个有点坑的技巧
 
 ```js
-var aﾠ= 1;
+var aﾠ = 1;
 var a = 2;
-// 声明的地方加个空格
 var ﾠa = 3;
-console.log(aﾠ== 1 && a == 2 && ﾠa == 3);
+console.log(aﾠ == 1 && a == 2 && ﾠa == 3);
 ```
+
+<style>
+.space-a {
+  padding: 0.25rem 0.5rem;
+  margin: 0;
+  font-size: 0.85em;
+  background-color: var(--code-color);
+  border-radius: 3px;
+}
+</style>
+
+从 ast 上看 <span class="space-a">var &nbsp;&nbsp;a = 1</span> 和 `var a = 1` 的结果是不一样的，他们的 `Identifier.name` 一个是 <span class="space-a">&nbsp;a</span> 一个是 `a`，所以在使用的时候同样加一个空格字符便是一样，那么根据短路语法可得：最终要的是 <span class="space-a">&nbsp;a == 3</span> 的返回值，因为前两项的结果是 true，所以要 <span class="space-a">&nbsp;a == 3</span> 的结果，也是 true，此解有点坑
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/ast-a==1.jpg')" />
+</p>
 
 ## Generator
 
