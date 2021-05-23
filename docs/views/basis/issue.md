@@ -455,7 +455,7 @@ console.log(aﾠ == 1 && a == 2 && ﾠa == 3);
 
 从 ast 上看 <span class="space-a">var &nbsp;&nbsp;a = 1</span> 和 `var a = 1` 的结果是不一样的，他们的 `Identifier.name` 一个是 <span class="space-a">&nbsp;a</span> 一个是 `a`，所以在使用的时候同样加一个空格字符便是一样，那么根据短路语法可得：最终要的是 <span class="space-a">&nbsp;a == 3</span> 的返回值，因为前两项的结果是 true，所以要 <span class="space-a">&nbsp;a == 3</span> 的结果，也是 true。
 
-到底才发现 JavaScript 变量声明是可以以空格开头的，此解有点坑
+到此才发现 JavaScript 变量声明是可以以空格开头的，此解有点坑
 
 <p align="center" class="p-images">
   <img :src="$withBase('/imgs/ast-a==1.jpg')" />
