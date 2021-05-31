@@ -489,6 +489,88 @@ p {
 </body>
 ```
 
+## 布局 - 左边固定右边自适应
+
+### 经典方案 float
+
+```html
+<style>
+  .container {
+    overflow: hidden;
+  }
+  .left {
+    float: left;
+    width: 200px;
+    height: 100vh;
+    background-color: blue;
+  }
+  .right {
+    margin-left: 200px;
+    height: 100vh;
+    background-color: green;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+</body>
+```
+
+### 经典方案 定位
+
+```html
+<style>
+  .container {
+    position: relative;
+  }
+  .left {
+    position: absolute;
+    width: 200px;
+    height: 100vh;
+    background-color: blue;
+  }
+  .right {
+    margin-left: 200px;
+    height: 100vh;
+    background-color: green;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+</body>
+```
+
+### flex 布局
+
+```html
+<style>
+  .container {
+    display: flex;
+  }
+  .left {
+    width: 200px;
+    height: 100vh;
+    background-color: blue;
+  }
+  .right {
+    flex: 1;
+    height: 100vh;
+    background-color: green;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+</body>
+```
+
 ## 层叠上下文和层叠顺序
 
 ### 层叠上下文
@@ -740,10 +822,14 @@ p {
   }
 </style>
 <p>
-  <span>::first-line-1</span><br />
-  <span>::first-line-2</span><br />
-  <span>::first-line-3</span><br />
-  <span>::first-line-4</span><br />
+  <span>::first-line-1</span>
+  <br />
+  <span>::first-line-2</span>
+  <br />
+  <span>::first-line-3</span>
+  <br />
+  <span>::first-line-4</span>
+  <br />
   <span>::first-line-5</span>
 </p>
 ```
@@ -766,30 +852,30 @@ p {
 
 ```js
 // 绝对滚动到距离上边100
-window.scrollTo(0, 100)
+window.scrollTo(0, 100);
 // 或者传递一个对象
 window.scrollTo({
   left: 0,
   top: 100,
-})
+});
 ```
 
 - 也可以使用相对滚动设置 <code>scrollBy</code>
 
 ```js
 // 每次滚动相对于当前位置，向下滚动100
-window.scrollBy(0, 100)
+window.scrollBy(0, 100);
 // 或者
 window.scrollBy({
   left: 0,
   top: 100,
-})
+});
 ```
 
 - 再或者直接使用 <code>scrollTop</code> 设置
 
 ```js
-document.scrollingElement.scrollTop = 100
+document.scrollingElement.scrollTop = 100;
 ```
 
 ### 如何指定一个元素显示在指定的位置
@@ -797,9 +883,9 @@ document.scrollingElement.scrollTop = 100
 - 最常用的方法就是：获取到元素距离文档顶部的距离，然后设置滚动条的高度过去
 
 ```js
-const offsetTop = document.getElementById('scroll').offsetTop
+const offsetTop = document.getElementById('scroll').offsetTop;
 // 设置滚动条的高度
-window.scrollTo(0, offsetTop)
+window.scrollTo(0, offsetTop);
 ```
 
 - 也可以使用锚点
@@ -813,12 +899,12 @@ window.scrollTo(0, offsetTop)
 
 ```js
 // 不传参数，默认跳到该元素的顶端
-document.getElementById('scroll').scrollIntoView()
+document.getElementById('scroll').scrollIntoView();
 // 还可以指定元素出现在指定的位置
 document.getElementById('scroll').scrollIntoView({
   // 不传参数默认为start
   block: 'start' | 'center' | 'end',
-})
+});
 ```
 
 ### 平滑的移动
@@ -829,13 +915,13 @@ document.getElementById('scroll').scrollIntoView({
 window.scrollTo({
   // 将浏览器的行为设置为平滑的移动
   behavior: 'smooth',
-})
+});
 window.scrollBy({
   behavior: 'smooth',
-})
+});
 document.getElementById('scroll').scrollIntoView({
   behavior: 'smooth',
-})
+});
 ```
 
 - 也可以使用 css 属性进行设置

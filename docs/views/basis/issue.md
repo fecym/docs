@@ -434,6 +434,59 @@ if (n == 1 && n == 2 && n == 3) {
 }
 ```
 
+## jsonp
+
+当出现端口、协议、域名三者有一个不一样的时候就会出现跨域，跨域解决方案很多，这里实现一个 jsonp
+
+`jsonp` 是利用 `script、img、iframe、link` 等带有的 `src` 属性请求可以跨域加载资源，而不受同源策略的限制。 每次加载时都会由浏览器发送一次 GET 请求，通过 `src` 属性加载的资源
+
+```js
+// callbackName 要与后端返回的一致
+function jsonp(url, query, callbackName = 'getData') {
+  return new Promise((resolve, reject) => {
+    const scriptEl = document.createElement('script');
+    const queryObj = parseQuery(query);
+    const onDone = () => {
+      delete window[callbackName];
+      document.body.removeChild(scriptEl);
+    };
+    url += `?callback=${callbackName}${queryObj && '&' + queryObj}`;
+    scriptEl.src = url;
+    window[callbackName] = res => {
+      onDone();
+      if (res) {
+        resolve(res);
+      } else {
+        reject('没有获取到数据');
+      }
+    };
+    scriptEl.onerror = () => {
+      onDone();
+      reject('脚本加载失败');
+    };
+    document.body.appendChild(scriptEl);
+  });
+}
+function parseQuery(query) {
+  let queryStr = '';
+  for (const key in query) {
+    if (Object.hasOwnProperty.call(query, key)) {
+      queryStr += `${key}=${query[key]}&`;
+    }
+  }
+  return queryStr.slice(0, -1);
+}
+
+// 使用
+jsonp('http://localhost:3000/getData', { a: 1, b: 2 })
+  .then(res => {
+    console.log('🚀 ~ jsonp ~ res', res);
+  })
+  .catch(err => {
+    console.log('🚀 ~ jsonp ~ err', err);
+  });
+```
+
 ## Generator
 
 ### 对象增加迭代器
