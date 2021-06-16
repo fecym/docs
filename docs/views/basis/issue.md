@@ -487,6 +487,165 @@ jsonp('http://localhost:3000/getData', { a: 1, b: 2 })
   });
 ```
 
+## 图片懒加载
+
+工作中经常会用到图片，当图片过多的时候，通常会做懒加载优化加载请求，懒加载就是优先加载可视区域内的内容，其他部分等进入了可视区域内在去加载
+
+图片懒加载的原理很简单，需要做到两点即可实现：
+
+1. 图片是否要加载取决于它的 `src` 属性。在初始化的时候我们不给图片设置 src 属性，而给一个其他属性设置图片的真实地址，当图片需要加载时候在给图片的 `src` 设置属性，此时就可以做到懒加载
+
+2. 当图片进入可视区域的时候，我们就需要加载图片了。可视区域就是当图片元素的相对于 `可视区域的高度` 小于 `可视区域的高度` 的时候说明元素进入视口了
+
+### 可视区域高度
+
+可是区域就是浏览器中我们可以看见的高度，可以使用 `window.innerHeight` 或者 `document.documentElement.clientHeight` 获取到
+
+当元素 `顶边距离` 距离小于 `可视窗口` 时说明元素要进入可视区域了
+
+### getBoundingClientRect
+
+`element.getBoundingClientRect()` 返回值是一个 DOMRect 对象，这个对象是由该元素的 getClientRects() 方法返回的一组矩形的集合，就是该元素的 CSS 边框大小。返回的结果是包含完整元素的最小矩形，并且拥有 left, top, right, bottom, x, y, width, 和 height 这几个以像素为单位的只读属性用于描述整个边框。除了 width 和 height 以外的属性是`相对于视图窗口的左上角`来计算的。
+
+<p align="center" class="p-images">
+  <img :src="$withBase('/imgs/img-lazy-load-rect.png')" height="260" />
+</p>
+
+我们可以用这个 api 来获取图片相对于可视区域左上角的高度，它永远是个相对高度，此时可以写一个是否进入可视区域的方法
+
+```js
+const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+function isInViewport(el) {
+  const { top } = el.getBoundingClientRect;
+  return top <= viewHeight;
+}
+```
+
+对于滚动这种高频事件我们一般都会做防抖处理，连续触发后只执行最后一次
+
+```js
+function debounce(fn, delay = 500) {
+  let timer;
+  return function(...args) {
+    if (timer) clearTimeout(timer);
+    setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
+```
+
+贴上完整代码
+
+```js
+const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+// 是否满足加载条件
+function isInViewport(el) {
+  const { top } = el.getBoundingClientRect();
+  return top <= viewHeight;
+}
+
+// 防抖处理
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    if (timer) clearTimeout(timer);
+    setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
+
+// 图片加载个数
+let count = 0;
+
+// 懒加载核心
+function lazyLoad() {
+  const imgs = document.getElementsByTagName('img');
+  const len = imgs.length;
+  for (let i = 0; i < len; i++) {
+    const el = imgs[i];
+    if (isInViewport(el)) {
+      const src = el.getAttribute('data-src');
+      if (src) {
+        el.src = src;
+        el.removeAttribute('data-src');
+        if (++count === len) {
+          // 图片都加载完成后移除事件
+          removeEvent();
+        }
+      }
+    }
+  }
+}
+
+// 防抖处理懒加载函数，方便移除事件监听
+function debounceLazyLoad() {
+  return debounce(lazyLoad, 500)();
+}
+
+// 绑定事件函数
+function bindEvent() {
+  // 页面加载完成执行一次
+  window.addEventListener('load', debounceLazyLoad);
+  // 绑定滚动事件
+  document.addEventListener('scroll', debounceLazyLoad);
+}
+// 满足条件后移除事件
+function removeEvent() {
+  window.removeEventListener('load', debounceLazyLoad);
+  document.removeEventListener('scroll', debounceLazyLoad);
+}
+// 绑定事件
+bindEvent();
+```
+
+## 滚动加载
+
+开发移动端经常会遇到滚动加载，滚动加要满足 `"页面真实内容高度" 超过 "可视窗口" 的高度`，那么说明需要加载新的数据了
+
+此时我们就需要知道几个高度值：
+
+1. 页面的真实高度
+2. 可视区域的高度
+3. 页面滚动的高度
+
+页面的真实高度 = 可是区域的高度 + 页面的滚动高度
+
+### 和元素高度、滚动、位置相关的属性
+
+每个 HTML 元素都具有 `clientHeight`、`offsetHeight`、`scrollHeight`、`offsetTop`、`scrollTop` 这 5 个和元素高度、滚动、位置相关的属性
+
+clientHeight 和 offsetHeight 属性和元素的滚动位置没有关系，它代表着元素的高度：
+
+- clientHeight 包括 padding 但不包括 margin、border 和水平滚动条的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
+
+- offsetHeight 包括 padding、border 和水平滚动条但不包括 margin 的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
+
+当父元素的子元素比父元素高且 overflow=scroll 时，父元素会滚动，此时：
+
+- scrollHeight：因为子元素比父元素高，父元素不想被子元素撑的一样高就显示了滚动条，在滚动过程中子元素有部分隐藏被隐藏，scrollHeight 就是子元素可见高度与不可见高度的真实高度，而可见高度就是 clientHeight。也就是 `scrollHeight > clientHeight` 时会出现滚动条，没有滚动条时 `scrollHeight === clientHeight` 恒成立，只读属性
+
+- scrollTop：代表有滚动条时，滚动条向下滚动的距离，也就是子元素被遮挡的高度，在没有滚动条时 `scrollTop === 0` 恒成立，可读可设置
+
+- offsetTop：当前元素距离最近父元素顶部的距离，和滚动条没有关系，只读属性
+
+- clientTop：当前元素顶部边框的宽度，不包括 padding 和 margin，只读属性
+
+知道了上面这些概念我们就可以来实现这个滚动加载，只要满足 `页面真实高度 - 页面可见高度 - 页面滚动高度 < 0` 说明该去加载新的数据了
+
+```js
+const htmlEl = document.documentElement;
+// 在不满足滚动条件的时候，如果出现横向滚动条，那么 offsetHeight 是包括横向滚动条滚动条高度的，所以会大于 scrollHeight的高度，所以我们取最大值
+const pageHeight = Math.max(htmlEl.scrollHeight, htmlEl.offsetHeight);
+// 滚动的高度
+const scrollHeight = htmlEl.scrollTop;
+const viewHeight = window.innerHeight || htmlEl.clientHeight;
+// 满足触发条件
+pageHeight - scrollHeight - viewHeight < 0;
+// 当前一般情况下会提前去加载数据，数据是一般是异步的，所以会有一个预留高度
+```
+
 ## Generator
 
 ### 对象增加迭代器

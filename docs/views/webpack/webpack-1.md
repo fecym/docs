@@ -213,6 +213,37 @@ module.exports = function(env, argv) {
   },
 ```
 
+#### oneOf
+
+每个文件对于 rules 中所有规则都会遍历一遍，使用 oneOf 就可以解决该问题，只要匹配一个即可退出（在 oneOf 中不能两个配置处理同一种类型文件）
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        // 优先执行
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          fix: true
+        }
+      },
+      {
+        // 以下 loader 只会匹配一个
+        oneOf: [
+          ...,
+          {},
+          {}
+        ]
+      }
+    ]
+  }
+}
+```
+
 ### 五、resolve
 
 ::: tip resolve
@@ -423,7 +454,7 @@ module.exports = function(env, argv) {
 
 > 哈希一般是结合 `CDN` 缓存来使用的。 如果文件内容改变的话， 那么对应文件哈希值也会改变， 对应的 `HTML` 引用的 `URL` 地址也会改变， 触发 `CDN` 服务器从源服务器上拉取对应数据， 进而更新本地缓存。
 
-- hash： 计算是跟整个项目的构建相关，所有的文件都用一个 `hash`，一个文件发生改变，其他都会改变，`hash` 值是一个。
+- hash： 计算是跟整个项目的构建相关，所有的文件共享一个 `hash`，一个文件发生改变，其他都会改变，`hash` 值是一个。
 - chunkHash：跟 `hash` 差不多。区别在与 `chunkHash` 所有公共库的代码文件都用一个 `hash`，公共库的代码用一个 `hash`，当我们更新普通模块内容的时候，其他模块的 `hash` 值发生改变，但是公共模块的 `hash` 不会受到影响
 
 ```js
@@ -445,7 +476,30 @@ module.exports = function(env, argv) {
 
 - 总结：`hash` 要变一起变；`chunkhash` 公共内容 `hash` 不发生改变，其他一起变；`contenthash` 哪个文件内容发生变化，那么对应的 `hash` 才发生改变
 
-### 五、path、publicPath、contentBase
+### 五、webpack 指纹占位符
+
+webpack 中有一些指纹占位符，比如以下配置：
+
+```js
+new MiniCssExtractPlugin({
+  filename: 'css/[name].[hash].css',
+  chunkFilename: 'css/[id].[hash].css',
+}),
+```
+
+中括号中 `[name].[hash]`，其实就是一些占位符，其中 name 代表文件名称，hash 代码构建时生成的 hash 值，下面是完整的占位符表示
+
+| 占位符名称  | 含义                                                          |
+| ----------- | ------------------------------------------------------------- |
+| name        | 文件名称                                                      |
+| ext         | 资源后缀名                                                    |
+| path        | 文件的相对路径                                                |
+| folder      | 文件所在的文件夹                                              |
+| hash        | 每次 webpack 构建时生成一个唯一的 hash 值                     |
+| chunkhash   | 根据 chunk 生成 hash 值，来源于同一个 chunk，则 hash 值就一样 |
+| contenthash | 根据内容生成 hash 值，文件内容相同 hash 值就相同              |
+
+### 六、path、publicPath、contentBase
 
 > output.publicPath 和 devServer.publicPath
 
@@ -454,7 +508,7 @@ module.exports = function(env, argv) {
 - 配置了 `devServer.publicPath` 之后，打完包的项目会自动在请求地址上加上你所配置的那个文件夹名字，比如说我们配置的 `address_v2`，那么此时请求的所有文件资源都是携带这个 `address_v2`，也就是说在你的请求地址最后面要加上`address_v2`，那么在服务器上也需要放这么一个文件夹，用来放置你打包完的项目
 - `devServer.contentBase` 是指开发环境下服务器根目录
 
-### 六、webpack 处理 css 的一些介绍
+### 七、webpack 处理 css 的一些介绍
 
 > css loader （包括前处理器和后处理器）
 

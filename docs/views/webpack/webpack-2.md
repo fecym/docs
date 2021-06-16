@@ -167,7 +167,7 @@ npm install --save @babel/polyfill
 ```js
 // import $ from 'jquery'
 // 暴露给全局
-import $ from 'expose-loader?$!jquery'
+import $ from 'expose-loader?$!jquery';
 ```
 
 - 也可以直接在 webpack 中配置
@@ -188,7 +188,7 @@ import $ from 'expose-loader?$!jquery'
 new webpack.ProvidePlugin({
   // 在每个模块中都注入 $
   $: 'jquery',
-})
+});
 ```
 
 - 假如 cdn 引入了 jQuery，在项目中我又写了 import \$ from 'jquery'。此时会把 jQuery 在打包到项目中，配置 externals 可以解决这个问题
@@ -291,10 +291,7 @@ externals: {
 
 ```html
 <body>
-  <img
-    src="<%= require('../../images/webpack-resolve.png').default %>"
-    alt=""
-  />
+  <img src="<%= require('../../images/webpack-resolve.png').default %>" alt="" />
 </body>
 ```
 
@@ -404,7 +401,7 @@ new CopyWebpackPlugin([
 - 该插件是 webpack 内置的插件
 
 ```js
-new webpack.BannerPlugin('make 2020 by chengyuming')
+new webpack.BannerPlugin('make 2020 by chengyuming');
 ```
 
 ## 解决跨越
@@ -463,35 +460,45 @@ devServer: {
 
 ```js
 // node 端代码
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-const webpack = require('webpack')
-const middle = require('webpack-dev-middleware')
+const webpack = require('webpack');
+const middle = require('webpack-dev-middleware');
 // 引入 webpack 配置
-const config = require('../config/webpack.config-proxy')
+const config = require('../config/webpack.config-proxy');
 // 取得 webpack 的编译结果
-const compiler = webpack(config)
+const compiler = webpack(config);
 // 把 webpack 编译结果处理成中间件交给node来处理
-app.use(middle(compiler))
+app.use(middle(compiler));
 
 app.get('/api/v2/user', (req, res) => {
-  res.json({name: 'cym'})
-})
+  res.json({ name: 'cym' });
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
-## resolve
+## 缩小查询范围
 
-### 查看路径
+### extensions
 
-- 我么可以在 webpack 中配置查的第三方包的路径，比如说我们 require 的时候默认找到的 node_modules 下面的文件，也可以让他找其他目录下的文件
+- 在开发中，我们可能有时候不想写后缀名，但是也能找到我们想要的那个文件，此时我们可以配置 `resolve.extensions` 字段，来让 webpack 查找的时候自动配置对应的拓展名
+
+```js
+resolve: {
+  // 记得加点哦
+  extensions: ['.js', '.json', '.ts', '.jsx', '.css', '.scss', '.vue'],
+},
+```
+
+### modules
+
+- 我们可以在 webpack 中配置查的第三方包的路径，比如说我们 require 的时候默认找到的 node_modules 下面的文件，也可以让他找其他目录下的文件
 - 此时我们就需要在 resolve.modules 中配置，它是一个数组，可以配置多个
 - 比如说我们配置了工具函数的文件夹 utils，utils 下面有个 a 方法，我们引用的时候就可以直接引入便可
 
 ```js
-// webpack
 resolve: {
   modules: [path.resolve('node_modules'), resolve('../src/utils')],
 }
@@ -499,18 +506,22 @@ resolve: {
 import a from 'a'
 ```
 
-### 别名
+### alias
+
+- 配置别名可以加快 webpack 查找模块的速度
 
 - 别名是我们经常用的，比如说 src 目录我们会配置成 @，此时都是在 webpack 下面配置的
 
 ```js
-alias: {
-  bootstrap: 'bootstrap/dist/css/bootstrap.css',
-  '@': resolve('../src/')
+resolve: {
+  alias: {
+    bootstrap: path.resolve(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.css'),
+    '@': resolve('../src/')
+  }
 }
 ```
 
-### 控制模块查找的先后顺序
+### mainFields
 
 - 默认情况下，webpack 查找模块，会找模块下面的 package.json 中的 main 字段，main 字段指向哪个地址那就是哪个地址，这个查看顺序其实也是可以更改的，比如说 bootstrap 他会默认找 `dist/js/bootstrap`，但是我们只想用他的样式，我们就需要把它改成默认查找 style 属性 `dist/css/bootstrap.css`
 
@@ -533,19 +544,35 @@ resolve: {
 },
 ```
 
-- 也可以修改 mainFiles，修改入口文件
+### mainFiles
 
-### 省略拓展名
-
-- 在开发中，我们可能有时候不想写后缀名，但是也能找到我们想要的那个文件，此时我们可以配置 extensions 字段，来让 webpack 查找的时候自动配置对应的拓展名
+当目录下没有 package.json 文件时，我们说会默认使用目录下的 index.js 这个文件，其实这个也是可以配置的
 
 ```js
 resolve: {
-  alias: {
-    '@': resolve('../src/')
+  mainFiles: ['index'], // 你可以添加其他默认使用的文件名
+},
+```
+
+### resolveLoader
+
+`resolveLoader` 用于配置解析 loader 时的 resolve 配置，默认的配置：
+
+```js
+module.exports = {
+  resolveLoader: {
+    modules: ['node_modules'],
+    extensions: ['.js', '.json'],
+    mainFields: ['loader', 'main'],
   },
-  // 记得加点哦
-  extensions: ['.js', '.json', '.ts', '.jsx', '.css', '.scss', '.vue'],
+};
+```
+
+我们可以配置 `resolveLoader.modules` 来减少我们自定义开发 loader 时的位置
+
+```js
+resolveLoader: {
+  modules: ['node_modules', path.resolve(__dirname, 'loaders')]
 },
 ```
 
@@ -578,11 +605,11 @@ plugins: [
 
 ```js
 // 使用 webpack-merge 插件
-const {smart} = require('webpack-merge')
-const baseConf = require('./webpack.base.config')
+const { smart } = require('webpack-merge');
+const baseConf = require('./webpack.base.config');
 module.exports = smart(baseConf, {
   // merge 了最基础的配置然后根据不同环境做不同的配置
-})
+});
 ```
 
 - 然后使用的使用只需要在 package.json 文件中执行 webpack 的时候增加 config 参数来改变 webpack 要执行的配置文件
@@ -630,19 +657,19 @@ module: {
 - 可以他到该插件的内部是默认引入所有的语言包，此时我们可以配置一下忽略掉让引入的语言包
 
 ```js
-plugins: [new webpack.IgnorePlugin(/\.\/locale/, /moment/)]
+plugins: [new webpack.IgnorePlugin(/\.\/locale/, /moment/)];
 ```
 
 - 此时我们会发现，之前设置 moment 的语言包实效了，此时我们就需要手动引入以下我们用到的语言包
 
 ```js
-import moment from 'moment'
+import moment from 'moment';
 // 手动引入中文语言包
-import 'moment/locale/zh-cn'
-moment.locale('zh-cn')
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 const current = moment()
   .endOf('day')
-  .fromNow()
+  .fromNow();
 ```
 
 ## 动态链接库 DLLPlugin
@@ -658,9 +685,9 @@ const current = moment()
   - 在 plugins 中配置 manifest.json 的映射地址，附上一个完整配置
 
   ```js
-  const path = require('path')
-  const resolve = dir => path.resolve(__dirname, dir)
-  const webpack = require('webpack')
+  const path = require('path');
+  const resolve = dir => path.resolve(__dirname, dir);
+  const webpack = require('webpack');
   module.exports = {
     entry: {
       react: ['react', 'react-dom'],
@@ -680,7 +707,7 @@ const current = moment()
         path: resolve('../public/dll/[name].manifest.json'),
       }),
     ],
-  }
+  };
   ```
 
   - 然后去主 webpack 配置中，新增动态链接库引用的插件，配置如下
@@ -693,7 +720,7 @@ const current = moment()
       // 打包的时候先去找这么一个清单，如果找不到了在去打包
       manifest: require('../public/dll/react.manifest.json'),
     }),
-  ]
+  ];
   ```
 
   - 最后需要在 HTML 中引入打包的这个动态链接库的 js 文件
@@ -704,16 +731,14 @@ const current = moment()
     new AddAssetHtmlPlugin([
       {
         // 要添加到编译中的文件的绝对路径，以及生成的HTML文件。支持 globby 字符串
-        filepath: require.resolve(
-          path.resolve(__dirname, '../public/dll/react.dll.js')
-        ),
+        filepath: require.resolve(path.resolve(__dirname, '../public/dll/react.dll.js')),
         // 文件输出目录
         outputPath: 'dll',
         // 脚本或链接标记的公共路径
         publicPath: 'dll',
       },
     ]),
-  ]
+  ];
   ```
 
 - 有一个要注意的地方，记得把 AddAssetHtmlPlugin 的配置写在 HTMLWebpackPlugin 插件的后面，不然可能不会把资源注入进去
@@ -798,6 +823,10 @@ console.log(d, '-----------')
 optimization: {
   // 分割代码块
   splitChunks: {
+    // 异步文件可以分割成几个模块
+    maxAsyncRequest: 5,
+    // 入口文件可以分割成几个模块
+    maxInitialRequest: 3,
     // 缓存组
     cacheGroups: {
       // 公共的模块
@@ -833,14 +862,14 @@ vender: {
 - webpack 提供了懒加载语法，在 Es 新版本中该语法也成为了规范 `import('./modules.js').then(res => {})`
 
 ```js
-const btn = document.createElement('button')
+const btn = document.createElement('button');
 btn.addEventListener('click', () => {
   import('./source.js').then(res => {
-    console.log(res.default)
-  })
-})
-btn.innerHTML = 'hello'
-document.body.append(btn)
+    console.log(res.default);
+  });
+});
+btn.innerHTML = 'hello';
+document.body.append(btn);
 ```
 
 ## 热更新
