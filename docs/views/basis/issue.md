@@ -865,39 +865,63 @@ const o4 = new Observer();
 
 const s = new Subject();
 // 添加观察者
-s.add(o1).add(o2).add(o3).add(o4);
+s.add(o1)
+  .add(o2)
+  .add(o3)
+  .add(o4);
 // 通知观察者
 s.notify('你好');
 ```
 
 ### 发布订阅模式
 
-发布订阅模式会有一个调度中心的概念。是面向调度中心编程的，对发布者与订阅者解耦
+发布订阅模式会有一个调度中心的概念。是面向调度中心编程的，对发布者与订阅者解耦，例如 node 中的 emitter
 
 ```js
-class PubSub {
+class Emitter {
   constructor() {
-    this.handlers = {};
+    this.callbacks = {};
   }
-  subscribe(type, fn) {
-    if (!this.handlers[type]) {
-      this.handlers[type] = [];
+  on(type, fn) {
+    if (!this.callbacks[type]) {
+      this.callbacks[type] = [];
     }
-    this.handlers[type].push(fn);
+    this.callbacks[type].push(fn);
+    return this;
   }
-  publish(type, ...args) {
-    if (!this.handlers[type]) return;
-    this.handlers[type].forEach(fn => fn(...args));
+  emit(type, ...args) {
+    if (!this.callbacks[type]) return;
+    this.callbacks[type].forEach(fn => fn(...args));
+    return this;
+  }
+  off(type, fn) {
+    if (!this.callbacks[type]) return;
+    this.callbacks[type].find((handler, idx) => {
+      if (fn === handler) {
+        this.callbacks[type].splice(idx, 1);
+      }
+    });
+    return this;
+  }
+  once(type, fn) {
+    const wrapFn = (...args) => {
+      fn(...args);
+      this.off(type, fn);
+    };
+    this.on(type, wrapFn);
   }
 }
+const em = new Emitter();
 
-const ps = new PubSub();
-
-ps.subscribe('a', console.log);
-ps.subscribe('a', console.log);
-ps.subscribe('a', console.log);
-ps.subscribe('a', console.log);
-ps.publish('a', 'hello world');
+const fn1 = (a, b) => console.log('哈哈哈哈哈第一次', a, b);
+const fn2 = a => console.log('哈哈哈哈哈第二次', a);
+const fn3 = a => console.log('测试 once', a);
+em.on('fecym', fn1);
+em.on('fecym', fn2);
+em.emit('fecym', 1, 2);
+em.off('fecym', fn2);
+em.emit('fecym', 1, 132);
+em.once('aaa', fn3(1));
 ```
 
 ## 字符串转 txt 文件（blob）
