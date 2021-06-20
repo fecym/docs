@@ -374,6 +374,25 @@ Promise.all = function(prs) {
 };
 ```
 
+```js
+// 也可以这么写
+Promise.all = function(prs) {
+  let counter = 0,
+    result = [];
+  return new Promise2((resolve, reject) => {
+    prs.forEach((p, idx) => {
+      // 直接封装成 promise 然后执行
+      Promise.resolve(p).then(val => {
+        result[idx] = val;
+        if (++counter === prs.length) {
+          resolve(result);
+        }
+      }, reject);
+    });
+  });
+};
+```
+
 ### race
 
 `race` 是一个赛跑方法，在 `promise` 中被称为竞态，谁先有结果要谁，不管成功还是失败只要第一个有结果的
