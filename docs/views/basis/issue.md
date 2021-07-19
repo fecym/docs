@@ -1034,7 +1034,7 @@ const encryptReg = (before = 3, after = 4) => {
 - 深度优先，访问完一颗子树再去访问后面的子树，而访问子树的时候，先访问根再访问根的子树，称为先序遍历；先访问子树再访问根，称为后序遍历。
 - 广度优先，即访问树结构的第 n+1 层前必须先访问完第 n 层
 
-1. 深度优先
+### 深度优先
 
 先序遍历
 
@@ -1058,19 +1058,32 @@ const treeForEach = (tree, func) => {
 };
 ```
 
-2. 广度优先
+### 广度优先
 
 广度优先的思路是，维护一个队列，队列的初始值为树结构根节点组成的列表，重复执行以下步骤直到队列为空。取出队列中的第一个元素，进行访问相关操作，然后将其后代元素（如果有）全部追加到队列最后。
 
 ```js
 const treeForEach = (tree, func) => {
-  let node,
-    list = [...tree];
+  let node;
+  const list = [...tree];
   while ((node = list.shift())) {
     func(node);
     node.children && list.push(...node.children);
   }
 };
+```
+
+### 过滤树
+
+工作中可能会遇到一个过滤树的需求
+
+```js
+function treeFilter(tree, func) {
+  return tree.filter(node => {
+    node.children = node.children && treeFilter(node.children, func);
+    return func(node) || (node.children && node.children.length);
+  });
+}
 ```
 
 ## 数组分组

@@ -13,9 +13,9 @@ const productionGzipExtensions = ['js', 'css']
 module.exports = {
   chainWebpack: (config, isServer) => {
     // 移除 prefetch 插件
-    config.plugins.delete('prefetch')
+    // config.plugins.delete('prefetch')
     // 移除 preload 插件
-    config.plugins.delete('preload');
+    // config.plugins.delete('preload');
 
     if (config.mode === 'production') {
       config.optimization.minimize(true)
