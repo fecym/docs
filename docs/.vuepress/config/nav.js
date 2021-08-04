@@ -21,7 +21,8 @@ module.exports = {
         { text: '实现 Promise', link: '/views/basis/promise' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
         { text: '命令行参数', link: '/views/basis/command' },
-        { text: '小技巧及面试题收录', link: '/views/basis/issue' },
+        { text: '工作小技巧', link: '/views/basis/issue' },
+        { text: '面试题收录', link: '/views/basis/interview' },
         // { text: '交接文档', link: '/views/other/doc' },
       ]
     },

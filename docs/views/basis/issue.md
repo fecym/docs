@@ -1,16 +1,16 @@
 ---
-title: 小技巧及面试题
+title: 工作遇到的小技巧
 date: 2019-12-14
 tags:
-  - issue
-  - 基础
+  + issue
+  + 基础
 ---
 
 ## 获取一个月有多少天
 
 今天遇到一个需求，已知月份，得到这个月的第一天和最后一天作为查询条件查范围内的数据
 
-`new Date(year, month, date, hrs, min, sec)`，`new Date` 可以接受这些参数创建一个时间对象
+`new Date(year, month, date, hrs, min, sec)` ， `new Date` 可以接受这些参数创建一个时间对象
 其中当我们把 `date` 设置为 `0` 的时候，可以直接通过 `getDate()` 获取到最后一天的日期然后得到我们要的最后一天
 
 ```js
@@ -26,42 +26,11 @@ function getMonthLength(month) {
 }
 ```
 
-## 关于函数的 length 属性
-
-360 面试过程遇到一个很有趣的问题，是关于函数的 length 属性的，题简写如下
-
-```js
-(() => 1).length === 0; // 输出什么
-```
-
-我所理解的拥有 `length` 的对象一般都是数组或者类数组对象，或者定义了 `length` 属性的对象，所以我回答说这个应该是 `false` 吧，后来面试告诉我函数是有 `length` 属性的，函数的 `length` 属性就是函数参数的个数，瞬间我恍然大悟，函数的参数就是 `arguments`，而 `arguments` 也是一个类数组对象所以他是有 `length` 属性的
-
-```js
-// so
-(() => 1).length === 0; // 输出 true
-(a => a).length; // 输出 1
-```
-
-## 数组中字符串键值的处理
-
-在 JavaScript 中数组是通过数字进行索引，但是有趣的是他们也是对象，所以也可以包含 `字符串` 键值和属性，但是这些不会被计算在数组的长度（length）内
-
-如果字符串键值能够被强制类型转换为十进制数字的话，它就会被当做数字索引来处理
-
-```js
-const arr = [];
-arr[0] = 1;
-arr['1'] = '嘿嘿';
-arr['cym'] = 'cym';
-console.log(arr); // [1, '嘿嘿', cym: 'cym']
-console.log(arr.length); // 2
-```
-
 ## void 运算符
 
-`undefined` 是一个内置标志符，它的值为 `undefined`（除非被重新定义过），通过 `void` 运算符即可得到该值
+`undefined` 是一个内置标志符，它的值为 `undefined` （除非被重新定义过），通过 `void` 运算符即可得到该值
 
-在 `void` 之后的语句或表达式都将返回 `undefined`。`void` 并不会改变表达式的结果，只是让表达式不返回值
+在 `void` 之后的语句或表达式都将返回 `undefined` 。 `void` 并不会改变表达式的结果，只是让表达式不返回值
 
 ```js
 void true; // undefined
@@ -99,15 +68,18 @@ JSON.stringify(true); // "true"
 
 ### 不安全的 JSON 值
 
-所有安全的 `JSON` 值都可以使用 `JSON.stringify` 序列化，不安全的 `JSON` 值有：`undefined`、`function`、`symbol` 和 `循环引用`。`JSON.stringify`
+所有安全的 `JSON` 值都可以使用 `JSON.stringify` 序列化，不安全的 `JSON` 值有： `undefined` 、 `function` 、 `symbol` 和 `循环引用` 。 `JSON.stringify`
 
-在对象中遇到这些不安全的 `JSON` 值的时候会自动将其忽略，在数组中遇到则会返回 `null`，以保证数组成员位置不变
+在对象中遇到这些不安全的 `JSON` 值的时候会自动将其忽略，在数组中遇到则会返回 `null` ，以保证数组成员位置不变
 
 ```js
 JSON.stringify(undefined); // null
 JSON.stringify(function() {}); // null
 JSON.stringify([1, undefined, 2, function() {}, 3]); // "1, null, 2, null, 3"
-JSON.stringify({ a: 2, b: function() {} }); // "{"a":2}"
+JSON.stringify({
+  a: 2,
+  b: function() {}
+}); // "{"a":2}"
 ```
 
 ### toJSON 方法
@@ -120,7 +92,9 @@ JSON.stringify({ a: 2, b: function() {} }); // "{"a":2}"
 const o = {
   a: 'cym',
   toJSON() {
-    return { c: 'b' };
+    return {
+      c: 'b'
+    };
   },
 };
 
@@ -129,7 +103,7 @@ JSON.stringify(o); // {"c":"b"}
 
 ### JSON.stringify 的第二个参数
 
-我们可以向 `JSON.stringify` 中传递一个可选参数 `replacer`，他可以书数组也可以书函数，用来指定对象序列化的时候哪些属性应该被处理，哪些应该被排除，和 `toJSON` 很像
+我们可以向 `JSON.stringify` 中传递一个可选参数 `replacer` ，他可以书数组也可以书函数，用来指定对象序列化的时候哪些属性应该被处理，哪些应该被排除，和 `toJSON` 很像
 
 1. 当 `replacer` 是一个数组时，那么他必须是一个字符串数组，其中包含序列化要处理的对象的属性名称，除此之外的属性就会被忽略
 
@@ -158,9 +132,9 @@ JSON.stringify(obj, (k, v) => {
 
 ## 一元运算符
 
-我们都知道一个字符串转换为数字，可以使用 `+ "12"` 转换为数字 12，也可以使用 `-`，这样的 `+、-` 是一元运算符，这样将数字转换为字符串的方法属于显示转换
+我们都知道一个字符串转换为数字，可以使用 `+ "12"` 转换为数字 12，也可以使用 `-` ，这样的 `+、-` 是一元运算符，这样将数字转换为字符串的方法属于显示转换
 
-`-` 运算符还有反转符号位的功能，当然不能把一元操作符连在一起写，不然会变成 `--`，当做递减运算符号来计算了，我们可以理解为 `-` 运算符出在单数次数会转符号位，出现双次数会抵消反转，比如说 `1 - - 1 === 2`
+`-` 运算符还有反转符号位的功能，当然不能把一元操作符连在一起写，不然会变成 `--` ，当做递减运算符号来计算了，我们可以理解为 `-` 运算符出在单数次数会转符号位，出现双次数会抵消反转，比如说 `1 - - 1 === 2`
 
 ```py
 # 这是 js 代码哦，不是 python
@@ -171,7 +145,7 @@ JSON.stringify(obj, (k, v) => {
 
 ## 字位反转操作符 ~
 
-`~` 返回 2 的补码，`~x` 大致等同于 `-(x+1)`
+`~` 返回 2 的补码， `~x` 大致等同于 `-(x+1)`
 
 ```js
 ~42; // -(42+1) ===> -43
@@ -179,13 +153,13 @@ JSON.stringify(obj, (k, v) => {
 
 在 `-(x+1)` 中唯一能够得到 0（或者严格来说时候 -0）的 x 值是 -1，也就是说 ~ 和一些数字在一起会返回一个假值 0，其他情况下则返回真值
 
--1 是一个 `哨位值`，哨位值是那些在各个类型中被赋予了特殊含义的值。在 C 语言中 -1 代表函数执行失败，大于等于 0 的值代表函数执行成功
+-1 是一个 `哨位值` ，哨位值是那些在各个类型中被赋予了特殊含义的值。在 C 语言中 -1 代表函数执行失败，大于等于 0 的值代表函数执行成功
 
 比如在 JavaScript 中字符串的 indexOf 方法也遵循这一惯例，该方法在字符串中搜索指定的字符串，如果找到就返回该子字符串所在的位置，否则返回 -1
 
 ### ~ 的用途
 
-我们知道在 JavaScript 中假值有：`undefined、null、false、+0、-0、NaN、''`，其他都为真值，所以负数也是真值，那么我们就可以拿着 `~` 和 `indexOf` 一起检结果强制类型转换为 真/假 值
+我们知道在 JavaScript 中假值有： `undefined、null、false、+0、-0、NaN、''` ，其他都为真值，所以负数也是真值，那么我们就可以拿着 `~` 和 `indexOf` 一起检结果强制类型转换为 真/假 值
 
 ```js
 const str = 'hello world';
@@ -193,8 +167,7 @@ const str = 'hello world';
 if (~str.indexOf('lo')) {
   // true
   // 找到匹配
-}
-~str.indexOf('ol'); // 0，假值
+}~str.indexOf('ol'); // 0，假值
 !~str.indexOf('ol'); // true
 if (!~str.indexOf('ol')) {
   // true
@@ -220,14 +193,15 @@ Math.floor(-1.9); // -2
 ~~-1.9; // -1
 ```
 
-`~~x` 能将值截除为一个 32 位的整数，`x | 0` 也可以，而且看起来更简洁哦，不过出于对运算符优先级的考虑，我们更倾向于使用 `~~x`
+`~~x` 能将值截除为一个 32 位的整数， `x | 0` 也可以，而且看起来更简洁哦，不过出于对运算符优先级的考虑，我们更倾向于使用 `~~x`
 
 ```js
 ~~1.9; // 1
 1.9 | 0; // 1
 
 ~~-1.9; // -1
--1.9 | 0; // -1
+-
+1.9 | 0; // -1
 ```
 
 ## 给定一组 url 实现并发请求
@@ -240,6 +214,7 @@ Math.floor(-1.9); // -2
 
 ```js
 const urls = ['./1.json', './2.json', './3.json'];
+
 function getData(url) {
   // 返回一个 Promise 利用 Promise.all 接受
   return new Promise((resolve, reject) => {
@@ -256,6 +231,7 @@ function getData(url) {
     xhr.send(null);
   });
 }
+
 function getMultiData(urls) {
   // Promise.all 接受一个包含 promise 的数组，如果不是 promise 数组会被转成 promise
   Promise.all(urls.map(url => getData(url))).then(results => {
@@ -272,8 +248,10 @@ function getMultiData(urls) {
 
 ```js
 const urls = ['./1.json', './2.json', './3.json'];
+
 function getAllDate(urls, cd) {
   const result = {};
+
   function getData(url, idx) {
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -332,56 +310,6 @@ getGroupData(urls, data => {
 });
 ```
 
-## 类型转换问题
-
-原题：如何让 (a == 1 && a == 2 && a == 3) 的值为 true?
-
-这个问题考查的数据类型转换，`==` 类型转换有个基本规则
-
-- `NaN` 与任何值都不相等，包括自己本身
-- `undefined` 与 `null` 相等(==)，其他都不等
-- 对象与字符串类型做比较，会把对象转换成字符串然后做比较
-- 其他类型比较都要转换成 `数字` 做比较
-
-那么这个问题我们重写 `toString` 或者 `valueOf` 方法就可以了
-
-```js
-const a = {
-  val: 1,
-  toString() {
-    return this.val++;
-  },
-};
-if (a == 1 && a == 2 && a == 3) {
-  console.log('ok');
-}
-```
-
-还有一种方法实现
-
-```js
-var i = 1;
-Object.defineProperty(window, 'a', {
-  get() {
-    return i++;
-  },
-});
-
-if (a == 1 && a == 2 && a == 3) {
-  console.log('OK');
-}
-```
-
-### 拓展一下 [] == ![] 为什么是 true
-
-上面隐式类型转换规则中提到，其他类型比较都要转换成数字做比较，这个就是对应那条规则的
-
-- 首先 `[].toString()` 会得到一个 `''` 字符串
-- `![]` 得到一个布尔值 `false`
-- `''` 与 `false` 比较肯定要转换成数字比较
-- 那么 `''` 转换则为 `0`， `false` 转换也是 `0`
-- 所以这道题就是 `true`
-
 ## 1..toString 的问题
 
 有时候我们看到别人的代码中会写到数字调其他类型的方法的时候会写成 `1..toString()` 这样的写法
@@ -391,218 +319,14 @@ if (a == 1 && a == 2 && a == 3) {
 因为可能在 `.` 上面存在争议，一个数字后面加点，解释器他不知道你这是小数还是要调取方法，所以就跑异常了
 
 ```js
-1.toString()     // Uncaught SyntaxError: Invalid or unexpected token
-1..toString()    // '1'
-1.2.toString()   // '1.2'
-```
-
-## 如何让 (a == 1 && a == 2 && a == 3) 的值为 true
-
-- 这是一道经典的面试题，主要考察是数据类型转换，我们重写 toString 或者 valueOf 方法即可解决
-
-```js
-const n = {
-  i: 1,
-  toString() {
-    return n.i++;
-  },
-  // 两个写一个即可
-  valueOf() {
-    return n.i++;
-  },
-};
-
-if (n == 1 && n == 2 && n == 3) {
-  console.log('通过');
-}
-```
-
-- 当然也有其他解决技巧
-
-```js
-const n = 0;
-!(n == 1 && n == 2 && n == 3); // true
-```
-
-- 利用数组 `toString` 方法会调用本身的 `join` 方法，这里把自己的 `join` 方法改写为 `shift` 方法，每次返回第一个元素，而且每次数组删除第一个值，正好可以使判断成立。
-
-```js
-var n = [1, 2, 3];
-n.join = n.shift;
-if (n == 1 && n == 2 && n == 3) {
-  console.log('通过');
-}
-```
-
-## jsonp
-
-当出现端口、协议、域名三者有一个不一样的时候就会出现跨域，跨域解决方案很多，这里实现一个 jsonp
-
-`jsonp` 是利用 `script、img、iframe、link` 等带有的 `src` 属性请求可以跨域加载资源，而不受同源策略的限制。 每次加载时都会由浏览器发送一次 GET 请求，通过 `src` 属性加载的资源
-
-```js
-// callbackName 要与后端返回的一致
-function jsonp(url, query, callbackName = 'getData') {
-  return new Promise((resolve, reject) => {
-    const scriptEl = document.createElement('script');
-    const queryObj = parseQuery(query);
-    const onDone = () => {
-      delete window[callbackName];
-      document.body.removeChild(scriptEl);
-    };
-    url += `?callback=${callbackName}${queryObj && '&' + queryObj}`;
-    scriptEl.src = url;
-    window[callbackName] = res => {
-      onDone();
-      if (res) {
-        resolve(res);
-      } else {
-        reject('没有获取到数据');
-      }
-    };
-    scriptEl.onerror = () => {
-      onDone();
-      reject('脚本加载失败');
-    };
-    document.body.appendChild(scriptEl);
-  });
-}
-function parseQuery(query) {
-  let queryStr = '';
-  for (const key in query) {
-    if (Object.hasOwnProperty.call(query, key)) {
-      queryStr += `${key}=${query[key]}&`;
-    }
-  }
-  return queryStr.slice(0, -1);
-}
-
-// 使用
-jsonp('http://localhost:3000/getData', { a: 1, b: 2 })
-  .then(res => {
-    console.log('🚀 ~ jsonp ~ res', res);
-  })
-  .catch(err => {
-    console.log('🚀 ~ jsonp ~ err', err);
-  });
-```
-
-## 图片懒加载
-
-工作中经常会用到图片，当图片过多的时候，通常会做懒加载优化加载请求，懒加载就是优先加载可视区域内的内容，其他部分等进入了可视区域内在去加载
-
-图片懒加载的原理很简单，需要做到两点即可实现：
-
-1. 图片是否要加载取决于它的 `src` 属性。在初始化的时候我们不给图片设置 src 属性，而给一个其他属性设置图片的真实地址，当图片需要加载时候在给图片的 `src` 设置属性，此时就可以做到懒加载
-
-2. 当图片进入可视区域的时候，我们就需要加载图片了。可视区域就是当图片元素的相对于 `可视区域的高度` 小于 `可视区域的高度` 的时候说明元素进入视口了
-
-### 可视区域高度
-
-可是区域就是浏览器中我们可以看见的高度，可以使用 `window.innerHeight` 或者 `document.documentElement.clientHeight` 获取到
-
-当元素 `顶边距离` 距离小于 `可视窗口` 时说明元素要进入可视区域了
-
-### getBoundingClientRect
-
-`element.getBoundingClientRect()` 返回值是一个 DOMRect 对象，这个对象是由该元素的 getClientRects() 方法返回的一组矩形的集合，就是该元素的 CSS 边框大小。返回的结果是包含完整元素的最小矩形，并且拥有 left, top, right, bottom, x, y, width, 和 height 这几个以像素为单位的只读属性用于描述整个边框。除了 width 和 height 以外的属性是`相对于视图窗口的左上角`来计算的。
-
-<p align="center" class="p-images">
-  <img :src="$withBase('/imgs/img-lazy-load-rect.png')" height="260" />
-</p>
-
-我们可以用这个 api 来获取图片相对于可视区域左上角的高度，它永远是个相对高度，此时可以写一个是否进入可视区域的方法
-
-```js
-const viewHeight = window.innerHeight || document.documentElement.clientHeight;
-function isInViewport(el) {
-  const { top } = el.getBoundingClientRect;
-  return top <= viewHeight;
-}
-```
-
-对于滚动这种高频事件我们一般都会做防抖处理，连续触发后只执行最后一次
-
-```js
-function debounce(fn, delay = 500) {
-  let timer;
-  return function(...args) {
-    if (timer) clearTimeout(timer);
-    setTimeout(() => {
-      fn.apply(this, args);
-    }, delay);
-  };
-}
-```
-
-贴上完整代码
-
-```js
-const viewHeight = window.innerHeight || document.documentElement.clientHeight;
-// 是否满足加载条件
-function isInViewport(el) {
-  const { top } = el.getBoundingClientRect();
-  return top <= viewHeight;
-}
-
-// 防抖处理
-function debounce(fn, delay) {
-  let timer;
-  return function(...args) {
-    if (timer) clearTimeout(timer);
-    setTimeout(() => {
-      fn.apply(this, args);
-    }, delay);
-  };
-}
-
-// 图片加载个数
-let count = 0;
-
-// 懒加载核心
-function lazyLoad() {
-  const imgs = document.getElementsByTagName('img');
-  const len = imgs.length;
-  for (let i = 0; i < len; i++) {
-    const el = imgs[i];
-    if (isInViewport(el)) {
-      const src = el.getAttribute('data-src');
-      if (src) {
-        el.src = src;
-        el.removeAttribute('data-src');
-        if (++count === len) {
-          // 图片都加载完成后移除事件
-          removeEvent();
-        }
-      }
-    }
-  }
-}
-
-// 防抖处理懒加载函数，方便移除事件监听
-function debounceLazyLoad() {
-  return debounce(lazyLoad, 500)();
-}
-
-// 绑定事件函数
-function bindEvent() {
-  // 页面加载完成执行一次
-  window.addEventListener('load', debounceLazyLoad);
-  // 绑定滚动事件
-  document.addEventListener('scroll', debounceLazyLoad);
-}
-// 满足条件后移除事件
-function removeEvent() {
-  window.removeEventListener('load', debounceLazyLoad);
-  document.removeEventListener('scroll', debounceLazyLoad);
-}
-// 绑定事件
-bindEvent();
+1. toString() // Uncaught SyntaxError: Invalid or unexpected token
+1..toString() // '1'
+1.2.toString() // '1.2'
 ```
 
 ## 滚动加载
 
-开发移动端经常会遇到滚动加载，滚动加要满足 `"页面真实内容高度" 超过 "可视窗口" 的高度`，那么说明需要加载新的数据了
+开发移动端经常会遇到滚动加载，滚动加要满足 `"页面真实内容高度" 超过 "可视窗口" 的高度` ，那么说明需要加载新的数据了
 
 此时我们就需要知道几个高度值：
 
@@ -614,23 +338,23 @@ bindEvent();
 
 ### 和元素高度、滚动、位置相关的属性
 
-每个 HTML 元素都具有 `clientHeight`、`offsetHeight`、`scrollHeight`、`offsetTop`、`scrollTop` 这 5 个和元素高度、滚动、位置相关的属性
+每个 HTML 元素都具有 `clientHeight` 、 `offsetHeight` 、 `scrollHeight` 、 `offsetTop` 、 `scrollTop` 这 5 个和元素高度、滚动、位置相关的属性
 
 clientHeight 和 offsetHeight 属性和元素的滚动位置没有关系，它代表着元素的高度：
 
-- clientHeight 包括 padding 但不包括 margin、border 和水平滚动条的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
+* clientHeight 包括 padding 但不包括 margin、border 和水平滚动条的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
 
-- offsetHeight 包括 padding、border 和水平滚动条但不包括 margin 的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
+* offsetHeight 包括 padding、border 和水平滚动条但不包括 margin 的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
 
 当父元素的子元素比父元素高且 overflow=scroll 时，父元素会滚动，此时：
 
-- scrollHeight：因为子元素比父元素高，父元素不想被子元素撑的一样高就显示了滚动条，在滚动过程中子元素有部分隐藏被隐藏，scrollHeight 就是子元素可见高度与不可见高度的真实高度，而可见高度就是 clientHeight。也就是 `scrollHeight > clientHeight` 时会出现滚动条，没有滚动条时 `scrollHeight === clientHeight` 恒成立，只读属性
+* scrollHeight：因为子元素比父元素高，父元素不想被子元素撑的一样高就显示了滚动条，在滚动过程中子元素有部分隐藏被隐藏，scrollHeight 就是子元素可见高度与不可见高度的真实高度，而可见高度就是 clientHeight。也就是 `scrollHeight > clientHeight` 时会出现滚动条，没有滚动条时 `scrollHeight === clientHeight` 恒成立，只读属性
 
-- scrollTop：代表有滚动条时，滚动条向下滚动的距离，也就是子元素被遮挡的高度，在没有滚动条时 `scrollTop === 0` 恒成立，可读可设置
+* scrollTop：代表有滚动条时，滚动条向下滚动的距离，也就是子元素被遮挡的高度，在没有滚动条时 `scrollTop === 0` 恒成立，可读可设置
 
-- offsetTop：当前元素距离最近父元素顶部的距离，和滚动条没有关系，只读属性
+* offsetTop：当前元素距离最近父元素顶部的距离，和滚动条没有关系，只读属性
 
-- clientTop：当前元素顶部边框的宽度，不包括 padding 和 margin，只读属性
+* clientTop：当前元素顶部边框的宽度，不包括 padding 和 margin，只读属性
 
 知道了上面这些概念我们就可以来实现这个滚动加载，只要满足 `页面真实高度 - 页面可见高度 - 页面滚动高度 < 0` 说明该去加载新的数据了
 
@@ -644,284 +368,6 @@ const viewHeight = window.innerHeight || htmlEl.clientHeight;
 // 满足触发条件
 pageHeight - scrollHeight - viewHeight < 0;
 // 当前一般情况下会提前去加载数据，数据是一般是异步的，所以会有一个预留高度
-```
-
-## Generator
-
-### 对象增加迭代器
-
-类数组对象的特征：必须有长度、索引、能够被迭代，否则这个对象不可以使用 `...` 语法转数组，我们可以使用 Array.from 转，当然我们也可以给对象添加一个迭代器
-
-```js
-const obj = {
-  0: 1,
-  1: 2,
-  2: 3,
-  3: 4,
-  length: 4,
-  [Symbol.iterator]() {
-    let idx = 0
-    return {
-      next() {
-        return {
-          value: obj[idx],
-          done: idx++ >= obj.length,
-        }
-      }
-    }
-  }
-}
-// 此时对象就被添加了迭代器
-[...obj]  // 1 2 3 4
-for (const val of obj) {
-  console.log(val)  // 1 2 3 4
-}
-```
-
-上面的问题可以字节使用生成器来实现，生成器返回一个迭代器，迭代器有 next 方法，调用 next 方法可以返回 value 和 done
-
-```js
-const obj = {
-  0: 1,
-  1: 2,
-  2: 3,
-  3: 4,
-  length: 4,
-  [Symbol.iterator]: function* () {
-    let idx = 0
-    while (idx !== this.length) {
-      yield this[idx++]
-    }
-  }
-```
-
-### 实现一个字符串的迭代器
-
-实现一个字符串的迭代器：传入一组字符串并返回单个字符的范例。一旦更新的字符串，输出也跟着替换掉旧的
-
-```js
-function generator(str) {
-  let idx = 0;
-  return {
-    next() {
-      return {
-        value: str[idx],
-        done: idx++ >= str.length,
-      };
-    },
-  };
-}
-// 测试
-const str = 'as';
-let gen = generator(str);
-console.log(gen.next());
-console.log(gen.next());
-console.log(gen.next());
-console.log(gen.next());
-gen = generator('str');
-console.log(gen.next());
-console.log(gen.next());
-console.log(gen.next());
-console.log(gen.next());
-// { value: 'a', done: false }
-// { value: 's', done: false }
-// { value: undefined, done: true }
-// { value: undefined, done: true }
-// { value: 's', done: false }
-// { value: 't', done: false }
-// { value: 'r', done: false }
-// { value: undefined, done: true }
-```
-
-### 简单模拟 co
-
-模拟一下 co 的实现
-
-首先来看一则例子
-
-```js
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
-const readFile = promisify(fs.readFile);
-
-function* read() {
-  const name = yield readFile(path.resolve(__dirname, 'name.txt'), 'utf8');
-  const age = yield readFile(path.resolve(__dirname, name), 'utf8');
-  return age;
-}
-
-const it = read();
-
-let { value, done } = it.next();
-value.then(data => {
-  let { value, done } = it.next(data);
-  // console.log(data, '???')
-  value.then(data => {
-    let { value, done } = it.next(data);
-    console.log(value);
-  });
-});
-```
-
-使用 co 库可以很容易解决这个问题
-
-```js
-const co = require('co');
-// co 接受一个生成器
-co(read()).then(data => {
-  console.log(data);
-});
-// 那模拟一下
-function _co(it) {
-  // 首先返回一个 promise
-  return new Promise((resolve, reject) => {
-    // 因为可以传值的原因，不可以直接使用循环实现，需要使用 递归
-    function next(data) {
-      const { value, done } = it.next(data);
-      if (done) return resolve(value);
-      // 保证值是一个 promise
-      Promise.resolve(value).then(data => {
-        next(data);
-      }, reject);
-    }
-    next();
-  });
-}
-```
-
-## 菲波那切数列
-
-- 今天新东方的面试还提到了菲波那切数列，其实这个东西蛮很有趣，简单介绍一下
-- 1、1、2、3、5、8、13、21、34 ....
-- 这道题有个规律，第一项加上第二项永远等于第三项：1 + 1 = 2；1 + 2 = 3；2 + 3 = 5；3 + 5 = 8 ....
-- 要求是传入第几项，得到该值，根据这个规律来实现一下
-
-### 简单写法
-
-```js
-function fibonacci(n) {
-  // 第一项和第二项都返回1
-  if (n === 1 || n === 2) return 1;
-  // 我们只要返回 n - 1（n的前一项）与 n - 2（n的前两项）的和便是我们要的值
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
-```
-
-### 优化版本
-
-上面的写法，求 20 次以内的总和运行会很快，50 次以上特别慢，100 次 以上可能就爆栈了，所以我们需要优化写法，缓存每次计算后的值
-
-```js
-function feibo(n, sum1 = 1, sum2 = 1) {
-  if (n === 1 || n === 2) return sum2;
-  return feibo(n - 1, sum2, sum1 + sum2);
-}
-```
-
-这种写法缓存了，每次计算后的值，执行效率会很高，100 次以上也会秒返回结果，这个也叫作尾递归优化
-
-## 观察者与发布订阅
-
-> 一直以来，我以为发布订阅和观察者是一个思路，一次偶然的机会我发现他们是两种不同的设计思路
-
-虽然他们都是`实现了对象的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖它的对象都将得倒通知，然后自动更新`。但是他们之间是有一定区别的。
-
-### 观察者模式
-
-观察者模式会有 `观察者` 与 `被观察者(观察目标)` 两个对象存在，观察者可以有多个，观察目标可以添加多个观察者，可以通知观察者。观察者模式是面向与目标和观察者编程的，耦合目标和观察者
-
-```js
-// 被观察者
-class Subject {
-  constructor() {
-    this.observes = [];
-  }
-  add(ob) {
-    this.observes.push(ob);
-    return this;
-  }
-  notify(...args) {
-    this.observes.forEach(ob => ob.update(...args));
-    return this;
-  }
-}
-// 观察者
-let id = 0;
-class Observer {
-  constructor(name) {
-    this.name = name || ++id;
-  }
-  update(...args) {
-    console.log(`${this.name} 收到了通知：${args}`);
-  }
-}
-
-// 使用
-const o1 = new Observer('fecym');
-const o2 = new Observer('ys');
-const o3 = new Observer();
-const o4 = new Observer();
-
-const s = new Subject();
-// 添加观察者
-s.add(o1)
-  .add(o2)
-  .add(o3)
-  .add(o4);
-// 通知观察者
-s.notify('你好');
-```
-
-### 发布订阅模式
-
-发布订阅模式会有一个调度中心的概念。是面向调度中心编程的，对发布者与订阅者解耦，例如 node 中的 emitter
-
-```js
-class Emitter {
-  constructor() {
-    this.callbacks = {};
-  }
-  on(type, fn) {
-    if (!this.callbacks[type]) {
-      this.callbacks[type] = [];
-    }
-    this.callbacks[type].push(fn);
-    return this;
-  }
-  emit(type, ...args) {
-    if (!this.callbacks[type]) return;
-    this.callbacks[type].forEach(fn => fn(...args));
-    return this;
-  }
-  off(type, fn) {
-    if (!this.callbacks[type]) return;
-    this.callbacks[type].find((handler, idx) => {
-      if (fn === handler) {
-        this.callbacks[type].splice(idx, 1);
-      }
-    });
-    return this;
-  }
-  once(type, fn) {
-    const wrapFn = (...args) => {
-      fn(...args);
-      this.off(type, fn);
-    };
-    this.on(type, wrapFn);
-  }
-}
-const em = new Emitter();
-
-const fn1 = (a, b) => console.log('哈哈哈哈哈第一次', a, b);
-const fn2 = a => console.log('哈哈哈哈哈第二次', a);
-const fn3 = a => console.log('测试 once', a);
-em.on('fecym', fn1);
-em.on('fecym', fn2);
-em.emit('fecym', 1, 2);
-em.off('fecym', fn2);
-em.emit('fecym', 1, 132);
-em.once('aaa', fn3(1));
 ```
 
 ## 字符串转 txt 文件（blob）
@@ -958,7 +404,7 @@ const isEven = num => num % 2 === 0;
 
 项目中我们经常会遇到金钱格式化需求，或者说数字格式化一下，方便阅读（数字比较大的情况下）
 
-比如说 `999999999`，直接阅读很不直观，格式化后 `999,999,999`
+比如说 `999999999` ，直接阅读很不直观，格式化后 `999, 999, 999`
 
 通常我们会使用正则来处理
 
@@ -981,7 +427,7 @@ function formatPrice(price) {
 }
 ```
 
-上面是两种提到的比较常用的方案，但是 js 还有个比较牛逼的 API 可以直接实现这个需求哦，它就是 `toLocaleString`，我们可以直接数字调用这个方法就可以实现，金额的格式化
+上面是两种提到的比较常用的方案，但是 js 还有个比较牛逼的 API 可以直接实现这个需求哦，它就是 `toLocaleString` ，我们可以直接数字调用这个方法就可以实现，金额的格式化
 
 ```js
 (999999999).toLocaleString(); // 999,999,999
@@ -993,7 +439,7 @@ const options = {
 (123456).toLocaleString('zh-CN', options); // ¥123,456.00
 ```
 
-`toLocaleString` 可以接收两个可选参数：`locales` 和 `options`，而且这个 api 在各大浏览器通用不存在兼容问题并且这个 `api` 不止存在 Number 的原型上，Array、Object、Date 原型上都有这个 api，并且格式化出来的值可以根据我们传入的参数出现各种结果
+`toLocaleString` 可以接收两个可选参数： `locales` 和 `options` ，而且这个 api 在各大浏览器通用不存在兼容问题并且这个 `api` 不止存在 Number 的原型上，Array、Object、Date 原型上都有这个 api，并且格式化出来的值可以根据我们传入的参数出现各种结果
 
 [参数及用法可以参考 MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString)
 
@@ -1031,8 +477,8 @@ const encryptReg = (before = 3, after = 4) => {
 
 广度优先和深度优先的概念很简单，区别如下：
 
-- 深度优先，访问完一颗子树再去访问后面的子树，而访问子树的时候，先访问根再访问根的子树，称为先序遍历；先访问子树再访问根，称为后序遍历。
-- 广度优先，即访问树结构的第 n+1 层前必须先访问完第 n 层
+* 深度优先，访问完一颗子树再去访问后面的子树，而访问子树的时候，先访问根再访问根的子树，称为先序遍历；先访问子树再访问根，称为后序遍历。
+* 广度优先，即访问树结构的第 n+1 层前必须先访问完第 n 层
 
 ### 深度优先
 
@@ -1174,14 +620,19 @@ export function generatorXAxisData(options) {
   options.startTime =
     options.startTime ||
     dayjs()
-      .startOf('d')
-      .valueOf();
+    .startOf('d')
+    .valueOf();
   options.endTime =
     options.endTime ||
     dayjs()
-      .endOf('d')
-      .valueOf();
-  const { interval, template, startTime, endTime } = options;
+    .endOf('d')
+    .valueOf();
+  const {
+    interval,
+    template,
+    startTime,
+    endTime
+  } = options;
   const result = [];
   const timeRange = endTime - startTime;
   const count = Math.floor(timeRange / interval); //时间间隔 （五分钟：5*60*1000）
@@ -1239,7 +690,9 @@ export function base64ToUrl(base64, contentType = 'image/png', includeHead = fal
     // 返回指定位置的字符的 Unicode 编码
     uint8Arr[len] = bstr.charCodeAt(len);
   }
-  const blob = new Blob([uint8Arr], { type: contentType });
+  const blob = new Blob([uint8Arr], {
+    type: contentType
+  });
   return URL.createObjectURL(blob);
 }
 ```
