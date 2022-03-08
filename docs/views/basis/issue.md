@@ -2,8 +2,9 @@
 title: 工作遇到的小技巧
 date: 2019-12-14
 tags:
-  + issue
-  + 基础
+  - 小技巧
+  - 基础
+  - 工作
 ---
 
 ## 获取一个月有多少天
@@ -21,8 +22,8 @@ function getMonthLength(month) {
   const date = new Date(month);
   const year = date.getFullYear();
   // 月份是从 0 开始计算的
-  const _month = date.getMonth() + 1;
-  return new Date(year, _month, 0).getDate();
+  const m = date.getMonth() + 1;
+  return new Date(year, m, 0).getDate();
 }
 ```
 
@@ -66,7 +67,7 @@ JSON.stringify(null); // "null"
 JSON.stringify(true); // "true"
 ```
 
-### 不安全的 JSON 值
+- 不安全的 JSON 值
 
 所有安全的 `JSON` 值都可以使用 `JSON.stringify` 序列化，不安全的 `JSON` 值有： `undefined` 、 `function` 、 `symbol` 和 `循环引用` 。 `JSON.stringify`
 
@@ -82,7 +83,7 @@ JSON.stringify({
 }); // "{"a":2}"
 ```
 
-### toJSON 方法
+- toJSON 方法
 
 如果对象中定义了 `toJSON` 方法，那么在 `JSON` 序列化的时候优先调用该方法，主要是为了处理循环引用的时候，我们让其返回一个合理的值
 
@@ -101,7 +102,7 @@ const o = {
 JSON.stringify(o); // {"c":"b"}
 ```
 
-### JSON.stringify 的第二个参数
+- JSON.stringify 的第二个参数
 
 我们可以向 `JSON.stringify` 中传递一个可选参数 `replacer` ，他可以书数组也可以书函数，用来指定对象序列化的时候哪些属性应该被处理，哪些应该被排除，和 `toJSON` 很像
 
@@ -157,7 +158,7 @@ JSON.stringify(obj, (k, v) => {
 
 比如在 JavaScript 中字符串的 indexOf 方法也遵循这一惯例，该方法在字符串中搜索指定的字符串，如果找到就返回该子字符串所在的位置，否则返回 -1
 
-### ~ 的用途
+1. ~ 的用途
 
 我们知道在 JavaScript 中假值有： `undefined、null、false、+0、-0、NaN、''` ，其他都为真值，所以负数也是真值，那么我们就可以拿着 `~` 和 `indexOf` 一起检结果强制类型转换为 真/假 值
 
@@ -177,7 +178,7 @@ if (!~str.indexOf('ol')) {
 
 ~ 要比 `>=0` 和 `== -1` 更简洁
 
-### 字位截除
+2. 字位截除
 
 我们经常使用 `~~` 来截取数字值的小数部分，以为这是和 Math.floor 效果是一样的，实际上并非如此
 
@@ -208,7 +209,7 @@ Math.floor(-1.9); // -2
 
 原题是这样的：给定一组 url，利用 js 的异步实现并发请求，并按顺序输出结果
 
-### Promise.all
+1. Promise.all
 
 首先我们可以想到的是利用 `Promise.all` 来实现，代码实现如下
 
@@ -240,11 +241,11 @@ function getMultiData(urls) {
 }
 ```
 
-### 不用 Promise
+2. 不用 Promise
 
 原题是不用 `Promise` 来实现，我们可以写一个方法，加个回调函数，等数据全部回来之后，触发回调函数传入得到的数据，那么数据全部回来的就是我们要考虑的核心问题，我们可以用个数组或者对象，然后判断一下数组的 length 和传入的 url 的长度是否一样来做判断
 
-#### 使用对象做映射
+- 使用对象做映射
 
 ```js
 const urls = ['./1.json', './2.json', './3.json'];
@@ -278,7 +279,7 @@ getAllDate(urls, data => {
 });
 ```
 
-#### 使用数组实现
+- 使用数组实现
 
 和上面的基本思路差不多，不过这次换成了数组，也可以给个信号量来做判断
 
@@ -336,7 +337,7 @@ getGroupData(urls, data => {
 
 页面的真实高度 = 可是区域的高度 + 页面的滚动高度
 
-### 和元素高度、滚动、位置相关的属性
+## 高度、滚动、位置相关的属性
 
 每个 HTML 元素都具有 `clientHeight` 、 `offsetHeight` 、 `scrollHeight` 、 `offsetTop` 、 `scrollTop` 这 5 个和元素高度、滚动、位置相关的属性
 
@@ -394,11 +395,23 @@ function exportTxt(text, filename) {
 
 ## 奇偶数判断
 
-可能会遇到一个做奇偶数判断的方法吧，反正我遇到了，一句话搞定
+普通写法：
 
 ```js
 const isEven = num => num % 2 === 0;
 ```
+
+也可以使用 `&` 操作符号
+
+```js
+const isEven = num => num & 1 === 0;
+```
+
+根据按位与操作符运算，`两个数都为 1 时，结果才为 1`
+
+而判断奇偶只要根据`最未位`是 0 还是 1 来决定，为 0 就是偶数，为 1 就是奇数
+
+所以 `n & 1` 如果为 0 就是偶数，为 1 是奇数
 
 ## 格式化金钱
 
@@ -482,7 +495,7 @@ const encryptReg = (before = 3, after = 4) => {
 
 ### 深度优先
 
-先序遍历
+- 先序遍历
 
 ```js
 const treeForEach = (tree, func) => {
@@ -493,7 +506,7 @@ const treeForEach = (tree, func) => {
 };
 ```
 
-后序遍历，只需要调换一下节点遍历和子树遍历的顺序即可
+- 后序遍历，只需要调换一下节点遍历和子树遍历的顺序即可
 
 ```js
 const treeForEach = (tree, func) => {
@@ -609,7 +622,7 @@ mapRange([0, 10], [-1, 0], arr);
 // [-1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.30000000000000004, -0.19999999999999996, -0.09999999999999998, 0]
 ```
 
-## 根据时间间隔生成 X 轴的数据
+## 根据时间间隔生成 X 轴数据
 
 在开发 echarts 过程中，需要快速模拟数据，我们可以快速根据时间间隔，开始时间结束时间来快速生成一组 x 轴线的数据，用到 dayjs 库
 
@@ -665,6 +678,27 @@ export function generatorRandomValue(len = 20, range = 50) {
   });
 }
 ```
+
+## 生成随机汉字
+
+```js
+// 生成随机汉字
+export function genRandomText() {
+  const randomChineseUnicode = `%u${(
+    Math.round(Math.random() * 20901) + 19968
+  ).toString(16)}`;
+  return unescape(randomChineseUnicode);
+}
+// 生成随机汉字
+export function randomString(n) {
+  let s = "";
+  for (let i = 0; i < n; i++) {
+    s += genRandomText();
+  }
+  return s;
+}
+```
+
 
 ## base64 转文件预览地址
 
