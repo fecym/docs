@@ -26,10 +26,10 @@ tags:
 
 ```js
 function Person(name) {
-  this.name = name
+  this.name = name;
 }
 // 创建一个新对象
-var person = new Person('cym')
+var person = new Person('cym');
 ```
 
 - 这和一般面向对象编程语言中创建对象的语法很类似，但是 `new` 后面跟的不是类，而是构造函数。在面向对象语言中这样创建的对象除了属性一样外，并没有其他的任何联系，对象之间无法共享属性和方法。每当我们新建一个对象时，都会方法和属性分配一块新的内存，这是极大的资源浪费。
@@ -41,36 +41,36 @@ var person = new Person('cym')
 
 ```js
 // 关于对象
-const obj = {}
+const obj = {};
 // 所有对象都是Object的实例，
-obj.__proto__ === Object.prototype
+obj.__proto__ === Object.prototype;
 // 原型链终点
-Object.prototype.__proto__ === null
-obj.__proto__.__proto__ === null
+Object.prototype.__proto__ === null;
+obj.__proto__.__proto__ === null;
 
 // 关于函数
-const bar = function() {}
+const bar = function() {};
 // 所有的函数都是Function的实例，包括Function本身
-bar.__proto__ === Function.prototype
+bar.__proto__ === Function.prototype;
 // Function的原型继承了Object
-Function.prototype.__proto__ === Object.prototype
+Function.prototype.__proto__ === Object.prototype;
 // 原型链终点
-Object.prototype.__proto__ === null
+Object.prototype.__proto__ === null;
 
 // Object是由Function构造的
-Object.__proto__ === Function.prototype
+Object.__proto__ === Function.prototype;
 // Function也是由Function构造的
-Function.__proto__ === Function.prototype
-Function.__proto__.__proto__ === Object.prototype
-Function.prototype.__proto__ === Object.prototype
-Function.__proto__.__proto__ === Function.prototype.__proto__
+Function.__proto__ === Function.prototype;
+Function.__proto__.__proto__ === Object.prototype;
+Function.prototype.__proto__ === Object.prototype;
+Function.__proto__.__proto__ === Function.prototype.__proto__;
 // 原型链终点
-Object.prototype.__proto__ === null
+Object.prototype.__proto__ === null;
 
 // 函数也是对象的实例
-Function instanceof Object
-Object instanceof Function
-Function instanceof Function
+Function instanceof Object;
+Object instanceof Function;
+Function instanceof Function;
 ```
 
 - 根据上面的代码，我们可以得到一些结论
@@ -98,18 +98,18 @@ Function instanceof Function
 ```js
 // 比如说
 function F() {}
-const f = new F()
-typeof f.__proto__ === 'object'
-typeof F.prototype === 'object'
+const f = new F();
+typeof f.__proto__ === 'object';
+typeof F.prototype === 'object';
 // f.__proto__ 是一个对象，F.prototype 是一个对象
 ```
 
 但是今天在群里为群友指点原型相关的知识的时候，有个群友说，`Function.prototype` 是一个函数不是一个对象，然后我才去试了一下才发现我错了
 
 ```js
-typeof Function.prototype === 'function' // true
-typeof Function.__proto__ === 'function' // true
-typeof Object.__proto__ === 'function' // true
+typeof Function.prototype === 'function'; // true
+typeof Function.__proto__ === 'function'; // true
+typeof Object.__proto__ === 'function'; // true
 ```
 
 ### 经典图
@@ -162,15 +162,15 @@ typeof Object.__proto__ === 'function' // true
   ```js
   function _new() {
     // 创建一个对象
-    const obj = {}
+    const obj = {};
     // 获取到我们传入的构造函数，获取arguments的第一项
-    const F = [].shift.call(arguments)
+    const F = [].shift.call(arguments);
     // 连接到原型
-    obj.__proto__ = F.prototype
+    obj.__proto__ = F.prototype;
     // 执行构造函数，绑定this到新对象
-    F.apply(obj, arguments)
+    F.apply(obj, arguments);
     // 返回一个对象
-    return obj
+    return obj;
   }
   ```
 
@@ -203,7 +203,7 @@ typeof Object.__proto__ === 'function' // true
 function Parent() {}
 function Child() {}
 // 继承的关键
-Child.prototype = new Parent()
+Child.prototype = new Parent();
 ```
 
 **特点和缺点：**
@@ -217,29 +217,29 @@ Child.prototype = new Parent()
 
 ```js
 function Parent() {
-  this.name = 'inherit'
-  this.colors = ['red', 'green']
+  this.name = 'inherit';
+  this.colors = ['red', 'green'];
 }
 Parent.prototype.sayName = function() {
-  return this.name
-}
+  return this.name;
+};
 function Child() {}
 // 继承的关键
-Child.prototype = new Parent()
+Child.prototype = new Parent();
 // 原型链继承会让子类丢失构造函数，所以让构造函数指向自身
-Child.prototype.constructor = Child
-const c1 = new Child()
-const c2 = new Child()
-const p = new Parent()
+Child.prototype.constructor = Child;
+const c1 = new Child();
+const c2 = new Child();
+const p = new Parent();
 // 子类修改 引用类型
-c1.colors.push('blue')
+c1.colors.push('blue');
 // 子类修改 非引用类型属性
-c1.name = '哈哈哈'
-console.log(c1.name, c2.name) // 哈哈哈，inherit
-console.log(c1.colors, c2.colors) // ['red', 'green', 'blue']，['red', 'green', 'blue']
+c1.name = '哈哈哈';
+console.log(c1.name, c2.name); // 哈哈哈，inherit
+console.log(c1.colors, c2.colors); // ['red', 'green', 'blue']，['red', 'green', 'blue']
 // 子类修改引用类型不会对父类造成影响
-console.log(p.colors) // ['red', 'green']
-console.log(c1.sayName === p.sayName) // true
+console.log(p.colors); // ['red', 'green']
+console.log(c1.sayName === p.sayName); // true
 ```
 
 ### 借用构造函数
@@ -250,11 +250,11 @@ console.log(c1.sayName === p.sayName) // true
 
 ```js {6}
 function Parent(name) {
-  this.name = name
+  this.name = name;
 }
 function Child(name) {
   // 继承关键
-  Parent.call(this, name)
+  Parent.call(this, name);
 }
 ```
 
@@ -268,28 +268,28 @@ function Child(name) {
 
 ```js
 function Parent(name) {
-  this.name = name
-  this.colors = ['red', 'green']
+  this.name = name;
+  this.colors = ['red', 'green'];
 }
 Parent.prototype.sayName = function() {
-  return this.name
-}
+  return this.name;
+};
 function Child(name) {
-  Parent.call(this, name)
+  Parent.call(this, name);
 }
 // 子类可以传参
-const c1 = new Child('小铭')
-const c2 = new Child('小白')
-const p = new Parent('父亲')
+const c1 = new Child('小铭');
+const c2 = new Child('小白');
+const p = new Parent('父亲');
 // 子类修改 引用类型
-c1.colors.push('blue')
+c1.colors.push('blue');
 // 子类修改 非引用类型属性
-c1.name = '哈哈哈'
-console.log(c1.name, c2.name) // 哈哈哈，小白
-console.log(c1.colors, c2.colors) // ['red', 'green', 'blue']，['red', 'green']
-console.log(p.colors) // ['red', 'green']
+c1.name = '哈哈哈';
+console.log(c1.name, c2.name); // 哈哈哈，小白
+console.log(c1.colors, c2.colors); // ['red', 'green', 'blue']，['red', 'green']
+console.log(p.colors); // ['red', 'green']
 // 父类的方法不能复用了
-console.log(c1.sayName()) // Uncaught TypeError: c1.sayName is not a function
+console.log(c1.sayName()); // Uncaught TypeError: c1.sayName is not a function
 ```
 
 ### 组合继承
@@ -300,18 +300,18 @@ console.log(c1.sayName()) // Uncaught TypeError: c1.sayName is not a function
 
 ```js
 function Parent(name) {
-  this.name = name
+  this.name = name;
 }
 Parent.prototype.sayName = function() {
-  return this.name
-}
+  return this.name;
+};
 function Child(name) {
   // 融合两种继承继承写法
-  Parent.call(this, name)
+  Parent.call(this, name);
 }
 // 融合两种继承继承写法
-Child.prototype = new Parent()
-Child.prototype.constructor = Child
+Child.prototype = new Parent();
+Child.prototype.constructor = Child;
 ```
 
 **特点和缺点：**
@@ -326,26 +326,26 @@ Child.prototype.constructor = Child
 
 ```js
 function Parent(name) {
-  this.name = name
-  this.colors = ['red', 'green']
+  this.name = name;
+  this.colors = ['red', 'green'];
 }
 Parent.prototype.sayName = function() {
-  return this.name
-}
+  return this.name;
+};
 function Child(name) {
-  Parent.call(this, name)
+  Parent.call(this, name);
 }
-Child.prototype = new Parent()
-Child.prototype.constructor = Child
-const c1 = new Child('小铭')
-const c2 = new Child('小白')
-const p = new Parent('父亲')
+Child.prototype = new Parent();
+Child.prototype.constructor = Child;
+const c1 = new Child('小铭');
+const c2 = new Child('小白');
+const p = new Parent('父亲');
 // 修改子类的引用属性
-c1.colors.push('blue')
-console.log(c1.colors, c2.colors) // ['red', 'green', 'blue']，['red', 'green']
-console.log(p.colors) // ['red', 'green']
-console.log(p.colors === c2.colors) // false
-console.log(c1.sayName()) // 小铭
+c1.colors.push('blue');
+console.log(c1.colors, c2.colors); // ['red', 'green', 'blue']，['red', 'green']
+console.log(p.colors); // ['red', 'green']
+console.log(p.colors === c2.colors); // false
+console.log(c1.sayName()); // 小铭
 ```
 
 ### 原型式继承
@@ -359,9 +359,9 @@ console.log(c1.sayName()) // 小铭
 // 该函数接受一个原型作为参数
 function create(o) {
   // 临时性构造函数
-  const F = function() {}
-  F.prototype = o
-  return new F()
+  const F = function() {};
+  F.prototype = o;
+  return new F();
 }
 ```
 
@@ -378,24 +378,24 @@ function create(o) {
 
 ```js
 function create(o) {
-  const F = function() {}
-  F.prototype = o
-  return new F()
+  const F = function() {};
+  F.prototype = o;
+  return new F();
 }
 const parent = {
   name: 'inherit',
   colors: ['red', 'green'],
-}
-const o1 = create(parent)
+};
+const o1 = create(parent);
 // 自己本身没有，那么修改的是原型链上的引用
-o1.colors.push('blue')
-o1.name = '小铭'
-const o2 = create(parent)
-console.log(o1, o2) // F {name: "小铭"}，F {}
-console.log(o1.colors === o2.colors) // true
-console.log(o1.colors === parent.colors) // true
-console.log(o1.__proto__.colors === parent.colors) // true
-console.log(o1.colors) // ['red', 'green', 'blue']
+o1.colors.push('blue');
+o1.name = '小铭';
+const o2 = create(parent);
+console.log(o1, o2); // F {name: "小铭"}，F {}
+console.log(o1.colors === o2.colors); // true
+console.log(o1.colors === parent.colors); // true
+console.log(o1.__proto__.colors === parent.colors); // true
+console.log(o1.colors); // ['red', 'green', 'blue']
 ```
 
 ### 寄生式继承
@@ -429,18 +429,18 @@ console.log(o1.colors) // ['red', 'green', 'blue']
  */
 function inheritPrototype(child, parent) {
   // 创建一个临时构造函数
-  const F = function() {}
+  const F = function() {};
   // 临时类原型对象执向父类的原型对象
-  F.prototype = parent.prototype
+  F.prototype = parent.prototype;
   // 子类原型指向 临时类的实例
-  child.prototype = new F()
+  child.prototype = new F();
   // 为子类绑定构造函数
-  child.prototype.constructor = child
+  child.prototype.constructor = child;
 }
 // Es5 写法
 function extend(child, parent) {
-  child.prototype = Object.create(parent.prototype)
-  child.prototype.constructor = child
+  child.prototype = Object.create(parent.prototype);
+  child.prototype.constructor = child;
 }
 ```
 
@@ -457,26 +457,26 @@ function extend(child, parent) {
 ```js
 class Parent {
   constructor(name, age) {
-    this.name = name
-    this.age = age
+    this.name = name;
+    this.age = age;
   }
   sayName() {
-    return this.name
+    return this.name;
   }
 }
 class Child extends Parent {
   constructor(name, age) {
     // super作为函数来用，相当于构造函数（Parent.call(name)）
-    super(name, age)
+    super(name, age);
     // super当做对象来用，相当于此时的this
-    console.log(super.sayName()) // '小铭'
-    super.sex = 'male'
+    console.log(super.sayName()); // '小铭'
+    super.sex = 'male';
   }
 }
 
-const p = new Parent('父亲', 46)
-const c = new Child('小铭', 24)
-console.log(c, c.sex) //  Child { name: '小铭', age: 24, sex: 'male' }，'male'
+const p = new Parent('父亲', 46);
+const c = new Child('小铭', 24);
+console.log(c, c.sex); //  Child { name: '小铭', age: 24, sex: 'male' }，'male'
 ```
 
 ### 三大经典继承拓展
@@ -488,14 +488,14 @@ console.log(c, c.sex) //  Child { name: '小铭', age: 24, sex: 'male' }，'male
 
   ```js
   function DOG(name) {
-    this.name = name
-    this.type = '犬科'
+    this.name = name;
+    this.type = '犬科';
   }
-  var dogA = new DOG('大毛')
-  var dogB = new DOG('二毛')
+  var dogA = new DOG('大毛');
+  var dogB = new DOG('二毛');
   // 修改其中一个
-  dogB.type = '猫科'
-  console.log(dogA, dogB)
+  dogB.type = '猫科';
+  console.log(dogA, dogB);
   ```
 
   <p align="center" class="p-images">
@@ -511,13 +511,13 @@ console.log(c, c.sex) //  Child { name: '小铭', age: 24, sex: 'male' }，'male
   - 其实就是两个对象共同引用同一个对象，作为自己的共有属性和方法
   ```js
   function DOG(name) {
-    this.name = name
+    this.name = name;
   }
-  DOG.prototype = {type: '犬科'}
-  var dogA = new DOG('大毛')
-  var dogB = new DOG('二毛')
-  DOG.prototype.type = '犬科'
-  console.log(dogA.type, dogB.type)
+  DOG.prototype = { type: '犬科' };
+  var dogA = new DOG('大毛');
+  var dogB = new DOG('二毛');
+  DOG.prototype.type = '犬科';
+  console.log(dogA.type, dogB.type);
   ```
 
 ### 原型链继承
@@ -530,19 +530,19 @@ console.log(c, c.sex) //  Child { name: '小铭', age: 24, sex: 'male' }，'male
 
 ```js {10}
 function Parent() {
-  this.name = '小明'
-  this.colors = ['red', 'blue']
+  this.name = '小明';
+  this.colors = ['red', 'blue'];
 }
 function Child() {}
-Child.prototype = new Parent()
+Child.prototype = new Parent();
 
-var c1 = new Child()
-c1.colors.push('green')
-c1.name = '小白'
+var c1 = new Child();
+c1.colors.push('green');
+c1.name = '小白';
 
-var c2 = new Child()
-c2.colors = ['a', 'b', 'c', 'd']
-console.log(c2, c1)
+var c2 = new Child();
+c2.colors = ['a', 'b', 'c', 'd'];
+console.log(c2, c1);
 ```
 
 <p align="center" class="p-images">
@@ -566,19 +566,19 @@ console.log(c2, c1)
 
 ```js {7}
 function Parent(name, age) {
-  this.name = name
-  this.age = age
-  this.colors = ['red', 'blue']
+  this.name = name;
+  this.age = age;
+  this.colors = ['red', 'blue'];
 }
 
 function Child(name, age) {
-  Parent.apply(this, arguments)
+  Parent.apply(this, arguments);
 }
 
-var c1 = new Child('小明', 24)
-var c2 = new Child('小白', 25)
-c2.colors.push('green')
-console.log(c1, c2)
+var c1 = new Child('小明', 24);
+var c2 = new Child('小白', 25);
+c2.colors.push('green');
+console.log(c1, c2);
 ```
 
 <p align="center" class="p-images">

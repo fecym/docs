@@ -34,7 +34,7 @@
 
 ### chdir
 
-chdir 用于修改 node 应用程序中使用的当前工作目录，使用方法：`process.chdir(directory)`
+chdir 用于修改 node 应用程序中使用的当前工作目录，使用方法： `process.chdir(directory)`
 
 ### cwd
 
@@ -51,7 +51,7 @@ chdir 用于修改 node 应用程序中使用的当前工作目录，使用方�
 - SIGINT 程序终止（interrupt）信号，在用户输入 INTR 字符（Ctrl + c）时发出，用户通知前台进程组终止进程
 - SIGTERM 程序结束（terminate）信号，该信号可以被阻塞和处理，通常用来要求程序自己正常退出，shell 命令 kill 缺省产生这个信号
 
-用法：`process.kill(pid, [signal])`
+用法： `process.kill(pid, [signal])`
 
 - pid 是进程 id，整数类型
 - signal 发送的信号，默认是 SIGTERM
@@ -65,14 +65,14 @@ chdir 用于修改 node 应用程序中使用的当前工作目录，使用方�
 测试一个代码段的运行时间，返回两个时间，第一个单位是秒，第二个是纳秒，类似于 `console.timeEnd`
 
 ```js
-const time = process.hrtime()
-let num = 0
+const time = process.hrtime();
+let num = 0;
 while (num <= 10000000000) {
-  num++
+  num++;
 }
-const diff = process.hrtime(time)
+const diff = process.hrtime(time);
 
-console.log(`该程序执行耗时 %d 秒`, diff[0])
+console.log(`该程序执行耗时 %d 秒`, diff[0]);
 ```
 
 ### exit 事件
@@ -80,8 +80,8 @@ console.log(`该程序执行耗时 %d 秒`, diff[0])
 当 node 程序退出时会触发进程对象的 exit 事件，可以通过指定事件回调来指定进程退出时所执行的处理
 
 ```js
-process.on('exit', () => console.log('node 程序退出了'))
-process.exit()
+process.on('exit', () => console.log('node 程序退出了'));
+process.exit();
 ```
 
 ### uncaughtException 事件

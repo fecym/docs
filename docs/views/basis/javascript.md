@@ -16,9 +16,9 @@ tags:
 > 看到了这个我亲自尝试了下，结果发现自己对 js 基础越来越陌生了，现在好好复习下吧
 
 ```js
-0 == '0' // true
-0 == [] // true
-'0' == [] // false
+0 == '0'; // true
+0 == []; // true
+'0' == []; // false
 ```
 
 #### 为什么？
@@ -57,9 +57,9 @@ tags:
 - 所以这道题就是 `true`
 
 ```js
-Number([]) // 0
-Number(![]) // 0
-Number(!![]) // 1
+Number([]); // 0
+Number(![]); // 0
+Number(!![]); // 1
 ```
 
 ### 类型转换规则
@@ -106,16 +106,16 @@ Number(!![]) // 1
   ```js
   const obj = {
     valueOf() {
-      return 0
+      return 0;
     },
     toString() {
-      return '1'
+      return '1';
     },
     [Symbol.toPrimitive]() {
-      return 2
+      return 2;
     },
-  }
-  obj + 1 // 3
+  };
+  obj + 1; // 3
   ```
 - 引用类型转换为 `Number` 类型，先调用 `valueOf` ，在调用 `toString`
 - 引用类型转换为 `String` 类型，先调用 `toString` ，在调用 `valueOf`
@@ -125,29 +125,29 @@ Number(!![]) // 1
 // 可以转换的
 const obj = {
   valueOf() {
-    console.log('valueOf')
-    return 123
+    console.log('valueOf');
+    return 123;
   },
   toString() {
-    console.log('toString')
-    return 'cym'
+    console.log('toString');
+    return 'cym';
   },
-}
-console.log(obj - 1) // valueOf 122
-console.log(`${obj} 你好`) // toString cym 你好
+};
+console.log(obj - 1); // valueOf 122
+console.log(`${obj} 你好`); // toString cym 你好
 // 转换报错
 const o = {
   valueOf() {
-    console.log('valueOf')
-    return {}
+    console.log('valueOf');
+    return {};
   },
   toString() {
-    console.log('toString')
-    return {}
+    console.log('toString');
+    return {};
   },
-}
-console.log(o - 1) // Uncaught TypeError: Cannot convert object to primitive value
-console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primitive value
+};
+console.log(o - 1); // Uncaught TypeError: Cannot convert object to primitive value
+console.log(`${o} 你好`); // Uncaught TypeError: Cannot convert object to primitive value
 ```
 
 ### 再来一张图
@@ -174,8 +174,8 @@ console.log(`${o} 你好`) // Uncaught TypeError: Cannot convert object to primi
 - 对象的 `==` 和 `===` 比较的时候工作原理是一样的，都是判断其地址是否一致
 
 ```js
-console.log({a: 1} == true) // false
-console.log({a: 1} == '[object Object]') // true
+console.log({ a: 1 } == true); // false
+console.log({ a: 1 } == '[object Object]'); // true
 ```
 
 ### 假值常规和非常规的情况
@@ -219,22 +219,22 @@ console.log({a: 1} == '[object Object]') // true
 - 那么一个 ts 的枚举就是利用这个来实现的
 
 ```js
-var Days = {}
+var Days = {};
 function enumerate(Enum = {}) {
-  Enum[(Enum['a'] = 1)] = 'a'
-  Enum[(Enum['b'] = 2)] = 'b'
-  Enum[(Enum['c'] = 3)] = 'c'
-  Enum[(Enum['d'] = 4)] = 'd'
-  Enum[(Enum['e'] = 5)] = 'e'
-  return Enum
+  Enum[(Enum['a'] = 1)] = 'a';
+  Enum[(Enum['b'] = 2)] = 'b';
+  Enum[(Enum['c'] = 3)] = 'c';
+  Enum[(Enum['d'] = 4)] = 'd';
+  Enum[(Enum['e'] = 5)] = 'e';
+  return Enum;
 }
 // 那么枚举的实现应该这么写
 function creatEnum(Enum = {}, args = []) {
-  if (!args.length) return {}
+  if (!args.length) return {};
   for (let i = 0, len = args.length; i < len; i++) {
-    Enum[(Enum[i] = i)] = args[i]
+    Enum[(Enum[i] = i)] = args[i];
   }
-  return Enum
+  return Enum;
 }
 ```
 
@@ -245,14 +245,14 @@ function creatEnum(Enum = {}, args = []) {
 > 对于一个引用类型，把这个引用类型赋值给其他的引用类型的后，对该引用类型的某个属性进行修改，则另外一个也会变，但是覆盖后，则对另一个不会有影响
 
 ```js
-const obj = {a: 1, b: '我是b'}
-let b = obj
+const obj = { a: 1, b: '我是b' };
+let b = obj;
 // 对其某个属性修改，则会另外一个对象也会变，因为是同一个引用
-b.b = '我是b'
-console.log(obj, b) // {a: 1, b: "我是b"} {a: 1, b: "我是b"}
+b.b = '我是b';
+console.log(obj, b); // {a: 1, b: "我是b"} {a: 1, b: "我是b"}
 // 对其覆盖，则不会影响另一个对象
-b = {c: '我是b的c'}
-console.log(obj, b) // {a: 1, b: "我是b"} {c: "我是b的c"}
+b = { c: '我是b的c' };
+console.log(obj, b); // {a: 1, b: "我是b"} {c: "我是b的c"}
 ```
 
 ### 函数的传值和传址
@@ -261,19 +261,19 @@ console.log(obj, b) // {a: 1, b: "我是b"} {c: "我是b的c"}
 - 传址：传给函数的是一个引用，函数中 **对引用的属性做修改会影响到外部的对象**，但用 **新引用覆盖其则在不会影响到外面的引用**
 
 ```js
-let a = [1, 2, 3]
-let b = [5, 6]
+let a = [1, 2, 3];
+let b = [5, 6];
 function change(a, b) {
-  a[0] = 4 // 对其属性的修改外部可见
-  let c = a
-  a = b // 用新引用覆盖
-  b = c
-  console.log(a) // '5, 6'
-  console.log(b) // '4, 2, 3'
+  a[0] = 4; // 对其属性的修改外部可见
+  let c = a;
+  a = b; // 用新引用覆盖
+  b = c;
+  console.log(a); // '5, 6'
+  console.log(b); // '4, 2, 3'
 }
-change(a, b)
-console.log(a) // '4, 2, 3'
-console.log(b) // '5, 6'
+change(a, b);
+console.log(a); // '4, 2, 3'
+console.log(b); // '5, 6'
 ```
 
 ### 如何解决函数内传址带来的影响
@@ -287,17 +287,17 @@ console.log(b) // '5, 6'
 也就是说我们传递一个引用类型的副本给函数，那么修改了也是对这个副本的引用有影响，对原来的引用值没有影响，还是不理解？那么看下面的代码：
 
 ```js
-const arr = [1, 2, 3]
+const arr = [1, 2, 3];
 function fn(arr) {
-  arr.push(8)
+  arr.push(8);
 }
 // 执行函数fn传递数组的副本过去，此时，我们在打印外面的 arr 发现是没有变化的
-fn(arr.slice())
+fn(arr.slice());
 // 为什么呢？因为这么写就相当于我们用了引用覆盖了原来的引用，当然不会对原来的引用造成影响了
 // 相当于这么写
-let copyArr = arr
-copyArr = arr.slice()
-fn(copyArr)
+let copyArr = arr;
+copyArr = arr.slice();
+fn(copyArr);
 ```
 
 ## this
@@ -318,18 +318,18 @@ fn(copyArr)
 
 ```js
 function print_a() {
-  console.log(this.a)
+  console.log(this.a);
 }
 const obj2 = {
   a: 42,
   print_a,
-}
+};
 const obj1 = {
   a: 2,
   obj2,
-}
+};
 // 最后一层调用链中起作用
-obj1.obj2.print_a() // 42
+obj1.obj2.print_a(); // 42
 ```
 
 3. `dom` 编程中事件函数中的 `this`（事件函数不是箭头函数的情况）指向了绑定事件的元素，说白了还是谁调用函数那么 `this` 就指向谁
@@ -338,14 +338,14 @@ obj1.obj2.print_a() // 42
 
 ```js
 function print_a() {
-  console.log(this.a)
+  console.log(this.a);
 }
-const obj = {a: 2, print_a}
+const obj = { a: 2, print_a };
 // 我们把函数赋值给了一个变量来保存
-const fn = obj.print_a
-var a = '我是window的a'
+const fn = obj.print_a;
+var a = '我是window的a';
 // 此时执行这个函数，其实就是相当于函数的自执行的，那么就会走默认绑定的规则
-fn() // 我是window的a
+fn(); // 我是window的a
 ```
 
 ### 显示绑定
@@ -355,12 +355,12 @@ fn() // 我是window的a
 ```js
 // api 调用的上下文
 function foo(el) {
-  console.log(el, this.id)
+  console.log(el, this.id);
 }
-const obj = {id: 'awesome'}[
+const obj = { id: 'awesome' }[
   // 调用 foo 时把 this 绑定到 obj 上
   (1, 2, 3)
-].forEach(foo, obj) // 1 awesome 2 awesome 3 awesome
+].forEach(foo, obj); // 1 awesome 2 awesome 3 awesome
 ```
 
 ### new 绑定
@@ -372,23 +372,23 @@ const obj = {id: 'awesome'}[
 箭头函数不会使用 `this` 四种标准规则，而是根据外层（函数或者全局）作用域来决定 `this`，其实一个简单的理解就是我们在箭头函数出来之前经常用的一种方法，在函数外面 `var that = this`，然后在内层函数中使用 `that` 此时就保留了外层的 `this` 值
 
 ```js
-var name = 'cym'
-const fn = () => console.log(this.name)
-const obj = {name: 'obj'}
+var name = 'cym';
+const fn = () => console.log(this.name);
+const obj = { name: 'obj' };
 // this 不会被改变
-fn.call(obj) // cym
+fn.call(obj); // cym
 
 // 来个面试题理解下
 const obj1 = {
   name: 'obj1',
   print: function() {
-    return () => console.log(this.name)
+    return () => console.log(this.name);
   },
-}
-const obj2 = {name: 'obj2'}
-obj1.print()() // obj1
-obj1.print().call(obj2) // obj1
-obj1.print.call(obj2)() // obj2
+};
+const obj2 = { name: 'obj2' };
+obj1.print()(); // obj1
+obj1.print().call(obj2); // obj1
+obj1.print.call(obj2)(); // obj2
 ```
 
 ## 防抖和节流
@@ -400,14 +400,14 @@ obj1.print.call(obj2)() // obj2
 
 ```js
 function debounce(fn, step) {
-  let timer = null
+  let timer = null;
   return function() {
-    clearTimeout(timer)
+    clearTimeout(timer);
     // 每次调用前先清除
     timer = setTimeout(() => {
-      fn.apply(this, arguments)
-    }, step)
-  }
+      fn.apply(this, arguments);
+    }, step);
+  };
 }
 ```
 
@@ -520,19 +520,19 @@ function debounce(fn, step) {
 
 ```js
 // 演示下node中的发布订阅
-const Emitter = require('events').EventEmitter
-const emitter = new Emitter()
+const Emitter = require('events').EventEmitter;
+const emitter = new Emitter();
 emitter.on('test', msg => {
-  console.log(msg, '第一个')
-})
+  console.log(msg, '第一个');
+});
 emitter.on('test', (...msg) => {
-  console.log(msg, '第二个')
-})
+  console.log(msg, '第二个');
+});
 emitter.on('test', msg => {
-  console.log(msg, '第三个')
-})
-emitter.emit('test', 'chengyuming')
-emitter.emit('test2', '嘿嘿嘿', '哈哈哈')
+  console.log(msg, '第三个');
+});
+emitter.emit('test', 'chengyuming');
+emitter.emit('test2', '嘿嘿嘿', '哈哈哈');
 ```
 
 - 让我们来实现一个简单发布订阅模式
@@ -544,24 +544,24 @@ emitter.emit('test2', '嘿嘿嘿', '哈哈哈')
 class Emitter {
   constructor() {
     // 消息队列，以及消息类型
-    this.handlers = {}
+    this.handlers = {};
   }
   // 订阅事件，绑定函数
   on(eventType, handler) {
     // 判断消息队列里面有没有该事件，有则继续push没有则赋值空[]
     if (!(eventType in this.handlers)) {
-      this.handlers[eventType] = []
+      this.handlers[eventType] = [];
     }
-    this.handlers[eventType].push(handler)
+    this.handlers[eventType].push(handler);
   }
   // 发布消息
   emit(eventType) {
     // 获取到发布的所有消息
-    const messages = Array.prototype.slice.call(arguments, 1)
+    const messages = Array.prototype.slice.call(arguments, 1);
     // 触发订阅事件的函数执行
     this.handlers[eventType].forEach(handler => {
-      handler.apply(this, messages)
-    })
+      handler.apply(this, messages);
+    });
   }
 }
 ```

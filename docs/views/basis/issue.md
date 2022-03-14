@@ -79,7 +79,7 @@ JSON.stringify(function() {}); // null
 JSON.stringify([1, undefined, 2, function() {}, 3]); // "1, null, 2, null, 3"
 JSON.stringify({
   a: 2,
-  b: function() {}
+  b: function() {},
 }); // "{"a":2}"
 ```
 
@@ -94,7 +94,7 @@ const o = {
   a: 'cym',
   toJSON() {
     return {
-      c: 'b'
+      c: 'b',
     };
   },
 };
@@ -168,7 +168,8 @@ const str = 'hello world';
 if (~str.indexOf('lo')) {
   // true
   // 找到匹配
-}~str.indexOf('ol'); // 0，假值
+}
+~str.indexOf('ol'); // 0，假值
 !~str.indexOf('ol'); // true
 if (!~str.indexOf('ol')) {
   // true
@@ -201,8 +202,7 @@ Math.floor(-1.9); // -2
 1.9 | 0; // 1
 
 ~~-1.9; // -1
--
-1.9 | 0; // -1
+-1.9 | 0; // -1
 ```
 
 ## 给定一组 url 实现并发请求
@@ -343,19 +343,19 @@ getGroupData(urls, data => {
 
 clientHeight 和 offsetHeight 属性和元素的滚动位置没有关系，它代表着元素的高度：
 
-* clientHeight 包括 padding 但不包括 margin、border 和水平滚动条的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
+- clientHeight 包括 padding 但不包括 margin、border 和水平滚动条的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
 
-* offsetHeight 包括 padding、border 和水平滚动条但不包括 margin 的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
+- offsetHeight 包括 padding、border 和水平滚动条但不包括 margin 的高度，对于 inline 的元素这个属性一直是 0，单位 px，只读属性
 
 当父元素的子元素比父元素高且 overflow=scroll 时，父元素会滚动，此时：
 
-* scrollHeight：因为子元素比父元素高，父元素不想被子元素撑的一样高就显示了滚动条，在滚动过程中子元素有部分隐藏被隐藏，scrollHeight 就是子元素可见高度与不可见高度的真实高度，而可见高度就是 clientHeight。也就是 `scrollHeight > clientHeight` 时会出现滚动条，没有滚动条时 `scrollHeight === clientHeight` 恒成立，只读属性
+- scrollHeight：因为子元素比父元素高，父元素不想被子元素撑的一样高就显示了滚动条，在滚动过程中子元素有部分隐藏被隐藏，scrollHeight 就是子元素可见高度与不可见高度的真实高度，而可见高度就是 clientHeight。也就是 `scrollHeight > clientHeight` 时会出现滚动条，没有滚动条时 `scrollHeight === clientHeight` 恒成立，只读属性
 
-* scrollTop：代表有滚动条时，滚动条向下滚动的距离，也就是子元素被遮挡的高度，在没有滚动条时 `scrollTop === 0` 恒成立，可读可设置
+- scrollTop：代表有滚动条时，滚动条向下滚动的距离，也就是子元素被遮挡的高度，在没有滚动条时 `scrollTop === 0` 恒成立，可读可设置
 
-* offsetTop：当前元素距离最近父元素顶部的距离，和滚动条没有关系，只读属性
+- offsetTop：当前元素距离最近父元素顶部的距离，和滚动条没有关系，只读属性
 
-* clientTop：当前元素顶部边框的宽度，不包括 padding 和 margin，只读属性
+- clientTop：当前元素顶部边框的宽度，不包括 padding 和 margin，只读属性
 
 知道了上面这些概念我们就可以来实现这个滚动加载，只要满足 `页面真实高度 - 页面可见高度 - 页面滚动高度 < 0` 说明该去加载新的数据了
 
@@ -404,7 +404,7 @@ const isEven = num => num % 2 === 0;
 也可以使用 `&` 操作符号
 
 ```js
-const isEven = num => num & 1 === 0;
+const isEven = num => num & (1 === 0);
 ```
 
 根据按位与操作符运算，`两个数都为 1 时，结果才为 1`
@@ -490,8 +490,8 @@ const encryptReg = (before = 3, after = 4) => {
 
 广度优先和深度优先的概念很简单，区别如下：
 
-* 深度优先，访问完一颗子树再去访问后面的子树，而访问子树的时候，先访问根再访问根的子树，称为先序遍历；先访问子树再访问根，称为后序遍历。
-* 广度优先，即访问树结构的第 n+1 层前必须先访问完第 n 层
+- 深度优先，访问完一颗子树再去访问后面的子树，而访问子树的时候，先访问根再访问根的子树，称为先序遍历；先访问子树再访问根，称为后序遍历。
+- 广度优先，即访问树结构的第 n+1 层前必须先访问完第 n 层
 
 ### 深度优先
 
@@ -633,19 +633,14 @@ export function generatorXAxisData(options) {
   options.startTime =
     options.startTime ||
     dayjs()
-    .startOf('d')
-    .valueOf();
+      .startOf('d')
+      .valueOf();
   options.endTime =
     options.endTime ||
     dayjs()
-    .endOf('d')
-    .valueOf();
-  const {
-    interval,
-    template,
-    startTime,
-    endTime
-  } = options;
+      .endOf('d')
+      .valueOf();
+  const { interval, template, startTime, endTime } = options;
   const result = [];
   const timeRange = endTime - startTime;
   const count = Math.floor(timeRange / interval); //时间间隔 （五分钟：5*60*1000）
@@ -684,21 +679,18 @@ export function generatorRandomValue(len = 20, range = 50) {
 ```js
 // 生成随机汉字
 export function genRandomText() {
-  const randomChineseUnicode = `%u${(
-    Math.round(Math.random() * 20901) + 19968
-  ).toString(16)}`;
+  const randomChineseUnicode = `%u${(Math.round(Math.random() * 20901) + 19968).toString(16)}`;
   return unescape(randomChineseUnicode);
 }
 // 生成随机汉字
 export function randomString(n) {
-  let s = "";
+  let s = '';
   for (let i = 0; i < n; i++) {
     s += genRandomText();
   }
   return s;
 }
 ```
-
 
 ## base64 转文件预览地址
 
@@ -725,7 +717,7 @@ export function base64ToUrl(base64, contentType = 'image/png', includeHead = fal
     uint8Arr[len] = bstr.charCodeAt(len);
   }
   const blob = new Blob([uint8Arr], {
-    type: contentType
+    type: contentType,
   });
   return URL.createObjectURL(blob);
 }

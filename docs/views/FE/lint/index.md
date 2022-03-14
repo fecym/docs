@@ -18,7 +18,7 @@ tags:
 
   ```js
   module.exports = {
-    extends: ['allow']
+    extends: ['allow'],
   };
   ```
 
@@ -60,8 +60,8 @@ tags:
       // 禁止使用 var
       'no-var': 'error',
       // 优先使用 interface 而不是 type
-      '@typescript-eslint/consistent-type-definitions': ['error', 'interface']
-    }
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    },
   };
   ```
 
@@ -118,7 +118,7 @@ module.exports = {
     'alloy', // 必须
     'alloy/vue', // vue项目需要
     'alloy/react', // react项目需要
-    'alloy/typescript' // ts项目需要
+    'alloy/typescript', // ts项目需要
   ],
   env: {
     // 设置的环境变量（包含多个预定义的全局变量）
@@ -134,7 +134,7 @@ module.exports = {
   },
   rules: {
     // 自定义规则
-  }
+  },
 };
 ```
 
@@ -190,7 +190,7 @@ module.exports = {
   // 根据显示样式决定 html 要不要折行
   htmlWhitespaceSensitivity: 'css',
   // 换行符使用 lf
-  endOfLine: 'lf'
+  endOfLine: 'lf',
 };
 ```
 

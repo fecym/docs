@@ -138,7 +138,7 @@ call2 函数 第一个参数是要绑定的对象（obj）<br/>
 ```js
 const arrayLike = {};
 [].push.call(arrayLike, 1);
-console.log(arrayLike); // { 0: 1, lenght: 1 }
+console.log(arrayLike); // { 0: 1, length: 1 }
 // 接下来我们改成这样
 const call = [].push.call;
 call(arrayLike, 1);
@@ -378,6 +378,7 @@ function mixins() {
   return target;
 }
 ```
+
 ## 深浅拷贝
 
 深拷贝问题一直是面试过程中被问到频率特别高的问题

@@ -33,14 +33,14 @@ crypto 是 node 中实现加密解密的模块，使用 OpenSSL 类库作为内�
 ### 语法说明
 
 ```js
-const crypto = require('crypto')
+const crypto = require('crypto');
 // crypto.createHash 接受一个散列算法的类型，比如 md5、sha1 等
-const md5 = crypto.createHash('md5')
+const md5 = crypto.createHash('md5');
 // update 方法用来指定要加密的值，可以多次添加
-md5.update('hello')
-md5.update('world')
+md5.update('hello');
+md5.update('world');
 // 输出 md5 的值，可以执行类型
-md5.digest('hex')
+md5.digest('hex');
 // fc5e038d38a57032085441e7fe7010b0，md5是32位的
 // fc5e038d38a57032085441e7fe7010b0，sha1是40位的
 ```
@@ -56,17 +56,17 @@ HMAC 加密需要生成一个密钥，然后与散列算法组合，生成的密
 hmac 用法和 hash 加密差不多
 
 ```js
-const hmac = crypto.createHmac(algorithm, key)
-hamc.update(data)
+const hmac = crypto.createHmac(algorithm, key);
+hamc.update(data);
 ```
 
 - algorithm 是一个可用的摘要算法，比如 sha1、md5、sha256 等
 - key 是一个字符串，用于指定一个 pem 格式的密钥，也可以写一个随机字符串，但是一般我们会生成一个密钥，不会去写一个字符串
 
 ```js
-const hmac = crypto.createHmac('sha1', 'abc')
-hmac.update('123')
-hmac.digest('hex')
+const hmac = crypto.createHmac('sha1', 'abc');
+hmac.update('123');
+hmac.digest('hex');
 ```
 
 ### 生成私钥
@@ -79,15 +79,15 @@ hmac.digest('hex')
 ### 示例
 
 ```js
-const crypto = require('crypto')
-const path = require('path')
-const fs = require('fs')
-const key = fs.readFileSync(path.join(__dirname, './rsa_private.key'))
+const crypto = require('crypto');
+const path = require('path');
+const fs = require('fs');
+const key = fs.readFileSync(path.join(__dirname, './rsa_private.key'));
 // createHmac 方法接受两个参数 algorithm 和 密钥
-const hmac = crypto.createHmac('sha1', key)
-hmac.update('123')
-const result = hmac.digest('hex')
-console.log(result)
+const hmac = crypto.createHmac('sha1', key);
+hmac.update('123');
+const result = hmac.digest('hex');
+console.log(result);
 ```
 
 ## 对称加密
@@ -108,25 +108,25 @@ blowfish 算法是一种对称加密算法，对称呢就是加密和解密使�
 示例：
 
 ```js
-const crypto = require('crypto')
-const path = require('path')
-const fs = require('fs')
+const crypto = require('crypto');
+const path = require('path');
+const fs = require('fs');
 
-const key = fs.readFileSync(path.join(__dirname, './rsa_private.key'))
-const str = 'cym'
+const key = fs.readFileSync(path.join(__dirname, './rsa_private.key'));
+const str = 'cym';
 
 // 加密
-const cipher = crypto.createCipher('blowfish', key)
-cipher.update(str, 'utf8')
+const cipher = crypto.createCipher('blowfish', key);
+cipher.update(str, 'utf8');
 // 输出加密后的结果
-const encry = cipher.final('hex')
-console.log(encry)
+const encry = cipher.final('hex');
+console.log(encry);
 
 // 解密
-const decipher = crypto.createDecipher('blowfish', key)
-decipher.update(encry, 'hex')
-const deEncry = decipher.final('utf8')
-console.log(deEncry)
+const decipher = crypto.createDecipher('blowfish', key);
+decipher.update(encry, 'hex');
+const deEncry = decipher.final('utf8');
+console.log(deEncry);
 ```
 
 ## 非对称加密

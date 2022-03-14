@@ -2,8 +2,8 @@
 title: 面试题记录
 date: 2021-08-04
 tags:
-  + interview
-  + 基础
+  - interview
+  - 基础
 ---
 
 ## 1. 关于函数的 length 属性
@@ -43,10 +43,10 @@ console.log(arr.length); // 2
 
 这个问题考查的数据类型转换， `==` 类型转换有个基本规则
 
-* `NaN` 与任何值都不相等，包括自己本身
-* `undefined` 与 `null` 相等(==)，其他都不等
-* 对象与字符串类型做比较，会把对象转换成字符串然后做比较
-* 其他类型比较都要转换成 `数字` 做比较
+- `NaN` 与任何值都不相等，包括自己本身
+- `undefined` 与 `null` 相等(==)，其他都不等
+- 对象与字符串类型做比较，会把对象转换成字符串然后做比较
+- 其他类型比较都要转换成 `数字` 做比较
 
 那么这个问题我们重写 `toString` 或者 `valueOf` 方法就可以了
 
@@ -81,15 +81,15 @@ if (a == 1 && a == 2 && a == 3) {
 
 上面隐式类型转换规则中提到，其他类型比较都要转换成数字做比较，这个就是对应那条规则的
 
-* 首先 `[].toString()` 会得到一个 `''` 字符串
-* `![]` 得到一个布尔值 `false`
-* `''` 与 `false` 比较肯定要转换成数字比较
-* 那么 `''` 转换则为 `0`， `false` 转换也是 `0`
-* 所以这道题就是 `true`
+- 首先 `[].toString()` 会得到一个 `''` 字符串
+- `![]` 得到一个布尔值 `false`
+- `''` 与 `false` 比较肯定要转换成数字比较
+- 那么 `''` 转换则为 `0`， `false` 转换也是 `0`
+- 所以这道题就是 `true`
 
 ## 3. 如何让 (a == 1 && a == 2 && a == 3) 的值为 true
 
-* 这是一道经典的面试题，主要考察是数据类型转换，我们重写 toString 或者 valueOf 方法即可解决
+- 这是一道经典的面试题，主要考察是数据类型转换，我们重写 toString 或者 valueOf 方法即可解决
 
 ```js
 const n = {
@@ -108,14 +108,14 @@ if (n == 1 && n == 2 && n == 3) {
 }
 ```
 
-* 当然也有其他解决技巧
+- 当然也有其他解决技巧
 
 ```js
 const n = 0;
 !(n == 1 && n == 2 && n == 3); // true
 ```
 
-* 利用数组 `toString` 方法会调用本身的 `join` 方法，这里把自己的 `join` 方法改写为 `shift` 方法，每次返回第一个元素，而且每次数组删除第一个值，正好可以使判断成立。
+- 利用数组 `toString` 方法会调用本身的 `join` 方法，这里把自己的 `join` 方法改写为 `shift` 方法，每次返回第一个元素，而且每次数组删除第一个值，正好可以使判断成立。
 
 ```js
 var n = [1, 2, 3];
@@ -171,9 +171,9 @@ function parseQuery(query) {
 
 // 使用
 jsonp('http://localhost:3000/getData', {
-    a: 1,
-    b: 2
-  })
+  a: 1,
+  b: 2,
+})
   .then(res => {
     console.log('🚀 ~ jsonp ~ res', res);
   })
@@ -212,9 +212,7 @@ jsonp('http://localhost:3000/getData', {
 const viewHeight = window.innerHeight || document.documentElement.clientHeight;
 
 function isInViewport(el) {
-  const {
-    top
-  } = el.getBoundingClientRect;
+  const { top } = el.getBoundingClientRect;
   return top <= viewHeight;
 }
 ```
@@ -239,9 +237,7 @@ function debounce(fn, delay = 500) {
 const viewHeight = window.innerHeight || document.documentElement.clientHeight;
 // 是否满足加载条件
 function isInViewport(el) {
-  const {
-    top
-  } = el.getBoundingClientRect();
+  const { top } = el.getBoundingClientRect();
   return top <= viewHeight;
 }
 
@@ -308,27 +304,27 @@ bindEvent();
 
 ```js
 const obj = {
-  0: 1,
-  1: 2,
-  2: 3,
-  3: 4,
-  length: 4,
-  [Symbol.iterator]() {
-    let idx = 0
-    return {
-      next() {
+    0: 1,
+    1: 2,
+    2: 3,
+    3: 4,
+    length: 4,
+    [Symbol.iterator]() {
+        let idx = 0
         return {
-          value: obj[idx],
-          done: idx++ >= obj.length,
+            next() {
+                return {
+                    value: obj[idx],
+                    done: idx++ >= obj.length,
+                }
+            }
         }
-      }
     }
-  }
 }
 // 此时对象就被添加了迭代器
 [...obj] // 1 2 3 4
 for (const val of obj) {
-  console.log(val) // 1 2 3 4
+    console.log(val) // 1 2 3 4
 }
 ```
 
@@ -336,17 +332,17 @@ for (const val of obj) {
 
 ```js
 const obj = {
-    0: 1,
-    1: 2,
-    2: 3,
-    3: 4,
-    length: 4,
-    [Symbol.iterator]: function*() {
-      let idx = 0
-      while (idx !== this.length) {
-        yield this[idx++]
-      }
-    }
+        0: 1,
+        1: 2,
+        2: 3,
+        3: 4,
+        length: 4,
+        [Symbol.iterator]: function*() {
+            let idx = 0
+            while (idx !== this.length) {
+                yield this[idx++]
+            }
+        }
 ```
 
 ### 实现一个字符串的迭代器
@@ -396,9 +392,7 @@ console.log(gen.next());
 ```js
 const fs = require('fs');
 const path = require('path');
-const {
-  promisify
-} = require('util');
+const { promisify } = require('util');
 const readFile = promisify(fs.readFile);
 
 function* read() {
@@ -409,21 +403,12 @@ function* read() {
 
 const it = read();
 
-let {
-  value,
-  done
-} = it.next();
+let { value, done } = it.next();
 value.then(data => {
-  let {
-    value,
-    done
-  } = it.next(data);
+  let { value, done } = it.next(data);
   // console.log(data, '???')
   value.then(data => {
-    let {
-      value,
-      done
-    } = it.next(data);
+    let { value, done } = it.next(data);
     console.log(value);
   });
 });
@@ -443,10 +428,7 @@ function _co(it) {
   return new Promise((resolve, reject) => {
     // 因为可以传值的原因，不可以直接使用循环实现，需要使用 递归
     function next(data) {
-      const {
-        value,
-        done
-      } = it.next(data);
+      const { value, done } = it.next(data);
       if (done) return resolve(value);
       // 保证值是一个 promise
       Promise.resolve(value).then(data => {
@@ -460,10 +442,10 @@ function _co(it) {
 
 ## 7. 菲波那切数列
 
-* 今天新东方的面试还提到了菲波那切数列，其实这个东西蛮很有趣，简单介绍一下
-* 1、1、2、3、5、8、13、21、34 ....
-* 这道题有个规律，第一项加上第二项永远等于第三项：1 + 1 = 2；1 + 2 = 3；2 + 3 = 5；3 + 5 = 8 ....
-* 要求是传入第几项，得到该值，根据这个规律来实现一下
+- 今天新东方的面试还提到了菲波那切数列，其实这个东西蛮很有趣，简单介绍一下
+- 1、1、2、3、5、8、13、21、34 ....
+- 这道题有个规律，第一项加上第二项永远等于第三项：1 + 1 = 2；1 + 2 = 3；2 + 3 = 5；3 + 5 = 8 ....
+- 要求是传入第几项，得到该值，根据这个规律来实现一下
 
 ### 简单写法
 
@@ -609,10 +591,10 @@ console.log(obj);
 
 结果：输出 obj 是 `[empty × 2, 1, 2, splice: ƒ, push: ƒ]`
 
-* 一个对象如果有 length 属性，length 属性可以告诉我们对象的元素个数，基本上就满足一个类数组对象了
-* 当对象带有数组的 `splice` 方法并且 `length` 属性的值可以转为数值时，对象将会被当做数组打印。
+- 一个对象如果有 length 属性，length 属性可以告诉我们对象的元素个数，基本上就满足一个类数组对象了
+- 当对象带有数组的 `splice` 方法并且 `length` 属性的值可以转为数值时，对象将会被当做数组打印。
 
-* obj 调用数组的 push 方法自身的 length 属性就会 ++，此时调用两次，length 就变成了 4
+- obj 调用数组的 push 方法自身的 length 属性就会 ++，此时调用两次，length 就变成了 4
 
   1. 第一次 push：`obj[2] = 1; obj.length += 1`
   2. 第二次 push：`obj[3] = 2; obj.length += 1`
@@ -623,11 +605,11 @@ console.log(obj);
 
 ```js
 var a = {
-  n: 1
+  n: 1,
 };
 var b = a;
 a.x = a = {
-  n: 2
+  n: 2,
 };
 
 console.log(a.x);
@@ -651,7 +633,14 @@ console.log(b.x);
 ```js
 let i = 10000;
 const res = [];
-const reverse = x => Number(x.toString().split('').reverse().join(''));
+const reverse = x =>
+  Number(
+    x
+      .toString()
+      .split('')
+      .reverse()
+      .join('')
+  );
 while (i >= 0) {
   if (i === reverse(i)) {
     res.push(i);

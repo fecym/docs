@@ -177,19 +177,19 @@ tags:
 > 放到代码中其实也是一样，一看代码便知
 
 ```js
-const redis = require('redis')
+const redis = require('redis');
 // 拿到客户端
-const client = redis.createClient(6379, 'localhost')
+const client = redis.createClient(6379, 'localhost');
 // 监听错误事件
 client.on('error', err => {
-  console.log(err)
-})
+  console.log(err);
+});
 
 // 异步的
 client.set('home', 'beijing', (err, result) => {
-  if (err) throw err
-  console.log(result)
-})
+  if (err) throw err;
+  console.log(result);
+});
 // hash
 /**
  * person = {
@@ -197,26 +197,19 @@ client.set('home', 'beijing', (err, result) => {
  *   age: '24'
  * }
  */
-client.hmset(
-  'person1',
-  'username',
-  'chengyuming',
-  'age',
-  '24',
-  (err, result) => {
-    if (err) throw err
-    console.log(result)
-  }
-)
+client.hmset('person1', 'username', 'chengyuming', 'age', '24', (err, result) => {
+  if (err) throw err;
+  console.log(result);
+});
 client.hkeys('person1', (err, result) => {
-  if (err) throw err
-  console.log(result)
+  if (err) throw err;
+  console.log(result);
   result.forEach(key => {
     client.hget('person1', key, (err, value) => {
-      console.log(key, value, '嘿嘿和')
-    })
-  })
-})
+      console.log(key, value, '嘿嘿和');
+    });
+  });
+});
 ```
 
 ## Redis 发布订阅
@@ -228,31 +221,31 @@ client.hkeys('person1', (err, result) => {
 - 下面用代码演示一下
 
 ```js
-const redis = require('redis')
-const subClient1 = redis.createClient(6379, 'localhost')
-const subClient2 = redis.createClient(6379, 'localhost')
-const pubClient = redis.createClient(6379, 'localhost')
+const redis = require('redis');
+const subClient1 = redis.createClient(6379, 'localhost');
+const subClient2 = redis.createClient(6379, 'localhost');
+const pubClient = redis.createClient(6379, 'localhost');
 // 订阅消息
-subClient1.subscribe('food')
-subClient2.subscribe('drink')
+subClient1.subscribe('food');
+subClient2.subscribe('drink');
 // 监听发布的消息之后要做什么
 subClient1.on('message', (channel, message) => {
-  console.log(channel, message)
+  console.log(channel, message);
   // 取消订阅
-  subClient1.unsubscribe('food')
-})
+  subClient1.unsubscribe('food');
+});
 subClient2.on('message', (channel, message) => {
-  console.log(channel, message)
-})
+  console.log(channel, message);
+});
 // 发布消息
 setTimeout(() => {
-  pubClient.publish('food', '面包')
-  pubClient.publish('drink', '可乐')
-})
+  pubClient.publish('food', '面包');
+  pubClient.publish('drink', '可乐');
+});
 setTimeout(() => {
-  pubClient.publish('food', '面包')
-  pubClient.publish('drink', '可乐')
-}, 1000)
+  pubClient.publish('food', '面包');
+  pubClient.publish('drink', '可乐');
+}, 1000);
 ```
 
 ## 事务
@@ -290,8 +283,8 @@ setTimeout(() => {
 - 放到代码中，来看一下
 
 ```js
-const redis = require('redis')
-const client = redis.createClient(6379, 'localhost')
+const redis = require('redis');
+const client = redis.createClient(6379, 'localhost');
 // 开启事务
 client
   .multi()
@@ -299,13 +292,13 @@ client
   .set('k4', 'v4')
   .get('k4')
   .exec((err, result) => {
-    if (err) throw err
+    if (err) throw err;
     // 返回 [ 'OK', 'OK', 'v4' ]
-    console.log(result)
-  })
+    console.log(result);
+  });
 client.on('error', err => {
-  console.log(err)
-})
+  console.log(err);
+});
 ```
 
 ## 备份与恢复

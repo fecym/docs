@@ -8,7 +8,6 @@ tags:
   - plugin
 ---
 
-
 ## vscode 插件可以做什么
 
 vscode 编辑器是可以高度自定义的，使用 vscode 插件几乎可以对 vscode 编辑器进行说有形式的自定义。
