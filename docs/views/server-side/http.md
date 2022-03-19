@@ -2,7 +2,7 @@
 title: HTTP 日记
 date: 2020-02-18
 tags:
-  - HTTP
+  - http
 keys:
   - 'http-cym'
 ---

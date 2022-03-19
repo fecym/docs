@@ -3,7 +3,6 @@ title: 数组常用 api 实现
 date: 2021-05-21
 tags:
   - api
-  - array
 ---
 
 我们一直在用数组的 api，因为使用很方便

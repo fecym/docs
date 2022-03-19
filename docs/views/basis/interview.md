@@ -1,8 +1,9 @@
 ---
 title: 面试题记录
 date: 2021-08-04
-tags: + interview
-  + 基础
+tags:
+  - interview
+  - 基础
 ---
 
 ## 1. 关于函数的 length 属性

@@ -2,9 +2,7 @@
 title: 常见的 HTTP 认证方式
 date: 2019-12-31
 tags:
-  - cookie
-  - session
-  - jwt
+  - http
   - 基础
 ---
 
