@@ -42,7 +42,7 @@
   mkdir .vuepress && cd .vuepress
   # 在 .vuepress 新建 config.js 文件
   touch config.js
-  # 返回上一级新建READMEmd
+  # 返回上一级新建 README.md
   cd .. && touch README.md
   # 到根目录修改package.json文件，script脚本下写入以下命令
   "scripts": {
@@ -179,13 +179,13 @@ module.exports = {
 - 在 github 界面，点击 **你的头像 -> Settings -> Developer settings -> Personal access tokens** 进入 Personal access tokens 申请页面，点击 Generate new token 按钮生成 token ，或者你嫌麻烦可以直接点这 [传送门](https://github.com/settings/tokens)
 
 <p align="center">
-  <img :src="$withBase('/imgs/Generate-token.png')""/>
+  <img :src="$withBase('/imgs/Generate-token.png')"/>
 </p>
 
 - 进去之后，你可以输入一个名字，随便一个名字，你可以理解为一个全局的变量，你记住就可以了，下面的权限你都选中，然后点击 **Generate token** 就会生成一个 **Personal access tokens**
 
 <p align="center">
-  <img :src="$withBase('/imgs/Generate-token-after.png')""/>
+  <img :src="$withBase('/imgs/Generate-token-after.png')"/>
 </p>
 
 - 上图生成之后的效果
@@ -196,21 +196,21 @@ module.exports = {
 - 在里面选择你要进行部署的项目，如下图
 
 <p align="center">
-  <img :src="$withBase('/imgs/Travis-setting-project.png')""/>
+  <img :src="$withBase('/imgs/Travis-setting-project.png')"/>
 </p>
 
 - **fecym.github.io** 是我部署到的项目名字，也就是博客的地址，不需要把它打勾，我们需要打勾的是 **docs** 因为是从这个项目打包后直接部署到 **fecym.github.io** 里面，这个以后进入的入口是点击 头像 -> Settings 进入，第一次进入会直接进入这个页面的
 - 然后我们点击 logo 图标进入首页，左边会出现你选择的项目，然后最右边的 **More options**
 
 <p align="center">
-  <img :src="$withBase('/imgs/Travis-setting-project-after.png')""/>
+  <img :src="$withBase('/imgs/Travis-setting-project-after.png')"/>
 </p>
 
 - 然后如下图，把在 **github** 里面生成的 **Personal access tokens** 放到 **Value** 里面，**Name** 里面起个名字。然后点击 **Add**，我起的名字叫做 blog
 - 还需要添加一个地址，就是你要部署到 github 地址，不需要带 **https** 的，比如我的地址是 **github.com/fecym/fecym.github.io.git**，**name** 是 **address**
 
 <p align="center">
-  <img :src="$withBase('/imgs/Travis-setting-project-settings-token.png')""/>
+  <img :src="$withBase('/imgs/Travis-setting-project-settings-token.png')"/>
 </p>
 
 ### 项目里面配置自动化部署

@@ -572,7 +572,7 @@ module.exports = getNetworkIp;
 - 最终实现的效果如下所示
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/dev-error-info.png')""/>
+  <img :src="$withBase('/imgs/dev-error-info.png')"/>
 </p>
 
 ## 六、Source Map

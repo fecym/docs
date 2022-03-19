@@ -55,7 +55,7 @@ tags:
 > - 为什么要三次握手？为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误。
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/process-tcp-three-1.png')""/>
+  <img :src="$withBase('/imgs/process-tcp-three-1.png')"/>
 </p>
 
 - **客户端**首先发送一个连接试探，ACK=0 表示确认号无效，SYN = 1 表示这是一个连接请求或连接接受报文，同时表示这个数据报不能携带数据，seq = x 表示**客户端**自己的初始序号（seq = 0 就代表这是第 0 号帧），这时候**客户端**进入 syn_sent 状态，表示客户端等待服务器的回复
@@ -63,7 +63,7 @@ tags:
 - **客户端**收到确认后还需再次发送确认，同时携带要发送给**服务器**的数据。ACK 置 1 表示确认号 ack= y + 1 有效（代表期望收到服务器的第 1 个帧），**客户端**自己的序号 seq= x + 1（表示这就是我的第 1 个帧，相对于第 0 个帧来说的），一旦收到**客户端**的确认之后，这个 TCP 连接就进入 Established 状态，就可以发起 http 请求了。
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/process-tcp-three-2.png')""/>
+  <img :src="$withBase('/imgs/process-tcp-three-2.png')"/>
 </p>
 
 ## 发送 HTTP 请求
@@ -138,11 +138,11 @@ tags:
 > - 发起方向被动方发送报文段，Ack、Seq。然后进入等待 TIME_WAIT 状态。被动方收到发起方的报文段以后关闭连接。发起方等待一定时间未收到回复，则正常关闭。(第四次挥手：由浏览器发起，告诉服务器，我响应报文接受完了，我准备关闭了，你也准备吧)
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/process-tcp-four-1.png')""/>
+  <img :src="$withBase('/imgs/process-tcp-four-1.png')"/>
 </p>
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/process-tcp-four-2.png')""/>
+  <img :src="$withBase('/imgs/process-tcp-four-2.png')"/>
 </p>
 
 - 断开连接端可以是客户端，也可以是**服务端**。假设**客户端**发起中断连接请求：
