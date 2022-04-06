@@ -33,6 +33,7 @@ module.exports = {
         { text: 'webpack介绍', link: '/views/webpack/webpack-1' },
         { text: 'webpack实战', link: '/views/webpack/webpack-2' },
         { text: 'webpack拓展', link: '/views/webpack/webpack-3' },
+        { text: '如何优雅的解决端口被占用', link: '/views/webpack/getport' },
         { text: '树在工作面试中的应用', link: '/views/algorithms/tree' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'AST团队分享', link: '/views/webpack/AST' },
