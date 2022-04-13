@@ -22,6 +22,15 @@ tags:
 (a => a).length; // 输出 1
 ```
 
+但也不完全是这样，函数的参数分为`实参`和`形参`，实参的数量是 `argument.length`，而行参的数量是`函数的length`
+
+```js
+function fn(a, b) {
+  console.log(arguments.length, fn.length);
+}
+fn(1, 2, 3, 4) // 4，2
+```
+
 ## 2. 数组中字符串键值的处理
 
 在 JavaScript 中数组是通过数字进行索引，但是有趣的是他们也是对象，所以也可以包含 `字符串` 键值和属性，但是这些不会被计算在数组的长度（length）内
