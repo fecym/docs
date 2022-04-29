@@ -691,6 +691,91 @@ export function randomString(n) {
 }
 ```
 
+## 文件按需加载
+
+有时候会遇到一些插件不是es module 规范开发的，没有 npm 包，想要引入就需要在 HTML 中引入，但是那种插件可能会很大，我们首屏可能不需要直接引入，在需要的时候引入就可以了，所以不能直接在HTML中直接引入
+
+这种一般我们会做成，在需要用到插件的时候，动态创建一个 script 或者 link 标签设置到 src 属性然后插入到head 中，为此可以使用以下解决方案
+
+```js
+// LoadFiles.js
+export default class LoadFiles {
+  /**
+   * @param {Array<string>} options.files  文件地址集合
+   * @param {Boolean} options.isExternal   是否是第三方链接
+   * @param {String} options.urlPrefix     文件前缀
+   * @param {Boolean} options.autoloading  是否主动加载
+   */
+  constructor(options = {}) {
+    this.headNode = null;
+    this.htmlNodes = [];
+    this.options = options;
+    options.urlPrefix = options.urlPrefix || process.env.BASE_URL;
+    options.isExternal = options.isExternal || false;
+    options.autoloading = options.autoloading || false;
+    const files = options.files || [];
+    options.files = options.isExternal
+      ? files
+      : files.map(this.processFileUrl, this);
+    options.autoloading = options.autoloading || false;
+    options.autoloading && this.load();
+  }
+  getHead() {
+    if (!this.headNode) {
+      this.headNode = document.head;
+    }
+    return this.headNode;
+  }
+  processFileUrl(url) {
+    return this.options.urlPrefix + url;
+  }
+  getFileExt(url) {
+    return url.substr(url.lastIndexOf(".")).toLowerCase();
+  }
+  fileExist(url) {
+    return this.htmlNodes.includes(url);
+  }
+  loadFile(url, callback) {
+    if (this.fileExist(url)) return callback(null);
+    const ext = this.getFileExt(url);
+    let el = null;
+    if (ext === ".js") {
+      el = document.createElement("script");
+      el.src = url;
+      el.type = "text/javascript";
+    } else {
+      el = document.createElement("link");
+      el.href = url;
+      el.rel = "stylesheet";
+      el.type = "text/css";
+    }
+    const self = this;
+    el.onload = el.onreadystatechange = function() {
+      const state = this.readyState;
+      if (!state || state === "loaded" || state === "complete") {
+        callback(null);
+        self.htmlNodes.push(url);
+      }
+    };
+    el.onerror = callback;
+    this.getHead().appendChild(el);
+  }
+  load() {
+    return new Promise((resolve, reject) => {
+      let count = 0;
+      const files = this.options.files;
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        this.loadFile(file, err => {
+          if (err) return reject(err);
+          if (++count === files.length) resolve(true);
+        });
+      }
+    });
+  }
+}
+```
+
 ## base64 转文件预览地址
 
 base64 文件可以直接预览，但是有些三方库可能需要一个真实预览地址，我们可以把 base64 转成文件预览地址来使用
