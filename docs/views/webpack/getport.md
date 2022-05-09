@@ -61,7 +61,7 @@ module.exports = {
 这下终于还可以保持之前的操作习惯，每次项目编译完成之后，直接点击提示信息进行项目的访问了，而且对新人也比较友好，新来的同学也不需要进行一大堆配置才可以访问本地跑起来的项目了
 
 <p align="center">
-  <img :src="$withBase('/imgs/getport-terminal-prompt.png')"/>
+  <img :src="$withBase('/imgs/getport-terminal-prompt1.png')"/>
 </p>
 
 这就完了嘛？不，还没正式开始呢！因为这根本没考虑到端口被占用情况，端口如果被占用了，cli 的提示端口会自增 1，而我们提示的还是项目配置的端口，这可不是我们想要的
