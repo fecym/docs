@@ -56,22 +56,22 @@ module.exports = {
     ['@vuepress/nprogress'],
     ['@vuepress/back-to-top'],
     ['@vuepress/medium-zoom', true],
-    [
-      '@vuepress/pwa',
-      {
-        serviceWorker: true,
-        // popupComponent: 'MySWUpdatePopup',
-        // updatePopup: true
-        // updatePopup: {
-        //   message: "发现新内容可用",
-        //   buttonText: "刷新"
-        // }
-        updatePopup: {
-          message: 'New content is available.',
-          buttonText: 'Refresh',
-        },
-      },
-    ],
+    // [
+    //   '@vuepress/pwa',
+    //   {
+    //     serviceWorker: true,
+    //     // popupComponent: 'MySWUpdatePopup',
+    //     // updatePopup: true
+    //     // updatePopup: {
+    //     //   message: "发现新内容可用",
+    //     //   buttonText: "刷新"
+    //     // }
+    //     updatePopup: {
+    //       message: 'New content is available.',
+    //       buttonText: 'Refresh',
+    //     },
+    //   },
+    // ],
     // 移除 Google 监控
     // ['@vuepress/google-analytics', {
     //   ga: 'UA-151995186-1'  // Google Analytics ID
