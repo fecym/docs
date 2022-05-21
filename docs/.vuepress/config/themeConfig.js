@@ -54,7 +54,8 @@ module.exports = {
       placeholder: '你想说点什么...',
       pageSize: 5,
       // 是否记录评论者IP
-      recordIP: true
+      recordIP: true,
+      enableQQ: true
     },
     isComment: true,
     footerConf: {
