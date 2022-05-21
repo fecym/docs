@@ -7,7 +7,7 @@ tags:
 
 ## 项目背景
 
-因公司项目要拆成多个模块，部分模块给分公司的开发权限一起开发，所以最终决定使用 git 子模块来拆分项目，今天来复盘下项目拆分中爬过的各种坑。有兴趣的同学可以参考源码一起阅读，附[源码](https://github.com/fecym/git-submodules.git)
+因公司项目要拆成多个模块，部分模块给分公司的小伙伴开发权限一起开发，所以最终决定使用 git 子模块来拆分项目，今天来复盘下项目拆分中爬过的一些坑。有兴趣的同学可以参考源码一起阅读，附[源码](https://github.com/fecym/git-submodules.git)。
 
 ## 文章导览
 
@@ -54,7 +54,7 @@ git submodule
 # 更新项目内子模块到最新版本
 git submodule update
 
-# 更新子模块为远程项目的最新版本
+# 更新子模块为远端的最新版本
 git submodule update --remote
 ```
 
@@ -159,6 +159,7 @@ git submodule foreach git pull
 **科普一下**：子模块与主模块关联之后，子模块根目录下的 .git 文件夹将会变成 `.git 文件`，里面内容指定了 git 的地址
 
 ```sh
+# 子模块的 .git 文件
 gitdir: ../../../.git/modules/src/modules/submodules-1
 ```
 
@@ -232,7 +233,7 @@ export default router;
 
 ### vuex 改造
 
-vuex 做了统一引入注册，写法同路由，定义在我们所建模块文件夹下面，命名以 xxxxxStore.js ，但是有两点强制要求：
+vuex 做了统一引入注册，写法同路由，定义在我们所建模块文件夹下面，命名以 xxxxxStore.js ，但有两点强制要求：
 
 1. 必须以 Store.js 结尾
 2. 模块名称不能与之前出现过的文件夹名称重复
@@ -292,7 +293,7 @@ git config --global alias.prf '!f() { git pull origin $1 --recurse-submodules &&
 
 ## 子模块 lint 失效
 
- code review 时，我发现小伙伴儿的代码风格都不一样，理论上代码提交时有 githooks 来控制执行 lint，自动按照配置来格式化代码。
+ code review 时，发现小伙伴儿的代码风格都不一样，理论上代码提交时有 githooks 来控制执行 lint，自动按照配置来格式化代码。
 
 很明显 eslint + prettier 失效了，思来想去想到子模块也是一个 git，而 githooks 执行时是查找 package.json 里面的配置
 
@@ -318,7 +319,7 @@ git config --global alias.prf '!f() { git pull origin $1 --recurse-submodules &&
   <img :src="$withBase('/imgs/vue-cli-commands.png')" style="border-radius: 8px;">
 </p>
 
-子模块要想 lint 代码并且与主模块保持一致，我们还得使用 @vue/cli-service lint，但是主模块有，我当时也很纳闷，于是看了一下源码发现是必须有 eslint 的时候他会自己去注册 lint 命令，于是我们在 package.json 中加入 eslint 然后就有了 😂
+子模块要想 lint 代码并且与主模块保持一致，我们还得使用 @vue/cli-service lint，但是主模块有，我当时也很纳闷，于是看了一下源码发现是必须有 eslint 的时候他会自己去注册 lint 命令，于是我们在 package.json 中加入 eslint 就可以了
 
 最终子模块 package.json 代码如下
 
@@ -346,7 +347,7 @@ git config --global alias.prf '!f() { git pull origin $1 --recurse-submodules &&
 }
 ```
 
-然后我们在改造主模块为注册 git hooks
+然后我们在改造主模块为子模块注册 git hooks
 
 ## githooks
 
@@ -406,7 +407,7 @@ husky 是一个让配置 git 钩子变得更简单的工具。husky 的原理是
   <img :src="$withBase('/imgs/githooks-install.png')" style="border-radius: 8px;">
 </p>
 
-如果我们想直接用的话，就需要在每一个子模块中都按照 yorkie，但是能在主模块中处理一次，肯定不能在子模块中处理多次，最终还是决定把 yorkie 源码拿过来修改一下，我们初始化的时候执行一次即可
+如果我们想直接用的话，就需要在每一个子模块中都安装 yorkie，但是能在主模块中处理一次，肯定不能在子模块中多次处理，最终还是决定把 yorkie 源码拿过来修改一下，在初始化的时候执行一次即可
 
 ## 改造 yorkie
 
