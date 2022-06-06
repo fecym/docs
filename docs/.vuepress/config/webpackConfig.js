@@ -5,10 +5,10 @@
  * @LastEditors: chengyuming
  * @LastEditTime: 2019-11-11 23:36:01
  */
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
-const webpack = require('webpack')
-const productionGzipExtensions = ['js', 'css']
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const webpack = require('webpack');
+const productionGzipExtensions = ['js', 'css'];
 
 module.exports = {
   chainWebpack: (config, isServer) => {
@@ -18,10 +18,20 @@ module.exports = {
     // config.plugins.delete('preload');
 
     if (config.mode === 'production') {
-      config.optimization.minimize(true)
-      config.optimization.runtimeChunk('single')
+      config.optimization.minimize(true);
+      config.optimization.runtimeChunk('single');
     }
 
+    // config.module
+    //   .rule('js') // Find the rule.
+    //   .use('babel-loader') // Find the loader
+    //   .loader(require.resolve("babel-loader"))
+    //   .tap(options => {
+    //     options = options || {}
+    //     const presets = options.presets || []
+    //     options.presets = [...presets, ['@babel/preset-env'], ['@vue/babel-preset-jsx', { injectH: false }]]
+    //     return options
+    //   });
   },
   configureWebpack: (config, isServer) => {
     if (config.mode === 'production') {
@@ -31,15 +41,15 @@ module.exports = {
           algorithm: 'gzip',
           test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
           threshold: 10240,
-          minRatio: 0.8
+          minRatio: 0.8,
         })
-      )
+      );
       config.plugins.push(
         new MiniCssExtractPlugin({
           filename: 'assets/css/[name].[hash].css',
-          chunkFilename: 'assets/css/[id].[hash].css'
+          chunkFilename: 'assets/css/[id].[hash].css',
         })
-      )
+      );
     }
-  }
-}
+  },
+};

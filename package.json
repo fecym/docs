@@ -9,19 +9,21 @@
     "deploy": "bash deploy.sh"
   },
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
-    "@vuepress/plugin-blog": "^1.9.2",
-    "@vuepress/plugin-medium-zoom": "^1.0.0-rc.1",
-    "compression-webpack-plugin": "^3.0.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "vuepress": "^1.5.0",
-    "vuepress-plugin-flowchart": "1.4.3",
-    "webpack-bundle-analyzer": "^3.6.0"
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
+    "@vue/babel-preset-jsx": "^1.2.4",
+    "@vuepress/plugin-back-to-top": "^1.9.7",
+    "@vuepress/plugin-blog": "^1.9.4",
+    "@vuepress/plugin-medium-zoom": "^1.9.7",
+    "compression-webpack-plugin": "^10.0.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "vuepress": "^1.9.7",
+    "vuepress-plugin-flowchart": "1.5.0",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "dependencies": {
     "dayjs": "^1.11.2",
-    "leancloud-storage": "3.13.2",
+    "leancloud-storage": "4.12.2",
     "valine": "^1.4.0",
-    "vue-click-outside": "1.0.7"
+    "vue-click-outside": "1.1.0"
   }
 }
