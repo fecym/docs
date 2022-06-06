@@ -2,8 +2,7 @@
 title: 数组常用 api 实现
 date: 2021-05-21
 tags:
-  - api
-  - array
+  - 基础
 ---
 
 我们一直在用数组的 api，因为使用很方便
@@ -152,6 +151,23 @@ function shift(arr) {
   }
   arr.length--;
   return r;
+}
+```
+
+## 数组反转
+
+数组反转 reverse 也是一个会让原数组发生改变的 api，返回改变后的数组
+
+```js
+function reverse(arr) {
+  const len = arr.length;
+  const lenHalf = len / 2;
+  for (let i = 0; i < lenHalf; i++) {
+    const temp = arr[i];
+    arr[i] = arr[len - 1 - i];
+    arr[len - i - 1] = temp;
+  }
+  return arr;
 }
 ```
 
@@ -354,6 +370,17 @@ function flat(arr) {
 }
 ```
 
+- 当然循环要比递归性能更好
+
+```js
+function flat(arr) {
+  while (arr.some(item => Array.isArray(item))) {
+    arr = [].concat(...arr);
+  }
+  return arr;
+}
+```
+
 ## 增维面试思考
 
 之前面试遇到一道题，有一个一维数组，我想要写个方法，方法接收两个参数，该数组和一个数字，然后得到一个根据这个数字而拆分成的多维数组，比如说我传递一个 3，那就数组中的成员就每三个成员组成一个新的数组
@@ -452,6 +479,16 @@ Array.prototype.shift2 = function() {
   }
   this.length--;
   return r;
+};
+
+Array.prototype.reverse2 = function() {
+  const len = this.length;
+  for (let i = 0; i < len / 2; i++) {
+    const temp = this[i];
+    this[i] = this[len - i - 1];
+    this[len - i - 1] = temp;
+  }
+  return this;
 };
 
 Array.prototype.forEach2 = function(callback, ctx = null) {

@@ -20,7 +20,7 @@ tags:
 > &emsp;`代理` 是在服务器和客户端之间架设的一层服务器，代理将接受客户端的请求将它转发给服务器，然后将服务端的响应转发给客户端。不管正向代理还是反向代理，都是实现此功能。<br/> > &emsp;说到代理，首先我们要明确一个概念，所谓代理就是一个代表、一个渠道；此时就涉及到两个角色，一个是被代理角色，一个是目标角色。<br/> > &emsp;举个例子：比如说生活中的专卖店，客人到 adidas 专卖店买了一双鞋，这个专卖店就是代理，被代理角色就是 adidas 厂家，目标角色就是用户
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/nginx-proxy.jpg')""/>
+  <img :src="$withBase('/imgs/nginx-proxy.jpg')"/>
 </p>
 
 ### 正向代理
@@ -110,7 +110,7 @@ tags:
 > 接下来，我们写四台简单的服务器，来进行测试，四个服务器的端口分别是 `3333、4444、5555、6666`，他们都返回自身的端口号，然后我们在进行 `nginx` 调度配置，先把四台服务器跑起来
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/nginx-proxy-cluster.jpg')""/>
+  <img :src="$withBase('/imgs/nginx-proxy-cluster.jpg')"/>
 </p>
 
 ### 轮询（默认）

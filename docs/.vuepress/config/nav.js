@@ -21,7 +21,8 @@ module.exports = {
         { text: '实现 Promise', link: '/views/basis/promise' },
         { text: '浏览器缓存', link: '/views/basis/cache' },
         { text: '命令行参数', link: '/views/basis/command' },
-        { text: '小技巧及面试题收录', link: '/views/basis/issue' },
+        { text: '工作小技巧', link: '/views/basis/issue' },
+        { text: '面试题收录', link: '/views/basis/interview' },
         // { text: '交接文档', link: '/views/other/doc' },
       ]
     },
@@ -32,6 +33,8 @@ module.exports = {
         { text: 'webpack介绍', link: '/views/webpack/webpack-1' },
         { text: 'webpack实战', link: '/views/webpack/webpack-2' },
         { text: 'webpack拓展', link: '/views/webpack/webpack-3' },
+        { text: '如何优雅的解决端口被占用', link: '/views/webpack/getport' },
+        { text: '树在工作面试中的应用', link: '/views/algorithms/tree' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'AST团队分享', link: '/views/webpack/AST' },
         { text: 'eslint 工作流', link: '/views/FE/lint/index' },
@@ -66,7 +69,8 @@ module.exports = {
         { text: 'npm', link: '/views/tools/npm/init' },
         { text: 'mysql', link: '/views/tools/mysql' },
         { text: 'redis', link: '/views/tools/redis/index' },
-        { text: 'nginx', link: '/views/tools/nginx/index' }
+        { text: 'nginx', link: '/views/tools/nginx/index' },
+        { text: 'git子模块', link: '/views/tools/git/git-submodules' },
       ]
     },
     {

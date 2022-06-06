@@ -4,10 +4,8 @@ date: 2021-03-20
 keys:
   - 'vscode-cym'
 tags:
-  - vscode
-  - plugin
+  - 插件
 ---
-
 
 ## vscode 插件可以做什么
 

@@ -23,8 +23,8 @@ tags:
 
 ```js
 // hello.js
-console.log('hello')
-console.log(process.argv)
+console.log('hello');
+console.log(process.argv);
 ```
 
 此时我们直接执行 `node hello.js --name=cym` 就可以看到打印的参数了。
@@ -93,14 +93,14 @@ mkdir bin && cd bin && touch www
 // hello.js
 class Hello {
   constructor(argv) {
-    console.log(argv)
+    console.log(argv);
   }
   start() {
-    console.log('此处省略一万行代码...')
+    console.log('此处省略一万行代码...');
   }
 }
 
-module.exports = Hello
+module.exports = Hello;
 ```
 
 ### 命令文件
@@ -109,8 +109,8 @@ module.exports = Hello
 
 ```js
 #! /usr/bin/env node
-const yargs = require('yargs')
-const Hello = require('..')
+const yargs = require('yargs');
+const Hello = require('..');
 
 const argv = yargs
   .option('n', {
@@ -128,10 +128,10 @@ const argv = yargs
   .alias('v', 'version')
   // 帮助信息
   .help('h')
-  .alias('h', 'help').argv
+  .alias('h', 'help').argv;
 
-const hello = new Hello(argv)
-hello.start()
+const hello = new Hello(argv);
+hello.start();
 ```
 
 ### 配置 bin

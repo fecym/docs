@@ -3,8 +3,7 @@ title: 实现一个 Promise
 date: 2020-03-22
 author: chengyuming
 tags:
-  - Promise
-  - api
+  - promise
   - 基础
 ---
 
@@ -51,19 +50,19 @@ function Promise(execute) {
 }
 
 Promise.prototype.then = function(onFulfilled, onRejected) {
-  const selt = this;
-  if (selt.status === RESOLVED) {
-    onFulfilled(selt.value);
+  const self = this;
+  if (self.status === RESOLVED) {
+    onFulfilled(self.value);
   }
-  if (selt.status === REJECTED) {
-    onRejected(selt.reason);
+  if (self.status === REJECTED) {
+    onRejected(self.reason);
   }
-  if (selt.status === PENDING) {
+  if (self.status === PENDING) {
     this.onResolvedCallbacks.push(function() {
-      onFulfilled(selt.value);
+      onFulfilled(self.value);
     });
     this.onRejectedCallbacks.push(function() {
-      onRejected(selt.reason);
+      onRejected(self.reason);
     });
   }
 };
@@ -188,20 +187,16 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
   // 如果没有传递成功的值，那么我们给自动传递过去，这个叫做值得穿透，保证可以在后面捕获到异常
   onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val;
   // 如果错误没有传递，那我们手动传递过去
-  onRejected =
-    typeof onRejected === 'function'
-      ? onRejected
-      : err => {
-          throw err;
-        };
-  const selt = this;
+  onRejected = typeof onRejected === 'function' ? onRejected : err => throw err;
+
+  const self = this;
   // then方法必须返回一个新的 promise
   const _promise = new Promise((resolve, reject) => {
-    if (selt.status === RESOLVED) {
+    if (self.status === RESOLVED) {
       setTimeout(() => {
         try {
-          // then 方法中可能直接出现异常，所以 trycatch 下
-          const x = onFulfilled(selt.value);
+          // then 方法中可能直接出现异常，所以 try catch 下
+          const x = onFulfilled(self.value);
           // 需要一个方法处理 promise 中 then 方法
           // 我们要在自身中使用自身，自身还没有创建完毕了，所以我们需要异常处理一下才可以取到 _promise
           // 在 Notes 3.1 中提到，这种情况我们可以使用 setTimeout 来实现
@@ -211,21 +206,21 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
         }
       });
     }
-    if (selt.status === REJECTED) {
+    if (self.status === REJECTED) {
       setTimeout(() => {
         try {
-          const x = onRejected(selt.reason);
+          const x = onRejected(self.reason);
           resolvePromise(_promise, x, resolve, reject);
         } catch (e) {
           reject(e);
         }
       });
     }
-    if (selt.status === PENDING) {
+    if (self.status === PENDING) {
       this.onResolvedCallbacks.push(function() {
         setTimeout(() => {
           try {
-            const x = onFulfilled(selt.value);
+            const x = onFulfilled(self.value);
             resolvePromise(_promise, x, resolve, reject);
           } catch (e) {
             reject(e);
@@ -235,7 +230,7 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
       this.onRejectedCallbacks.push(function() {
         setTimeout(() => {
           try {
-            const x = onRejected(selt.reason);
+            const x = onRejected(self.reason);
             resolvePromise(_promise, x, resolve, reject);
           } catch (e) {
             reject(e);
@@ -267,9 +262,7 @@ const p = new Promise((resolve, reject) => {
 });
 p.then(
   data => console.log(data),
-  err => {
-    console.log(err, '出错了');
-  }
+  err => console.log(err, '出错了');
 );
 // p.then(data => console.log(data))
 
@@ -369,6 +362,25 @@ Promise.all = function(prs) {
       } else {
         processData(i, p);
       }
+    });
+  });
+};
+```
+
+```js
+// 也可以这么写
+Promise.all = function(prs) {
+  let counter = 0,
+    result = [];
+  return new Promise2((resolve, reject) => {
+    prs.forEach((p, idx) => {
+      // 直接封装成 promise 然后执行
+      Promise.resolve(p).then(val => {
+        result[idx] = val;
+        if (++counter === prs.length) {
+          resolve(result);
+        }
+      }, reject);
     });
   });
 };

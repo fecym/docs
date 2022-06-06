@@ -2,9 +2,7 @@
 title: 常见的 HTTP 认证方式
 date: 2019-12-31
 tags:
-  - cookie
-  - session
-  - jwt
+  - http
   - 基础
 ---
 
@@ -49,8 +47,8 @@ cookie 是不可跨域的：每个 `cookie` 都会绑定单一的域名，无法
 下面是使用 express 设置一条 cookie ，来浏览器端做访问
 
 ```js
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 app.get('/', (req, res) => {
   res.cookie('test', 'cookie', {
@@ -59,11 +57,11 @@ app.get('/', (req, res) => {
     path: '/cym/abc',
     secure: true,
     // domain: 'baidu.com',
-  })
-  res.end('home')
-})
+  });
+  res.end('home');
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ## Session
@@ -104,18 +102,18 @@ app.listen(3000)
 
 ```js
 // koa 实现如下
-const Koa = require('koa')
-const Router = require('koa-router')
-const session = require('koa-session')
-const static = require('koa-static')
-const body = require('koa-parser')
-const app = new Koa()
+const Koa = require('koa');
+const Router = require('koa-router');
+const session = require('koa-session');
+const static = require('koa-static');
+const body = require('koa-parser');
+const app = new Koa();
 
 // 使用 session 需要一个秘钥，就是一些随机字符串
-app.keys = ['5e04d20d-33b72', '5e04d20d-1181c', '5e04d20d-1ac51']
+app.keys = ['5e04d20d-33b72', '5e04d20d-1181c', '5e04d20d-1ac51'];
 
 // 处理post
-app.use(body())
+app.use(body());
 
 // 使用中间件设置session
 app.use(
@@ -126,43 +124,43 @@ app.use(
     },
     app
   )
-)
+);
 
-const router = new Router()
+const router = new Router();
 
 router.post('/login', async ctx => {
-  const {username, password} = ctx.request.body
+  const { username, password } = ctx.request.body;
   if (username === 'admin' && password === '123123') {
-    console.log('登录成功')
+    console.log('登录成功');
     // 设置 session
-    ctx.session.user = username
+    ctx.session.user = username;
   } else {
-    console.log('登录失败')
+    console.log('登录失败');
   }
   // 没有这个前台会报404，必须返回点什么
-  ctx.body = {code: 200}
-})
+  ctx.body = { code: 200 };
+});
 
 // 用户中心
 router.get('/profile', async ctx => {
   if (!ctx.session.user) {
-    ctx.body = `<a href="/">请返回登录</a>`
+    ctx.body = `<a href="/">请返回登录</a>`;
   } else {
-    ctx.body = '用户中心'
+    ctx.body = '用户中心';
   }
-})
+});
 
 // 清空 session
 router.get('/logout', async ctx => {
-  ctx.session.user = null
-  ctx.body = '退出成功'
-})
+  ctx.session.user = null;
+  ctx.body = '退出成功';
+});
 
-app.use(router.routes())
+app.use(router.routes());
 
-app.use(static('./www'))
+app.use(static('./www'));
 
-app.listen(3001)
+app.listen(3001);
 ```
 
 ## Cookie 和 Session 的区别
@@ -218,15 +216,15 @@ Y6F6_pOyDw2FMW6s9pND4n_IJTUmDQalEIZg823-Pqli-PSrKdoO0wfZTeXJawePNcceqt-wc5s37V5Z
 **载荷：除去协议首部之外实际传输的数据**
 
 ```js
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
-const payload = {name: 'cym'}
+const payload = { name: 'cym' };
 
 // 秘钥
-const secret = 'CHENGYUMING'
+const secret = 'CHENGYUMING';
 
 // 签发 token
-const token = jwt.sign(payload, secret, {expiresIn: '1day'})
+const token = jwt.sign(payload, secret, { expiresIn: '1day' });
 ```
 
 #### 2. 校验 jwt
@@ -236,10 +234,10 @@ const token = jwt.sign(payload, secret, {expiresIn: '1day'})
 ```js
 jwt.verify(token, secret, (err, data) => {
   if (err) {
-    return void console.log(err.message)
+    return void console.log(err.message);
   }
-  console.log(data)
-})
+  console.log(data);
+});
 ```
 
 #### 3. RS256 算法
@@ -265,37 +263,33 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 用 `RS256` 算法签发 `jwt` 的时候需要，从读取我们创建的秘钥文件，使用的方法还是跟之前一样的，不过需要在最后一个参数里面配置一下算法的格式 `{ algorithm: 'RS256' }`，那么整个流程如下
 
 ```js
-const fs = require('fs')
-const jwt = require('jsonwebtoken')
-const path = require('path')
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const path = require('path');
 
-const privateKey = fs.readFileSync(
-  path.resolve(__dirname, './rsa_key/rsa_private_key.pem')
-)
+const privateKey = fs.readFileSync(path.resolve(__dirname, './rsa_key/rsa_private_key.pem'));
 
 // 签发 token，这里使用 RS256算法
-const payload = {name: 'cym'}
+const payload = { name: 'cym' };
 const tokenRS256 = jwt.sign(payload, privateKey, {
   // 这里修改算法为 RS256
   algorithm: 'RS256',
   // 使用秒或表示时间跨度 zeit / ms 的字符串表示。
   expiresIn: '1d',
-})
+});
 
-console.log('RS256 算法：', tokenRS256)
+console.log('RS256 算法：', tokenRS256);
 
 // 校验
-const publicKey = fs.readFileSync(
-  path.resolve(__dirname, './rsa_key/rsa_public_key.pem')
-)
+const publicKey = fs.readFileSync(path.resolve(__dirname, './rsa_key/rsa_public_key.pem'));
 
 // 接受两个个参数：要校验的 token，公钥。校验 token 会得到一个对象，其中 iat 是 token 创建时间，exp 是 token 到期时间
 jwt.verify(tokenRS256, publicKey, (err, data) => {
   if (err) {
-    return void console.log(err.message)
+    return void console.log(err.message);
   }
-  console.log(data)
-})
+  console.log(data);
+});
 ```
 
 ### 前后端交互代码实现

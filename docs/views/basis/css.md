@@ -579,7 +579,7 @@ p {
 - <code style="color: #ff502c">z 轴</code>：表示的是用户与屏幕的这条看不见的垂直线
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/basis-css-z-index-0.jpg')""/>
+  <img :src="$withBase('/imgs/basis-css-z-index-0.jpg')"/>
 </p>
 
 - 一般情况下，元素在页面上沿 x 轴 y 轴平铺，我们察觉不到它们在 z 轴上的层叠关系。而一旦元素发生堆叠，这时就能发现某个元素可能覆盖了另一个元素或者被另一个元素覆盖。它们的层叠关系我们可称为<code>层叠上下文</code>。
@@ -630,7 +630,7 @@ p {
 ```
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/basis-css-z-index-1.jpg')""/>
+  <img :src="$withBase('/imgs/basis-css-z-index-1.jpg')"/>
 </p>
 
 - 还有一种情况就是，当父盒子也设置为层叠上下文，那么就会根据父盒子的 _z-index_ 来处理，子盒子设置再高也不行，上代码和图
@@ -681,7 +681,7 @@ p {
 ```
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/basis-css-z-index-2.jpg')""/>
+  <img :src="$withBase('/imgs/basis-css-z-index-2.jpg')"/>
 </p>
 
 - 为什么出现这种情况？举个例子：处于层叠上下文中的元素，就像是元素当了官，等级自然比普通元素高。再想象一下，假设一个官员 A 是个省级领导，他下属有一个秘书 a-1，家里有一个保姆 a-2。另一个官员 B 是一个县级领导，他下属有一个秘书 b-1，家里有一个保姆 b-2。a-1 和 b-1 虽然都是秘书，但是你想一个省级领导的秘书和一个县级领导的秘书之间有可比性么？甚至保姆 a-2 都要比秘书 b-1 的等级高得多。谁大谁小，谁高谁低一目了然，所以根本没有比较的意义。只有在 A 下属的 a-1、a-2 以及 B 下属的 b-1、b-2 中相互比较大小高低才有意义。
@@ -689,7 +689,7 @@ p {
 ### 层叠顺序
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/basis-css-z-index-3.png')""/>
+  <img :src="$withBase('/imgs/basis-css-z-index-3.png')"/>
 </p>
 
 - 层叠顺序表示元素发生层叠时按照特定的顺序规则在*Z 轴*上垂直显示
@@ -744,7 +744,7 @@ p {
 ```
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/basis-css-z-index-4.jpg')""/>
+  <img :src="$withBase('/imgs/basis-css-z-index-4.jpg')"/>
 </p>
 
 - 参考链接，[张鑫旭大大博客](https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/)、[MagicEyeslv 的彻底搞懂 CSS 层叠上下文...](https://juejin.im/post/5b876f86518825431079ddd6)

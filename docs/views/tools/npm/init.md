@@ -263,8 +263,8 @@ tags:
 ```json
 {
   "name": "foo",
-  "config": {"port": "8080"},
-  "scripts": {"start": "node server.js"}
+  "config": { "port": "8080" },
+  "scripts": { "start": "node server.js" }
 }
 ```
 
@@ -355,11 +355,11 @@ tags:
 比如最初我们执行 `npm init -y` 之后生成的 `package.json` 文件，我们可以使用 `process.env.npm_package_xxx` 来获取到在 `package.json` 定义的变量
 
 ```js
-console.log(process.env.npm_package_name) // npm-name
-console.log(process.env.npm_package_version) // 1.0.0
-console.log(process.env.npm_package_description) //
-console.log(process.env.npm_package_main) // index.js
-console.log(process.env.npm_package_license) // MIT
+console.log(process.env.npm_package_name); // npm-name
+console.log(process.env.npm_package_version); // 1.0.0
+console.log(process.env.npm_package_description); //
+console.log(process.env.npm_package_main); // index.js
+console.log(process.env.npm_package_license); // MIT
 ```
 
 ## npm 发布包

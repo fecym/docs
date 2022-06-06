@@ -224,7 +224,6 @@ module.exports = {
 
 其实上面这种写法和直接在 use 里面写路径是一样的，只是配置了别名，还是比较麻烦。其实我们还有更好的方案，配置 modules，配置 webpack 查找的地方，默认情况下是查找 `node_modules` 文件夹下，我们可以在这里把我们的 `loaders` 文件夹补充上，找不到 `node_modules` 后去 `loaders` 文件夹下查找
 
-
 ```js
 module.exports = {
   // 省略其他配置

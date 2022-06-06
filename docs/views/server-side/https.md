@@ -2,7 +2,7 @@
 title: https 笔记
 date: 2020-02-27
 tags:
-  - https
+  - http
 keys:
   - 'https-cym'
 ---

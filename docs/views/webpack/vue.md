@@ -83,7 +83,7 @@ tags:
 - `clean-webpack-plugin` 用来对打包之前的删除操作，因为新版本的原因，引入方式有点不一样
 
   ```javascript
-  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin');
   ```
 
 - `webpack` 处理 `html、css、js`，就会处理路径，我们会用到 `path` 模块，一般会写一个 `resolve` 方法来处理路径
@@ -96,7 +96,7 @@ tags:
   - 我们先简单的配置以下，使 `js` 和 `html` 耦合到一起，`entry` 我们选对象语法
   ```javascript
   entry: {
-    app: resolve('./src/main.js')
+    app: resolve('./src/main.js');
   }
   ```
   - `output` 就是对象语法，必要的有两个配置项，`path、filename` 还有一个可有可无 `publicPath` 打包后静态资源文件夹的目录
@@ -180,9 +180,9 @@ tags:
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
-      }
-    ]
+        loader: 'vue-loader',
+      },
+    ];
   }
   ```
   - 然后我们在相应的地方写上我们改写的代码，此时就可以运行代码了
@@ -208,8 +208,8 @@ tags:
     </template>
     <script>
       export default {
-        name: 'app'
-      }
+        name: 'app',
+      };
     </script>
     ```
   - 此时 `vue` 最基本的功能就配置完成了
@@ -230,9 +230,9 @@ tags:
   ```javascript
   module.exports = {
     plugins: {
-      autoprefixer: {}
-    }
-  }
+      autoprefixer: {},
+    },
+  };
   ```
 - 可能会用到对一些文件的打包，比如说图片转 `base64`，解析字体，我们会用到 `file-loader`
   ```javascript
@@ -285,8 +285,8 @@ tags:
 ```javascript
 module.exports = {
   presets: ['@babel/preset-env'],
-  plugins: ['@babel/plugin-syntax-dynamic-import']
-}
+  plugins: ['@babel/plugin-syntax-dynamic-import'],
+};
 ```
 
 - 如果您喜欢用 `.babelrc` 配置的话也是可以，下面是 `.babelrc` 的配置
@@ -329,8 +329,8 @@ module.exports = {
   ```javascript
   new MiniCssExtractPlugin({
     filename: 'css/[name].[hash].css',
-    chunkFilename: 'css/[id].[hash].css'
-  })
+    chunkFilename: 'css/[id].[hash].css',
+  });
   ```
   - 配置完后，需要修改 `module` 里面配置 `css` 的参数，修改为以下配置
   ```javascript
@@ -368,11 +368,11 @@ optimization: {
             name: 'vendor',
             test: /[\\/]node_modules[\\/]/,
             priority: 10,
-            chunks: 'initial' // 只打包初始时依赖的第三方
-          }
-        }
+            chunks: 'initial', // 只打包初始时依赖的第三方
+          },
+        },
       }
-    : undefined
+    : undefined;
 }
 ```
 
@@ -553,30 +553,26 @@ optimization: {
 - 获取 `networkInterfaces` 对象，里面有 `ip` 的各种格式，筛选出我们要的那个就可以了
 
 ```js
-const interfaces = require('os').networkInterfaces()
+const interfaces = require('os').networkInterfaces();
 const getNetworkIp = () => {
-  let IpAddress = ''
+  let IpAddress = '';
   for (let devName in interfaces) {
-    let iface = interfaces[devName]
+    let iface = interfaces[devName];
     iface.forEach(ipInfo => {
-      if (
-        ipInfo.family === 'IPv4' &&
-        ipInfo.address !== '127.0.0.1' &&
-        !ipInfo.internal
-      ) {
-        IpAddress = ipInfo.address
+      if (ipInfo.family === 'IPv4' && ipInfo.address !== '127.0.0.1' && !ipInfo.internal) {
+        IpAddress = ipInfo.address;
       }
-    })
+    });
   }
-  return IpAddress
-}
-module.exports = getNetworkIp
+  return IpAddress;
+};
+module.exports = getNetworkIp;
 ```
 
 - 最终实现的效果如下所示
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/dev-error-info.png')""/>
+  <img :src="$withBase('/imgs/dev-error-info.png')"/>
 </p>
 
 ## 六、Source Map

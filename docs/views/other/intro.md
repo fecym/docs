@@ -95,17 +95,32 @@ module.exports = {
   themeConfig: {
     // 导航的配置
     nav: [
-      {text: '首页', link: '/'},
+      {
+        text: '首页',
+        link: '/',
+      },
       // 可下拉的导航
       {
         text: 'webpack',
         items: [
-          {text: 'webpack简介', link: '/webpack/index'},
-          {text: '从0搭建vue', link: '/webpack/vue'},
+          {
+            text: 'webpack简介',
+            link: '/webpack/index',
+          },
+          {
+            text: '从0搭建vue',
+            link: '/webpack/vue',
+          },
         ],
       },
-      {text: 'mapbox', link: '/mapbox/index'},
-      {text: 'vue', link: '/vue'},
+      {
+        text: 'mapbox',
+        link: '/mapbox/index',
+      },
+      {
+        text: 'vue',
+        link: '/vue',
+      },
     ],
     // 导航栏的配置，自动生成
     sidebar: 'auto',
@@ -117,7 +132,7 @@ module.exports = {
     // 代码块显示行号
     lineNumbers: true,
   },
-}
+};
 ```
 
 - 在 nav 中配置标题是 text 字段，链接要写在 link 中，也可以写外部链接
@@ -177,13 +192,13 @@ module.exports = {
 - 在 github 界面，点击 **你的头像 -> Settings -> Developer settings -> Personal access tokens** 进入 Personal access tokens 申请页面，点击 Generate new token 按钮生成 token ，或者你嫌麻烦可以直接点这 [传送门](https://github.com/settings/tokens)
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/Generate-token.png')""/>
+  <img :src="$withBase('/imgs/Generate-token.png')"/>
 </p>
 
 - 进去之后，你可以输入一个名字，随便一个名字，你可以理解为一个全局的变量，你记住就可以了，下面的权限你都选中，然后点击 **Generate token** 就会生成一个 **Personal access tokens**
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/Generate-token-after.png')""/>
+  <img :src="$withBase('/imgs/Generate-token-after.png')"/>
 </p>
 
 - 上图生成之后的效果
@@ -194,21 +209,21 @@ module.exports = {
 - 在里面选择你要进行部署的项目，如下图
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/Travis-setting-project.png')""/>
+  <img :src="$withBase('/imgs/Travis-setting-project.png')"/>
 </p>
 
 - **fecym.github.io** 是我部署到的项目名字，也就是博客的地址，不需要把它打勾，我们需要打勾的是 **docs** 因为是从这个项目打包后直接部署到 **fecym.github.io** 里面，这个以后进入的入口是点击 头像 -> Settings 进入，第一次进入会直接进入这个页面的
 - 然后我们点击 logo 图标进入首页，左边会出现你选择的项目，然后最右边的 **More options**
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/Travis-setting-project-after.png')""/>
+  <img :src="$withBase('/imgs/Travis-setting-project-after.png')"/>
 </p>
 
 - 然后如下图，把在 **github** 里面生成的 **Personal access tokens** 放到 **Value** 里面，**Name** 里面起个名字。然后点击 **Add**，我起的名字叫做 blog
 - 还需要添加一个地址，就是你要部署到 github 地址，不需要带 **https** 的，比如我的地址是 **github.com/fecym/fecym.github.io.git**，**name** 是 **address**
 
 <p align="center" class="p-images">
-  <img :src="$withBase('/imgs/Travis-setting-project-settings-token.png')""/>
+  <img :src="$withBase('/imgs/Travis-setting-project-settings-token.png')"/>
 </p>
 
 ### 项目里面配置自动化部署
@@ -223,9 +238,12 @@ module.exports = {
   node_js: stable
   script: bash ./deploy.sh
   branches:
+
     only:
+
       - master
   notifications:
+
     email: false
 
   # deploy.sh 修改后的
@@ -248,6 +266,7 @@ module.exports = {
   # 如果发布到 https://<USERNAME>.github.io/<REPO>
   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
   cd -
+
 ```
 
 - 注意里面的 **blog** 和 **address** 是我们在 **Travis** 配置的那个 blog 和 address
@@ -263,30 +282,35 @@ module.exports = {
 - 首先添加评论系统授权，所以要在 **github** 中生成 **clientID** 和 **clientSecret**
 - 点击 **你的头像** -> **Settings** -> **Developer settings** -> **OAuth Apps** 里面点击 **New OAuth App** 按钮，或者直接点[这里](https://github.com/settings/applications/new)
 - 准备工作做完了，接下来我们只需要配置两步就可以了
+
   - 第一步：安装插件
+
   ```sh
     npm install @vssue/vuepress-plugin-vssue
     npm install @vssue/api-github-v3
   ```
+
   - 配置插件
-  ```js
-  // 在.vuepress/config.js中添加plugins
-  plugins: [
-    [
-      '@vssue/vuepress-plugin-vssue',
-      {
-        // 设置 `platform` 而不是 `api`
-        platform: 'github',
-        locale: 'zh', // 语言设置
-        // 其他的 Vssue 配置
-        owner: 'OWNER_OF_REPO', // github账户名称，登陆名字
-        repo: 'NAME_OF_REPO', // Github博客仓库，仓库地址，不加要https
-        clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
-        clientSecret: 'YOUR_CLIENT_SECRET', // github上面申请的clientSecret
-      },
-    ],
-  ]
-  ```
+
+```js
+// 在.vuepress/config.js中添加plugins
+plugins: [
+  [
+    '@vssue/vuepress-plugin-vssue',
+    {
+      // 设置 `platform` 而不是 `api`
+      platform: 'github',
+      locale: 'zh', // 语言设置
+      // 其他的 Vssue 配置
+      owner: 'OWNER_OF_REPO', // github账户名称，登陆名字
+      repo: 'NAME_OF_REPO', // Github博客仓库，仓库地址，不加要https
+      clientId: 'YOUR_CLIENT_ID', // github上面申请的clientId
+      clientSecret: 'YOUR_CLIENT_SECRET', // github上面申请的clientSecret
+    },
+  ],
+];
+```
+
 - 最后在你想要显示评论的 md 文件下面，加上这句话就 ok 了
 
 ```html
@@ -301,27 +325,27 @@ module.exports = {
 
 ```js
   const valineConfig = this.$themeConfig.valineConfig
-    if (valineConfig) {
+  if (valineConfig) {
       const Valine = require('valine');
       const AV = require('leancloud-storage')
       if (typeof window !== 'undefined') {
-        this.window = window
-        window.AV = AV
+          this.window = window
+          window.AV = AV
       }
 
       new Valine({
-        el: '#valine' ,
-        appId: valineConfig.appId, // your appId
-        appKey: valineConfig.appKey, // your appKey
-        placeholder: valineConfig.placeholder || 'just go go',
-        notify: valineConfig.notify || false,
-        verify: valineConfig.verify || false,
-        avatar: valineConfig.avatar || 'retro',
-        visitor: valineConfig.visitor || true,
-        recordIP: valineConfig.recordIP || false,
-        path: window.location.pathname
+          el: '#valine',
+          appId: valineConfig.appId, // your appId
+          appKey: valineConfig.appKey, // your appKey
+          placeholder: valineConfig.placeholder || 'just go go',
+          notify: valineConfig.notify || false,
+          verify: valineConfig.verify || false,
+          avatar: valineConfig.avatar || 'retro',
+          visitor: valineConfig.visitor || true,
+          recordIP: valineConfig.recordIP || false,
+          path: window.location.pathname
       });
-    }
+  }
   }
 ```
 
@@ -344,7 +368,7 @@ module.exports = {
       },
     ],
   ],
-}
+};
 ```
 
 :tada: :100:

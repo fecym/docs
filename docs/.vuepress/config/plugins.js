@@ -4,10 +4,8 @@ module.exports = {
       '@vuepress/last-updated',
       {
         transformer: timestamp => {
-          // 不要忘了安装 moment
-          const moment = require('moment');
-          // moment.locale('zh-CN')
-          return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+          const dayjs = require('dayjs');
+          return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
         },
       },
     ],
@@ -56,22 +54,6 @@ module.exports = {
     ['@vuepress/nprogress'],
     ['@vuepress/back-to-top'],
     ['@vuepress/medium-zoom', true],
-    [
-      '@vuepress/pwa',
-      {
-        serviceWorker: true,
-        // popupComponent: 'MySWUpdatePopup',
-        // updatePopup: true
-        // updatePopup: {
-        //   message: "发现新内容可用",
-        //   buttonText: "刷新"
-        // }
-        updatePopup: {
-          message: 'New content is available.',
-          buttonText: 'Refresh',
-        },
-      },
-    ],
     // 移除 Google 监控
     // ['@vuepress/google-analytics', {
     //   ga: 'UA-151995186-1'  // Google Analytics ID

@@ -16,19 +16,19 @@ tags:
 - 异步写法的返回值在回调函数中，同步写发直接就有返回值，这基本上也是 fs 所有模块的写法
 
 ```js
-const fs = require('fs')
-const path = require('path')
-const resolve = dir => path.join(__dirname, '..', dir)
+const fs = require('fs');
+const path = require('path');
+const resolve = dir => path.join(__dirname, '..', dir);
 // 异步写法
 fs.readFile(resolve('file/test.html'), 'utf8', (err, data) => {
-  if (err) throw err
+  if (err) throw err;
   // data就是他的返回值
-  console.log('异步测试：--> ' + data)
-})
+  console.log('异步测试：--> ' + data);
+});
 // 同步写法
-const result = fs.readFileSync(resolve('file/test.txt'), 'utf8')
+const result = fs.readFileSync(resolve('file/test.txt'), 'utf8');
 // result就是返回值，返回读取到的文件内容
-console.log(result)
+console.log(result);
 ```
 
 - fs.readFile 接受三个参数 (path[, options], callback)
@@ -44,18 +44,18 @@ console.log(result)
 - r 代表读取文件，w 代表写文件，a 代表追加。，默认为 w
 
 ```js
-const data = Buffer.from('hello world')
+const data = Buffer.from('hello world');
 const options = {
   encoding: 'utf8',
   mode: 0o666,
   // 文件描述符，r代表读取文件，w代表写文件，a代表追加。，默认为w
   // 'flag': 'w'
   flag: 'a',
-}
+};
 fs.writeFile(resolve('write/options.txt'), data, options, err => {
-  if (err) throw err
-  console.log('文件写入成功')
-})
+  if (err) throw err;
+  console.log('文件写入成功');
+});
 ```
 
 ### 追加文件
@@ -77,18 +77,14 @@ fs.writeFile(resolve('write/options.txt'), data, options, err => {
 ```js
 // 硬链接，备份文件
 fs.link(resolve('file/test.txt'), resolve('write/test_copy.txt'), err => {
-  if (err) throw err
-  console.log('文件备份成功')
-})
+  if (err) throw err;
+  console.log('文件备份成功');
+});
 // 软链接，快捷方式
-fs.symlink(
-  resolve('file/test.txt'),
-  resolve('write/test_symbolic.txt'),
-  err => {
-    if (err) throw err
-    console.log('建立软链接成功')
-  }
-)
+fs.symlink(resolve('file/test.txt'), resolve('write/test_symbolic.txt'), err => {
+  if (err) throw err;
+  console.log('建立软链接成功');
+});
 ```
 
 ### 删除文件
@@ -98,9 +94,9 @@ fs.symlink(
 
 ```js
 fs.unlink(resolve('write/options.txt'), err => {
-  if (err) throw err
-  console.log('文件删除成功')
-})
+  if (err) throw err;
+  console.log('文件删除成功');
+});
 ```
 
 ### 重命名文件
@@ -111,9 +107,9 @@ fs.unlink(resolve('write/options.txt'), err => {
 
 ```js
 fs.rename(resolve('file/1.txt'), '哈哈哈.js', err => {
-  if (err) throw err
-  console.log('重命名完成')
-})
+  if (err) throw err;
+  console.log('重命名完成');
+});
 ```
 
 ### 文件系统标志
@@ -151,9 +147,9 @@ fs.rename(resolve('file/1.txt'), '哈哈哈.js', err => {
 
 ```js
 fs.rmdir(dir, err => {
-  if (err) throw err
-  console.log('文件夹删除成功')
-})
+  if (err) throw err;
+  console.log('文件夹删除成功');
+});
 ```
 
 ### fs.readdir 读取文件夹
@@ -183,11 +179,11 @@ fs.rmdir(dir, err => {
 - 接受两个参数，path 和 callback
 
 ```js {4}
-const filePath = path.resolve('D:/')
+const filePath = path.resolve('D:/');
 fs.stat(filePath, (err, stats) => {
-  if (err) throw err
-  console.log(stats)
-})
+  if (err) throw err;
+  console.log(stats);
+});
 ```
 
 - 此时我们可以在 stats 上看到文件的信息
@@ -224,24 +220,24 @@ fs.stat(filePath, (err, stats) => {
 - 判断有没有该文件夹的方法是没有的，我们可以直接创建，如果创建失败了，那么说明有文件夹，则直接创建文件，没有这个文件夹就创建成功了呗
 
 ```js
-const fs = require('fs')
-const path = require('path')
-const resolve = dir => path.join(__dirname, dir)
+const fs = require('fs');
+const path = require('path');
+const resolve = dir => path.join(__dirname, dir);
 
 // 判断是否有该文件夹
 
 function isDir(dir) {
-  console.log(dir)
+  console.log(dir);
   return new Promise(resolve => {
     fs.mkdir(dir, err => {
       if (err) {
         // 失败了说明文件夹创建过了
-        return resolve(true)
+        return resolve(true);
       } else {
-        return resolve(false)
+        return resolve(false);
       }
-    })
-  })
+    });
+  });
 }
 
 function betchCreateFile() {
@@ -250,20 +246,20 @@ function betchCreateFile() {
       if (result) {
         for (let i = 0; i < 100; i++) {
           fs.writeFile(resolve(`mkdir/${i}.txt`), 'hello world', err => {
-            if (err) throw err
-            console.log('文件 ' + i + ' 写入成功')
-          })
+            if (err) throw err;
+            console.log('文件 ' + i + ' 写入成功');
+          });
         }
       } else {
-        betchCreateFile()
+        betchCreateFile();
       }
     })
     .catch(err => {
-      console.log(err, '哪出错了？？')
-    })
+      console.log(err, '哪出错了？？');
+    });
 }
 
-betchCreateFile()
+betchCreateFile();
 ```
 
 ### 批量删除当前文件夹下的文件
@@ -275,22 +271,22 @@ betchCreateFile()
 const rm = dir => {
   // 文件夹读取返回一个数组，返回文件夹下的所有子目录，并且按照字符串的排序规则排序
   fs.readdir(dir, (err, data) => {
-    if (err) throw err
+    if (err) throw err;
     if (data && data.length) {
       // 说明有文件
       data.forEach((item, idx) => {
-        fs.unlinkSync(`${dir}/${item}`)
-        console.log(`开始删除第${idx + 1}个文件：${item}`)
-      })
-      rm(dir)
+        fs.unlinkSync(`${dir}/${item}`);
+        console.log(`开始删除第${idx + 1}个文件：${item}`);
+      });
+      rm(dir);
     } else {
       fs.rmdir(dir, err => {
-        if (err) throw err
-        console.log('文件夹删除成功')
-      })
+        if (err) throw err;
+        console.log('文件夹删除成功');
+      });
     }
-  })
-}
+  });
+};
 ```
 
 ### 批量读取文件
@@ -299,35 +295,35 @@ const rm = dir => {
 - 这个时候我们就需要使用 fs.stat() 返回的 stats 中得 stats.isFile()和 stats.isDirectory()来区分是文件还是文件夹了
 
 ```js
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 
 const fileDisplay = filePath => {
-  console.log(filePath)
+  console.log(filePath);
   fs.readdir(filePath, (err, files) => {
     if (err) {
-      console.warn('文件夹读取失败' + err)
+      console.warn('文件夹读取失败' + err);
     } else {
       // 遍历文件列表
       files.forEach(filename => {
         // 获取当前路径
-        let filedir = path.join(filePath, filename)
+        let filedir = path.join(filePath, filename);
         fs.stat(filedir, (err, stats) => {
           if (err) {
-            console.warn('获取文件stat失败：' + err)
+            console.warn('获取文件stat失败：' + err);
           } else {
-            let isFile = stats.isFile()
-            let isDir = stats.isDirectory()
-            if (isFile) console.log('文件读取成功：' + filedir)
-            if (isDir) fileDisplay(filedir)
+            let isFile = stats.isFile();
+            let isDir = stats.isDirectory();
+            if (isFile) console.log('文件读取成功：' + filedir);
+            if (isDir) fileDisplay(filedir);
           }
-        })
-      })
+        });
+      });
     }
-  })
-}
+  });
+};
 
-fileDisplay(path.join(__dirname, '..', '..', '..'))
+fileDisplay(path.join(__dirname, '..', '..', '..'));
 ```
 
 ### 批量删除所有文件
@@ -337,94 +333,94 @@ fileDisplay(path.join(__dirname, '..', '..', '..'))
 
 ```js
 // 同步写法
-const fs = require('fs')
-const path = require('path')
-const resolve = dir => path.join(__dirname, dir)
+const fs = require('fs');
+const path = require('path');
+const resolve = dir => path.join(__dirname, dir);
 
 const rmdir = dir => {
-  let files = []
+  let files = [];
   // 判断该文件路径是否存在返回一个布尔值
   if (fs.existsSync(dir)) {
     // 先读取文件
-    files = fs.readdirSync(dir)
+    files = fs.readdirSync(dir);
     files.forEach(filename => {
       // 获取当前的绝对路径
-      let curPath = path.join(dir, filename)
+      let curPath = path.join(dir, filename);
       // 获取该文件的信息，如果是文件夹，那么递归
       if (fs.statSync(curPath).isDirectory()) {
-        rmdir(curPath)
+        rmdir(curPath);
       } else {
         // 如果是文件，那么删除
-        fs.unlinkSync(curPath)
-        console.log('文件 ' + curPath + ' 删除成功')
+        fs.unlinkSync(curPath);
+        console.log('文件 ' + curPath + ' 删除成功');
       }
-    })
+    });
     // 删除完文件删除文件夹
-    fs.rmdirSync(dir)
-    console.log('文件夹 ' + dir + ' 删除成功')
+    fs.rmdirSync(dir);
+    console.log('文件夹 ' + dir + ' 删除成功');
   }
-}
+};
 
-rmdir(resolve('../../test'))
+rmdir(resolve('../../test'));
 ```
 
 - 异步写法，为了不报错，只能删除掉所有的子文件，可能我写法有问题，先贴出来，求指正
 
 ```js
-const fs = require('fs')
-const path = require('path')
-const resolve = dir => path.join(__dirname, dir)
+const fs = require('fs');
+const path = require('path');
+const resolve = dir => path.join(__dirname, dir);
 
 const rmdir = dir => {
   // 先读取文件
   fs.readdir(dir, (err, files) => {
     if (err) {
-      console.warn('文件读取失败：' + err)
+      console.warn('文件读取失败：' + err);
     } else {
       // 说明文件夹里有东西
       if (files.length) {
         // 判断是文件还是文件夹
         files.forEach(filename => {
           // 获取当前的绝对路径
-          let positionPath = path.join(dir, filename)
+          let positionPath = path.join(dir, filename);
           fs.stat(positionPath, (err, stats) => {
             if (err) {
-              console.warn('获取文件信息失败：' + err)
+              console.warn('获取文件信息失败：' + err);
             } else {
-              let isDir = stats.isDirectory()
-              let isFile = stats.isFile()
+              let isDir = stats.isDirectory();
+              let isFile = stats.isFile();
               if (isDir) {
                 // 如果是文件夹则递归
-                rmdir(positionPath)
+                rmdir(positionPath);
               }
               if (isFile) {
                 // 若是文件则删除文件
                 fs.unlink(positionPath, err => {
                   if (err) {
-                    console.warn('文件 ' + positionPath + ' 删除失败：' + err)
+                    console.warn('文件 ' + positionPath + ' 删除失败：' + err);
                   } else {
-                    console.warn('文件 ' + positionPath + ' 删除成功')
-                    rmdir(dir)
+                    console.warn('文件 ' + positionPath + ' 删除成功');
+                    rmdir(dir);
                   }
-                })
+                });
                 // fs.unlinkSync(positionPath)
               }
             }
-          })
-        })
+          });
+        });
       } else {
         // 说明是空文件夹
         fs.rmdir(dir, err => {
           if (err) {
-            console.warn('文件夹 ' + dir + ' 删除失败：' + err)
+            console.warn('文件夹 ' + dir + ' 删除失败：' + err);
           } else {
-            console.log('文件夹 ' + dir + ' 删除成功')
+            console.log('文件夹 ' + dir + ' 删除成功');
           }
-        })
+        });
       }
     }
-  })
-}
+  });
+};
 
-rmdir(resolve('../../test'))
+rmdir(resolve('../../test'));
 ```
