@@ -378,6 +378,18 @@ console.log(process.env.npm_package_license); // MIT
   npm publish
 ```
 
+介绍几个可能用到的命令，推荐先使用：
+
+```sh
+# 查看当前登录的npm用户，如果已经登录了且是我们要发包的账号，就不需要登录了
+npm whoami
+
+# 发包可能失败，有可能是源不对
+# 查看当前源地址
+npm config get registry
+# 如果不是 npm 源需要切换到 npm 的源
+npm config set registry https://registry.npmjs.org
+```
 ### npm version 说明
 
 `npm version` 后面可以跟三个参数：
