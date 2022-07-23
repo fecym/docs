@@ -7,7 +7,6 @@
  */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const webpack = require('webpack');
 const productionGzipExtensions = ['js', 'css'];
 
 module.exports = {
