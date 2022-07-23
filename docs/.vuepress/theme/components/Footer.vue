@@ -24,7 +24,6 @@ export default {
       return this.$frontmatter;
     },
     config() {
-      // console.log(this.$frontmatter, 'this.$frontmatter')
       return this.$themeConfig
     },
   }
