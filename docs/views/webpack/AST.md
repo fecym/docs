@@ -207,7 +207,7 @@ console.log(r.code);
 // var fn = function fn() { return a + b; };
 ```
 
-此时我们可以看到最终代码会被转成普通函数，但是我们，只需要箭头函数转通函数的功能，不需要用这么大一套包，只需要一个箭头函数转普通函数的包，我们其实是可以在 `node_modules` 下面找到有个叫做 `plugin-transform-arrow-functions` 的插件，这个插件是专门用来处理 箭头函数的，我们就可以这么写：
+此时我们可以看到最终代码会被转成普通函数，但是我们只需要箭头函数转通用函数的功能，不需要用这么大一套包，只需要一个箭头函数转普通函数的包，我们其实是可以在 `node_modules` 下面找到有个叫做 `plugin-transform-arrow-functions` 的插件，这个插件是专门用来处理 箭头函数的，我们就可以这么写：
 
 ```js
 const r = babel.transform(code, {
@@ -496,7 +496,7 @@ function importPlugin(opt) {
 
 ### babylon 与 babel 的关系
 
-`babel` 使用的引擎是 `babylon`，`Babylon` 并非 `babel` 团队自己开发的，而是 fork 的 `acorn` 项目，`acorn` 的项目本人在很早之前在兴趣部落 1.0 在构建中使用，为了是做一些代码的转换，是很不错的一款引擎，不过 `acorn` 引擎只提供基本的解析 `ast` 的能力，遍历还需要配套的 `acorn-travesal`, 替换节点需要使用 acorn-，而这些开发，在 Babel 的插件体系开发下，变得一体化了（摘自 AlloyTeam 团队的[剖析 babel](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/)）
+`babel` 使用的引擎是 `babylon`，`Babylon` 并非 `babel` 团队自己开发的，而是 fork 的 `acorn` 项目，`acorn` 的项目本人在很早之前在兴趣部落 1.0 在构建中使用，为了是做一些代码的转换，是很不错的一款引擎，不过 `acorn` 引擎只提供基本的解析 `ast` 的能力，遍历还需要配套的 `acorn-traversal`, 替换节点需要使用 acorn-，而这些开发，在 Babel 的插件体系开发下，变得一体化了（摘自 AlloyTeam 团队的[剖析 babel](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/)）
 
 ### 使用 babylon
 
