@@ -2,7 +2,7 @@
 title: nginx
 date: 2019-07-10
 tags:
-  - nginx
+  - 其他
 ---
 
 ## 安装

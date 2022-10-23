@@ -2,7 +2,7 @@
 title: 加密解密
 date: 2020-02-23
 tags:
-  - 加密
+  - 其他
 keys:
   - 'crypto-cym'
 ---

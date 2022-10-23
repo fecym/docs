@@ -2,7 +2,6 @@
 title: 面试题记录
 date: 2021-08-04
 tags:
-  - interview
   - 基础
 ---
 

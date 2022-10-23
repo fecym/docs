@@ -2,7 +2,7 @@
 title: mysql
 date: 2019-07-23
 tags:
-  - mysql
+  - 其他
 ---
 
 ## 数据库操作

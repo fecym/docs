@@ -3,7 +3,6 @@ title: 实现一个 Promise
 date: 2020-03-22
 author: chengyuming
 tags:
-  - promise
   - 基础
 ---
 
