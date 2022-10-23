@@ -37,7 +37,7 @@ module.exports = {
         { text: '树在工作面试中的应用', link: '/views/algorithms/tree' },
         { text: '从0搭建vue', link: '/views/webpack/vue' },
         { text: 'AST团队分享', link: '/views/webpack/AST' },
-        { text: 'eslint 工作流', link: '/views/FE/lint/index' },
+        { text: 'eslint 工作流', link: '/views/FE/lint' },
         { text: 'Vue 源码分析', link: '/views/basis/vue' },
         { text: 'cli 开发', link: '/views/tools/npm/cli' },
         { text: 'vscode 开发记录', link: '/views/plugins/vscode' },
