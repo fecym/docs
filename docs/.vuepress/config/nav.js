@@ -68,7 +68,7 @@ module.exports = {
       items: [
         { text: 'npm', link: '/views/tools/npm/init' },
         { text: 'mysql', link: '/views/tools/mysql' },
-        { text: 'redis', link: '/views/tools/redis/index' },
+        { text: 'redis', link: '/views/tools/redis' },
         { text: 'nginx', link: '/views/tools/nginx/index' },
         { text: 'git子模块', link: '/views/tools/git/git-submodules' },
       ]

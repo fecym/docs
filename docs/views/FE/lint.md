@@ -337,7 +337,7 @@ prettier 格式化代码也很简单，只需要执行 `npx prettier --write src
 
 ## git hook
 
-执行 git init 的时候会生成一个 `.git` 文件夹，或者从 github、gitlab 中 download 下来的代码都会有这么一个文件夹，git hook 就是这个文件夹的 hooks 下的一些钩子函数，特定时期他们将会被调用，完整钩子参考[ git hooks ](https://git-scm.com/docs/git hooks)
+执行 git init 的时候会生成一个 `.git` 文件夹，或者从 github、gitlab 中 download 下来的代码都会有这么一个文件夹，git hook 就是这个文件夹的 hooks 下的一些钩子函数，特定时期他们将会被调用，完整钩子参考[ git hooks ](https://git-scm.com/docs/githooks)
 
 <!-- ![](https://chengyuming.cn/imgs/git-hooks.png) -->
 <p align="center">

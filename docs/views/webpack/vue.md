@@ -92,7 +92,7 @@ tags:
     const resolve = dir => path.join(__dirname, dir)
   ```
 - `webpack` 必须配置的几项，`entry、output`
-  - entry 顾名思义配置文件主入口的，他的配置方式多种多样，详细了解 `webpack` 的介绍 [传送门](/views/webpack/#一、entry)
+  - entry 顾名思义配置文件主入口的，他的配置方式多种多样，详细了解 `webpack` 的介绍 [传送门](/views/webpack/webpack-1/#一、entry)
   - 我们先简单的配置以下，使 `js` 和 `html` 耦合到一起，`entry` 我们选对象语法
   ```javascript
   entry: {
