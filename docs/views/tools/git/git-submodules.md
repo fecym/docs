@@ -294,7 +294,7 @@ git config --global alias.prf '!f() { git pull origin $1 --recurse-submodules &&
 
 ## 子模块 lint 失效
 
- code review 时，发现小伙伴儿的代码风格都不一样，理论上代码提交时有 githooks 来控制执行 lint，自动按照配置来格式化代码。
+code review 时，发现小伙伴儿的代码风格都不一样，理论上代码提交时有 githooks 来控制执行 lint，自动按照配置来格式化代码。
 
 很明显 eslint + prettier 失效了，思来想去想到子模块也是一个 git，而 githooks 执行时是查找 package.json 里面的配置
 
@@ -505,6 +505,160 @@ module.exports = {
 };
 ```
 
+## 自动注册 hooks
+
+到此为止，项目就支持了子模块提交时的 lint 功能，但是小伙伴第一次使用的时候是没有安装子模块的 git hooks 的，而且对于新来的小伙伴来说他们可能不知道需要这样做，导致代码风格还是不一样，总不能给来一个小伙伴给他们讲一遍吧，所以还是写个脚本检测一下是否安装过了子模块的 hooks，如果安装了就该干嘛干嘛，未安装的话先安装一次
+
+在项目运行的时候先去检查一下子模块的 hooks 是否安装过了，安装过了则直接运行项目，没有安装的话先安装项目，安装完之后在运行项目，那么我们就要解决几个问题
+
+### 怎么知道是否已经注册过了
+
+要知道是否注册过 hooks，我们可以在项目根目录中找 `.git/hooks` 里面找那些 shell 脚本，默认会有很多 .sample 结尾的文件，如果所有文件都是 .sample 结尾的则说明没有安装 hooks，如果不带 .sample 说明已经注册过了
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/githooks.png')" style="border-radius: 8px;">
+</p>
+
+那我们要做的就是直接读取文件夹里面的文件看是否存在如果该文件已存在则说明注册过了，不存在则说明没有注册
+
+那怎么知道要读取哪个文件夹呢，可以写个方法来找，如果没找到就返回，找到了则看一下是文件还是文件夹：
+
+- 如果是文件夹的话，这个文件夹下面的 hooks 就是咱们要找的了
+- 如果是文件的话，那么这个文件里面会告诉我他的 hooks 的文件夹在哪（子模块会用到）
+
+<p align="left" class="p-images">
+  <img :src="$withBase('/imgs/git-submodules-hooks-dir.jpg')" style="border-radius: 8px;">
+</p>
+
+```js
+function findHooksDir(dir) {
+  if (dir) {
+    let gitDir = path.join(dir, '.git');
+    if (!fs.existsSync(gitDir)) return;
+    const stats = fs.lstatSync(gitDir);
+    if (stats.isFile()) {
+      const gitFileData = fs.readFileSync(gitDir, 'utf-8');
+      gitDir = gitFileData.split(':').slice(1).join(':').trim();
+    }
+    return path.resolve(dir, gitDir, 'hooks');
+  }
+}
+```
+
+既然这个问题解决了我们就可以直接写个方法来检查是否已经注册过 git hooks 了
+
+```js
+const path = require('path');
+const hooks = [
+  'applypatch-msg',
+  'pre-applypatch',
+  'post-applypatch',
+  'pre-commit',
+  'prepare-commit-msg',
+  'commit-msg',
+  'post-commit',
+  'pre-rebase',
+  'post-checkout',
+  'post-merge',
+  'pre-push',
+  'pre-receive',
+  'update',
+  'post-receive',
+  'post-update',
+  'push-to-checkout',
+  'pre-auto-gc',
+  'post-rewrite',
+  'sendemail-validate',
+];
+const findHooksDir = require('./findHooksDir');
+const fs = require('fs');
+const { promisify } = require('util');
+const exists = promisify(fs.exists);
+// 那么直接传入项目根目录就可以查到是否注册过
+function checkHooks(huskyDir) {
+  return new Promise((resolve, rejected) => {
+    const hooksDir = findHooksDir(huskyDir, '.git');
+    Promise.all(hooks.map(hook => exists(path.resolve(hooksDir, hook)))).then(res => {
+      resolve(res.every(x => !!x));
+    }, rejected);
+  });
+}
+```
+
+接下来把所有子模块的根目录传进去就可以得到，得到子模块是否注册过了 git hooks
+### 检查子模块是否注册过
+
+改造下这个代码让子模块支持，思路也很简单，把子模块的文件路径传递过去然后去读文件然后判断结果就可以
+
+```js
+const path = require('path');
+// 把一些通用的东西拆出去了，文末会有项目地址，里面会有完整代码
+const { findHooksDir, hooks, submoduleDirs, warnLogger } = require('./helper');
+const fs = require('fs');
+const { promisify } = require('util');
+const exists = promisify(fs.exists);
+
+function checkHooks(huskyDir) {
+  return new Promise((resolve, rejected) => {
+    const hooksDir = findHooksDir(huskyDir, '.git');
+    Promise.all(hooks.map(hook => exists(hooksDir && path.resolve(hooksDir, hook)))).then(res => {
+      const relativeDir = path.relative(__dirname, huskyDir);
+      const result = res.every(x => !!x);
+      resolve({ hooksDir, huskyDir, relativeDir, result });
+    }, rejected);
+  });
+}
+
+module.exports = function check() {
+  return new Promise((resolve, rejected) => {
+    Promise.all(submoduleDirs.map(checkHooks)).then(result => {
+      const res = result.filter(r => !r.result);
+      const logger = r => {
+        const text = `${r.relativeDir.replace('../src/modules/', '')} 子模块未注册 Git Hook`;
+        warnLogger(text);
+      };
+      res.forEach(logger);
+      resolve(!res.length);
+    }, rejected);
+  });
+};
+```
+
+此时执行 `check` 方法就可以得到子模块是否都注册过hooks
+
+### npm pre 钩子
+
+最后把之前改造 yorkie 的代码和查找子模块是否注册过的代码合到一起，然后放到 npm pre 钩子函数中执行即可
+
+npm 脚本有 pre 和 post 两个钩子。举例来说，serve 脚本命令的钩子就是 preserve 和 postserve
+
+执行 npm run serve 的时候，就会先执行 preserve 里面的脚本然后在执行 serve 脚本
+
+执行结果就是 `npm run preserve && npm run serve`，npm 钩子不熟悉的同学可以参考另一篇代码[ eslint工作流/npm 钩子 ](/views/FE/lint.html#npm-钩子)
+
+如果 preserve 里面的代码是异步的，也会等异步返回结果后才会执行下一个脚本，所以非常符合我们的预期
+
+最终代码改造为：
+
+```json
+{
+  "scripts": {
+    "preserve": "node installHooks",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+}
+```
+
+```js
+// installHooks/index.js
+require("./checkHooks")().then(checked => {
+  if (!checked) require("./install.hooks");
+});
+```
+
+源码地址：[https://github.com/fecym/git-submodules](https://github.com/fecym/git-submodules)
 ## 参考文献
 
 1. [Config Files](https://babeljs.io/docs/en/config-files)
