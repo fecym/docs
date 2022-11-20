@@ -3,9 +3,9 @@
   "version": "1.1.0",
   "author": "chengyuming",
   "scripts": {
-    "dev": "vuepress dev docs",
     "start": "vuepress dev docs --temp .temp",
     "build": "vuepress build docs",
+    "predeploy": "cross-env BUILD_TYPE=git vuepress build docs",
     "deploy": "bash deploy.sh"
   },
   "devDependencies": {
@@ -13,6 +13,7 @@
     "@vuepress/plugin-blog": "^1.9.4",
     "@vuepress/plugin-medium-zoom": "^1.9.7",
     "compression-webpack-plugin": "3.0.0",
+    "cross-env": "^7.0.3",
     "mini-css-extract-plugin": "0.9.0",
     "vuepress": "^1.9.7",
     "vuepress-plugin-flowchart": "1.5.0",

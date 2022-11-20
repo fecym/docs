@@ -15,6 +15,7 @@ module.exports = {
   description: 'Today, have you studied yet?',
   dest: './love',
   head,
+  base: process.env.BUILD_TYPE ? '/docs/' : '/',
   theme: require.resolve('./theme'),
   serviceWorker: false, // 是否开启 PWA
   themeConfig,

@@ -11,7 +11,7 @@
 
 ## 快速上手
 
-> 话不多少，先看看项目目录吧
+> 话不多说，先看看项目目录吧
 
 ### 项目基本结构
 
@@ -74,9 +74,7 @@
 
 ### 注意事项
 
-::: warning 注意事项
 理论上 vuepress 搭建的文档是支持热加载的，但是 README.me 的修改，config.js 的修改以及配置了侧边栏为自动生成的时候，侧边栏的生成都需要重启项目才可以看到效果，他们是不会热更新的
-:::
 
 ### 主题配置
 
@@ -140,17 +138,13 @@ module.exports = {
 
 ## 线上部署
 
-::: warning 线上部署
-
 - 当你的文档开发完毕，你可以执行 yarn build 命令对项目进行打包，打包之后会在 .vuepress/dist 里面就是你打包后的静态资源文件，他会转成 html 文件，然后你可以在你的服务器上用 nginx 开个一个端口，解析一个域名，创建一个对应的目录，把项目放进去就可以访问到了，你也可以本地起一个简单的服务器，测试你的项目，都是完全 ok 的
 - 当然如果你想直接部署到 github 的博客上，也是可以的，你需要写一个部署脚本文件，配置一下就可以了，配置内容如下
-  :::
 
 ```sh
   #!/usr/bin/env sh
   # 确保脚本抛出遇到的错误
   set -e
-  npm install -g vuepress@next
   # 生成静态文件
   npm run build
   # 进入生成的文件夹
@@ -161,10 +155,11 @@ module.exports = {
   git add -A
   git commit -m 'deploy'
   # 如果发布到 https://<USERNAME>.github.io
-  git push -f https://github.com/fecym/fecym.github.io.git master
   # git push -f https://${blog}@${address} master:master
+  # git push -f https://github.com/docs/fecym.github.io.git master
   # 如果发布到 https://<USERNAME>.github.io/<REPO>
   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+  git push -f git@github.com:fecym/docs.git master:gh-pages
   cd -
 ```
 
@@ -180,11 +175,8 @@ module.exports = {
 
 ## 线上自动化部署
 
-::: tip 关于线上自动化部署
-
 - 关于线上部署，这里你需要额外在创建一个 git 项目，然后放到 git 上面你的项目名字要定义为：git 用户名 + github.io 组成，比如说，你的 github 用户名叫做 fecym，那么你就需要定义项目名称为 **fecym.github.io** 作为项目名字，这也将会是你的博客地址<br>
 - 然后你需要配置一下 **Travis**，不了解 **Travis** 的话可以先简单了解下 [传送门](http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html)
-  :::
 
 ### 申请 Personal access tokens
 
