@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>反向代理与负载均衡 | chengyuming</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/docs/imgs/oops.png">
+    <link rel="apple-touch-icon" href="/docs/imgs/iOS.jpg">
+    <link rel="manifest" href="/docs/manifest.json">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1385737_yilz38tptbd.css">
+    <meta name="description" content="Today, have you studied yet?">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.1e247984.css" as="style"><link rel="preload" href="/docs/assets/css/0.718fed91400c904cbb41.css" as="style"><link rel="preload" href="/docs/assets/js/app.27049448.js" as="script"><link rel="preload" href="/docs/assets/js/3.e4423274.js" as="script"><link rel="preload" href="/docs/assets/js/1.c56aafa6.js" as="script"><link rel="preload" href="/docs/assets/js/43.d9574346.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.bb4fefe1.js"><link rel="prefetch" href="/docs/assets/js/11.4c11642a.js"><link rel="prefetch" href="/docs/assets/js/12.6113556a.js"><link rel="prefetch" href="/docs/assets/js/13.4260c3e4.js"><link rel="prefetch" href="/docs/assets/js/14.cb1bcff8.js"><link rel="prefetch" href="/docs/assets/js/15.153f0344.js"><link rel="prefetch" href="/docs/assets/js/16.76113697.js"><link rel="prefetch" href="/docs/assets/js/17.bedea0b1.js"><link rel="prefetch" href="/docs/assets/js/18.91927903.js"><link rel="prefetch" href="/docs/assets/js/19.1b9cf86d.js"><link rel="prefetch" href="/docs/assets/js/20.d3fc0f4a.js"><link rel="prefetch" href="/docs/assets/js/21.0d88edd7.js"><link rel="prefetch" href="/docs/assets/js/22.b567c741.js"><link rel="prefetch" href="/docs/assets/js/23.c238c85e.js"><link rel="prefetch" href="/docs/assets/js/24.08cf65fc.js"><link rel="prefetch" href="/docs/assets/js/25.bb20e3e9.js"><link rel="prefetch" href="/docs/assets/js/26.cd6de07a.js"><link rel="prefetch" href="/docs/assets/js/27.e400b623.js"><link rel="prefetch" href="/docs/assets/js/28.108a89b1.js"><link rel="prefetch" href="/docs/assets/js/29.3ff5f7ac.js"><link rel="prefetch" href="/docs/assets/js/30.bdf03831.js"><link rel="prefetch" href="/docs/assets/js/31.aca799c9.js"><link rel="prefetch" href="/docs/assets/js/32.48e0e065.js"><link rel="prefetch" href="/docs/assets/js/33.1b34f264.js"><link rel="prefetch" href="/docs/assets/js/34.9277de90.js"><link rel="prefetch" href="/docs/assets/js/35.6a743b60.js"><link rel="prefetch" href="/docs/assets/js/36.36d5af41.js"><link rel="prefetch" href="/docs/assets/js/37.8a0a9b59.js"><link rel="prefetch" href="/docs/assets/js/38.89cb205e.js"><link rel="prefetch" href="/docs/assets/js/39.b7750bbe.js"><link rel="prefetch" href="/docs/assets/js/4.c5fd6be0.js"><link rel="prefetch" href="/docs/assets/js/40.54f08390.js"><link rel="prefetch" href="/docs/assets/js/41.1ec2a43c.js"><link rel="prefetch" href="/docs/assets/js/42.e0e24594.js"><link rel="prefetch" href="/docs/assets/js/44.c9c025d2.js"><link rel="prefetch" href="/docs/assets/js/45.0737ebc6.js"><link rel="prefetch" href="/docs/assets/js/46.54a88bd9.js"><link rel="prefetch" href="/docs/assets/js/47.d3d8fa5d.js"><link rel="prefetch" href="/docs/assets/js/48.85b7bfc1.js"><link rel="prefetch" href="/docs/assets/js/49.c3c3f812.js"><link rel="prefetch" href="/docs/assets/js/5.45610be6.js"><link rel="prefetch" href="/docs/assets/js/50.a4524005.js"><link rel="prefetch" href="/docs/assets/js/51.c89d5638.js"><link rel="prefetch" href="/docs/assets/js/52.07539178.js"><link rel="prefetch" href="/docs/assets/js/6.e3c3581d.js"><link rel="prefetch" href="/docs/assets/js/7.c0d296b3.js"><link rel="prefetch" href="/docs/assets/js/8.92aa7017.js"><link rel="prefetch" href="/docs/assets/js/9.7cda40f2.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.1e247984.css"><link rel="stylesheet" href="/docs/assets/css/0.718fed91400c904cbb41.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container" data-v-395662f4><div data-v-395662f4><div class="password-shadow password-wrapper-out" style="display:none;" data-v-47d04a8e data-v-395662f4 data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>chengyuming</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div class="hide" data-v-395662f4><header class="navbar" data-v-395662f4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><img src="/docs/imgs/head.png" alt="chengyuming" class="logo"> <span class="site-name">chengyuming</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" class="nav-link"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-395662f4></div> <aside class="sidebar" data-v-395662f4><div class="personal-info-wrapper" data-v-2ef94353><!----> <h3 class="name" data-v-2ef94353>
+    fecym
+  </h3> <div class="num" data-v-2ef94353></div> <hr data-v-2ef94353></div> <nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" class="nav-link"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>反向代理与负载均衡</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/views/tools/nginx/requisite.html#代理" class="sidebar-link">代理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/nginx/requisite.html#正向代理" class="sidebar-link">正向代理</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/nginx/requisite.html#反向代理" class="sidebar-link">反向代理</a></li></ul></li><li><a href="/docs/views/tools/nginx/requisite.html#集群与负载均衡简单了解" class="sidebar-link">集群与负载均衡简单了解</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/nginx/requisite.html#负载均衡调度算法" class="sidebar-link">负载均衡调度算法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/nginx/requisite.html#轮询-默认" class="sidebar-link">轮询（默认）</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/nginx/requisite.html#权重-weight" class="sidebar-link">权重 weight</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/nginx/requisite.html#ip-hash-策略" class="sidebar-link">ip_hash 策略</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/nginx/requisite.html#其他策略" class="sidebar-link">其他策略</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/nginx/requisite.html#定义负载均衡设备的-ip-及设备状态" class="sidebar-link">定义负载均衡设备的 Ip 及设备状态</a></li></ul></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-47d04a8e data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>反向代理与负载均衡</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div data-v-395662f4><main class="page"><!----> <div class="page-title" style="display:none;"><h1>反向代理与负载均衡</h1> <hr> <div data-v-7b2e794a><i class="iconfont reco-account" data-v-7b2e794a><span data-v-7b2e794a>fecym</span></i> <i class="iconfont reco-date" data-v-7b2e794a><span data-v-7b2e794a>2019-08-16</span></i> <i class="iconfont reco-eye" data-v-7b2e794a><span id="/docs/views/tools/nginx/requisite.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-7b2e794a><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="iconfont reco-tag tags" data-v-7b2e794a><span class="tag-item" data-v-7b2e794a>
+      其他
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h1 id="反向代理与负载均衡"><a href="#反向代理与负载均衡" class="header-anchor">#</a> 反向代理与负载均衡</h1> <blockquote><p><strong>nginx</strong>是一个高性能的 HTTP 和反向代理服务器，也是一个通用的 TCP/UDP 代理服务器，最初由俄罗斯人<strong>Igor Sysoev</strong>编写。<strong>nginx</strong>在应用程序中的作用有：</p> <ul><li>解决跨域</li> <li>请求过滤</li> <li>配置 gzip</li> <li>负载均衡</li> <li>静态资源服务器</li></ul></blockquote> <h2 id="代理"><a href="#代理" class="header-anchor">#</a> 代理</h2> <blockquote><p><code>代理</code> 是在服务器和客户端之间架设的一层服务器，代理将接受客户端的请求将它转发给服务器，然后将服务端的响应转发给客户端。不管正向代理还是反向代理，都是实现此功能。<br> &gt;  说到代理，首先我们要明确一个概念，所谓代理就是一个代表、一个渠道；此时就涉及到两个角色，一个是被代理角色，一个是目标角色。<br> &gt;  举个例子：比如说生活中的专卖店，客人到 adidas 专卖店买了一双鞋，这个专卖店就是代理，被代理角色就是 adidas 厂家，目标角色就是用户</p></blockquote> <p align="center" class="p-images"><img src="/docs/imgs/nginx-proxy.jpg"></p> <h3 id="正向代理"><a href="#正向代理" class="header-anchor">#</a> 正向代理</h3> <blockquote><p>正向代理是一个位于 <strong>客户端</strong> 和 <strong>原始服务器</strong> 之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端</p></blockquote> <ul><li><p>正向代理是为我们服务的，也就是为客户端服务的。客户端可以根据正向代理访问到它本身无法访问到的服务器资源。</p></li> <li><p>正向代理对我们是透明的，对服务端是不透明的，服务端不知道自己收到的是来自代理的访问还是真是的客户端的访问。</p></li> <li><p>举个例子：我们经常说的翻墙就是正向代理，在如今的网络环境下，我们如果由于技术需要要去访问国外的某些网站，此时你会发现位于国外的某网站我们通过浏览器是没有办法访问的。此时大家可能都会用一个操作 翻墙 进行访问，翻墙 的方式主要是找到一个可以访问国外网站的代理服务器，我们将请求发送给代理服务器，代理服务器去访问国外的网站，然后将访问到的数据传递给我们</p></li> <li><p>特点</p> <ol><li>正向代理最大的特点是客户端非常明确要访问的服务器地址</li> <li>服务器只清楚请求来自哪个代理服务器，而不清楚来自哪个具体的客户端</li> <li>正向代理模式屏蔽或者隐藏了真实客户端信息</li></ol></li> <li><p>用途</p> <ol><li>访问原来无法访问的资源，如 Google</li> <li>可以做缓存，加速访问资源</li> <li>对客户端访问授权，上网进行认证</li> <li>代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息</li></ol></li></ul> <h3 id="反向代理"><a href="#反向代理" class="header-anchor">#</a> 反向代理</h3> <blockquote><p>正向代理隐藏了客户端的信息，那么反向代理正好相反，隐藏了服务端的信息，客户端反问一个台代理服务器，然后由代理服务器把请求转发到相应的服务器上</p></blockquote> <ul><li><p>反向代理经常被用来隐藏服务器安全，为了安全我们的服务一般都不会对外开放，此时我们需要一台对外开放的服务器，来做各种请求的转发，接受一条来自外界的请求，代理服务器负责转发到相应的内网服务器进行处理</p></li> <li><p>反向代理，<code>它代理的是服务端</code>，主要用于服务器集群分布式部署的情况下，反向代理隐藏了服务器的信息。</p></li> <li><p>举个栗子：在我们拨打 10086 客服电话，可能一个地区的 10086 客服有几个或者几十个，你永远都不需要关心在电话那头的是哪一个，你只需要拨通了 10086 的总机号码，电话那头总会有人会回答你。那么这里的 10086 总机号码就是我们说的 <strong>反向代理</strong>，客户不知道真正提供服务人的是谁。</p></li> <li><p>用途</p> <ol><li>保证内网的安全，通常将方向代理作为公网访问地址，web 服务是内网</li> <li>负载均衡，通过反向代理服务器来优化网站的负载。</li></ol></li> <li><p>假如现在访问我的网站就是访问 www.baidu.com，配置入戏</p></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  server <span class="token punctuation">{</span>
+    <span class="token comment"># 监听端口</span>
+    listen  <span class="token number">80</span><span class="token punctuation">;</span>
+    server_name localhost<span class="token punctuation">;</span>
+    location /  <span class="token punctuation">{</span>
+      proxy_pass  http://www.baidu.com<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h2 id="集群与负载均衡简单了解"><a href="#集群与负载均衡简单了解" class="header-anchor">#</a> 集群与负载均衡简单了解</h2> <ul><li>集群：一组松散或紧密连接在一起工作的计算机。 由于这些计算机协同工作，在许多方面它们可以被视为单个系统。 与网格计算机不同，计算机集群将每个节点设置为执行相同的任务，由软件控制和调度。（摘自百度百科）</li> <li>简单理解集群就是：多个服务器一起为某个服务工作；</li> <li>负载均衡：高可用网络基础架构的关键组件，通常用于将工作负载分布到多个服务器来提高网站、应用、数据库或其他服务的性能和可靠性。（摘自知乎）</li> <li>简单理解负载均衡就是：
+<ul><li>我们有一堆服务器处理相同的服务，这是集群，</li> <li>他们可以 ip 一样端口不一样，也可以不同的服务器端口一样的，</li> <li>比如说有两台服务器处理相同的服务，一台端口为 8888，一台端口为 7777，</li> <li>这两台服务器就是一个集群，这时候会有 多种算法 使我们访问这个服务的时候到底去请求那个端口的服务，</li> <li>这个算法可以是一个请求发给 8888，一个发给 7777；</li> <li>假如 8888 性能好点十核的服务，7777 是一核的，也可以十个请求给 8888 一个请求给 7777，有不同的算法来不同的处理。那我们怎么配置呢</li></ul></li> <li>首先，简单配置如下</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 配置都在http模块里面</span>
+  http <span class="token punctuation">{</span>
+    <span class="token comment"># ...省略其他配置</span>
+    <span class="token comment"># 配置集群，webserver是我们给集群起的名字</span>
+    upstream webserver <span class="token punctuation">{</span>
+      server localhost:8888<span class="token punctuation">;</span>
+      server localhost:7777<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment"># 配置负载均衡</span>
+    server <span class="token punctuation">{</span>
+      listen  <span class="token number">80</span><span class="token punctuation">;</span>
+      server_name localhost<span class="token punctuation">;</span>
+      location  / <span class="token punctuation">{</span>
+        <span class="token comment"># 这里传入集群的名字</span>
+        proxy_pass  http://webserver<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h2 id="负载均衡调度算法"><a href="#负载均衡调度算法" class="header-anchor">#</a> 负载均衡调度算法</h2> <blockquote><p>接下来，我们写四台简单的服务器，来进行测试，四个服务器的端口分别是 <code>3333、4444、5555、6666</code>，他们都返回自身的端口号，然后我们在进行 <code>nginx</code> 调度配置，先把四台服务器跑起来</p></blockquote> <p align="center" class="p-images"><img src="/docs/imgs/nginx-proxy-cluster.jpg"></p> <h3 id="轮询-默认"><a href="#轮询-默认" class="header-anchor">#</a> 轮询（默认）</h3> <ul><li>每个请求按照时间顺序逐一分配到不同的服务器，如果服务器宕机，则自动剔除</li> <li>简单配置一个，访问网站 <code>/testserver</code> 每次都返回不同的内容</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 默认配置就是轮询</span>
+  http <span class="token punctuation">{</span>
+    <span class="token comment"># .... 省略其余配置</span>
+    <span class="token comment"># 测试集群策略</span>
+    upstream test_server <span class="token punctuation">{</span>
+      server localhost:3333<span class="token punctuation">;</span>
+      server localhost:4444<span class="token punctuation">;</span>
+      server localhost:5555<span class="token punctuation">;</span>
+      server localhost:6666<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    server <span class="token punctuation">{</span>
+      listen  <span class="token number">80</span><span class="token punctuation">;</span>
+      server_name localhost<span class="token punctuation">;</span>
+      location / <span class="token punctuation">{</span>
+        <span class="token comment"># 省略....</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment"># 集群配置</span>
+      location /testserver <span class="token punctuation">{</span>
+        proxy_pass http://test_server<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="权重-weight"><a href="#权重-weight" class="header-anchor">#</a> 权重 weight</h3> <ul><li>使用 <code>weight</code> 指定轮询几率，<code>weight</code> 和访问比率成正比，用于后端服务器性能不均的情况。</li> <li>权重数据越大，被分配到请求的几率越大；该权重值，主要是针对实际工作环境中不同的后端服务器硬件配置进行调整的。</li> <li>配置一个实现，访问网站 10 次，四个端口按照 1:2:3:4 的比例进行访问</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 只需要在定义的集群服务器后面写上权重值就可以了</span>
+  upstream test_server <span class="token punctuation">{</span>
+    server localhost:3333 <span class="token assign-left variable">weight</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    server localhost:4444 <span class="token assign-left variable">weight</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+    server localhost:5555 <span class="token assign-left variable">weight</span><span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+    server localhost:6666 <span class="token assign-left variable">weight</span><span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="ip-hash-策略"><a href="#ip-hash-策略" class="header-anchor">#</a> ip_hash 策略</h3> <ul><li>使用 <code>ip_hash</code> 定义服务器的调度</li> <li>每个请求按照发起客户端的 <code>ip</code> 的 <code>hash</code> 结果进行匹配，这样的算法下一个固定 <code>ip</code> 地址的客户端总会访问到同一个后端服务器，这也在一定程度上解决了集群部署环境下 <code>Session</code> 共享的问题</li> <li>配置也很简单，只需要在定义集群服务上面加上 <code>ip_hash</code> 即可</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># ip_hash 策略</span>
+  upstream test_server <span class="token punctuation">{</span>
+    <span class="token comment"># 这样做，谁访问的那个服务器，为了避免 session 不共享的问题，这个人基本上会被一直代理到他所访问到的服务器上</span>
+    ip_hash<span class="token punctuation">;</span>
+    server localhost:3333<span class="token punctuation">;</span>
+    server localhost:4444<span class="token punctuation">;</span>
+    server localhost:5555<span class="token punctuation">;</span>
+    server localhost:6666<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h3 id="其他策略"><a href="#其他策略" class="header-anchor">#</a> 其他策略</h3> <ul><li>除了以上三种调度策略外，还有其他的调度算法，但是那些需要依赖第三方插件，简单介绍下</li> <li><code>fair</code> 策略：按后端服务器的响应时间来分配请求，响应时间短的优先分配。</li> <li><code>url_hash</code> 策略：按访问 url 的 hash 结果来分配请求，使每个 url 定向到同一个后端服务器，后端服务器为缓存时比较有效。</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># fair 策略（第三方）</span>
+  upstream test_server <span class="token punctuation">{</span>
+    server localhost:3333<span class="token punctuation">;</span>
+    server localhost:4444<span class="token punctuation">;</span>
+    server localhost:5555<span class="token punctuation">;</span>
+    server localhost:6666<span class="token punctuation">;</span>
+    fair<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment"># url_hash（第三方）</span>
+  upstream test_server <span class="token punctuation">{</span>
+    server localhost:3333<span class="token punctuation">;</span>
+    server localhost:4444<span class="token punctuation">;</span>
+    server localhost:5555<span class="token punctuation">;</span>
+    server localhost:6666<span class="token punctuation">;</span>
+    <span class="token builtin class-name">hash</span> <span class="token variable">$request_uri</span><span class="token punctuation">;</span>
+    hash_method crc32<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h3 id="定义负载均衡设备的-ip-及设备状态"><a href="#定义负载均衡设备的-ip-及设备状态" class="header-anchor">#</a> 定义负载均衡设备的 Ip 及设备状态</h3> <ul><li><code>nginx</code> 支持同时设置多组的负载均衡，用来给不用的 <code>server</code> 来使用</li> <li>配置如下：</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  upstream test_server <span class="token punctuation">{</span>
+    ip_hash<span class="token punctuation">;</span>
+    server localhost:3333 down<span class="token punctuation">;</span>
+    server localhost:4444 <span class="token assign-left variable">weight</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+    server localhost:5555<span class="token punctuation">;</span>
+    server localhost:6666 backup<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><ul><li>设备的状态值：
+<ol><li><code>down</code>：表示当前设备暂时不参与负载</li> <li><code>weight</code>：默认为 1。<code>weight</code> 越大，负载的权重就越大</li> <li><code>max_fails</code>：允许请求失败的次数默认为 1。当超过最大次数时，返回 <code>proxy_next_upstream</code> 模块定义的错误</li> <li><code>fail_timeout:max_fails</code>：次失败后，暂停的时间</li> <li><code>backup</code>：其它所有的非 <code>backup</code> 机器 <code>down</code> 或者忙的时候，请求 <code>backup</code> 机器。所以这台机器压力会最轻</li></ol></li></ul> <p>本文章参考链接如下:</p> <ul><li><a href="https://blog.51cto.com/wangwei007/1103727" target="_blank" rel="noopener noreferrer">Nginx upstream 的几种分配方式<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://www.cnblogs.com/wcwnina/p/8728391.html" target="_blank" rel="noopener noreferrer">Nginx 相关介绍(Nginx 是什么?能干嘛?)<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://mp.weixin.qq.com/s?__biz=MzIyMDkwODczNw==&amp;mid=2247485444&amp;idx=1&amp;sn=f142dc529b3bd4ad2813cbfd5e021e07&amp;chksm=97c595aaa0b21cbc72b9b15d42f24a435f24b1bb10acdecb84587390f58369f4a6c7e5873eda&amp;mpshare=1&amp;scene=24&amp;srcid=&amp;sharer_sharetime=1573177641385&amp;sharer_shareid=173a9b33fbb44b987bd7c4d69f782a28#rd" target="_blank" rel="noopener noreferrer">nginx 反向代理和负载均衡策略实战案例<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">最后修改时间: </span> <span class="time">2022-10-23 15:24:23</span></div></footer> <!----> <!----></main> <!----> <div class="comments-wrapper" data-v-395662f4><div class="valine-wrapper"><div id="valine"></div></div></div></div></div></div></div></div><div class="global-ui"><!----></div></div>
+    <script src="/docs/assets/js/app.27049448.js" defer></script><script src="/docs/assets/js/3.e4423274.js" defer></script><script src="/docs/assets/js/1.c56aafa6.js" defer></script><script src="/docs/assets/js/43.d9574346.js" defer></script>
+  </body>
+</html>
