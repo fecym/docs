@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
-node_js: stable
-script: bash ./deploy.sh
+node_js: 16
+script: bash ./deploy-travis.sh
 # 这里需要是true，否则会git push --force，把以前的记录覆盖了
 keep_history: true
 # 目标分支

@@ -21,16 +21,6 @@ module.exports = {
       config.optimization.runtimeChunk('single');
     }
 
-    // config.module
-    //   .rule('js') // Find the rule.
-    //   .use('babel-loader') // Find the loader
-    //   .loader(require.resolve("babel-loader"))
-    //   .tap(options => {
-    //     options = options || {}
-    //     const presets = options.presets || []
-    //     options.presets = [...presets, ['@babel/preset-env'], ['@vue/babel-preset-jsx', { injectH: false }]]
-    //     return options
-    //   });
   },
   configureWebpack: (config, isServer) => {
     if (config.mode === 'production') {

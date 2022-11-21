@@ -10,11 +10,13 @@ const { plugins } = require('./config/plugins')
 const { chainWebpack, configureWebpack } = require('./config/webpackConfig')
 const head = require('./config/head')
 const markdown = require('./config/markdown')
+console.log(process.env.BUILD_TYPE, '----------------------------------');
 module.exports = {
   title: "chengyuming",
   description: 'Today, have you studied yet?',
   dest: './love',
   head,
+  base: process.env.BUILD_TYPE ? '/docs/' : '/',
   theme: require.resolve('./theme'),
   serviceWorker: false, // 是否开启 PWA
   themeConfig,
