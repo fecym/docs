@@ -8,12 +8,11 @@ tags:
 ## 安装
 
 - 推荐本地安装，不推荐全局安装
-- 安装本地 webpack
-- webpack webpack-cli -D
+- 安装本地 Webpack：npm i webpack webpack-cli -D
 
 ## webpack 可以进行 0 配置
 
-- 我们不需要配置任何东西，直接执行 webpack 就可以打包我们的代码
+- 不需要配置任何东西，直接执行 webpack 就可以打包我们的代码
 - 打包工具 -> 输出后的结果 (js 模块)
 - 打包（支持 js 模块化）
 
@@ -24,7 +23,7 @@ tags:
 
 ## 传参
 
-- 如果想在命令行后面传参的，需要多个一个 `--`
+- 如果需要在命令行后面传参，需要使用 `--`
 
 ```sh
 npm run build -- --config ./basics/webpack.config.js
@@ -55,11 +54,11 @@ plugins: [
 
 ## 配置 css
 
-- 配置 css 需要配置 module，需要给 module 配置各种规则，所以需要在 rules 中配置
+- 配置 css 需要配置 module，需要给 module 配置规则，所以需要在 rules 中配置
 - loader 执行顺序，从右往左，从下到上
-- style-loader 是让样式写入 style 标签里面
+- style-loader 是将样式写入 style 标签里面
 - css-loader 解析 @import 这种语法的
-- 如果不想让 css 写入到 style 标签里面，我么需要抽离 css ，插件是 mini-css-extract-plugin，然后替换 style-loader，并且配置 plugins
+- 如果不想让 css 写入到 style 标签里面，需要抽离 css ，使用 mini-css-extract-plugin，然后替换 style-loader，并且配置 plugins
 
 ```js
 new MiniCssExtractPlugin({
@@ -82,7 +81,7 @@ new MiniCssExtractPlugin({
 },
 ```
 
-- 想要压缩 css 需要使用插件 optimize-css-assets-webpack-plugin，[mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) 官网推荐的，这个需要配置在 optimization 里面，但是使用了它之后 js 就不会压缩了，还需要使用另外一个插件 uglifyjs-webpack-plugin 来压缩 js
+- 压缩 css 需要使用插件 optimize-css-assets-webpack-plugin，[mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) 官网推荐的，这个需要配置在 optimization 里面，但是使用了它之后 js 就不会压缩了，还需要使用另外一个插件 uglifyjs-webpack-plugin 来压缩 js
 
 ```js
 optimization: {
@@ -222,22 +221,46 @@ externals: {
 - 处理图片我们可以用 file-loader 来处理文件
 - file-loader 会在内部生成一张图片到 打包后的 目录下，并保持原来的名字
 
-- 如果在 HTML 中引入图片，但是打包完图片之后原 HTML 中的图片是找不到的，此时我们可以用 html-withimg-loader 来编译
+  - 如果在 HTML 中引入图片，但是打包完图片之后原 HTML 中的图片是找不到的，此时我们可以用 html-withimg-loader 来编译
 
-  - 在这里可能会出一个问题 file-loader 4.2 的时候是没有这个问题的，但是 file-loader 5.0 以上会出现，图片地址返回了一个对象
-  - `<img src={"default":"3e5e5663e90681a73033ca3e3ac17655.png"} alt="">`
-  - 此时我们需要在 file-loader 中配置 options: {esModule: false} 便可以[解决这个问题](https://blog.csdn.net/qq_38702877/article/details/103384626)
+    - 在这里可能会出一个问题 file-loader 4.2 的时候是没有这个问题的，但是 file-loader 5.0 以上会出现，图片地址返回了一个对象
+    - `<img src={"default":"3e5e5663e90681a73033ca3e3ac17655.png"} alt="">`
+    - 此时我们需要在 file-loader 中配置 options: {esModule: false} 便可以[解决这个问题](https://blog.csdn.net/qq_38702877/article/details/103384626)
+
+    ```js
+    {
+      test: /\.(png|gif|jpg|bmp)$/,
+      use: [{loader: 'file-loader', options: {esModule: false}}],
+    }
+    ```
+    
+- file-loader 主要作用是将这些文件复制到输出目录，并返回相对 URL，以便在代码中引用
 
   ```js
-  {
-    test: /\.(png|gif|jpg|bmp)$/,
-    use: [{loader: 'file-loader', options: {esModule: false}}],
-  }
+    module.exports = {
+      module: {
+        rules: [
+          {
+            test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/, // 匹配需要处理的文件类型
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: '[name].[hash:8].[ext]', // 生成文件的命名规则
+                  outputPath: 'assets/', // 输出目录
+                  publicPath: 'assets/', // 公共路径
+                },
+              },
+            ],
+          },
+        ],
+      },
+  };
   ```
 
 ### url-loader
 
-- 一般情况下图片处理不会使用 file-loader，我们一般使用 url-loader
+- 一般情况下图片处理不会使用 file-loader，一般使用 url-loader
 - url-loader 可以做一个限制，当图片小于多少 k 的时候我们可以减少 http 请求，只用使用 base64 来转换图片，可用通过 name 来控制图片打包完后放到哪
 
 ```js
@@ -646,15 +669,14 @@ module: {
 
 ## exclude 和 include
 
-- 可以设置 loader 解析文件要排除的哪些目录，比如说 node_modules
-- 有排除就有包含，也可以设置让 loader 解析的时候只找某一个目录，比如说 src 目录
-- 两个加一个就可以
+- 可以设置 loader 解析文件要排除的哪些目录，比如 node_modules
+- 有排除就有包含，也可以设置让 loader 解析时只处理特定目录，比如 src 目录
 
 ## IgnorePlugin
 
 - 这是 webpack 自带的一款插件，可以忽略掉 模块内部的引用，
-- 比如说格式化时间的插件 moment，该插件假如我们只用他格式化了一下时间，但是打包后看到项目明显变大了好多
-- 可以他到该插件的内部是默认引入所有的语言包，此时我们可以配置一下忽略掉让引入的语言包
+- 比如插件 moment，该插件假如我们只用他格式化了一下时间，但是打包后看到项目明显变大了好多
+- 它默认引入了所有语言包，可以配置忽略掉
 
 ```js
 plugins: [new webpack.IgnorePlugin(/\.\/locale/, /moment/)];
@@ -710,7 +732,7 @@ const current = moment()
   };
   ```
 
-  - 然后去主 webpack 配置中，新增动态链接库引用的插件，配置如下
+  - 在主 webpack 配置中，新增动态链接库引用的插件
 
   ```js
   // 主 webpack 配置
@@ -741,7 +763,7 @@ const current = moment()
   ];
   ```
 
-- 有一个要注意的地方，记得把 AddAssetHtmlPlugin 的配置写在 HTMLWebpackPlugin 插件的后面，不然可能不会把资源注入进去
+- 有一个要注意的地方，需要把 AddAssetHtmlPlugin 的配置写在 HTMLWebpackPlugin 插件的后面，不然可能不会把资源注入进去
 
 ## happypack
 

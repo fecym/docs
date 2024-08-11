@@ -7,8 +7,7 @@ tags:
 
 ## webpack 介绍
 
-> webpack 可以不做任何配置，直接执行 webpack 命令就可以打包我们代码，也可以手动配置一些 webpack 来打包我们的代码，
-> webpack 配置只需要在项目根目录下新建一个 `webpack.config.js` 文件，然后导出一个对象或者函数都可以，如果导出为一个函数那么这个函数接受两个参数，第一个参数是环境对象（environment），第二个参数是一个 map 对象（argv）这个对象描述了传递给 webpack 的选项，并且具有 output-filename 和 optimize-minimize 等 key。
+Webpack 可以直接执行 webpack 命令进行打包，也可以通过手动配置实现更复杂的打包需求。配置文件为 webpack.config.js，可以导出一个对象或函数，函数接受两个参数：env（环境对象）和 argv（描述传递给 webpack 选项的 map 对象）。
 
 来看一下这两个参数：
 
@@ -25,11 +24,11 @@ tags:
   <img :src="$withBase('/imgs/webpack-arguments.jpg')" height="">
 </p>
 
-- 让 `webpack` 正常启动需要最少需要两个 `npm` 包，`webpack、webpack-cli`
+- 让 `webpack` 正常启动，至少需要两个 `npm` 包，`webpack、webpack-cli`
 
 ### 一、entry
 
-> webpack 是采用模块化的思想，所有的文件或者配置都是一个个的模块， 同时所有模块联系在一起，可以理解为就是一个简单的树状结构，那么最顶层的入口是什么呢？答案就是 `entry`， 所以， `webpack` 在执行构建的时候， 第一步就是找到入口，从入口开始，寻找，遍历，递归解析出所有入口依赖的模块。
+> Webpack 采用模块化思想，所有文件和配置都是模块。entry 是顶层入口，Webpack 从入口开始，遍历和递归解析所有入口依赖的模块。
 
 - `entry` 用法如下
 
@@ -74,7 +73,7 @@ tags:
 
 - development：会将 `process.env.NODE_ENV` 的值设置为 `development`，启用 `NamedChunksPlugin` 和 `NamedModulesPlugin`。代码不压缩
 - production：会将 `DefinePlugin` 中 `process.env.NODE_ENV` 的值设置为 `production`。启用 `FlagDependencyUsagePlugin`, `FlagIncludedChunksPlugin`, `ModuleConcatenationPlugin`, `NoEmitOnErrorsPlugin`, `OccurrenceOrderPlugin`, `SideEffectsFlagPlugin` 和 `TerserPlugin`。
-- none：退出任何默认优化选项
+- none：不使用任何默认优化。
 - 如果没有设置，`webpack` 会把 `mode` 默认设置为 `production`，并发出警告。
 - 我们可以通过控制台中输入 `--mode=development` 来设置 `webpack` 的模式，也可以在 `webpack.config.js` 中设置 `mode: development`
 - 设置 `NODE_ENV` 并不会自动地设置 `mode`。
@@ -355,18 +354,18 @@ plugins: [
 `devServer` 主要用于本地开发的时候，配置本地服务的各种特性，常用的配置如下
 :::
 
-- hot： true/false // 是否开启模块热替换
-- inline: true/false; // 是否开启实时刷新， 即代码更改以后， 浏览器自动刷新
-- contentBase // 用于配置本地服务的文件根目录
-- header // 设置请求头
-- host // 设置域名
-- port // 设置端口
-- allowedHosts: [] // 只有请求的域名在该属性所配置的范围内， 才可以访问。
-- https: true/false; // 使用使用 https 服务， 默认为 false
-- compress: true/false; // 是否启用 Gzip 压缩， 默认为 false.
-- open //是否开启新窗口
-- devtool : 'source-map' // 配置 webpack 是否生成 source Map， 以方便调试。
-- watch： true // 默认为 true， 表示是否监听文件修改以后， 自动编译。
+- hot： 是否开启模块热替换
+- inline:  是否开启实时刷新， 即代码更改以后， 浏览器自动刷新
+- contentBase: 用于配置本地服务的文件根目录
+- header: 设置请求头
+- host: 设置域名
+- port:  设置端口
+- allowedHosts: 只有请求的域名在该属性所配置的范围内， 才可以访问。
+- https:  使用使用 https 服务， 默认为 false
+- compress:  是否启用 Gzip 压缩， 默认为 false.
+- open: // 是否开启新窗口
+- devtool: 配置 webpack 是否生成 source Map， 以方便调试。
+- watch: 默认为 true， 表示是否监听文件修改以后， 自动编译。
 
 ### 附上一个简单的配置
 
@@ -435,7 +434,12 @@ module.exports = function(env, argv) {
 1. 对于同逻辑代码，当我们手写下一个个文件，他们都是 `module`；
 2. 当我们写的 `module` 源文件传到 `webpack` 进行打包时，`webpack` 会根据文件引用关系生成 `chunk` 文件，`webpack` 会对这个 `chunk` 文件进行一些操作；
 3. `webpack` 处理好 `chunk` 文件后，最后会输出 `bundle` 文件，这个 `bundle` 文件包含了经过加载和编译的最终源文件，所以它可以直接在浏览器中运行。
-   总结：`module、chunk、bundle` 其实就是同一份逻辑代码在不同转换场景下取了不同的名字：我们直接写出来的是 `module`，`webpack` 处理时是 `chunk`，最后在浏览器中可以直接运行的是 `bundle`
+
+总结：`module、chunk、bundle` 其实就是同一份逻辑代码在不同转换场景下取了不同的名字：我们直接写出来的是 `module`，`webpack` 处理时是 `chunk`，最后在浏览器中可以直接运行的是 `bundle`
+
+- module：我们手写的文件。
+- chunk：Webpack 根据文件引用关系生成的中间文件。
+- bundle：Webpack 处理后输出的最终文件，可直接在浏览器中运行。
 
 ### 二、filename 和 chunkFilename
 
@@ -495,7 +499,7 @@ new MiniCssExtractPlugin({
 | ext         | 资源后缀名                                                    |
 | path        | 文件的相对路径                                                |
 | folder      | 文件所在的文件夹                                              |
-| hash        | 每次 webpack 构建时生成一个唯一的 hash 值                     |
+| hash        | 每次构建时生成一个唯一的 hash 值                     |
 | chunkhash   | 根据 chunk 生成 hash 值，来源于同一个 chunk，则 hash 值就一样 |
 | contenthash | 根据内容生成 hash 值，文件内容相同 hash 值就相同              |
 
@@ -503,10 +507,13 @@ new MiniCssExtractPlugin({
 
 > output.publicPath 和 devServer.publicPath
 
-- `output` 里面的 `publicPath` 表示的是打包生成的 `index.html` 文件里面引用资源的前缀；就是项目要扔到服务器的哪个地址里面
-- `devServer` 里面的 `publicPath` 表示的是打包生成的 静态文件 所在的位置
-- 配置了 `devServer.publicPath` 之后，打完包的项目会自动在请求地址上加上你所配置的那个文件夹名字，比如说我们配置的 `address_v2`，那么此时请求的所有文件资源都是携带这个 `address_v2`，也就是说在你的请求地址最后面要加上`address_v2`，那么在服务器上也需要放这么一个文件夹，用来放置你打包完的项目
-- `devServer.contentBase` 是指开发环境下服务器根目录
+- output.publicPath：引用资源的前缀。
+  - 就是项目要扔到服务器的哪个地址里面
+- devServer.publicPath：静态文件的位置。
+  - 表示的是打包生成的 静态文件 所在的位置
+  - 配置了 `devServer.publicPath` 之后，打完包的项目会自动在请求地址上加上配置的那个文件夹名字
+  - 比如说配置了 `address_v2`，那么此时请求的所有文件资源都是携带这个 `address_v2`，也就是说在你的请求地址最后面要加上`address_v2`，那么在服务器上也需要放这么一个文件夹，用来放置你打包完的项目
+- devServer.contentBase：本地服务根目录。
 
 ### 七、webpack 处理 css 的一些介绍
 

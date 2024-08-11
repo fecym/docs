@@ -3,9 +3,9 @@
   "version": "1.1.0",
   "author": "chengyuming",
   "scripts": {
-    "start": "vuepress dev docs --temp .temp",
-    "build": "vuepress build docs",
-    "predeploy": "cross-env BUILD_TYPE=git vuepress build docs",
+    "process-openssl": "NODE_OPTIONS=--openssl-legacy-provider",
+    "start": "yarn process-openssl vuepress dev docs --temp .temp",
+    "build": "yarn process-openssl vuepress build docs",
     "deploy": "bash deploy.sh"
   },
   "devDependencies": {

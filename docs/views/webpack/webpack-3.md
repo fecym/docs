@@ -7,13 +7,11 @@ tags:
 
 ## 介绍
 
-接前两篇，这篇内容介绍一下使用 webpack 一些小技巧，以及在根据一些实际业务场景我们可以自定义 loader 和 plugin。最近工作比较忙，这篇笔记也断断续续写了好久，写的可能比较杂乱，这篇文章日后也会不断优化
+接前两篇，这篇文章介绍一些使用 Webpack 的小技巧，以及在实际业务场景中如何自定义 Loader 和 Plugin。由于最近工作比较忙，这篇笔记写得断断续续，可能有些杂乱，后续会不断优化。
 
 ## 小技巧：require.context
 
-- 在平时开发项目的时候，有时候需要引入的文件太多的时候，有什么好的方法解决嘛
-- 这时我们可以用 `require.context` 函数来创建我们要引入文件的 `context`
-- 该函数接受三个参数：要搜索的目录、是否搜索子目录、匹配文件的正则表达式
+在开发项目时，如果需要引入很多文件，可以使用 require.context 函数创建一个文件引入的上下文。该函数接受三个参数：要搜索的目录、是否搜索子目录、匹配文件的正则表达式。
 
 ```js
 // 语法如下
@@ -24,12 +22,12 @@ require.context(directory, (useSubdirectories = false), (regExp = /^\.\//));
 - 返回函数拥有三个属性：`resolve、keys、id`
   - `resolve` 是一个函数，它返回 `request` 被解析后得到的模块 `id`。
   - `keys` 也是一个函数，返回一个数组，由所有可能被上下文模块处理的请求组成（满足 `require.context` 传参的文件相对路径，但是要是传入一个文件地址还是会报错，必须传入一个满足 `require.context` 传参的文件地址）
-  - `id` 是上下文模块里面所包含的模块 `id`。它可能在你使用 `module.hot.accept` 的时候被用到
-- [内容摘自 webpack 官网](https://webpack.docschina.org/guides/dependency-management/#require-context)
+  - `id` 是上下文模块里面所包含的模块 `id`。它可能在使用 `module.hot.accept` 的时候被用到
+- 更多详细信息可以参考[webpack 官网](https://webpack.docschina.org/guides/dependency-management/#require-context)
 
-拿 vue 项目来说，有下面目录结构我们来自动引入 route、store 以及自动注册全局组件
+以 vue 项目来说，有下面目录结构我们来自动引入 route、store 以及自动注册全局组件
 
-```sh
+```text
   ├── src
   │   ├── views
   │   ├── components
@@ -117,13 +115,15 @@ export default modules;
 
 ## webpack loader
 
-webpack 中 loader 用于对模块的源代码进行转换。loader 可以使你在 import 或 "load(加载)" 模块时预处理文件。因此，loader 类似于其他构建工具中"任务(task)"，并提供了处理前端构建步骤的得力方式。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript 或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模块中 import CSS 文件！（摘自官网）
+webpack 中 loader 用于对模块的源代码进行转换。loader 可以使你在 import 或 "load(加载)" 模块时预处理文件。因此，loader 类似于其他构建工具中"任务(task)"，并提供了处理前端构建步骤的得力方式。
 
-使用方法这里不做介绍，可以参考之前的文章或者查看[官网](https://webpack.docschina.org/concepts/loaders/)
+loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript 或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模块中 import CSS 文件！（摘自官网）
+
+使用方法可以参考之前的文章或者查看[官网](https://webpack.docschina.org/concepts/loaders/)
 
 接下来，我们开始开发 loader，新建一个项目，项目目录如下：
 
-```sh
+```text
   ├── loaders             # 我们自定义的 loader
   │   └── ...             # 各种 loader
   ├── src
@@ -245,7 +245,7 @@ module.exports = {
 
 ### 执行顺序
 
-我们都知道 loader 执行顺序按照从后往前的顺序逆向执行的，当然 loader 的执行顺序也是可控的， 可以在 loader 中配置 `enforce` 参数为 `pre` 或者 `post` 来控制 loader 的执行的顺序
+ loader 执行顺序按照从后往前的顺序逆向执行的，当然 loader 的执行顺序也是可控的， 可以在 loader 中配置 `enforce` 参数为 `pre` 或者 `post` 来控制 loader 的执行的顺序
 
 当然 loader 还有一种[内联 loader](https://webpack.docschina.org/concepts/loaders/#inline)，所以一般 loader 的执行顺序应该是：pre -> normal -> inline -> post
 
@@ -268,10 +268,10 @@ loader 默认是由两部分组成 pitchLoader 和 normalLoader，loader 执行�
 ### loader 的特点
 
 - 单一职责，一个 `loader` 只做一件事情，正因为职责越单一，所以 `loader` 的组合性强，可配置性好。
-- `loader` 支持链式调用，上一个 `loader` 的处理结果可以传给下一个 `loader` 接着处理，上一个 `loader` 的参数 options 可以传递给下一个 loader，直到最后一个 loader，返回 webpack 所期望的 javascript
+- `loader` 支持链式调用，上一个 `loader` 的处理结果可以传给下一个 `loader` 接着处理，上一个 `loader` 的参数 options 可以传递给下一个 loader，直到最后一个 loader，返回 webpack 所期望的 js 代码
 - loader 是一个纯函数，不能有状态(外界的状态)
 
-### 开发 loader
+### 开发一个 loader
 
 我们来实现一个比较常见的功能删除代码中所有 console 打印，我们使用 ast 来实现这个功能，整个过程我们分为以下几步：
 
@@ -382,7 +382,7 @@ module.exports = loader;
 
 ### 处理样式
 
-loader 中样式处理一般常见的有 less-loader、css-loader、style-loader，less-loader 负责把 less 语法编译成 css 代码，style-loader 负责把 css 代码插入到 html 标签内，css-loader 处理的事情比较多，比如背景图的路径处理
+loader 中样式处理常见的有 less-loader、css-loader、style-loader，less-loader 负责把 less 语法编译成 css 代码，style-loader 负责把 css 代码插入到 html 标签内，css-loader 处理的事情比较多，比如背景图的路径处理
 
 他们实现也是蛮简单
 
@@ -411,7 +411,7 @@ module.exports = loader;
 
 ### 处理文件
 
-一般我们使用 loader 来处理文本内容，loader 也是可以用来处理文件(二进制)。比如说 file-loader、url-loader 等，file-loader 作用就是劫持到引入的文件，然后生成新的文件到我们想要处理到的地方(比如默认生成到 dist 目录下)，然后返回一个路径。
+一般我们使用 loader 来处理文本内容，loader 也是可以用来处理文件(二进制)。比如说 file-loader、url-loader 等，file-loader 作用就是劫持到引入的文件，然后生成新的文件到我们想要处理到的地方(比如 dist 目录)，然后返回一个路径。
 
 在项目中我们可以用会用到各种格式的文件，一些常见的文件我们可以使用各种 loader 来处理，但是不同的业务也可能会遇到其他特殊的文件没有对应的 loader 处理，此时我们可以使用 file-loader 来处理，file-loader 会把源文件拷贝一份到 dist 目录下，不会存在副作用。
 
@@ -478,13 +478,17 @@ module.exports = loader;
 
 ## webpack plugins
 
-webpack 配置中的 `plugins` 是一个数组，接收一组的 plugin，每一个 plugin 是一个类，使用时需要 new 这个插件类。插件目的在于解决 loader 无法实现的其他事，`plugins` 专注处理 webpack 编译过程中某个特定的任务的功能模块
+webpack 配置中的 `plugins` 是一个数组，接收一组的 plugin，每一个 plugin 是一个类，使用时需要 new 这个插件类。
 
-webpack 打包是一个事件流机制，是将各个插件串联起来，核心是用了 tapable。并且在 webpack 中负责编译的 Compiler 和负责创建 bundles 的 Compilation 都是 tapable 构造函数的实列。
+插件目的在于解决 loader 无法实现的其他事，`plugins` 专注处理 webpack 编译过程中某个特定的任务的功能模块
+
+webpack 打包是一个事件流机制，是将各个插件串联起来，核心是用了 tapable。并且在 webpack 中负责编译的 Compiler 和负责创建 bundles 的 Compilation 都是 tapable 构造函数的实例。
 
 ### tapable
 
-tapable 类似于 node 中的 EventEmitter，但更专注于自定义事件的触发和处理。webpack 通过 tapable 将实现与流程解耦，所有具体实现通过插件的形式存在。tapable 中主要提供了同步与异步两种钩子
+tapable 类似于 node 中的 EventEmitter，但更专注于自定义事件的触发和处理。
+
+webpack 通过 tapable 将实现与流程解耦，所有具体实现通过插件的形式存在。tapable 中主要提供了同步与异步两种钩子
 
 ```js
 const {
@@ -504,7 +508,7 @@ const {
 
 ```js
 const { SyncHook } = require('tapable');
-// 创建实列
+// 创建实例
 const syncHook = new SyncHook(['name', 'age']);
 
 // 注册事件
@@ -535,11 +539,11 @@ tapable 中还有一些异步钩子，最基本的两个异步钩子分别是 As
 
 ### Compiler 和 Compilation
 
-在开发 plugin 时我们最常用的两个对象就是 Compiler 和 Compilation。
+在开发 plugin 时最常用的两个对象是 Compiler 和 Compilation。
 
-Compiler 对象包含了 webpack 环境所有的配置信息，包含 options，loaders, plugins 这些项，这个对象在 webpack 启动时候被实例化，它是全局唯一的。可以理解为 webpack 的实列。
+Compiler 对象包含了` webpack 环境所有的配置信息`，如 options，loaders, plugins 这些项，该对象在 webpack 启动时候被实例化，它是全局唯一的。可以理解为 webpack 的实例。
 
-Compilation 对象包含了当前的模块资源、编译生成资源、文件的变化等。当 webpack 在开发模式下运行时，每当检测到一个文件发生改变的时候，那么一次新的 Compilation 将会被创建。从而生成一组新的编译资源。
+Compilation 对象包含了当前的`模块资源、编译生成资源、文件的变化`等。当 webpack 在开发模式下运行时，每当检测到一个文件发生改变的时候，那么一次新的 Compilation 将会被创建。从而生成一组新的编译资源。
 
 Compiler 对象的事件钩子以及作用
 
@@ -554,13 +558,13 @@ Compiler 对象的事件钩子以及作用
 | after-emit      | 在生成资源并输出到目录之后 | compilation       | async |
 | done            | 完成编译                   | stats             | sync  |
 
-下面根据具体的案例来了解一下 Compiler 和 Compilation
+下面我们通过具体的案例了解一下 Compiler 和 Compilation 的使用。
 
 ### 实现一个资源分析插件
 
 实现一个资源分析插件：在打包完成之后，统计所有打包后资源的大小
 
-在 webpack 中使用插件的时候需要 new 这个插件，那么这个插件一定是个类(构造函数)。webpack 执行时，先生成插件的实例对象，之后会调用插件上的 apply 方法，并将 compiler 对象作为参数传递给 apply。所以这个构造函数里面有个核心的 apply 方法
+在 webpack 中使用插件的时候需要 new 这个插件，那么这个插件一定是个类(构造函数)。webpack 执行时，先生成插件的实例对象，之后会调用插件上的 apply 方法，并将 compiler 对象作为参数传递给 apply。因此这个构造函数有个核心的 apply 方法
 
 我们要做一个资源分析的插件，所以是在生成资源后输出到目录之前注册一个事件，这个事件函数接收一个 compilation 对象，compilation.assets 是我们所有的资源文件对象，每一个对象里面都有 source 和 size 方法，我们可以这里面控制输出的资源
 
@@ -620,7 +624,7 @@ module.exports = {
 再来资源替换插件，熟悉一下 plugin 的开发。把打包后的静态资源替换成我们的 cdn 地址，或者服务器上的绝对地址
 
 ```js
-// 需求：把所有的引入中的静态资源 static 变成 http://chengyuming.cn/
+// 需求：把所有的引入中的静态资源 static 变成 https://chengyuming.cn/
 const fs = require('fs');
 class StaticAssetsPlugin {
   constructor({ isProd = true, outputPath = 'dist', staticPath = 'static', cdnAddr = '/' }) {
@@ -663,7 +667,7 @@ module.exports = function(env, argv) {
         isProd: true,
         outputPath: 'dist',
         staticPath: 'static',
-        cdnAddr: 'http://chengyuming.cn/',
+        cdnAddr: 'https://chengyuming.cn/',
       }),
     ],
   };
@@ -707,7 +711,7 @@ webpack 的 plugin 功能很强大，当然学习成本比较大，当你熟悉�
 
 ## 源码地址
 
-代码以存放到 github，[地址](https://github.com/fecym/webpack-share)
+代码已存放到 github，[地址](https://github.com/fecym/webpack-share)
 
 ## 相关链接
 

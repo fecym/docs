@@ -5,7 +5,7 @@ tags:
   - 基础
 ---
 
-我们一直在用数组的 api，因为使用很方便
+在日常开发中，我们经常使用数组的 API。本文将详细介绍一些常用的数组操作方法，并提供其实现代码。
 
 ## 任意位置插入单个成员
 
@@ -30,7 +30,7 @@ function insert(arr, idx, item) {
 
 ## 任意位置移除单个成员
 
-移除元素跟插入元素应该是一组对应的 api，同理要返回删除的元素
+移除元素跟插入元素应该是一组对应的 api，同理要返回被删除的元素
 
 删除的核心思想就是：从删除项开始，数组所有成员左移一位，最后长度减一即可
 
@@ -81,7 +81,7 @@ JavaScript 中的数组可以很好的模拟栈和队列的数据操作
 
 ### push
 
-`push` api 可以添加多个成员，返回 push 后的数组长度
+`push` 向数组末尾添加一个或多个元素，并返回新数组的长度
 
 ```js
 function push(arr, ...item) {
@@ -96,7 +96,7 @@ function push(arr, ...item) {
 
 ### pop
 
-`pop` 弹出数组最后一项，返回弹出的成员
+`pop` 删除数组最后一个元素，并返回该元素
 
 ```js
 function pop(arr) {
@@ -110,7 +110,7 @@ function pop(arr) {
 
 ### unshift
 
-`unshift` 从头部添加一个成员，返回数组的长度
+`unshift` 在数组头部添加一个或多个元素，并返回新数组的长度
 
 ```js
 function unshift(arr, item) {
@@ -132,6 +132,9 @@ function unshift(arr) {
   for (let i = len - 1; i > argsLen - 1; i--) {
     arr[i] = arr[i - argsLen];
   }
+  // for (let i = arr.length - 1; i >= 0; i--) {
+  //   arr[i + args.length] = arr[i];
+  // }
   for (let i = 0; i < args.length; i++) {
     arr[i] = args[i];
   }
@@ -141,7 +144,7 @@ function unshift(arr) {
 
 ### shift
 
-`shift` 从头部删除一个成员
+`shift` 删除数组的第一个元素，并返回该元素
 
 ```js
 function shift(arr) {
@@ -177,7 +180,7 @@ function reverse(arr) {
 
 ### forEach
 
-纯遍历操作，不返回任何值
+遍历数组中的每个元素，执行提供的回调函数
 
 ```js
 function forEach(arr, cb, ctx = null) {
@@ -229,7 +232,7 @@ function every(arr, cb, ctx = null) {
 
 ### map
 
-`map` 会对数组成员进行处理，返回一个与原数组长度一致的新数组，如果使用中没有返回结果则与 forEach 的效果一致
+`map` 创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。如果使用中没有返回结果则与 forEach 的效果一致
 
 ```js
 function map(arr, cb, ctx = null) {
@@ -273,7 +276,7 @@ function find(arr, cb, ctx = null) {
 }
 ```
 
-`findIndex` 很 `find` 一样，只不过返回结果一个是返回数组成员，一个是数组下标
+`findIndex` 跟 `find` 一样，只不过返回结果一个是返回数组成员，一个是数组下标
 
 ```js
 function findIndex(arr, cb, ctx = null) {
@@ -348,9 +351,9 @@ function flatUseRegExp(arr) {
 ```js
 function flatUseToString(arr) {
   return arr
-    .toString()
-    .split(',')
-    .map(i => +i);
+          .toString()
+          .split(',')
+          .map(i => +i);
 }
 ```
 
@@ -381,7 +384,20 @@ function flat(arr) {
 }
 ```
 
-## 增维面试思考
+## 数组 at 方法
+
+根据索引值获取数组中的元素，支持正向和反向索引
+
+```js
+function at(arr, n) {
+  n = Math.trunc(n) || 0;
+  if (n < 0) n += arr.length;
+  if (n < 0 || n >= arr.length) return undefined;
+  return arr[n];
+}
+```
+
+## 将一维数组按指定长度拆分为二维数组：
 
 之前面试遇到一道题，有一个一维数组，我想要写个方法，方法接收两个参数，该数组和一个数字，然后得到一个根据这个数字而拆分成的多维数组，比如说我传递一个 3，那就数组中的成员就每三个成员组成一个新的数组
 
@@ -583,7 +599,14 @@ Array.prototype.flat2 = function() {
   return r;
 };
 
-var arr = [1, 2, 3, 4, 5];
+Array.prototype.at2 = function(n) {
+  n = Math.trunc(n) || 0;
+  if (n < 0) n += this.length;
+  if (n < 0 || n >= this.length) return undefined;
+  return this[n];
+};
+
+const arr = [1, 2, 3, 4, 5];
 
 const len = arr.insert(3, '你好');
 console.log(len, arr);
@@ -601,41 +624,25 @@ console.log(arr.shift2(), arr, 'shift');
 console.log(arr.shift2(), arr, 'shift');
 // console.log(arr.pop2(), arr, 'pop');
 
-console.log('???');
 arr.forEach2(console.log);
-console.log('???');
 
-console.log(
-  arr.map2(x => x * 2),
-  'map'
-);
+console.log(arr.map2(x => x * 2), 'map');
 
-console.log(
-  arr.filter2(x => x > 3),
-  'filter'
-);
+console.log(arr.filter2(x => x > 3), 'filter');
 
-console.log(
-  arr.some2(x => x === 2),
-  'some'
-);
-console.log(
-  arr.every2(x => x > 2),
-  'every'
-);
+console.log(arr.some2(x => x === 2), 'some');
+console.log(arr.every2(x => x > 2), 'every');
 
-console.log(
-  arr.reduce2((x, y) => x + y, 0),
-  'reduce'
-);
-console.log(
-  arr.find2(x => x === 1),
-  'find'
-);
+console.log(arr.reduce2((x, y) => x + y, 0), 'reduce');
+console.log(arr.find2(x => x === 1), 'find');
 
 console.log(arr.concat2(6, 7, 8, [9, 10]), 'concat');
 
-var arr2 = [1, 2, [3, 4, [5, 6]]];
+const arr2 = [1, 2, [3, 4, [5, 6]]];
 
 console.log(arr2.flat2(), 'flat');
 ```
+
+## 结束语
+
+本文介绍了常用数组 API 的实现方法，包括插入和删除元素、字符串转换、截取、栈和队列操作、反转、遍历、过滤、查找、归并、合并、扁平化等操作。通过这些基础实现，能够深入理解 JavaScript 数组的工作机制，并在实际开发中灵活运用，提升编码效率和代码质量。希望这些示例和代码能够帮助你更好地掌握数组操作，写出更高效、更优雅的代码。
