@@ -70,6 +70,8 @@ module.exports = {
         { text: 'mysql', link: '/views/tools/mysql' },
         { text: 'redis', link: '/views/tools/redis' },
         { text: 'nginx', link: '/views/tools/nginx/index' },
+        { text: 'git基础篇', link: '/views/tools/git/git-1' },
+        { text: 'git进阶篇', link: '/views/tools/git/git-2' },
         { text: 'git子模块', link: '/views/tools/git/git-submodules' },
       ]
     },
