@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Git 进阶篇 | chengyuming</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/docs/imgs/oops.png">
+    <link rel="apple-touch-icon" href="/docs/imgs/iOS.jpg">
+    <link rel="manifest" href="/docs/manifest.json">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1385737_yilz38tptbd.css">
+    <meta name="description" content="Today, have you studied yet?">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.0efb0bb9.css" as="style"><link rel="preload" href="/docs/assets/css/0.ab9f2e1a5558a2ad8350.css" as="style"><link rel="preload" href="/docs/assets/js/app.ae940e86.js" as="script"><link rel="preload" href="/docs/assets/js/3.8beeabb8.js" as="script"><link rel="preload" href="/docs/assets/js/1.226f09af.js" as="script"><link rel="preload" href="/docs/assets/js/40.e4aff89a.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.926dbf22.js"><link rel="prefetch" href="/docs/assets/js/11.f8e5bc46.js"><link rel="prefetch" href="/docs/assets/js/12.d380ae1c.js"><link rel="prefetch" href="/docs/assets/js/13.4d443d5c.js"><link rel="prefetch" href="/docs/assets/js/14.69d92f8f.js"><link rel="prefetch" href="/docs/assets/js/15.36f198d4.js"><link rel="prefetch" href="/docs/assets/js/16.5f76b04a.js"><link rel="prefetch" href="/docs/assets/js/17.add97ff5.js"><link rel="prefetch" href="/docs/assets/js/18.97a4bffa.js"><link rel="prefetch" href="/docs/assets/js/19.1239ab4e.js"><link rel="prefetch" href="/docs/assets/js/20.26f84e69.js"><link rel="prefetch" href="/docs/assets/js/21.fdeb13d9.js"><link rel="prefetch" href="/docs/assets/js/22.ce1d8c88.js"><link rel="prefetch" href="/docs/assets/js/23.6648f3b4.js"><link rel="prefetch" href="/docs/assets/js/24.a4cc854f.js"><link rel="prefetch" href="/docs/assets/js/25.887ec44b.js"><link rel="prefetch" href="/docs/assets/js/26.4ce141b0.js"><link rel="prefetch" href="/docs/assets/js/27.cee1c280.js"><link rel="prefetch" href="/docs/assets/js/28.48a1c83e.js"><link rel="prefetch" href="/docs/assets/js/29.13ce4aed.js"><link rel="prefetch" href="/docs/assets/js/30.9b883ca1.js"><link rel="prefetch" href="/docs/assets/js/31.8bece2b0.js"><link rel="prefetch" href="/docs/assets/js/32.81b1226e.js"><link rel="prefetch" href="/docs/assets/js/33.9711151b.js"><link rel="prefetch" href="/docs/assets/js/34.2064a42e.js"><link rel="prefetch" href="/docs/assets/js/35.caa4a73c.js"><link rel="prefetch" href="/docs/assets/js/36.bba3a665.js"><link rel="prefetch" href="/docs/assets/js/37.39a37b95.js"><link rel="prefetch" href="/docs/assets/js/38.4008dcde.js"><link rel="prefetch" href="/docs/assets/js/39.5b8d7d89.js"><link rel="prefetch" href="/docs/assets/js/4.99ec264b.js"><link rel="prefetch" href="/docs/assets/js/41.cf381b92.js"><link rel="prefetch" href="/docs/assets/js/42.2d818234.js"><link rel="prefetch" href="/docs/assets/js/43.594df8f0.js"><link rel="prefetch" href="/docs/assets/js/44.4dd101a6.js"><link rel="prefetch" href="/docs/assets/js/45.233d39db.js"><link rel="prefetch" href="/docs/assets/js/46.9ecea761.js"><link rel="prefetch" href="/docs/assets/js/47.295b33c0.js"><link rel="prefetch" href="/docs/assets/js/48.4a738d75.js"><link rel="prefetch" href="/docs/assets/js/49.f98d5ef6.js"><link rel="prefetch" href="/docs/assets/js/5.397a8e38.js"><link rel="prefetch" href="/docs/assets/js/50.e0af973a.js"><link rel="prefetch" href="/docs/assets/js/51.b9afe43b.js"><link rel="prefetch" href="/docs/assets/js/52.b0b14395.js"><link rel="prefetch" href="/docs/assets/js/53.0b7c12c5.js"><link rel="prefetch" href="/docs/assets/js/54.c95aab83.js"><link rel="prefetch" href="/docs/assets/js/6.0d176e97.js"><link rel="prefetch" href="/docs/assets/js/7.c69ae316.js"><link rel="prefetch" href="/docs/assets/js/8.d702375e.js"><link rel="prefetch" href="/docs/assets/js/9.4e661305.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.0efb0bb9.css"><link rel="stylesheet" href="/docs/assets/css/0.ab9f2e1a5558a2ad8350.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container" data-v-395662f4><div data-v-395662f4><div class="password-shadow password-wrapper-out" style="display:none;" data-v-47d04a8e data-v-395662f4 data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>chengyuming</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div class="hide" data-v-395662f4><header class="navbar" data-v-395662f4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><img src="/docs/imgs/head.png" alt="chengyuming" class="logo"> <span class="site-name">chengyuming</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" class="nav-link"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" class="nav-link"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  git基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-2.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  git进阶篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-395662f4></div> <aside class="sidebar" data-v-395662f4><div class="personal-info-wrapper" data-v-2ef94353><!----> <h3 class="name" data-v-2ef94353>
+    fecym
+  </h3> <div class="num" data-v-2ef94353></div> <hr data-v-2ef94353></div> <nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" class="nav-link"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" class="nav-link"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  git基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-2.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  git进阶篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Git 进阶篇</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/views/tools/git/git-2.html#前言" class="sidebar-link">前言</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/git/git-2.html#源的管理" class="sidebar-link">源的管理</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/git/git-2.html#git-文件夹" class="sidebar-link">.git 文件夹</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/git/git-2.html#git-hooks" class="sidebar-link">Git hooks</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#让钩子生效" class="sidebar-link">让钩子生效</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#更优雅的方式" class="sidebar-link">更优雅的方式</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#commit-msg" class="sidebar-link">commit-msg</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#husky" class="sidebar-link">husky</a></li></ul></li><li><a href="/docs/views/tools/git/git-2.html#协作最佳实践" class="sidebar-link">协作最佳实践</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#git-flow-经典流程" class="sidebar-link">Git Flow（经典流程）</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#其他常见分支策略" class="sidebar-link">其他常见分支策略</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#分支命名规范" class="sidebar-link">分支命名规范</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#提交信息模板" class="sidebar-link">提交信息模板</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#code-review-最佳实践" class="sidebar-link">Code Review 最佳实践</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#团队协作流程建议" class="sidebar-link">团队协作流程建议</a></li></ul></li><li><a href="/docs/views/tools/git/git-2.html#性能优化与维护" class="sidebar-link">性能优化与维护</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#性能优化命令" class="sidebar-link">性能优化命令</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#仓库体检" class="sidebar-link">仓库体检</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#gpg-签名" class="sidebar-link">GPG 签名</a></li></ul></li><li><a href="/docs/views/tools/git/git-2.html#统计分析" class="sidebar-link">统计分析</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#贡献统计" class="sidebar-link">贡献统计</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#项目分析" class="sidebar-link">项目分析</a></li></ul></li><li><a href="/docs/views/tools/git/git-2.html#故障排查与恢复" class="sidebar-link">故障排查与恢复</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#常见问题排查" class="sidebar-link">常见问题排查</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#紧急恢复场景" class="sidebar-link">紧急恢复场景</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#数据恢复技巧" class="sidebar-link">数据恢复技巧</a></li></ul></li><li><a href="/docs/views/tools/git/git-2.html#小技巧" class="sidebar-link">小技巧</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/git/git-2.html#总结" class="sidebar-link">总结</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#🎯-掌握的技能" class="sidebar-link">🎯 掌握的技能</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#💪-你现在可以" class="sidebar-link">💪 你现在可以</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/git/git-2.html#🚀-继续进步" class="sidebar-link">🚀 继续进步</a></li></ul></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-47d04a8e data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>Git 进阶篇</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div data-v-395662f4><main class="page"><!----> <div class="page-title" style="display:none;"><h1>Git 进阶篇</h1> <hr> <div data-v-7b2e794a><i class="iconfont reco-account" data-v-7b2e794a><span data-v-7b2e794a>fecym</span></i> <i class="iconfont reco-date" data-v-7b2e794a><span data-v-7b2e794a>2025-07-01</span></i> <i class="iconfont reco-eye" data-v-7b2e794a><span id="/docs/views/tools/git/git-2.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-7b2e794a><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="iconfont reco-tag tags" data-v-7b2e794a><span class="tag-item" data-v-7b2e794a>
+      git
+    </span><span class="tag-item" data-v-7b2e794a>
+      其他
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>在<a href="./git-1">第一篇</a>中，我们掌握了 Git 的基础操作和核心概念。现在让我们继续深入，探索 Git 的高级特性和实战技巧。</p> <p align="center"><img src="/docs/imgs/git/git-2.svg" alt="文章导览"></p> <h2 id="源的管理"><a href="#源的管理" class="header-anchor">#</a> 源的管理</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># 查看源仓库信息</span>
+<span class="token function">git</span> remote -v
+
+<span class="token comment"># 修改源仓库信息</span>
+<span class="token function">git</span> remote set-url <span class="token operator">&lt;</span>origin_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>url<span class="token operator">&gt;</span>
+
+<span class="token comment"># 添加源仓库</span>
+<span class="token function">git</span> remote <span class="token function">add</span> <span class="token operator">&lt;</span>origin_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>url<span class="token operator">&gt;</span>
+
+<span class="token comment"># 删除源仓库</span>
+<span class="token function">git</span> remote <span class="token function">rm</span> <span class="token operator">&lt;</span>origin_name<span class="token operator">&gt;</span>
+
+<span class="token comment"># 推送代码到指定的源仓库</span>
+<span class="token function">git</span> push <span class="token operator">&lt;</span>origin_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>branch<span class="token operator">&gt;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>默认的源仓库名称是 origin，一套代码可能需要推送到多个 git 仓库，此时就会用到这个</p> <h2 id="git-文件夹"><a href="#git-文件夹" class="header-anchor">#</a> .git 文件夹</h2> <p>.git 文件夹是 Git 仓库的核心，是 Git 用来跟踪版本历史、管理分支、记录配置等所有信息的隐藏目录。
+当你在一个项目中执行 <code>git init</code>，或者克隆一个仓库时，<code>.git</code> 文件夹就会自动生成。</p> <p align="center"><img src="/docs/imgs/git/git-folder.png" alt=".git 文件夹"></p> <ol><li><code>HEAD</code>: 指向当前分支的引用。 <code>ref: refs/heads/main</code></li> <li><code>config</code>: Git 仓库的本地配置（例如远程地址、用户信息、自动换行等）。相当于项目级 .gitconfig。</li> <li><code>description</code>: 仓库的描述信息。</li> <li><code>hooks/</code>: 钩子脚本目录，可以设置在 Git 操作前后执行自定义命令（如自动检查代码、发邮件、部署等）。</li> <li><code>info/</code>: 存放额外信息，比如 .git/info/exclude 是用于忽略文件的（作用类似 .gitignore，但仅当前仓库有效）。</li> <li><code>objects/</code>: Git 的对象数据库，所有的提交、树（目录结构）、文件内容（blob）等都以哈希对象形式存储在这里。</li> <li><code>refs/</code>: 引用数据库，保存分支、标签、HEAD 等引用。</li> <li><code>logs/</code>: 存放提交日志，用于记录提交历史。可用于 git reflog 查看历史操作。</li> <li><code>index</code>: 暂存区，保存当前工作目录的修改，等待下一次提交。</li> <li><code>COMMIT_EDITMSG</code>: 保存最近一次提交时的提交信息临时文本（用于提交时编辑）。</li> <li><code>packed-refs</code>: 当引用（分支、标签）很多时，Git 会将它们打包存储到此文件中，优化性能。</li></ol> <p>🧠 小贴士</p> <ol><li>.git 文件夹不应该被修改，除非你非常了解 Git 内部结构。</li> <li>.git 丢失后，该项目就不再是 Git 仓库了。</li> <li>在 Mac 和 Linux 中 .git 开头的文件属于隐藏文件。可使用 ls -a 查看。</li></ol> <h2 id="git-hooks"><a href="#git-hooks" class="header-anchor">#</a> Git hooks</h2> <p>git hooks 是 .git 文件夹的一个特殊目录，用于存储 Git 仓库的钩子脚本。默认会有很多 .sample 结尾的文件，这些都是示例文件，当把 .sample 后缀去掉后，Git 就会自动执行该脚本 。</p> <p align="center"><img src="/docs/imgs/git/githooks.png" alt="githooks"></p> <h3 id="让钩子生效"><a href="#让钩子生效" class="header-anchor">#</a> 让钩子生效</h3> <p>我们可以简单写两个钩子脚本，来尝试一下，基本步骤如下</p> <ol><li>在项目的根目录下创建个对应的脚本，在提交的时候打印一些信息，在 commit 的时候校验提交内容是否符合 <code>conventional commit</code> 的规范</li></ol> <div class="language-txt line-numbers-mode"><pre class="language-txt"><code>your-project/
+├── scripts/
+│   ├── pre-commit-message.sh
+│   └── validate-commit-msg.sh
+├── .git/
+│   └── hooks/
+│       ├── pre-commit
+│       └── commit-msg
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><ol start="2"><li>脚本内容</li></ol> <p><code>pre-commit-message.sh</code> 的内容</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🚀 继续加油！每一次 commit 都是在构筑未来。&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🔍 请确保你已经保存了所有改动，并且 commit message 清晰明确。&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ol start="3"><li>增加执行权限</li></ol> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token function">chmod</span> +x scripts/pre-commit-message.sh
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="4"><li>配置钩子脚本</li></ol> <ul><li>复制 pre-commit.sample 文件到 .git/hooks 目录下，并重命名为 pre-commit</li> <li>在中间插入以下脚本内容</li></ul> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># 先切换到 git 仓库根目录</span>
+<span class="token builtin class-name">cd</span> <span class="token string">&quot;<span class="token variable"><span class="token variable">$(</span><span class="token function">git</span> rev-parse --show-toplevel<span class="token variable">)</span></span>&quot;</span>
+<span class="token comment"># 执行 pre-commit 消息脚本</span>
+<span class="token function">sh</span> scripts/pre-commit-message.sh
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p align="center"><img src="/docs/imgs/git/pre-commit.png" alt=""></p> <p>此时执行 git commit 命令时，就会先执行 pre-commit 脚本，打印出我们所编写内容</p> <p align="center"><img src="/docs/imgs/git/pre-commit-res.png" alt=""></p> <h3 id="更优雅的方式"><a href="#更优雅的方式" class="header-anchor">#</a> 更优雅的方式</h3> <p>我们应该遵循 <code>.git 文件夹不应该被修改</code>的原则，直接在 .git 文件夹下创建脚本，在中间修改了对应代码，还是有点不合适的，我们可以修改 git hooks 的路径，让他执行我们自己的自定的脚本</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># 新建个 .githooks 文件夹</span>
+<span class="token function">mkdir</span> .githooks
+
+<span class="token comment"># 指定新的hooks 路径</span>
+<span class="token function">git</span> config core.hooksPath .githooks
+
+<span class="token comment"># 创建 pre-commit 文件</span>
+<span class="token function">touch</span> .githooks/pre-commit
+
+<span class="token comment"># 赋予可执行权限</span>
+<span class="token function">chmod</span> +x .githooks/pre-commit
+
+<span class="token comment"># 要恢复默认的 hooks 路径，可以执行 git config --unset core.hooksPath</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p><code>.githooks/pre-commit</code> 的内容</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token comment"># 切换到项目根目录</span>
+<span class="token builtin class-name">cd</span> <span class="token string">&quot;<span class="token variable"><span class="token variable">$(</span><span class="token function">git</span> rev-parse --show-toplevel<span class="token variable">)</span></span>&quot;</span>
+
+<span class="token comment"># 执行 pre-commit 消息脚本</span>
+<span class="token function">sh</span> scripts/pre-commit-message.sh 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>此时效果跟刚才一样直接修改 <code>.git/hooks/pre-commit</code> 文件效果一样</p> <h3 id="commit-msg"><a href="#commit-msg" class="header-anchor">#</a> commit-msg</h3> <p><code>commit-msg</code> 的作用是检查提交信息是否符合规范的钩子，比如是否符合 <code>conventional commit</code> 的规范。</p> <p>他的写法需要获取到提交的内容，然后验证是否符合规范，需要先获取到提交内容的地方，上面我们有提到 <code>.git/COMMIT_EDITMSG</code>
+里面保存最近一次提交时的提交信息临时文本，我们可以从这里拿到</p> <p>但是考虑到不同版本的 git(企业版或者定制版) 以及防范未来的变化，并且 git 提供了对应的参数接口，我们还是按照推荐的写法来编写</p> <p>并且 git 提供的没有直接获取提交临时路径的变量，所有我们可以在执行脚本的时候传递过来</p> <p>脚本内容如下:</p> <p>scripts/validate-commit-msg.sh 脚本如下:</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token assign-left variable">commit_msg_file</span><span class="token operator">=</span><span class="token variable">$1</span>
+<span class="token assign-left variable">commit_msg</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">cat</span> <span class="token string">&quot;<span class="token variable">$commit_msg_file</span>&quot;</span><span class="token variable">)</span></span>
+
+<span class="token comment"># 支持的提交前缀</span>
+<span class="token assign-left variable">valid_prefixes</span><span class="token operator">=</span><span class="token string">&quot;feat|fix|docs|style|refactor|test|chore&quot;</span>
+
+<span class="token keyword">if</span> <span class="token builtin class-name">echo</span> <span class="token string">&quot;<span class="token variable">$commit_msg</span>&quot;</span> <span class="token operator">|</span> <span class="token function">grep</span> -qE <span class="token string">&quot;^(<span class="token variable">$valid_prefixes</span>)(\(.+\))?: .+&quot;</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;✅ 提交信息格式通过校验&quot;</span>
+  <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+<span class="token keyword">else</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;❌ 提交信息格式不规范！请使用以下格式之一：&quot;</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;   feat: xxx&quot;</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;   fix: xxx&quot;</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;   docs: xxx&quot;</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;   chore(scope): xxx&quot;</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;👉 当前提交信息为：<span class="token variable">$commit_msg</span>&quot;</span>
+  <span class="token builtin class-name">exit</span> <span class="token number">1</span>
+<span class="token keyword">fi</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>.githooks/commit-msg` 的内容如下:</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token comment"># 切换到项目根目录</span>
+<span class="token builtin class-name">cd</span> <span class="token string">&quot;<span class="token variable"><span class="token variable">$(</span><span class="token function">git</span> rev-parse --show-toplevel<span class="token variable">)</span></span>&quot;</span>
+
+<span class="token comment"># 执行 commit-msg 验证脚本，传递 commit message 文件路径</span>
+<span class="token function">sh</span> scripts/validate-commit-msg.sh <span class="token string">&quot;<span class="token variable">$1</span>&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>别忘了给这两个文件添加执行权限哦</p> <h3 id="husky"><a href="#husky" class="header-anchor">#</a> husky</h3> <p>如果你是一个前端同学，我们这种写法好熟悉，好像在哪见过，对没错 就是 husky，新版的 husky 就是使用了这种方式来处理 钩子的，具体配置方法之前文章有讲过，可以参考我当时那篇关于 <a href="https://chengyuming.cn/views/FE/lint.html#husky" target="_blank" rel="noopener noreferrer">eslint 工作流<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>其他语言也有类似的工具，比如 Python 有 <a href="https://pre-commit.com/" target="_blank" rel="noopener noreferrer">pre-commit<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>  ，Rust 有 <a href="https://github.com/rhysd/cargo-husky" target="_blank" rel="noopener noreferrer">cargo-watch<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，Java 有 Maven/Gradle 插件</p> <p>当然还有个通用的: <a href="https://github.com/evilmartians/lefthook" target="_blank" rel="noopener noreferrer">Lefthook<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 支持任何项目</p> <h2 id="协作最佳实践"><a href="#协作最佳实践" class="header-anchor">#</a> 协作最佳实践</h2> <p>良好的 Git 协作习惯能大大提高团队开发效率，避免很多不必要的问题。</p> <h3 id="git-flow-经典流程"><a href="#git-flow-经典流程" class="header-anchor">#</a> Git Flow（经典流程）</h3> <p>Git Flow 适合中大型项目或需要严格发布控制的团队。</p> <ul><li><strong>主分支</strong>：<code>main</code> / <code>master</code>，只用于正式发布版本</li> <li><strong>集成分支</strong>：<code>develop</code>，日常开发合并到这里</li> <li><strong>功能分支</strong>：<code>feature/*</code>，从 develop 拉出</li> <li><strong>修复分支</strong>：<code>hotfix/*</code>，紧急 Bug 修复分支</li> <li><strong>发布分支</strong>：<code>release/*</code>，发布准备分支</li></ul> <p>示例流程:</p> <ol><li>从 develop 创建 feature/login</li> <li>完成后合并回 develop，进行测试</li> <li>准备发布时从 develop 创建 release/v1.0</li> <li>发布完成后合并到 master 和 develop</li> <li>紧急修复 bug 使用 hotfix 分支</li></ol> <p>当然这是简单的一个流程，如果涉及到多需求多团队并行开发的情况下，需要考虑更多的流程和策略，以下是个示例</p> <ol><li>从 master 创建 feature/login (保证代码与生产环境是最新的，可以随时上线)</li> <li>开发完成后合并回 develop，进行测试</li> <li>遇到 bug，在 feature/login 进行修改，修复完成后合并到 develop，进行测试</li> <li>准备发布时从 feature/login 创建 release/v1.0</li> <li>发布完成后合并到 master，也可以直接把 feature/login 合并到 master</li> <li>在 develop 分支随时同步 master 代码</li> <li>在生产遇到 bug ，基于 master 切 hotfix 分支进行修复</li></ol> <p>当然如果中间有 UAT 或者 pre 环境的话可以根据具体情况调整策略</p> <h3 id="其他常见分支策略"><a href="#其他常见分支策略" class="header-anchor">#</a> 其他常见分支策略</h3> <p>除了 Git Flow，还有其他适合不同团队的分支策略：</p> <h4 id="github-flow-简化流程"><a href="#github-flow-简化流程" class="header-anchor">#</a> GitHub Flow（简化流程）</h4> <p>适合持续部署的团队，流程更简单：</p> <ol><li>从 <code>main</code> 创建功能分支</li> <li>开发完成后发起 Pull Request</li> <li>代码审查通过后合并到 <code>main</code></li> <li>自动部署到生产环境</li></ol> <p><strong>优点</strong>：流程简单，适合小团队
+<strong>缺点</strong>：缺乏发布控制，适合持续部署的项目</p> <h4 id="gitlab-flow-环境分支"><a href="#gitlab-flow-环境分支" class="header-anchor">#</a> GitLab Flow（环境分支）</h4> <p>结合环境分支的流程：</p> <ul><li><code>main</code>：开发主分支</li> <li><code>pre-production</code>：预生产环境分支</li> <li><code>production</code>：生产环境分支</li></ul> <p><strong>流程</strong>：开发 → 测试环境 → 预生产环境 → 生产环境</p> <p><strong>优点</strong>：环境隔离清晰，发布可控
+<strong>缺点</strong>：分支较多，管理复杂</p> <h4 id="选择建议"><a href="#选择建议" class="header-anchor">#</a> 选择建议</h4> <ul><li><strong>小团队、快速迭代</strong>：GitHub Flow</li> <li><strong>中大型团队、版本发布</strong>：Git Flow</li> <li><strong>多环境部署</strong>：GitLab Flow</li> <li><strong>企业级项目</strong>：根据具体需求定制化流程</li></ul> <h3 id="分支命名规范"><a href="#分支命名规范" class="header-anchor">#</a> 分支命名规范</h3> <p>统一的分支命名规范让团队协作更顺畅：</p> <p>推荐这套规范：</p> <ul><li><strong>主分支</strong>：<code>main</code> / <code>master</code>，只用于正式发布版本</li> <li><strong>集成分支</strong>：<code>develop</code>，日常开发合并到这里</li> <li><strong>功能分支</strong>：<code>feature/*</code>，从 develop 拉出</li> <li><strong>修复分支</strong>：<code>hotfix/*</code>，紧急 Bug 修复分支</li> <li><strong>发布分支</strong>：<code>release/*</code>，发布准备分支</li></ul> <h3 id="提交信息模板"><a href="#提交信息模板" class="header-anchor">#</a> 提交信息模板</h3> <p>可以为项目设置提交信息模板：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 创建提交模板文件</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;
+# &lt;类型&gt;: &lt;简短描述&gt;
+# 
+# &lt;详细描述&gt;
+# 
+# &lt;相关问题编号&gt;
+#
+# 类型说明:
+# feat: 新功能
+# fix: 修复bug
+# docs: 文档更新
+# style: 代码格式调整
+# refactor: 代码重构
+# test: 测试相关
+# chore: 构建/工具链相关
+&quot;</span> <span class="token operator">&gt;</span> .gitmessage
+
+<span class="token comment"># 配置模板</span>
+<span class="token function">git</span> config commit.template .gitmessage
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h3 id="code-review-最佳实践"><a href="#code-review-最佳实践" class="header-anchor">#</a> Code Review 最佳实践</h3> <ul><li><strong>小而频繁的提交</strong>：便于审查和理解</li> <li><strong>清晰的提交信息</strong>：说明改动的原因和内容</li> <li><strong>自测后再提交</strong>：确保代码能正常运行</li> <li><strong>及时响应反馈</strong>：积极参与代码讨论</li></ul> <h3 id="团队协作流程建议"><a href="#团队协作流程建议" class="header-anchor">#</a> 团队协作流程建议</h3> <ol><li><strong>拉取最新代码</strong>：开始工作前先 <code>git pull</code></li> <li><strong>创建功能分支</strong>：从最新的主分支创建</li> <li><strong>频繁提交</strong>：完成一个小功能就提交一次</li> <li><strong>推送和PR</strong>：功能完成后推送并创建Pull Request</li> <li><strong>代码审查</strong>：等待团队成员审查</li> <li><strong>合并主分支</strong>：审查通过后合并</li></ol> <h2 id="性能优化与维护"><a href="#性能优化与维护" class="header-anchor">#</a> 性能优化与维护</h2> <p>随着项目发展，Git 仓库可能会变得臃肿，定期维护很有必要。</p> <h3 id="性能优化命令"><a href="#性能优化命令" class="header-anchor">#</a> 性能优化命令</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 垃圾回收和仓库优化</span>
+<span class="token function">git</span> gc --aggressive
+
+<span class="token comment"># 清理无用的对象</span>
+<span class="token function">git</span> prune
+
+<span class="token comment"># 查看仓库大小统计</span>
+<span class="token function">git</span> count-objects -vH
+
+<span class="token comment"># 清理远程分支引用</span>
+<span class="token function">git</span> remote prune origin
+
+<span class="token comment"># 压缩仓库（更激进的优化）</span>
+<span class="token function">git</span> repack -ad
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="仓库体检"><a href="#仓库体检" class="header-anchor">#</a> 仓库体检</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 检查仓库完整性</span>
+<span class="token function">git</span> <span class="token function">fsck</span> --full
+
+<span class="token comment"># 查看哪些文件占用空间最大</span>
+<span class="token function">git</span> rev-list --objects --all <span class="token operator">|</span> <span class="token punctuation">\</span>
+<span class="token function">git</span> cat-file --batch-check<span class="token operator">=</span><span class="token string">'%(objecttype) %(objectname) %(objectsize) %(rest)'</span> <span class="token operator">|</span> <span class="token punctuation">\</span>
+<span class="token function">sed</span> -n <span class="token string">'s/^blob //p'</span> <span class="token operator">|</span> <span class="token punctuation">\</span>
+<span class="token function">sort</span> --numeric-sort --key<span class="token operator">=</span><span class="token number">2</span> <span class="token operator">|</span> <span class="token punctuation">\</span>
+<span class="token function">tail</span> -n <span class="token number">10</span>
+
+<span class="token comment"># 找出历史中的大文件</span>
+<span class="token function">git</span> filter-branch --tree-filter <span class="token string">'rm -rf path/to/large/files'</span> HEAD
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p><strong>⚠️ 注意</strong>：<code>git filter-branch</code> 会重写历史，使用前请备份！</p> <h3 id="gpg-签名"><a href="#gpg-签名" class="header-anchor">#</a> GPG 签名</h3> <p>为了确保提交的安全性，可以使用 GPG 签名：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 生成 GPG 密钥（如果没有的话）</span>
+gpg --gen-key
+
+<span class="token comment"># 查看 GPG 密钥</span>
+gpg --list-keys
+
+<span class="token comment"># 配置 Git 使用 GPG 签名</span>
+<span class="token function">git</span> config --global user.signingkey <span class="token operator">&lt;</span>key-id<span class="token operator">&gt;</span>
+<span class="token function">git</span> config --global commit.gpgsign <span class="token boolean">true</span>
+
+<span class="token comment"># 手动签名提交</span>
+<span class="token function">git</span> commit -S -m <span class="token string">&quot;signed commit&quot;</span>
+
+<span class="token comment"># 验证签名</span>
+<span class="token function">git</span> log --show-signature
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h2 id="统计分析"><a href="#统计分析" class="header-anchor">#</a> 统计分析</h2> <p>Git 提供了丰富的统计功能，帮助了解项目开发情况。</p> <h3 id="贡献统计"><a href="#贡献统计" class="header-anchor">#</a> 贡献统计</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看贡献者统计</span>
+<span class="token function">git</span> shortlog -sn
+
+<span class="token comment"># 查看某个作者的提交</span>
+<span class="token function">git</span> log --author<span class="token operator">=</span><span class="token string">&quot;张三&quot;</span> --oneline
+
+<span class="token comment"># 统计指定时间段的提交</span>
+<span class="token function">git</span> log --since<span class="token operator">=</span><span class="token string">&quot;2023-01-01&quot;</span> --until<span class="token operator">=</span><span class="token string">&quot;2023-12-31&quot;</span> --pretty<span class="token operator">=</span>format:<span class="token string">&quot;%h %an %ad %s&quot;</span> --date<span class="token operator">=</span>short
+
+<span class="token comment"># 统计各个作者的代码行数变化</span>
+<span class="token function">git</span> log --pretty<span class="token operator">=</span>format:<span class="token string">&quot;%an&quot;</span> --numstat <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'
+{
+  if (NF == 1) {
+    author = $1
+  } else if (NF == 3) {
+    add[author] += $1
+    del[author] += $2
+  }
+}
+END {
+  for (a in add) {
+    printf &quot;%s: +%d -%d\n&quot;, a, add[a], del[a]
+  }
+}'</span>
+
+<span class="token comment"># 统计指定时间段内的代码行数变化</span>
+<span class="token function">git</span> log --since<span class="token operator">=</span><span class="token string">&quot;2025-01-01&quot;</span> --until<span class="token operator">=</span><span class="token string">&quot;2025-12-31&quot;</span> --pretty<span class="token operator">=</span>format:<span class="token string">&quot;%an&quot;</span> --numstat <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'
+{
+  if (NF == 1) {
+    author = $1
+  } else if (NF == 3) {
+    add[author] += $1
+    del[author] += $2
+  }
+}
+END {
+  for (a in add) {
+    printf &quot;%s: +%d -%d\n&quot;, a, add[a], del[a]
+  }
+}'</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><h3 id="项目分析"><a href="#项目分析" class="header-anchor">#</a> 项目分析</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看文件修改频率</span>
+<span class="token function">git</span> log --name-only --pretty<span class="token operator">=</span>format: <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -rg <span class="token operator">|</span> <span class="token function">head</span> -10
+
+<span class="token comment"># 查看最活跃的文件</span>
+<span class="token function">git</span> log --format<span class="token operator">=</span>format: --name-only <span class="token operator">|</span> <span class="token function">grep</span> -v <span class="token string">'^$'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -rg <span class="token operator">|</span> <span class="token function">head</span> -10
+
+<span class="token comment"># 统计不同类型文件的提交次数</span>
+<span class="token function">git</span> log --name-only --pretty<span class="token operator">=</span>format: <span class="token operator">|</span> <span class="token function">grep</span> -E <span class="token string">'\.(js|py|java|go)$'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -rg
+
+<span class="token comment"># 查看项目的生命周期</span>
+<span class="token function">git</span> log --reverse --format<span class="token operator">=</span><span class="token string">&quot;%ai %s&quot;</span> <span class="token operator">|</span> <span class="token function">head</span> -1  <span class="token comment"># 第一次提交</span>
+<span class="token function">git</span> log --format<span class="token operator">=</span><span class="token string">&quot;%ai %s&quot;</span> <span class="token operator">|</span> <span class="token function">head</span> -1            <span class="token comment"># 最近提交</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>这些统计信息对项目管理、代码审查和团队协作都很有帮助。</p> <h2 id="故障排查与恢复"><a href="#故障排查与恢复" class="header-anchor">#</a> 故障排查与恢复</h2> <p>在使用 Git 的过程中，难免会遇到各种问题。掌握一些排查和恢复技巧很重要。</p> <h3 id="常见问题排查"><a href="#常见问题排查" class="header-anchor">#</a> 常见问题排查</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 检查仓库完整性</span>
+<span class="token function">git</span> <span class="token function">fsck</span> --full
+
+<span class="token comment"># 检查远程仓库连接状态</span>
+<span class="token function">git</span> remote show origin
+
+<span class="token comment"># 查看当前状态（脚本友好格式）</span>
+<span class="token function">git</span> status --porcelain
+
+<span class="token comment"># 查看配置问题</span>
+<span class="token function">git</span> config --list --show-origin
+
+<span class="token comment"># 检查忽略文件规则</span>
+<span class="token function">git</span> check-ignore -v <span class="token operator">&lt;</span>filename<span class="token operator">&gt;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="紧急恢复场景"><a href="#紧急恢复场景" class="header-anchor">#</a> 紧急恢复场景</h3> <p><strong>场景1：误删重要文件</strong></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 如果文件还没有被提交，可以从暂存区恢复</span>
+<span class="token function">git</span> checkout HEAD -- <span class="token operator">&lt;</span>filename<span class="token operator">&gt;</span>
+
+<span class="token comment"># 如果已经提交但后来被删除，从历史恢复</span>
+<span class="token function">git</span> log --follow -- <span class="token operator">&lt;</span>filename<span class="token operator">&gt;</span>  <span class="token comment"># 找到文件的历史</span>
+<span class="token function">git</span> checkout <span class="token operator">&lt;</span>commit-hash<span class="token operator">&gt;</span> -- <span class="token operator">&lt;</span>filename<span class="token operator">&gt;</span>  <span class="token comment"># 恢复特定版本</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p><strong>场景2：提交到错误分支</strong></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看最近的提交</span>
+<span class="token function">git</span> log --oneline -5
+
+<span class="token comment"># 切换到正确的分支</span>
+<span class="token function">git</span> checkout correct-branch
+
+<span class="token comment"># 将提交从错误分支复制过来</span>
+<span class="token function">git</span> cherry-pick <span class="token operator">&lt;</span>commit-hash<span class="token operator">&gt;</span>
+
+<span class="token comment"># 回到错误分支删除那个提交</span>
+<span class="token function">git</span> checkout wrong-branch
+<span class="token function">git</span> reset --hard HEAD~1
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p><strong>场景3：合并出现问题</strong></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 如果合并过程中想要中止</span>
+<span class="token function">git</span> merge --abort
+
+<span class="token comment"># 如果合并已完成但有问题</span>
+<span class="token function">git</span> reset --hard HEAD~1  <span class="token comment"># 回到合并前</span>
+<span class="token comment"># 或者</span>
+<span class="token function">git</span> revert -m <span class="token number">1</span> HEAD      <span class="token comment"># 创建反向提交</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><strong>场景4：rebase 搞砸了</strong></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看 rebase 前的状态</span>
+<span class="token function">git</span> reflog
+
+<span class="token comment"># 回到 rebase 之前</span>
+<span class="token function">git</span> reset --hard HEAD@<span class="token punctuation">{</span>n<span class="token punctuation">}</span>  <span class="token comment"># n 是 reflog 中的序号</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="数据恢复技巧"><a href="#数据恢复技巧" class="header-anchor">#</a> 数据恢复技巧</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 找回&quot;丢失&quot;的提交</span>
+<span class="token function">git</span> reflog --all <span class="token operator">|</span> <span class="token function">grep</span> <span class="token operator">&lt;</span>commit-partial-hash<span class="token operator">&gt;</span>
+
+<span class="token comment"># 恢复已删除的分支</span>
+<span class="token function">git</span> reflog <span class="token operator">|</span> <span class="token function">grep</span> <span class="token operator">&lt;</span>branch-name<span class="token operator">&gt;</span>
+<span class="token function">git</span> checkout -b <span class="token operator">&lt;</span>branch-name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>commit-hash<span class="token operator">&gt;</span>
+
+<span class="token comment"># 找回被误删的 stash</span>
+<span class="token function">git</span> <span class="token function">fsck</span> --unreachable <span class="token operator">|</span> <span class="token function">grep</span> commit <span class="token operator">|</span> <span class="token function">cut</span> -d<span class="token string">' '</span> -f3 <span class="token operator">|</span> <span class="token function">xargs</span> <span class="token function">git</span> log --merges --no-walk --grep<span class="token operator">=</span>WIP
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h2 id="小技巧"><a href="#小技巧" class="header-anchor">#</a> 小技巧</h2> <p>记录一些，上面不曾提到过得小技巧</p> <ul><li>开发过程中， 可以使用图形界面工具（Sourcetree），来 diff 要提交的内容是否为自己要提交，以防止一些不想提交的东西提交进去。</li> <li>刚初始化的项目，想要撤销第一次提交，推荐使用：<code>git reset --soft HEAD~1</code></li> <li>远端删除的掉分支，本地想要同步删除可以使用：<code>git fetch -p</code>，<code>-p</code> 是 <code>--prune</code> 的缩写，也可以手动清理：<code>git remote prune origin</code></li> <li>本地代码想要重置到远程分支的最新状态，可以使用 <code>git reset --hard origin/&lt;branch_name&gt;</code> 来重置到远程分支最新的代码</li> <li>修改了一半的代码，想要撤销回去，可以使用：
+<ul><li><code>git checkout .</code> 来复位（旧方式，不会对已经 add 过的修改生效）</li> <li><code>git restore .</code> 来复位工作区（Git 2.23+ 推荐方式）</li> <li><code>git restore --staged .</code> 来取消暂存区的修改</li></ul></li> <li>以行的形式查看最近的提交：<code>git log --oneline</code>，可以直接看一屏的提交历史</li> <li>查看当前分支名，适合脚本使用：<code>git rev-parse --abbrev-ref HEAD</code></li> <li>可视化所有分支结构：<code>git log --graph --oneline --all --decorate</code></li> <li>git 是可以设置别名的，比如上一个命令太长不好记住，可以设置个别名：<code>git config --global alias.lg &quot;log --oneline --graph --decorate --all&quot;</code></li> <li>生成补丁文件：<code>git format-patch HEAD~3</code>，导出最近 3 次提交为 .patch 文件</li> <li>应用补丁文件：<code>git apply xxx.patch</code>，把补丁应用到当前代码</li> <li>查看两个 commit 之间的 log，<code>git log &lt;起点&gt;..&lt;终点&gt;</code>，<code>git log HEAD~5..HEAD --oneline</code> 查看最近 5 个提交</li> <li>已经提交过得文件，现在想要添加到 .gitignore 中，但它们依然会被 Git 追踪，为什么？</li></ul> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># .gitignore 只对未被 Git 跟踪（未提交）的文件有效。对于已经被提交并纳入版本控制的文件，它不起作用。</span>
+<span class="token comment"># 解决方法如下</span>
+<span class="token comment"># 1. 从 Git 暂存区中移除文件（不删除本地文件）：</span>
+<span class="token function">git</span> <span class="token function">rm</span> --cached <span class="token operator">&lt;</span>文件路径<span class="token operator">&gt;</span>
+
+<span class="token comment"># 2. 提交一次&quot;清除追踪&quot;的变更：</span>
+<span class="token function">git</span> commit -m <span class="token string">&quot;xxx&quot;</span>
+
+<span class="token comment"># 查看未追踪的被忽略文件	</span>
+<span class="token function">git</span> ls-files -i -o --exclude-standard
+
+<span class="token comment"># 查看已追踪但被忽略的文件</span>
+<span class="token function">git</span> ls-files -i -c --exclude-standard
+
+<span class="token comment"># 可以一键清理哦</span>
+<span class="token function">git</span> ls-files -z --cached --ignored --exclude-standard <span class="token operator">|</span> <span class="token function">xargs</span> -0 <span class="token function">git</span> <span class="token function">rm</span> --cached
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><ul><li>git 是不会对空文件夹进行管理的，如果需要保留空文件夹，可以在其中添加 <code>.gitkeep</code> 文件</li> <li>查看文件的修改历史：<code>git log -p -- &lt;filename&gt;</code>，可以看到文件每次修改的具体内容</li> <li>查看谁修改了文件的某一行：<code>git blame &lt;filename&gt;</code>，可以看到每一行的最后修改者和时间</li> <li>搜索提交信息：<code>git log --grep=&quot;关键词&quot;</code>，搜索代码内容：<code>git log -S &quot;代码片段&quot;</code></li> <li>批量修改历史中的邮箱地址：<code>git filter-branch --env-filter 'if [ &quot;$GIT_AUTHOR_EMAIL&quot; = &quot;old@email.com&quot; ]; then export GIT_AUTHOR_EMAIL=&quot;new@email.com&quot;; fi'</code></li></ul> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>恭喜你完成了 Git 进阶之旅！🎉</p> <p>通过两篇文章的学习，你现在已经：</p> <h3 id="🎯-掌握的技能"><a href="#🎯-掌握的技能" class="header-anchor">#</a> 🎯 <strong>掌握的技能</strong></h3> <ul><li><strong>基础扎实</strong>：熟练掌握 Git 日常操作和核心概念</li> <li><strong>分支专家</strong>：能够处理复杂的分支管理和冲突解决</li> <li><strong>团队协作</strong>：了解各种工作流程和最佳实践</li> <li><strong>高级技巧</strong>：掌握远程管理、性能优化、故障排查</li> <li><strong>深度理解</strong>：了解 Git 内部原理，知其然知其所以然</li></ul> <h3 id="💪-你现在可以"><a href="#💪-你现在可以" class="header-anchor">#</a> 💪 <strong>你现在可以</strong></h3> <ul><li>在任何规模的团队中高效协作</li> <li>解决各种复杂的 Git 问题</li> <li>优化和维护 Git 仓库</li> <li>设计适合团队的 Git 工作流</li> <li>成为团队中的 Git 专家</li></ul> <h3 id="🚀-继续进步"><a href="#🚀-继续进步" class="header-anchor">#</a> 🚀 <strong>继续进步</strong></h3> <ul><li><strong>实践为王</strong>：在实际项目中应用所学知识</li> <li><strong>持续学习</strong>：关注 Git 新特性和社区最佳实践</li> <li><strong>分享交流</strong>：与团队分享你的 Git 经验</li> <li><strong>工具探索</strong>：尝试各种 Git GUI 工具和集成</li></ul> <p><strong>📚 相关文章</strong>：</p> <ul><li><a href="./git-1">Git 基本介绍 —— 入门到熟练</a></li></ul> <p><strong>🎯 记住</strong>：Git 是一个工具，但更重要的是背后的版本控制思想。掌握了这些，你就掌握了现代软件开发的重要基石！</p> <p><em>&quot;工欲善其事，必先利其器&quot;</em> —— 现在你的 Git 这把利器已经磨得锋利无比！⭐</p></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----></main> <!----> <div class="comments-wrapper" data-v-395662f4><div class="valine-wrapper"><div id="valine"></div></div></div></div></div></div></div></div><div class="global-ui"><!----></div></div>
+    <script src="/docs/assets/js/app.ae940e86.js" defer></script><script src="/docs/assets/js/3.8beeabb8.js" defer></script><script src="/docs/assets/js/1.226f09af.js" defer></script><script src="/docs/assets/js/40.e4aff89a.js" defer></script>
+  </body>
+</html>

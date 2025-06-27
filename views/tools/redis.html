@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redis 小记 | chengyuming</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/docs/imgs/oops.png">
+    <link rel="apple-touch-icon" href="/docs/imgs/iOS.jpg">
+    <link rel="manifest" href="/docs/manifest.json">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1385737_yilz38tptbd.css">
+    <meta name="description" content="Today, have you studied yet?">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.0efb0bb9.css" as="style"><link rel="preload" href="/docs/assets/css/0.ab9f2e1a5558a2ad8350.css" as="style"><link rel="preload" href="/docs/assets/js/app.ae940e86.js" as="script"><link rel="preload" href="/docs/assets/js/3.8beeabb8.js" as="script"><link rel="preload" href="/docs/assets/js/1.226f09af.js" as="script"><link rel="preload" href="/docs/assets/js/48.4a738d75.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.926dbf22.js"><link rel="prefetch" href="/docs/assets/js/11.f8e5bc46.js"><link rel="prefetch" href="/docs/assets/js/12.d380ae1c.js"><link rel="prefetch" href="/docs/assets/js/13.4d443d5c.js"><link rel="prefetch" href="/docs/assets/js/14.69d92f8f.js"><link rel="prefetch" href="/docs/assets/js/15.36f198d4.js"><link rel="prefetch" href="/docs/assets/js/16.5f76b04a.js"><link rel="prefetch" href="/docs/assets/js/17.add97ff5.js"><link rel="prefetch" href="/docs/assets/js/18.97a4bffa.js"><link rel="prefetch" href="/docs/assets/js/19.1239ab4e.js"><link rel="prefetch" href="/docs/assets/js/20.26f84e69.js"><link rel="prefetch" href="/docs/assets/js/21.fdeb13d9.js"><link rel="prefetch" href="/docs/assets/js/22.ce1d8c88.js"><link rel="prefetch" href="/docs/assets/js/23.6648f3b4.js"><link rel="prefetch" href="/docs/assets/js/24.a4cc854f.js"><link rel="prefetch" href="/docs/assets/js/25.887ec44b.js"><link rel="prefetch" href="/docs/assets/js/26.4ce141b0.js"><link rel="prefetch" href="/docs/assets/js/27.cee1c280.js"><link rel="prefetch" href="/docs/assets/js/28.48a1c83e.js"><link rel="prefetch" href="/docs/assets/js/29.13ce4aed.js"><link rel="prefetch" href="/docs/assets/js/30.9b883ca1.js"><link rel="prefetch" href="/docs/assets/js/31.8bece2b0.js"><link rel="prefetch" href="/docs/assets/js/32.81b1226e.js"><link rel="prefetch" href="/docs/assets/js/33.9711151b.js"><link rel="prefetch" href="/docs/assets/js/34.2064a42e.js"><link rel="prefetch" href="/docs/assets/js/35.caa4a73c.js"><link rel="prefetch" href="/docs/assets/js/36.bba3a665.js"><link rel="prefetch" href="/docs/assets/js/37.39a37b95.js"><link rel="prefetch" href="/docs/assets/js/38.4008dcde.js"><link rel="prefetch" href="/docs/assets/js/39.5b8d7d89.js"><link rel="prefetch" href="/docs/assets/js/4.99ec264b.js"><link rel="prefetch" href="/docs/assets/js/40.e4aff89a.js"><link rel="prefetch" href="/docs/assets/js/41.cf381b92.js"><link rel="prefetch" href="/docs/assets/js/42.2d818234.js"><link rel="prefetch" href="/docs/assets/js/43.594df8f0.js"><link rel="prefetch" href="/docs/assets/js/44.4dd101a6.js"><link rel="prefetch" href="/docs/assets/js/45.233d39db.js"><link rel="prefetch" href="/docs/assets/js/46.9ecea761.js"><link rel="prefetch" href="/docs/assets/js/47.295b33c0.js"><link rel="prefetch" href="/docs/assets/js/49.f98d5ef6.js"><link rel="prefetch" href="/docs/assets/js/5.397a8e38.js"><link rel="prefetch" href="/docs/assets/js/50.e0af973a.js"><link rel="prefetch" href="/docs/assets/js/51.b9afe43b.js"><link rel="prefetch" href="/docs/assets/js/52.b0b14395.js"><link rel="prefetch" href="/docs/assets/js/53.0b7c12c5.js"><link rel="prefetch" href="/docs/assets/js/54.c95aab83.js"><link rel="prefetch" href="/docs/assets/js/6.0d176e97.js"><link rel="prefetch" href="/docs/assets/js/7.c69ae316.js"><link rel="prefetch" href="/docs/assets/js/8.d702375e.js"><link rel="prefetch" href="/docs/assets/js/9.4e661305.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.0efb0bb9.css"><link rel="stylesheet" href="/docs/assets/css/0.ab9f2e1a5558a2ad8350.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container" data-v-395662f4><div data-v-395662f4><div class="password-shadow password-wrapper-out" style="display:none;" data-v-47d04a8e data-v-395662f4 data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>chengyuming</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div class="hide" data-v-395662f4><header class="navbar" data-v-395662f4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><img src="/docs/imgs/head.png" alt="chengyuming" class="logo"> <span class="site-name">chengyuming</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" class="nav-link"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" class="nav-link"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  git基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  git进阶篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-395662f4></div> <aside class="sidebar" data-v-395662f4><div class="personal-info-wrapper" data-v-2ef94353><!----> <h3 class="name" data-v-2ef94353>
+    fecym
+  </h3> <div class="num" data-v-2ef94353></div> <hr data-v-2ef94353></div> <nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" class="nav-link"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" class="nav-link"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  git基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  git进阶篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Redis 小记</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/views/tools/redis.html#安装" class="sidebar-link">安装</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/redis.html#简介" class="sidebar-link">简介</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/redis.html#基本命令" class="sidebar-link">基本命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#客户端命令" class="sidebar-link">客户端命令</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#修改配置-查看某个配置" class="sidebar-link">修改配置，查看某个配置</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#设置值" class="sidebar-link">设置值</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#设置过期时间" class="sidebar-link">设置过期时间</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#哈希值" class="sidebar-link">哈希值</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#list-基本操作" class="sidebar-link">list 基本操作</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#放到代码中怎么玩" class="sidebar-link">放到代码中怎么玩</a></li></ul></li><li><a href="/docs/views/tools/redis.html#redis-发布订阅" class="sidebar-link">Redis 发布订阅</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/tools/redis.html#事务" class="sidebar-link">事务</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#mysql-事务" class="sidebar-link">MySQL 事务</a></li><li class="sidebar-sub-header"><a href="/docs/views/tools/redis.html#redis-事务" class="sidebar-link">Redis 事务</a></li></ul></li><li><a href="/docs/views/tools/redis.html#备份与恢复" class="sidebar-link">备份与恢复</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-47d04a8e data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>Redis 小记</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div data-v-395662f4><main class="page"><!----> <div class="page-title" style="display:none;"><h1>Redis 小记</h1> <hr> <div data-v-7b2e794a><i class="iconfont reco-account" data-v-7b2e794a><span data-v-7b2e794a>fecym</span></i> <i class="iconfont reco-date" data-v-7b2e794a><span data-v-7b2e794a>2019-09-14</span></i> <i class="iconfont reco-eye" data-v-7b2e794a><span id="/docs/views/tools/redis.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-7b2e794a><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="iconfont reco-tag tags" data-v-7b2e794a><span class="tag-item" data-v-7b2e794a>
+      其他
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h2> <ul><li>官网有 Linux 的详细教程，安装省略，记录一下基本配置以及基础用法</li></ul> <h2 id="简介"><a href="#简介" class="header-anchor">#</a> 简介</h2> <blockquote><p>Redis 是一个开源的，内存数据结构存储，用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA 脚本（Lua scripting）， LRU 驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过 Redis 哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。（摘自 Redis 官网）</p></blockquote> <ul><li><strong>Redis</strong> 是 <code>ket-value</code> 数据库。效率快，但功能单一；</li> <li>常用做集中式会话管理（部署了负载均衡的服务之后，可用作 <strong>redis</strong> 来存储 <em>session</em>，可保证 <em>session</em> 不用换一个服务请求一次）</li> <li>用作缓存服务器（<strong>Redis</strong> 读取特别快：SET 操作每秒钟 110000 次，GET 操作每秒钟 81000 次。）</li></ul> <h2 id="基本命令"><a href="#基本命令" class="header-anchor">#</a> 基本命令</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 启动redis，window启动方式</span>
+  redis-server redis.window.conf
+  <span class="token comment"># Linux启动</span>
+  redis-server
+  <span class="token comment"># 启动客户端</span>
+  redis-cli
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h3 id="客户端命令"><a href="#客户端命令" class="header-anchor">#</a> 客户端命令</h3> <blockquote><p>执行了 <code>redis-cli</code> 之后的命令</p></blockquote> <h3 id="修改配置-查看某个配置"><a href="#修改配置-查看某个配置" class="header-anchor">#</a> 修改配置，查看某个配置</h3> <blockquote><p>以下命令推荐使用大写，便于区分变量和命令</p></blockquote> <ul><li>可用到 <code>config get | set configName</code></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 查看端口的配置</span>
+  config get port
+  <span class="token comment"># 强制关闭Redis快照导致不能持久化。</span>
+  config <span class="token builtin class-name">set</span> stop-writes-on-bgsave-error no
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="设置值"><a href="#设置值" class="header-anchor">#</a> 设置值</h3> <ul><li><code>get、set</code> 命令设置值，语法 <code>set kyeName value | get keyName</code></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 设置成功会返回 ok</span>
+  <span class="token builtin class-name">set</span> name chengyuming
+  <span class="token comment"># 获取成功会返回之前设置的值，若没有设置过，则返回 (nil)</span>
+  get name
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li><code>del</code> 删除值</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token builtin class-name">set</span> testKey chengyuming
+  del testKey     <span class="token comment"># 返回 1，则删除成功，返回 0，删除失败</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ul><li><code>getrange</code> 命令获取值的范围，语法 <code>getrange keyName start end</code></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 获取全部是从 0 到 -1，返回 chengyuming，所以是从0开始</span>
+  getrange name <span class="token number">0</span> -1
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ul><li><code>incr|incrby、decr|decrby</code> 递增递减命令，语法：<code>incr keyName | incrby keyName number</code></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 递增递减，只对number类型的数据有效</span>
+  <span class="token builtin class-name">set</span> age <span class="token number">9</span>
+  <span class="token comment"># 递增</span>
+  incr age      <span class="token comment"># 返回 10</span>
+  incrby age <span class="token number">2</span>  <span class="token comment"># 返回 12</span>
+  <span class="token comment"># 递减</span>
+  decr age      <span class="token comment"># 返回 11</span>
+  decrby age <span class="token number">5</span>  <span class="token comment"># 返回 6</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><ul><li><code>type keyName</code> 查看变量类型</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token builtin class-name">type</span> name     <span class="token comment"># string</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="设置过期时间"><a href="#设置过期时间" class="header-anchor">#</a> 设置过期时间</h3> <blockquote><p>设置了过期时间后，变量会到期自动删除，这也是 redis 作为缓存数据库的一个优势，设置很简单只需要加 <strong>expire</strong> 就行</p></blockquote> <ul><li><code>expire kyeName expireTime</code> 设置过期时间，单位秒</li> <li>请求数据的时候先查看 <strong>redis</strong> 是否保存有数据，如果有则读取 <strong>redis</strong> 数据，没有则为 <strong>redis</strong> 存储数据，并且设置过期时间</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 设置 name 30秒之后过期</span>
+  expire name <span class="token number">30</span>      <span class="token comment"># 设置成功返回 1，失败返回 0，redis返回的 1 代表成功，0 代表失败</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="哈希值"><a href="#哈希值" class="header-anchor">#</a> 哈希值</h3> <blockquote><p>一个字符串类型的 key 和 value 的映射表，特别适合用于存储对象，语法也很简单，就是在 get 之前加一个 h，hget</p></blockquote> <ul><li>设置哈希值<code>hset | hmset</code> ，语法：<code>hset obj keyName value | hset obj key1 value1 key2 value2 ...</code></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 设置单个哈希值</span>
+  hset person1 name chengyuming
+  hset person1 age <span class="token number">24</span>
+  hset person1 sex <span class="token number">1</span>
+  <span class="token comment"># 设置多个哈希值</span>
+  hset person2 name chengyuming age <span class="token number">24</span> sex <span class="token number">1</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><ul><li>获取哈希值删除哈希值也差不多</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 获取单个哈希值</span>
+  hget person1 name
+  hget person1 age
+  hget person1 sex
+  <span class="token comment"># 获取多个哈希值</span>
+  hmget person1 name age
+  <span class="token comment"># 获取所有值</span>
+  hgetall person2     <span class="token comment"># 返回 &quot;name&quot; &quot;chengyuming&quot; &quot;age&quot; &quot;24&quot; &quot;sex&quot; &quot;1&quot;</span>
+  <span class="token comment"># 删除哈希值</span>
+  hdel person name
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><ul><li>获取所有的 <strong>key</strong>，<code>hkeys objName</code></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 获取所有的 key</span>
+  hkeys person1
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="list-基本操作"><a href="#list-基本操作" class="header-anchor">#</a> list 基本操作</h3> <ul><li><code>lpush</code> 命令，语法：<code>lpush listName value</code> ，从左边添加一个值</li> <li><code>rpush</code> 命令，语法：<code>rpush listName value</code> ，从右边添加一个值</li> <li><code>lpop</code> 命令，语法：<code>lpop listName</code> ，从左边弹出一个值</li> <li><code>rpop</code> 命令，语法：<code>rpop listName</code> ，从右边弹出一个值</li> <li><code>lrange</code> 命令，语法：<code>lrange listName start end</code> ，查看 list 的在 start 与 end 范围内的值</li> <li><code>lindex</code> 命令，语法：<code>lindex listName index</code> ，查看 list 索引为 index 的值</li> <li><code>llen</code> 命令，语法：<code>llen listName</code> ，查看 list 的长度</li> <li><code>lrem</code> 命令，语法：<code>lrem listName length item</code> ，从左边开始删除几个删除谁，如果 length 是负数则从右边开始删除</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 添加值，返回添加后的length长度</span>
+  lpush ids <span class="token number">2</span>
+  lpush ids <span class="token number">1</span>
+  rpush ids <span class="token number">3</span>
+  rpush ids <span class="token number">4</span>
+  rpush ids <span class="token number">1</span>
+  rpush ids <span class="token number">1</span>
+  rpush ids <span class="token number">1</span>
+  <span class="token comment"># 查看list所有的值</span>
+  lrange ids <span class="token number">0</span> -1   <span class="token comment"># 返回 &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot;</span>
+  <span class="token comment"># 查看索引为 3 的值</span>
+  lindex ids <span class="token number">3</span>      <span class="token comment"># 返回 4</span>
+  <span class="token comment"># 删除最后的三个1，那就是从右边开始删除，所以传递负数</span>
+  lrem ids -3 <span class="token number">1</span>     <span class="token comment"># 返回删除的长度 3</span>
+  <span class="token comment"># 在查看下list</span>
+  lrange ids <span class="token number">0</span> -1   <span class="token comment"># 返回 &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>...</p> <h3 id="放到代码中怎么玩"><a href="#放到代码中怎么玩" class="header-anchor">#</a> 放到代码中怎么玩</h3> <blockquote><p>放到代码中其实也是一样，一看代码便知</p></blockquote> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> redis <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'redis'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 拿到客户端</span>
+<span class="token keyword">const</span> client <span class="token operator">=</span> redis<span class="token punctuation">.</span><span class="token function">createClient</span><span class="token punctuation">(</span><span class="token number">6379</span><span class="token punctuation">,</span> <span class="token string">'localhost'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 监听错误事件</span>
+client<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 异步的</span>
+client<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'home'</span><span class="token punctuation">,</span> <span class="token string">'beijing'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// hash</span>
+<span class="token comment">/**
+ * person = {
+ *   username: 'chengyuming',
+ *   age: '24'
+ * }
+ */</span>
+client<span class="token punctuation">.</span><span class="token function">hmset</span><span class="token punctuation">(</span><span class="token string">'person1'</span><span class="token punctuation">,</span> <span class="token string">'username'</span><span class="token punctuation">,</span> <span class="token string">'chengyuming'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">,</span> <span class="token string">'24'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+client<span class="token punctuation">.</span><span class="token function">hkeys</span><span class="token punctuation">(</span><span class="token string">'person1'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  result<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">key</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    client<span class="token punctuation">.</span><span class="token function">hget</span><span class="token punctuation">(</span><span class="token string">'person1'</span><span class="token punctuation">,</span> key<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> <span class="token string">'嘿嘿和'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><h2 id="redis-发布订阅"><a href="#redis-发布订阅" class="header-anchor">#</a> Redis 发布订阅</h2> <blockquote><p>有很多人订阅了你的产品，当你产品上线后，你需要通知他们上线了，那么这会用到发布订阅，对于 <strong>Redis</strong> 来说发布订阅很简单</p></blockquote> <ul><li>我们只需要在订阅的频道，使用 <code>subscribe channelName</code> 即可订阅</li> <li>发布频道在发布消息的时候，就可以直接发布 <code>publish channelName</code> 即可发布消息，此时所有订阅过得人都会收到通知</li> <li>下面用代码演示一下</li></ul> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> redis <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'redis'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> subClient1 <span class="token operator">=</span> redis<span class="token punctuation">.</span><span class="token function">createClient</span><span class="token punctuation">(</span><span class="token number">6379</span><span class="token punctuation">,</span> <span class="token string">'localhost'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> subClient2 <span class="token operator">=</span> redis<span class="token punctuation">.</span><span class="token function">createClient</span><span class="token punctuation">(</span><span class="token number">6379</span><span class="token punctuation">,</span> <span class="token string">'localhost'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> pubClient <span class="token operator">=</span> redis<span class="token punctuation">.</span><span class="token function">createClient</span><span class="token punctuation">(</span><span class="token number">6379</span><span class="token punctuation">,</span> <span class="token string">'localhost'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 订阅消息</span>
+subClient1<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">'food'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+subClient2<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">'drink'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 监听发布的消息之后要做什么</span>
+subClient1<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'message'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">channel<span class="token punctuation">,</span> message</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>channel<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 取消订阅</span>
+  subClient1<span class="token punctuation">.</span><span class="token function">unsubscribe</span><span class="token punctuation">(</span><span class="token string">'food'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+subClient2<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'message'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">channel<span class="token punctuation">,</span> message</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>channel<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 发布消息</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  pubClient<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span><span class="token string">'food'</span><span class="token punctuation">,</span> <span class="token string">'面包'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  pubClient<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span><span class="token string">'drink'</span><span class="token punctuation">,</span> <span class="token string">'可乐'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  pubClient<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span><span class="token string">'food'</span><span class="token punctuation">,</span> <span class="token string">'面包'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  pubClient<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span><span class="token string">'drink'</span><span class="token punctuation">,</span> <span class="token string">'可乐'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><h2 id="事务"><a href="#事务" class="header-anchor">#</a> 事务</h2> <h3 id="mysql-事务"><a href="#mysql-事务" class="header-anchor">#</a> MySQL 事务</h3> <blockquote><p>举个栗子来说下 MySQL 的事务吧，别说那么多繁琐的概念了</p></blockquote> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 比如说转账，张三有1000元，李四有1000元，张三要转给李四500元</span>
+  <span class="token comment"># 那么就是</span>
+  <span class="token comment">#   张三: 1000 - 500 = 500 元</span>
+  <span class="token comment">#   李四: 1000 + 500 = 1500 元</span>
+  <span class="token comment"># 这个过程要么全部成功，要么全部失败，你不能给张三扣了，但是没有给李四加上去</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="redis-事务"><a href="#redis-事务" class="header-anchor">#</a> Redis 事务</h3> <blockquote><p>对于 <strong>Redis</strong> 来说事务就是执行一个批量的脚本，那么就会用到 <strong>multi</strong> 和 <strong>exec</strong> 命令</p></blockquote> <ul><li><code>multi</code> 命令开始事务</li> <li>执行一些其他命令，但是这些命令都不会立即执行，会返回一个队列（QUEUED）</li> <li>等到你执行 <code>exec</code> 命令之后，这些命令开始执行</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>  <span class="token comment"># 开始事务</span>
+  multi   <span class="token comment"># 返回 ok</span>
+  <span class="token comment"># 执行其他命令</span>
+  <span class="token builtin class-name">set</span> name chengyuming    <span class="token comment"># 返回 QUEUED</span>
+  <span class="token builtin class-name">set</span> age <span class="token number">24</span>              <span class="token comment"># 返回 QUEUED</span>
+  <span class="token comment"># 执行</span>
+  <span class="token builtin class-name">exec</span>                    <span class="token comment"># 返回 ok ok</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><ul><li>放到代码中，来看一下</li></ul> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> redis <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'redis'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> client <span class="token operator">=</span> redis<span class="token punctuation">.</span><span class="token function">createClient</span><span class="token punctuation">(</span><span class="token number">6379</span><span class="token punctuation">,</span> <span class="token string">'localhost'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 开启事务</span>
+client
+  <span class="token punctuation">.</span><span class="token function">multi</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'k3'</span><span class="token punctuation">,</span> <span class="token string">'v3'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'k4'</span><span class="token punctuation">,</span> <span class="token string">'v4'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'k4'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    <span class="token comment">// 返回 [ 'OK', 'OK', 'v4' ]</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+client<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="备份与恢复"><a href="#备份与恢复" class="header-anchor">#</a> 备份与恢复</h2> <blockquote><p>对于 <strong>Redis</strong> 的备份与恢复特别简单，备份只需要输入 <strong>save</strong> 命令即可完成备份，此时会在 <strong>Redis</strong> 的安装目录下生成一个 <strong>dump.rdb</strong> 文件这就是 <strong>Redis</strong> 的备份文件，你可以把它拿到别的地方，等下次想恢复到这个版本的数据的时候，直接在启动 <strong>Redis</strong> 前把该文件 copy 到 <strong>Redis</strong> 的安装目录就可以了</p></blockquote> <ul><li>可能会遇到输入 save 命令返回一个 error 的问题，那是你权限不够，提升下权限就可以解决</li> <li><strong>Redis</strong> 就先记录这些，以后在做补充</li></ul></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">最后修改时间: </span> <span class="time">2022-10-24 09:35:01</span></div></footer> <!----> <!----></main> <!----> <div class="comments-wrapper" data-v-395662f4><div class="valine-wrapper"><div id="valine"></div></div></div></div></div></div></div></div><div class="global-ui"><!----></div></div>
+    <script src="/docs/assets/js/app.ae940e86.js" defer></script><script src="/docs/assets/js/3.8beeabb8.js" defer></script><script src="/docs/assets/js/1.226f09af.js" defer></script><script src="/docs/assets/js/48.4a738d75.js" defer></script>
+  </body>
+</html>

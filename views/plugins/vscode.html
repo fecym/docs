@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>vscode 插件开发 | chengyuming</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/docs/imgs/oops.png">
+    <link rel="apple-touch-icon" href="/docs/imgs/iOS.jpg">
+    <link rel="manifest" href="/docs/manifest.json">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1385737_yilz38tptbd.css">
+    <meta name="description" content="Today, have you studied yet?">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.0efb0bb9.css" as="style"><link rel="preload" href="/docs/assets/css/0.ab9f2e1a5558a2ad8350.css" as="style"><link rel="preload" href="/docs/assets/js/app.ae940e86.js" as="script"><link rel="preload" href="/docs/assets/js/3.8beeabb8.js" as="script"><link rel="preload" href="/docs/assets/js/1.226f09af.js" as="script"><link rel="preload" href="/docs/assets/js/30.9b883ca1.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.926dbf22.js"><link rel="prefetch" href="/docs/assets/js/11.f8e5bc46.js"><link rel="prefetch" href="/docs/assets/js/12.d380ae1c.js"><link rel="prefetch" href="/docs/assets/js/13.4d443d5c.js"><link rel="prefetch" href="/docs/assets/js/14.69d92f8f.js"><link rel="prefetch" href="/docs/assets/js/15.36f198d4.js"><link rel="prefetch" href="/docs/assets/js/16.5f76b04a.js"><link rel="prefetch" href="/docs/assets/js/17.add97ff5.js"><link rel="prefetch" href="/docs/assets/js/18.97a4bffa.js"><link rel="prefetch" href="/docs/assets/js/19.1239ab4e.js"><link rel="prefetch" href="/docs/assets/js/20.26f84e69.js"><link rel="prefetch" href="/docs/assets/js/21.fdeb13d9.js"><link rel="prefetch" href="/docs/assets/js/22.ce1d8c88.js"><link rel="prefetch" href="/docs/assets/js/23.6648f3b4.js"><link rel="prefetch" href="/docs/assets/js/24.a4cc854f.js"><link rel="prefetch" href="/docs/assets/js/25.887ec44b.js"><link rel="prefetch" href="/docs/assets/js/26.4ce141b0.js"><link rel="prefetch" href="/docs/assets/js/27.cee1c280.js"><link rel="prefetch" href="/docs/assets/js/28.48a1c83e.js"><link rel="prefetch" href="/docs/assets/js/29.13ce4aed.js"><link rel="prefetch" href="/docs/assets/js/31.8bece2b0.js"><link rel="prefetch" href="/docs/assets/js/32.81b1226e.js"><link rel="prefetch" href="/docs/assets/js/33.9711151b.js"><link rel="prefetch" href="/docs/assets/js/34.2064a42e.js"><link rel="prefetch" href="/docs/assets/js/35.caa4a73c.js"><link rel="prefetch" href="/docs/assets/js/36.bba3a665.js"><link rel="prefetch" href="/docs/assets/js/37.39a37b95.js"><link rel="prefetch" href="/docs/assets/js/38.4008dcde.js"><link rel="prefetch" href="/docs/assets/js/39.5b8d7d89.js"><link rel="prefetch" href="/docs/assets/js/4.99ec264b.js"><link rel="prefetch" href="/docs/assets/js/40.e4aff89a.js"><link rel="prefetch" href="/docs/assets/js/41.cf381b92.js"><link rel="prefetch" href="/docs/assets/js/42.2d818234.js"><link rel="prefetch" href="/docs/assets/js/43.594df8f0.js"><link rel="prefetch" href="/docs/assets/js/44.4dd101a6.js"><link rel="prefetch" href="/docs/assets/js/45.233d39db.js"><link rel="prefetch" href="/docs/assets/js/46.9ecea761.js"><link rel="prefetch" href="/docs/assets/js/47.295b33c0.js"><link rel="prefetch" href="/docs/assets/js/48.4a738d75.js"><link rel="prefetch" href="/docs/assets/js/49.f98d5ef6.js"><link rel="prefetch" href="/docs/assets/js/5.397a8e38.js"><link rel="prefetch" href="/docs/assets/js/50.e0af973a.js"><link rel="prefetch" href="/docs/assets/js/51.b9afe43b.js"><link rel="prefetch" href="/docs/assets/js/52.b0b14395.js"><link rel="prefetch" href="/docs/assets/js/53.0b7c12c5.js"><link rel="prefetch" href="/docs/assets/js/54.c95aab83.js"><link rel="prefetch" href="/docs/assets/js/6.0d176e97.js"><link rel="prefetch" href="/docs/assets/js/7.c69ae316.js"><link rel="prefetch" href="/docs/assets/js/8.d702375e.js"><link rel="prefetch" href="/docs/assets/js/9.4e661305.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.0efb0bb9.css"><link rel="stylesheet" href="/docs/assets/css/0.ab9f2e1a5558a2ad8350.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container" data-v-395662f4><div data-v-395662f4><div class="password-shadow password-wrapper-out" style="display:none;" data-v-47d04a8e data-v-395662f4 data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>chengyuming</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div class="hide" data-v-395662f4><header class="navbar" data-v-395662f4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><img src="/docs/imgs/head.png" alt="chengyuming" class="logo"> <span class="site-name">chengyuming</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" class="nav-link"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  git基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  git进阶篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-395662f4></div> <aside class="sidebar" data-v-395662f4><div class="personal-info-wrapper" data-v-2ef94353><!----> <h3 class="name" data-v-2ef94353>
+    fecym
+  </h3> <div class="num" data-v-2ef94353></div> <hr data-v-2ef94353></div> <nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link"><i class="iconfont reco-home"></i>
+  首页
+</a></div><div class="nav-item"><a href="/docs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/docs/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-api"></i>
+      基础
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/basis/css.html" class="nav-link"><i class="iconfont undefined"></i>
+  css
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/javascript.html" class="nav-link"><i class="iconfont undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/inherit.html" class="nav-link"><i class="iconfont undefined"></i>
+  继承
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/api.html" class="nav-link"><i class="iconfont undefined"></i>
+  常用 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/array.html" class="nav-link"><i class="iconfont undefined"></i>
+  数组 Api 实现
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/promise.html" class="nav-link"><i class="iconfont undefined"></i>
+  实现 Promise
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/cache.html" class="nav-link"><i class="iconfont undefined"></i>
+  浏览器缓存
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/command.html" class="nav-link"><i class="iconfont undefined"></i>
+  命令行参数
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/issue.html" class="nav-link"><i class="iconfont undefined"></i>
+  工作小技巧
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/interview.html" class="nav-link"><i class="iconfont undefined"></i>
+  面试题收录
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont iconqianduan"></i>
+      前端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack介绍
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack实战
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/webpack-3.html" class="nav-link"><i class="iconfont undefined"></i>
+  webpack拓展
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/getport.html" class="nav-link"><i class="iconfont undefined"></i>
+  如何优雅的解决端口被占用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/algorithms/tree.html" class="nav-link"><i class="iconfont undefined"></i>
+  树在工作面试中的应用
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  从0搭建vue
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/webpack/AST.html" class="nav-link"><i class="iconfont undefined"></i>
+  AST团队分享
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/lint.html" class="nav-link"><i class="iconfont undefined"></i>
+  eslint 工作流
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/vue.html" class="nav-link"><i class="iconfont undefined"></i>
+  Vue 源码分析
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/cli.html" class="nav-link"><i class="iconfont undefined"></i>
+  cli 开发
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/vscode.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  vscode 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/plugins/chrome.html" class="nav-link"><i class="iconfont undefined"></i>
+  Chrome 开发记录
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/visualization/mapbox.html" class="nav-link"><i class="iconfont undefined"></i>
+  mapbox
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/FE/process/websize-render.html" class="nav-link"><i class="iconfont undefined"></i>
+  网站渲染流程
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-beian"></i>
+      服务端
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/fs.html" class="nav-link"><i class="iconfont undefined"></i>
+  fs文件系统
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/service-conf.html" class="nav-link"><i class="iconfont undefined"></i>
+  服务器的配置
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/vmware.html" class="nav-link"><i class="iconfont undefined"></i>
+  虚拟机
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux命令
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/http.html" class="nav-link"><i class="iconfont undefined"></i>
+  http笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/https.html" class="nav-link"><i class="iconfont undefined"></i>
+  https笔记
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/requisite.html" class="nav-link"><i class="iconfont undefined"></i>
+  负载均衡
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/basis/jwt.html" class="nav-link"><i class="iconfont undefined"></i>
+  HTTP认证方式
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/server-side/node/crypto.html" class="nav-link"><i class="iconfont undefined"></i>
+  加密解密
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-npm"></i>
+      工具
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/views/tools/npm/init.html" class="nav-link"><i class="iconfont undefined"></i>
+  npm
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/mysql.html" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/redis.html" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/nginx/index.html" class="nav-link"><i class="iconfont undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-1.html" class="nav-link"><i class="iconfont undefined"></i>
+  git基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-2.html" class="nav-link"><i class="iconfont undefined"></i>
+  git进阶篇
+</a></li><li class="dropdown-item"><!----> <a href="/docs/views/tools/git/git-submodules.html" class="nav-link"><i class="iconfont undefined"></i>
+  git子模块
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/fecym" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont icongithub"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>vscode 插件开发</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/views/plugins/vscode.html#vscode-插件可以做什么" class="sidebar-link">vscode 插件可以做什么</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/plugins/vscode.html#如何创建插件" class="sidebar-link">如何创建插件</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#yo-介绍" class="sidebar-link">yo 介绍</a></li></ul></li><li><a href="/docs/views/plugins/vscode.html#项目介绍" class="sidebar-link">项目介绍</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#package-json-介绍" class="sidebar-link">package.json 介绍</a></li><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#activationevents" class="sidebar-link">activationEvents</a></li><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#contributes" class="sidebar-link">contributes</a></li><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#extension-js" class="sidebar-link">extension.js</a></li></ul></li><li><a href="/docs/views/plugins/vscode.html#运行插件" class="sidebar-link">运行插件</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/plugins/vscode.html#command-配置" class="sidebar-link">Command 配置</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#命令" class="sidebar-link">命令</a></li><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#右键菜单" class="sidebar-link">右键菜单</a></li><li class="sidebar-sub-header"><a href="/docs/views/plugins/vscode.html#快捷键" class="sidebar-link">快捷键</a></li></ul></li><li><a href="/docs/views/plugins/vscode.html#插件生命周期" class="sidebar-link">插件生命周期</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/plugins/vscode.html#发布" class="sidebar-link">发布</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/plugins/vscode.html#插件默认配置" class="sidebar-link">插件默认配置</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/views/plugins/vscode.html#常见编辑器-api" class="sidebar-link">常见编辑器 api</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-47d04a8e data-v-395662f4><h3 class="title" style="display:none;" data-v-47d04a8e data-v-47d04a8e>vscode 插件开发</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-47d04a8e data-v-47d04a8e><input type="password" value="" data-v-47d04a8e> <span style="width:300px;" data-v-47d04a8e>此文章需要密码访问！</span> <button data-v-47d04a8e>OK</button></label> <div class="footer footer" style="display:none;" data-v-47d04a8e data-v-47d04a8e><p><span class="left">MIT Licensed | Copyright © 2019 - present</span> <span class="record"><b>备案号：</b> <a href="http://beian.miit.gov.cn" class="record-link">京ICP备19052475号</a></span></p></div></div> <div data-v-395662f4><main class="page"><!----> <div class="page-title" style="display:none;"><h1>vscode 插件开发</h1> <hr> <div data-v-7b2e794a><i class="iconfont reco-account" data-v-7b2e794a><span data-v-7b2e794a>fecym</span></i> <i class="iconfont reco-date" data-v-7b2e794a><span data-v-7b2e794a>2021-03-20</span></i> <i class="iconfont reco-eye" data-v-7b2e794a><span id="/docs/views/plugins/vscode.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-7b2e794a><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="iconfont reco-tag tags" data-v-7b2e794a><span class="tag-item" data-v-7b2e794a>
+      插件
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="vscode-插件可以做什么"><a href="#vscode-插件可以做什么" class="header-anchor">#</a> vscode 插件可以做什么</h2> <p>vscode 编辑器是可以高度自定义的，使用 vscode 插件几乎可以对 vscode 编辑器进行说有形式的自定义。</p> <p><a href="https://code.visualstudio.com/api" target="_blank" rel="noopener noreferrer">vscode 插件开发文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，<a href="https://liiked.github.io/VS-Code-Extension-Doc-ZH" target="_blank" rel="noopener noreferrer">中文文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>vscode 插件可以实现自定义指令、快捷键、自定义菜单项、自定义跳转、自动补全、悬浮提示、新增语言支持、语法检查、语法高亮、代码格式化等</p> <h2 id="如何创建插件"><a href="#如何创建插件" class="header-anchor">#</a> 如何创建插件</h2> <p>我们使用官方来生成 vscode 插件模板项目</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 安装 yo 和 generator-code</span>
+<span class="token function">npm</span> <span class="token function">install</span> -g yo generator-code
+<span class="token comment"># 使用脚手架创建项目</span>
+yo code
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="yo-介绍"><a href="#yo-介绍" class="header-anchor">#</a> yo 介绍</h3> <p>Yeoman 是一个通用的脚手架系统允许创建任何的 app 。它可以迅速的搭建一个新项目，并且能够简化了现有项目的维护。他可以构建任何语言的项目</p> <p>Yeoman 它自己不能做任何操作。 每个操作都是由 generators 基本插件在 Yeoman 环境所完成的。 这里有 很多公共的 generators 并且它很容易 创建一个 generator 去匹配任何工作流。</p> <p>yo 是 Yeoman 命令行工具，它允许项目利用脚手架模板来创建。</p> <p>yo 创建项目依赖于安装的 generators，比如 <code>generator-code</code></p> <p>安装完成之后就可以使用 <code>yo code</code> 快速生成一个项目</p> <p>yo 也提供了一系列指令供我们使用</p> <ul><li><code>yo --help</code>：查看帮助文档</li> <li><code>yo --generators</code>：列出所有安装的 generators</li> <li><code>yo --version</code>：得到他的最新版本</li> <li><code>yo doctor</code>：故障排查</li></ul> <p>也可以配合安装的 generators 来使用一些命令，比如 <code>yo code --help</code></p> <h2 id="项目介绍"><a href="#项目介绍" class="header-anchor">#</a> 项目介绍</h2> <p>使用 <code>yo code</code> 生成一个项目后，核心文件就是 <code>package.json</code> 和 <code>extension.js</code> 两个文件。</p> <p>package.json 是整个插件工程的配置文件，extension.js 则是工程的入口文件。</p> <p align="center"><img src="/docs/imgs/vscode-plugin-bootstrap.jpg"></p> <h3 id="package-json-介绍"><a href="#package-json-介绍" class="header-anchor">#</a> package.json 介绍</h3> <div class="language-json line-numbers-mode"><pre class="language-json"><code><span class="token punctuation">{</span>
+	<span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;fecym-plugin&quot;</span><span class="token punctuation">,</span>             # 插件名称
+	<span class="token property">&quot;displayName&quot;</span><span class="token operator">:</span> <span class="token string">&quot;fecym-plugin&quot;</span><span class="token punctuation">,</span>      # 显示在插件市场的名称
+	<span class="token property">&quot;description&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>                  # 插件描述
+	<span class="token property">&quot;version&quot;</span><span class="token operator">:</span> <span class="token string">&quot;0.0.1&quot;</span><span class="token punctuation">,</span>                 # 插件版本号
+	<span class="token property">&quot;engines&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">&quot;vscode&quot;</span><span class="token operator">:</span> <span class="token string">&quot;^1.54.0&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token property">&quot;categories&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;Other&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token property">&quot;activationEvents&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>               # 插件激活数组（在什么情况下插件会被激活，需要与extension.js中的注册函数保持一致）
+		<span class="token string">&quot;onCommand:fecym-plugin.helloWorld&quot;</span>
+	<span class="token punctuation">]</span><span class="token punctuation">,</span>
+	<span class="token property">&quot;main&quot;</span><span class="token operator">:</span> <span class="token string">&quot;./extension.js&quot;</span><span class="token punctuation">,</span>           # 插件入口文件
+	<span class="token property">&quot;contributes&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>                    # 插件贡献点（最重要的配置项）
+		<span class="token property">&quot;commands&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>                     # 命令，通过 command + shift + p 输入的
+			<span class="token punctuation">{</span>
+				<span class="token property">&quot;command&quot;</span><span class="token operator">:</span> <span class="token string">&quot;fecym-plugin.helloWorld&quot;</span><span class="token punctuation">,</span>		# 需要与 activationEvents 的命令保持一致
+				<span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Hello World&quot;</span>									# 真正输入的命令，可以与其他不保持一致
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">]</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	...
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h3 id="activationevents"><a href="#activationevents" class="header-anchor">#</a> activationEvents</h3> <p><code>activationEvents</code> 配置项配置插件的激活数组，即在什么情况下插件会被激活，目前支持以下几种配置：</p> <ul><li>onLanguage：在打开对应语言文件时</li> <li>onCommand：在执行对应命令时</li> <li>onDebug：在 debug 会话开始前</li> <li>onDebugInitialConfigurations：在初始化 debug 设置前</li> <li>onDebugResolve：在 debug 设置处理完之前</li> <li>workspaceContains：打开一个文件夹后，如果文件夹内包含设置的文件名模式时</li> <li>onFileSystem：打开文件或文件夹，是来自设置的类型或协议时</li> <li>onView：侧边栏设置的 id 项目展开时</li> <li>onUri：在基于 vscode 或 vscode-inside 协议的 URL 打开时</li> <li>onWebviewPanel：在打开设置的 webview 时</li> <li>*：在打开 vscode 的时候，如果不是一般不建议这么设置</li></ul> <h3 id="contributes"><a href="#contributes" class="header-anchor">#</a> contributes</h3> <p>contributes 是整个插件的贡献点，contributes 字段可以设置的 key 也就显示了</p> <ul><li>configuration：通过这个配置项我们可以设置一个属性，这个属性我们可以在 <code>vscode</code> 的 <code>setting.json</code> 中设置，然后在插件工程中可以读取用户设置的这个值，进行相应的逻辑</li> <li>commands：命令，通过 command + shift + p 进行输入来实现</li> <li>menus：设置右键菜单</li> <li>keybindings：设置快捷键</li> <li>languages：设置语言特点，包括语言的后缀</li> <li>grammars：可以在这个配置项里设置描述语言的语法文件的路径，vscode 可以根据这个来实现语法高亮</li> <li>snippets：设置语法片段相关的路径
+...</li></ul> <h3 id="extension-js"><a href="#extension-js" class="header-anchor">#</a> extension.js</h3> <p>extension.js 是插件工程的入口文件，当插件被激活（触发 activationEvents 时），extension.js 文件开始执行</p> <p>在 extension.js 中对需要功能进行注册，主要使用 vscode.commands.register 相关的 api 来为 package.json 中的 contributes 配置项的事件绑定方法</p> <p>相关的 api 主要有：</p> <ul><li>vscode.languages.registerCompletionItemProvider()</li> <li>vscode.languages.registerCodeActionsProvider()</li> <li>vscode.languages.registerCodeLensProvider()</li> <li>vscode.languages.registerHoverProvider()</li> <li>vscode.commands.registerCommand()
+...</li></ul> <p>下面是 <code>yo code</code> 生成的 extension.js 中的代码</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> vscode <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'vscode'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">activate</span><span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 当扩展被激活时，这行代码只会被执行一次</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Congratulations, your extension &quot;fecym-plugin&quot; is now active!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// commandId参数必须与package.json中的command字段匹配</span>
+  <span class="token comment">// 为命令绑定事件，输入命令时执行该函数</span>
+  <span class="token keyword">let</span> disposable <span class="token operator">=</span> vscode<span class="token punctuation">.</span>commands<span class="token punctuation">.</span><span class="token function">registerCommand</span><span class="token punctuation">(</span><span class="token string">'fecym-plugin.helloWorld'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 控制台输入 hello Word 执行这里的函数</span>
+    <span class="token comment">// 向用户展示一个消息框</span>
+    vscode<span class="token punctuation">.</span>window<span class="token punctuation">.</span><span class="token function">showInformationMessage</span><span class="token punctuation">(</span><span class="token string">'Hello World from first-plugin!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 事件入栈</span>
+  context<span class="token punctuation">.</span>subscriptions<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>disposable<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 插件释放时执行</span>
+<span class="token keyword">function</span> <span class="token function">deactivate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'插件释放'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span> activate<span class="token punctuation">,</span> deactivate <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><h2 id="运行插件"><a href="#运行插件" class="header-anchor">#</a> 运行插件</h2> <p>在项目中按下 <code>F5</code> 便可以运行插件，第一次可能需要在 extension.js 文件下按下 <code>F5</code>，此时会打开一个新的 vscode 窗口，此时按下 <code>F1</code> 火折子 command + shift + p 可以打开命令框，输入 <code>hello world</code> 命令，便可以看到在 vscode 的界面的右下角弹出一个弹框 <code>Hello World from first-plugin!</code>，这就是在 extension.js 中为 <code>helloWorld</code> 注册的事件</p> <h2 id="command-配置"><a href="#command-配置" class="header-anchor">#</a> Command 配置</h2> <h3 id="命令"><a href="#命令" class="header-anchor">#</a> 命令</h3> <p>配置一个命令只需要以下几步：</p> <ul><li>在 <code>package.json</code> 中</li></ul> <ol><li>在 <code>activationEvents</code> 中添加一项要注册的命令事件名称</li> <li>在 <code>contributes.commands</code> 中添加一项，<code>command</code> 和 <code>title</code>，<code>command</code> 的值要与 <code>activationEvents</code> 中的事件名称保持一致，<code>title</code> 的值是注册成功后真正要执行的命令</li></ol> <ul><li><p>在 <code>extension.js</code> 文件里面的 <code>activate</code> 方法中使用 <code>registerCommand</code> 注册命令（需要与<code>activationEvents</code> 中新增的事件名称保持一致），最后事件入栈（所有注册类的 API 执行后都要将将结果放到 context.subscriptions 中去）</p></li> <li><p>配置好后，按照 <code>运行插件</code> 的步骤就可以输入我们新注册的命令来看到效果了</p></li></ul> <h3 id="右键菜单"><a href="#右键菜单" class="header-anchor">#</a> 右键菜单</h3> <p>我们可以为我们的命令配置右键菜单，直接使用右键菜单执行我们的命令，只需要在 <code>package.json</code> 中的 <code>contributes</code> 配置 <code>menus</code> 即可</p> <div class="language-json line-numbers-mode"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;menus&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;editor/context&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;when&quot;</span><span class="token operator">:</span> <span class="token string">&quot;editorFocus&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;command&quot;</span><span class="token operator">:</span> <span class="token string">&quot;fecym-plugin.fecym&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;alt&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;group&quot;</span><span class="token operator">:</span> <span class="token string">&quot;navigation&quot;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><ul><li><code>editor/context</code>：定义菜单出现在哪里。这里是定义出现在编辑标题菜单栏</li> <li><code>when</code>：菜单出现的时机</li> <li><code>command</code>：点击菜单后执行的命令</li> <li><code>alt</code>：按住 <code>alt</code> 在选择菜单时执行的命令</li> <li><code>group</code>：定义菜单分组</li></ul> <p>菜单配置详细请查看<a href="https://liiked.github.io/VS-Code-Extension-Doc-ZH/#/extensibility-reference/contribution-points?id=contributesmenus" target="_blank" rel="noopener noreferrer">这里<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h3 id="快捷键"><a href="#快捷键" class="header-anchor">#</a> 快捷键</h3> <p>同样也可以设置快捷键来执行我们的命令，同样是在 <code>contributes</code> 中配置 <code>keybindings</code></p> <div class="language-json line-numbers-mode"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;keybindings&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;command&quot;</span><span class="token operator">:</span> <span class="token string">&quot;fecym-plugin.fecym&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;key&quot;</span><span class="token operator">:</span> <span class="token string">&quot;ctrl+5&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;mac&quot;</span><span class="token operator">:</span> <span class="token string">&quot;cmd+5&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;when&quot;</span><span class="token operator">:</span> <span class="token string">&quot;editorTextFocus&quot;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><ul><li><code>command</code>：快捷键要执行的指令</li> <li><code>key</code>：window 电脑对应的快捷键</li> <li><code>mac</code>：Mac 电脑对应的快捷键</li> <li><code>when</code>：快捷键出现的时机，这里是当编辑器焦点在某个文本中</li></ul> <p>更多请查看<a href="https://code.visualstudio.com/docs/getstarted/keybindings" target="_blank" rel="noopener noreferrer">这里<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="插件生命周期"><a href="#插件生命周期" class="header-anchor">#</a> 插件生命周期</h2> <h2 id="发布"><a href="#发布" class="header-anchor">#</a> 发布</h2> <h2 id="插件默认配置"><a href="#插件默认配置" class="header-anchor">#</a> 插件默认配置</h2> <h2 id="常见编辑器-api"><a href="#常见编辑器-api" class="header-anchor">#</a> 常见编辑器 api</h2></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">最后修改时间: </span> <span class="time">2022-03-19 17:32:55</span></div></footer> <!----> <!----></main> <!----> <div class="comments-wrapper" data-v-395662f4><div class="valine-wrapper"><div id="valine"></div></div></div></div></div></div></div></div><div class="global-ui"><!----></div></div>
+    <script src="/docs/assets/js/app.ae940e86.js" defer></script><script src="/docs/assets/js/3.8beeabb8.js" defer></script><script src="/docs/assets/js/1.226f09af.js" defer></script><script src="/docs/assets/js/30.9b883ca1.js" defer></script>
+  </body>
+</html>
