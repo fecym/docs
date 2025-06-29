@@ -364,6 +364,7 @@ npm set-script prepare "husky install"
 npm run prepare
 # 添加一个 hook
 npx husky add .husky/pre-commit "npm run prettier"
+# husky@9.x 以上用 npx husky init
 git commit -m "Keep calm and commit"
 # `npm run prettier` will run
 ```
