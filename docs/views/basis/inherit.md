@@ -119,8 +119,8 @@ typeof Object.__proto__ === 'function'; // true
 
 ### prototype
 
-- _prototype_ 是一个显示原型属性，只有**函数才拥有该属性**，基本上所有函数都有这个属性
-- 但是也有例外，下面这种方法创建的函数不会具有 _prototype_ 属性
+- `prototype` 是一个显示原型属性，只有**函数才拥有该属性**，基本上所有函数都有这个属性
+- 但是也有例外，下面这种方法创建的函数不会具有 `prototype` 属性
 
 ```js
   let fun = Function.prototype.bind
@@ -128,8 +128,15 @@ typeof Object.__proto__ === 'function'; // true
   ...
 ```
 
-- 当我们创建一个函数时，_prototype_ 属性就被自动创建了
-- _prototype_ 这个属性的值是一个对象（也就是一个原型），只有一个属性 _constructor_
+- 当我们创建一个函数时，`prototype` 属性就被自动创建了
+- `prototype` 这个属性的值是一个对象（也就是一个原型），只有一个属性 `constructor`
+
+```js
+function bar() {}
+bar.prototype // 是 { constructor: ƒ bar(params) } 
+bar.__proto__ === Function.prototype
+new bar().__proto__ === bar.prototype
+```
 
 ### constructor
 
