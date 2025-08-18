@@ -1,6 +1,8 @@
 import { defineConfig } from "vitepress";
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 import { version } from "vitepress-theme-teek/es/version";
+import llmstxt from "vitepress-plugin-llms";
+
 
 const description = [
   "欢迎来到 vitepress-theme-teek 使用文档",
@@ -9,6 +11,7 @@ const description = [
 ].toString();
 
 const teekConfig = defineTeekConfig({
+  sidebarTrigger: true,
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
@@ -44,20 +47,6 @@ const teekConfig = defineTeekConfig({
       githubUrl: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/master/docs",
     },
   },
-  siteAnalytics: [
-    {
-      provider: "baidu",
-      options: {
-        id: "d5ee872d9aa1ef8021f4a3921b2e9c2a",
-      },
-    },
-    {
-      provider: "google",
-      options: {
-        id: "G-K5GNDW3L7K",
-      },
-    },
-  ],
 });
 
 // https://vitepress.dev/reference/site-config
@@ -80,23 +69,15 @@ export default defineConfig({
     ["meta", { property: "og:description", description }],
     ["meta", { name: "description", description }],
     ["meta", { name: "author", content: "Teek" }],
-    [
-      "meta",
-      {
-        name: "viewport",
-        content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
-      },
-    ],
-
+    // 禁止浏览器缩放
+    // [
+    //   "meta",
+    //   {
+    //     name: "viewport",
+    //     content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
+    //   },
+    // ],
     ["meta", { name: "keywords", description }],
-    ["meta", { name: "baidu-site-verification", content: "codeva-GdK2q9MO1i" }], // 百度收录
-    ["meta", { name: "msvalidate.01", content: "48CABE70F538B8D117567176ABF325AF" }], // Bing 收录验证
-    ["script", { charset: "UTF-8", id: "LA_COLLECT", src: "//sdk.51.la/js-sdk-pro.min.js" }], // 51.la
-    [
-      "script",
-      {},
-      `typeof LA !== 'undefined' && LA.init({ id: "3LqfP8Icg0GeEvtn", ck: "3LqfP8Icg0GeEvtn", hashMode: true })`,
-    ], // 51.la
   ],
   markdown: {
     // 开启行号
@@ -115,7 +96,7 @@ export default defineConfig({
     },
   },
   sitemap: {
-    hostname: "https://vp.teek.top",
+    hostname: "https://vp.teek.top", // ** 换成你的域名
     transformItems: items => {
       const permalinkItemBak: typeof items = [];
       // 使用永久链接生成 sitemap
@@ -162,16 +143,9 @@ export default defineConfig({
           { text: "标签页", link: "/tags" },
         ],
       },
-      {
-        text: version,
-        items: [
-          { text: "历史版本", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/releases" },
-          { text: "更新日志", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/dev/CHANGELOG.md" },
-        ],
-      },
+      { text: "✨ 赞赏", link: "/personal/" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek" }],
-
     search: {
       provider: "local",
     },
@@ -180,4 +154,11 @@ export default defineConfig({
       pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/docs/:path",
     },
   },
+  vite: {
+    plugins: [llmstxt() as any],
+  },
+  // transformHtml: (code, id, context) => {
+  //   if (context.page !== "404.md") return code;
+  //   return code.replace("404 | ", "");
+  // },
 });

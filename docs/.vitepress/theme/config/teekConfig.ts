@@ -1,4 +1,4 @@
-import type { TeekConfig } from "@teek/config";
+import type { TeekConfig } from "vitepress-theme-teek/config";
 
 // 文档配置
 export const teekDocConfig: TeekConfig = {
@@ -116,6 +116,23 @@ export const teekBlogParkConfig: TeekConfig = {
     ],
     descStyle: "switch",
   },
+  footerGroup: [
+    {
+      title: "外部链接",
+      links: [
+        { name: "示例 1", link: "https://vp.teek.top" },
+        { name: "示例 2", link: "https://vp.teek.top" },
+        { name: "示例 3", link: "https://vp.teek.top" },
+      ],
+    },
+    {
+      title: "内部链接",
+      links: [
+        { name: "快速开始", link: "/guide/quickstart" },
+        { name: "配置简介", link: "/reference/config" },
+      ],
+    },
+  ],
 };
 
 // 博客大图配置
@@ -144,6 +161,29 @@ export const teekBlogFullConfig: TeekConfig = {
       categoryId: "DIC_kwDONpVfBM4Cm3v9",
     },
   },
+  codeBlock: {
+    overlay: true,
+  },
+  themeEnhance: {
+    themeColor: {
+      append: [
+        {
+          label: "博客扩展主题",
+          tip: "博客扩展主题",
+          options: [
+            { label: "紫罗兰", value: "violet", color: "#7166f0" },
+            { label: "珊瑚粉", value: "coral-pink", color: "#ff6b6b" },
+            { label: "天蓝", value: "sky-blue", color: "#00bbf9" },
+            { label: "蓝绿", value: "blue-green", color: "#00f5d4" },
+            { label: "石板灰", value: "slate-gray", color: "#708090" },
+            { label: "粉红", value: "pink", color: "#f15bb5" },
+            { label: "黄绿", value: "yellow-green", color: "#8ac926" },
+            { label: "橙红", value: "orange-red", color: "#ff9e6b" },
+          ],
+        },
+      ],
+    },
+  },
 };
 
 // 博客全图配置
@@ -152,6 +192,15 @@ export const teekBlogBodyConfig: TeekConfig = {
   pageStyle: "segment-nav",
   bodyBgImg: {
     imgSrc: ["/blog/bg1.webp", "/blog/bg2.webp", "/blog/bg3.webp"],
+  },
+  banner: {
+    name: "🎉 Teek Blog",
+    description: [
+      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
+      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
+    ],
+    descStyle: "types",
   },
   themeEnhance: {
     layoutSwitch: {
