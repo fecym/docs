@@ -454,71 +454,48 @@ function clone(target, map = new Map()) {
 - 里面有几个常用的方法，一个订阅事件，一个发布事件，一旦发布事件触发订阅者执行相应的回调
 
 ```js
-function Emitter() {
-  // 事件对象，用来存储各种类型的事假
-  this.handlers = {};
-}
-Emitter.prototype = {
-  // 订阅事件，事件类型，事件回调
-  on: function(type, handler) {
-    if (!(this.handlers[type] in this.handlers)) {
-      // 事件队列
-      this.handlers[type] = [];
-    }
-    this.handlers[type].push(handler);
-  },
-  // 发布事件，订阅者执行相应的回调
-  emit: function(type) {
-    if (!this.handlers[type]) return;
-    const args = [].slice.call(arguments, 1);
-    this.handlers[type].forEach(handler => {
-      handler.apply(this, args);
-    });
-  },
-  off: function(type, handler) {
-    const handlers = this.handlers[type];
-    if (!handlers) return undefined;
-    let result = undefined;
-    for (let i = 0, len = handlers.length; i <= len; i++) {
-      if (handlers[i] === handler) {
-        result = handlers.splice(i, 1);
-      }
-    }
-    return result;
-  },
-};
-```
-
-- 虽然实现的一些基本的 api 都是用底层语言来实现，但是用 `Es6` 来实现 `Emitter` 很好看，接下来用 `Es6` 来实现一下，而且好理解，还是 `Es6` 好看
-
-```js
 class Emitter {
-  constructor() {
-    this.handlers = {};
-  }
-  on(type, handler) {
-    if (!(this.handlers[type] in this.handlers)) {
-      this.handlers[type] = [];
+  handlers = {}
+
+  on(type, fn) {
+    if (!this.handlers[type]) {
+      this.handlers[type] = []
     }
-    this.handlers[type].push(handler);
+    this.handlers[type].push(fn)
   }
-  emit(type) {
-    if (!this.handlers[type]) return;
-    const args = [...arguments].slice(1);
-    this.handlers[type].forEach(handler => {
-      // 执行函数
-      handler.apply(this, args);
-    });
+
+  emit(type, ...args) {
+    if (!this.handlers[type]) return
+    const fns = this.handlers[type]
+    for (let i = 0; i < fns.length; i++) {
+      fns[i](...args)
+    }
   }
-  off(type, handler) {
-    if (!this.handlers[type]) return void 0;
-    return this.handlers[type].find((fn, idx) => {
-      if (fn === handler) {
-        return this.handlers[type].splice(idx, 1);
-      } else {
-        return void 0;
+
+  off(type, fn) {
+    if (!this.handlers[type]) return
+    const fns = this.handlers[type]
+    let res;
+    // 要倒着循环, 否则会丢项
+    for (let i = fns.length - 1; i >= 0; i--) {
+      if (fns[i] === fn) {
+        res = fns.splice(i, 1)
+        break
       }
-    });
+    }
+  }
+
+  rm(type) {
+    if (!this.handlers[type]) return
+    delete this.handlers[type]
+  }
+
+  once(type, fn) {
+    const wrapper = (...args) => {
+      fn(...args)
+      this.off(type, wrapper)
+    }
+    this.on(type, wrapper)
   }
 }
 ```
