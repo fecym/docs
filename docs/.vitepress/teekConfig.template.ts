@@ -1,5 +1,5 @@
 /**
- * 这是一个 Teek 配置文件模板，涵盖 Teek 95% 的配置项
+ * 这是一个 Teek 配置文件模板，涵盖 Teek 95% 的配置项，更多配置项示例请看 https://vp.teek.top/reference/config.html 专题
  *
  * 该文件并没有被外部任何文件引用，您可以参考这个里面的配置项，按需提取放到 teekConfig.ts 文件里并进行更改
  */
