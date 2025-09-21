@@ -40,6 +40,7 @@ module.exports = {
         { text: 'eslint 工作流', link: '/views/FE/lint' },
         { text: 'Vue 源码分析', link: '/views/basis/vue' },
         { text: 'cli 开发', link: '/views/tools/npm/cli' },
+        { text: '优雅的解决 vite 同名组件无法区分问题', link: '/views/plugins/vite-plugin-unique-page-chunks' },
         { text: 'vscode 开发记录', link: '/views/plugins/vscode' },
         { text: 'Chrome 开发记录', link: '/views/plugins/chrome' },
         { text: 'mapbox', link: '/views/FE/visualization/mapbox' },
