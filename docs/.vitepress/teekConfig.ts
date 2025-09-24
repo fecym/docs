@@ -2,7 +2,9 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 import { version } from "vitepress-theme-teek/es/version";
 
 export const teekConfig = defineTeekConfig({
-  sidebarTrigger: true,
+  teekHome: false, // 是否开启博客首页
+  vpHome: true, // 是否隐藏 VP 首页
+  sidebarTrigger: true, // 是否开启侧边栏折叠功能
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   footerInfo: {
     theme: {

@@ -1,9 +1,6 @@
 ---
 layout: home
 
-tk:
-  teekHome: false
-
 hero:
   name: Teek
   text: VitePress 主题
