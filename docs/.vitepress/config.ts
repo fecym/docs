@@ -1,45 +1,52 @@
-import { defineConfig } from "vitepress";
+import {defineConfig} from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
-import { teekConfig } from "./teekConfig";
+import {teekConfig} from "./teekConfig";
+import viteCompression from "vite-plugin-compression";
 
 const description = [
-  "欢迎来到 vitepress-theme-teek 使用文档",
-  "Teek 是一个基于 VitePress 构建的主题，是在默认主题的基础上进行拓展，支持 VitePress 的所有功能、配置",
-  "Teek 拥有三种典型的知识管理形态：结构化、碎片化、体系化，可以轻松构建一个结构化知识库，适用个人博客、文档站、知识库等场景",
-].toString();
+  "fecym 的技术博客：前端工程师，专注 Vue 全家桶与工程化",
+  "记录编码基础、CSS/HTML/JavaScript、Node、ECharts、Webpack/Vite",
+  "覆盖 Git、Linux、MySQL、Nginx、ESLint、npm、面试与实用技巧"
+].join(" · ");
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: teekConfig,
-  title: "vitepress-theme-teek",
+  title: "风起代码间",
   description: description,
   cleanUrls: false,
   lastUpdated: true,
   lang: "zh-CN",
+  // @ts-ignore
+  base: process.env.BUILD_TYPE ? "/docs/" : '/',
+  // 构建产物输出到项目根 love
+  outDir: "../love",
+  // 将 VitePress 缓存目录移动到项目根（原来是 docs/.vitepress/cache）
+  cacheDir: "../.vitepress/cache",
   head: [
     [
       "link",
-      { rel: "icon", type: "image/svg+xml", href: "/teek-logo-mini.svg" },
+      {rel: "icon", type: "image/svg+xml", href: "/teek-logo-mini.svg"},
     ],
-    ["link", { rel: "icon", type: "image/png", href: "/teek-logo-mini.png" }],
-    ["meta", { property: "og:type", content: "website" }],
-    ["meta", { property: "og:locale", content: "zh-CN" }],
-    ["meta", { property: "og:title", content: "Teek | VitePress Theme" }],
-    ["meta", { property: "og:site_name", content: "Teek" }],
-    ["meta", { property: "og:image", content: "" }],
-    ["meta", { property: "og:url", content: "" }],
-    ["meta", { property: "og:description", description }],
-    ["meta", { name: "description", description }],
-    ["meta", { name: "author", content: "Teek" }],
+    ["link", {rel: "icon", type: "image/png", href: "/teek-logo-mini.png"}],
+    ["meta", {property: "og:type", content: "website"}],
+    ["meta", {property: "og:locale", content: "zh-CN"}],
+    ["meta", {property: "og:title", content: "fecym | 风起代码间"}],
+    ["meta", {property: "og:site_name", content: "fecym"}],
+    ["meta", {property: "og:image", content: ""}],
+    ["meta", {property: "og:url", content: ""}],
+    ["meta", {property: "og:description", description}],
+    ["meta", {name: "description", description}],
+    ["meta", {name: "author", content: "fecym"}],
     // 禁止浏览器缩放
-    // [
-    //   "meta",
-    //   {
-    //     name: "viewport",
-    //     content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
-    //   },
-    // ],
-    ["meta", { name: "keywords", description }],
+    [
+      "meta",
+      {
+        name: "viewport",
+        content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
+      },
+    ],
+    ["meta", {name: "keywords", description}],
   ],
   markdown: {
     // 开启行号
@@ -58,7 +65,7 @@ export default defineConfig({
     },
   },
   sitemap: {
-    hostname: "https://vp.teek.top", // ** 换成你的域名
+    hostname: "https://chengyuming.cn", // ** 换成你的域名
     transformItems: (items) => {
       const permalinkItemBak: typeof items = [];
       // 使用永久链接生成 sitemap
@@ -67,7 +74,7 @@ export default defineConfig({
       items.forEach((item) => {
         const permalink = permalinks?.map[item.url];
         if (permalink)
-          permalinkItemBak.push({ url: permalink, lastmod: item.lastmod });
+          permalinkItemBak.push({url: permalink, lastmod: item.lastmod});
       });
       return [...items, ...permalinkItemBak];
     },
@@ -88,50 +95,92 @@ export default defineConfig({
       next: "下一页",
     },
     nav: [
-      { text: "首页", link: "/" },
+      {text: "首页", link: "/"},
       {
-        text: "指南",
-        link: "/guide/intro",
-        activeMatch: "/01.指南/",
+        text: '前端',
+        link: "/basic/interview",
+        activeMatch: "/01.前端/",
       },
-      { text: "配置", link: "/reference/config", activeMatch: "/10.配置/" },
-      { text: "开发", link: "/develop/intro", activeMatch: "/15.主题开发/" },
       {
-        text: "功能页",
-        items: [
-          { text: "归档页", link: "/archives" },
-          { text: "清单页", link: "/articleOverview" },
-          { text: "登录页", link: "/login" },
-          {
-            text: "风险链接提示页",
-            link: "/risk-link?target=https://vp.teek.top",
-          },
-          { text: "分类页", link: "/categories" },
-          { text: "标签页", link: "/tags" },
-        ],
+        text: '服务端',
+        link: "/service/linux",
+        activeMatch: "/02.服务端/",
       },
-      { text: "✨ 赞赏", link: "/personal/" },
+      {
+        text: '工具',
+        link: "/git/git-1",
+        activeMatch: "/03.工具/",
+      },
+      {
+        text: '经典',
+        link: "/scriptures/sutra",
+        activeMatch: "/04.经典摘录/",
+      },
+      {
+        text: '归档',
+        link: "/archives",
+      },
+      {
+        text: '清单',
+        link: "/articleOverview",
+      },
     ],
     socialLinks: [
       {
         icon: "github",
-        link: "https://github.com/Kele-Bingtang/vitepress-theme-teek",
+        link: "https://github.com/fecym",
       },
     ],
     search: {
       provider: "local",
     },
-    editLink: {
-      text: "在 GitHub 上编辑此页",
-      pattern:
-        "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/docs/:path",
-    },
+    // editLink: {
+    //   text: "在 GitHub 上编辑此页",
+    //   pattern:
+    //     "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/docs/:path",
+    // },
   },
   vite: {
-    plugins: [llmstxt() as any],
+    // 插件：生产不加载 llmstxt，避免 SSR 构建清空 .temp 导致 app.js 缺失
+    plugins: [
+      llmstxt() as any,
+      viteCompression({
+        algorithm: "gzip",
+        ext: ".gz",
+        threshold: 1024,
+        deleteOriginFile: false,
+      }),
+    ],
+
+    // optimizeDeps: {
+    //   include: ["vue", "echarts", "@giscus/vue", "vitepress-theme-teek"],
+    // },
+
+    build: {
+      target: "es2019",
+      cssCodeSplit: true,
+      sourcemap: false,
+      reportCompressedSize: false,
+      minify: "esbuild",
+      chunkSizeWarningLimit: 1500,
+      rollupOptions: {
+        output: {
+          //   manualChunks(id) {
+          //     if (id.includes("node_modules")) {
+          //       if (id.includes("/vue")) return "vendor-vue";
+          //       if (id.includes("echarts")) return "vendor-echarts";
+          //       if (id.includes("@giscus/vue")) return "vendor-giscus";
+          //       if (id.includes("vitepress-theme-teek")) return "vendor-teek";
+          //       return "vendor";
+          //     }
+          //   },
+          //   entryFileNames: "assets/[name]-[hash].js",
+          //   chunkFileNames: "assets/[name]-[hash].js",
+          //   assetFileNames: "assets/[name]-[hash][extname]",
+        },
+      },
+    },
+    // 将 Vite 预构建缓存也移动到项目根（默认在 node_modules/.vite）
+    cacheDir: "../.vite",
   },
-  // transformHtml: (code, id, context) => {
-  //   if (context.page !== "404.md") return code;
-  //   return code.replace("404 | ", "");
-  // },
 });

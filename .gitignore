@@ -10,7 +10,11 @@ lerna-debug.log*
 node_modules
 .DS_Store
 dist
+dist.zip
+
 dist-ssr
+love
+love.zip
 coverage
 *.local
 
@@ -29,3 +33,4 @@ coverage
 *.sw?
 
 /**/.vitepress/cache/*
+.vite

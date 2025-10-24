@@ -1,4 +1,5 @@
-import Teek from "vitepress-theme-teek";
+import Teek, {giscusContext} from "vitepress-theme-teek";
+// @ts-ignore
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue";
 
 // Teek 在线主题包引用（需安装 Teek 在线版本）
@@ -19,7 +20,20 @@ import "vitepress-theme-teek/theme-chalk/tk-fade-up-animation.css"; // 首次加
 import "./styles/code-bg.scss";
 import "./styles/iframe.scss";
 
+import Giscus from "@giscus/vue";
+import {defineComponent, h, provide} from "vue";
+
 export default {
   extends: Teek,
-  Layout: TeekLayoutProvider,
+  // Layout: TeekLayoutProvider,
+  Layout: defineComponent({
+    name: "LayoutProvider",
+    setup() {
+
+      provide(giscusContext, () => Giscus);
+
+      return () => h(TeekLayoutProvider, null, {});
+      // return () => h(Teek.Layout, null, {});
+    },
+  }),
 };

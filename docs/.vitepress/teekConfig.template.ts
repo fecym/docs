@@ -4,6 +4,7 @@
  * 该文件并没有被外部任何文件引用，您可以参考这个里面的配置项，按需提取放到 teekConfig.ts 文件里并进行更改
  */
 
+// @ts-ignore
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 
 export const teekConfig = defineTeekConfig({
@@ -25,12 +26,12 @@ export const teekConfig = defineTeekConfig({
   backTop: {
     enabled: true, // 是否启动回到顶部功能
     content: "progress", // 回到顶部按钮的显示内容，可选配置 progress | icon
-    done: TkMessage => TkMessage.success("返回顶部成功"), // 回到顶部后的回调
+    done: (TkMessage: { success: (arg0: string) => any; }) => TkMessage.success("返回顶部成功"), // 回到顶部后的回调
   },
   // 滚动到评论区配置
   toComment: {
     enabled: true, // 是否启动滚动到评论区功能
-    done: TkMessage => TkMessage.success("滚动到评论区成功"), // 滚动到评论区后的回调
+    done: (TkMessage: { success: (arg0: string) => any; }) => TkMessage.success("滚动到评论区成功"), // 滚动到评论区后的回调
   },
   // 代码块配置
   codeBlock: {
@@ -39,7 +40,7 @@ export const teekConfig = defineTeekConfig({
     overlay: false, // 代码块底部是否显示展开/折叠遮罩层
     overlayHeight: 400, // 当出现遮罩层时，指定代码块显示高度，当 overlay 为 true 时生效
     langTextTransform: "uppercase", // 语言文本显示样式，为 text-transform 的值:none, capitalize, lowercase, uppercase
-    copiedDone: TkMessage => TkMessage.success("复制成功！"), // 复制代码完成后的回调
+    copiedDone: (TkMessage: { success: (arg0: string) => any; }) => TkMessage.success("复制成功！"), // 复制代码完成后的回调
   },
   sidebarTrigger: false, // 是否启用侧边栏展开/折叠触发器，点击触发器可以展开/折叠侧边栏。
   windowTransition: true, // 是否全局给部分元素启用视图渐入过渡效果，当为 boolean 类型，则控制全局是否启用，当为 object 类型，则控制部分元素是否启用
@@ -270,7 +271,7 @@ export const teekConfig = defineTeekConfig({
       {
         key: "lastActiveTime",
         label: "活跃时间",
-        value: (_, currentValue) => (currentValue + "").replace("前", ""),
+        value: (_: any, currentValue: string) => (currentValue + "").replace("前", ""),
         show: true,
       },
     ],
