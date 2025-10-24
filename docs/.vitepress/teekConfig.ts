@@ -63,13 +63,13 @@ export const teekConfig = defineTeekConfig({
   //   pageSpeed: 4000, // 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
   // },
   siteAnalytics: [
-    {
-      provider: "umami",
-      options: {
-        id: "9922019-8b52-4992-8469-92fa1e24d6c9",
-        src: "https://******",
-      },
-    },
+    // {
+    //   provider: "umami",
+    //   options: {
+    //     id: "9922019-8b52-4992-8469-92fa1e24d6c9",
+    //     src: "https://cloud.umami.is/script.js",
+    //   },
+    // },
     {
       provider: "google",
       options: {
