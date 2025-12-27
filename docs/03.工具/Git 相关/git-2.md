@@ -569,7 +569,7 @@ git fsck --unreachable | grep commit | cut -d' ' -f3 | xargs git log --merges --
 记录一些，上面不曾提到过得小技巧
 
 - 开发过程中， 可以使用图形界面工具（Sourcetree），来 diff 要提交的内容是否为自己要提交，以防止一些不想提交的东西提交进去。
-- 刚初始化的项目，想要撤销第一次提交，推荐使用：`git reset --soft HEAD~1`
+- 刚初始化的项目，想要撤销第一次提交，推荐使用：`git update-ref -d HEAD`
 - 远端删除的掉分支，本地想要同步删除可以使用：`git fetch -p`，`-p` 是 `--prune` 的缩写，也可以手动清理：`git remote prune origin`
 - 本地代码想要重置到远程分支的最新状态，可以使用 `git reset --hard origin/<branch_name>` 来重置到远程分支最新的代码
 - 修改了一半的代码，想要撤销回去，可以使用：
