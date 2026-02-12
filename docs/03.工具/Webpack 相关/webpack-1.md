@@ -5,7 +5,7 @@ tags:
   - Webpack
 categories:
   - Webpack
-permalink: /pages/ea6feb
+permalink: /tools/webpack-1
 ---
 
 ## webpack 介绍

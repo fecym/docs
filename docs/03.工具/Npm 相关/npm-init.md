@@ -1,7 +1,7 @@
 ---
 title: 你应该了解的 npm 知识
 date: 2019-12-09
-permalink: /npm/init
+permalink: /tools/npm-init
 #tagsPage: true
 #layout: home
 tags:

@@ -1,7 +1,7 @@
 ---
 title: Mapbox 基本使用
 date: 2019-08-24
-permalink: /FE/mapbox
+permalink: /basic/mapbox
 tags:
   - 可视化
 categories:

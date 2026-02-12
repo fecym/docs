@@ -1,7 +1,7 @@
 ---
 title: 如何优雅的解决端口被占用
 date: 2022-04-04
-permalink: /FE/getport
+permalink: /basic/getport
 
 tags:
   - webpack

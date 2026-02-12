@@ -1,7 +1,7 @@
 ---
 title: 优雅的解决 vite + vue3 同名组件无法区分问题
 date: 2025-09-21
-permalink: /FE/vite-plugin-unique-page-chunks
+permalink: /basic/vite-plugin-unique-page-chunks
 tags:
   - 插件
   - Vite

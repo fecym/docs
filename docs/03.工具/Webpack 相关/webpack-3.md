@@ -5,7 +5,7 @@ tags:
   - Webpack
 categories:
   - Webpack
-permalink: /pages/0408ae
+permalink: /tools/webpack-3
 ---
 
 ## 介绍

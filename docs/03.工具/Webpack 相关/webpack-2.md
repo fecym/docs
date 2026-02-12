@@ -4,7 +4,7 @@ date: 2020-03-08 08:00:00
 tagsPage: true
 categories:
   - Webpack
-permalink: /pages/bd81b1
+permalink: /tools/webpack-2
 ---
 
 ## 安装
