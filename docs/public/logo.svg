@@ -1,0 +1,69 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Top Surface Gradient (Frosted Glass) -->
+    <linearGradient id="topSurface" x1="256" y1="130" x2="256" y2="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.5" />
+    </linearGradient>
+
+    <!-- Side Thickness Gradient (Full Body) -->
+    <!-- Starts completely transparent (0.0) at top to prevent ghosting -->
+    <linearGradient id="sideThickness" x1="256" y1="130" x2="256" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0" />
+      <stop offset="50%" stop-color="#E2E8F0" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#64748B" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Icon Gradient (Vibrant Blue/Cyan) -->
+    <linearGradient id="iconGradient" x1="150" y1="150" x2="362" y2="362" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0e7490" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+
+    <!-- Floor Shadow Filter -->
+    <filter id="floorShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15" in="SourceAlpha" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Main Container -->
+  <g transform="translate(0, -20)">
+    
+    <!-- Floor Shadow -->
+<!--    <rect x="126" y="420" width="260" height="50" rx="25" fill="#0f172a" fill-opacity="0.2" filter="url(#floorShadow)" />-->
+<!---->
+    <!-- 3D Body Structure -->
+    <g>
+      <!-- Base Body (Thickness Layer) -->
+      <!-- Shrunk by 1px on each side (x+1, y+1, w-2) and reduced radius to fit INSIDE the top layer's stroke -->
+      <!-- x=107, y=131, w=298, h=318, rx=59 -->
+<!--      <rect x="107" y="131" width="298" height="318" rx="59" fill="url(#sideThickness)" />-->
+<!--      -->
+      <!-- Top Surface Layer -->
+      <!-- Original size: x=106, y=130, w=300, h=300, rx=60 -->
+      <rect x="106" y="130" width="300" height="300" rx="60" fill="url(#topSurface)" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.5" />
+      
+      <!-- Surface Highlight/Reflection (Softer) -->
+      <!-- Slightly moved down and shrunk to avoid top edge conflict -->
+<!--      <path d="M120 135 A 50 50 0 0 0 170 180 L 342 180 A 50 50 0 0 0 392 135 Z" fill="white" fill-opacity="0.25" />-->
+    </g>
+
+    <!-- Icon Content (Slightly embedded) -->
+    <g transform="translate(0, 10)">
+        <!-- Left Bracket < -->
+        <path d="M190 220 L150 280 L190 340" stroke="url(#iconGradient)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+        
+        <!-- Right Bracket > -->
+        <path d="M322 220 L362 280 L322 340" stroke="url(#iconGradient)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+        
+        <!-- Slash / -->
+        <path d="M220 250 H292" stroke="url(#iconGradient)" stroke-width="22" stroke-linecap="round"/>
+        <path d="M210 290 H302" stroke="url(#iconGradient)" stroke-width="22" stroke-linecap="round" opacity="0.8"/>
+        <path d="M230 330 H282" stroke="url(#iconGradient)" stroke-width="22" stroke-linecap="round" opacity="0.6"/>
+    </g>
+
+    <!-- Top Edge Highlight (Rim Light) -->
+    <path d="M166 131 L 346 131" stroke="white" stroke-width="2" stroke-opacity="0.8" stroke-linecap="round" />
+  </g>
+</svg>

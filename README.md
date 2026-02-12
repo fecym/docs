@@ -184,7 +184,7 @@ export const teekConfig = defineTeekConfig({
 ```ts
 // docs/.vitepress/config.ts 片段（示例）
 head: [
-  { rel: "icon", type: "image/svg+xml", href: "/teek-logo-mini.svg" },
+  { rel: "icon", type: "image/svg+xml", href: "/logo.svg" },
   { rel: "icon", type: "image/png", href: "/favicon.ico" }
 ]
 ```

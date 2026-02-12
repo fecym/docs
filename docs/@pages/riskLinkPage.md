@@ -2,6 +2,6 @@
 permalink: /risk-link
 layout: false
 riskLinkPage: true
-logo: /teek-logo-large.png
+logo: /logo.svg
 article: false
 ---

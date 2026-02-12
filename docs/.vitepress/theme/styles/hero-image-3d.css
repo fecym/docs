@@ -1,0 +1,63 @@
+/* 首页 Hero Logo 的 3D 倾斜与景深效果 */
+.VPHero .image-src {
+  /* 开启 3D 透视空间 */
+  transform-style: preserve-3d;
+  
+  /* 
+    设置旋转中心为几何中心
+    默认可能是 center center，但明确指定可以消除浏览器差异
+    配合 translate(-50%, -50%) 使用时，transform-origin 依然是基于元素自身盒子计算
+  */
+  transform-origin: center center;
+
+  /* 
+    perspective: 视距，越小透视感越强
+    rotateY: 左右旋转 (正值面向左侧文字)
+    rotateX: 上下旋转 (正值向后仰)
+    rotateZ: 平面旋转 (微调动感)
+    translate: 居中修正
+  */
+  transform: perspective(1000px) rotateX(-10deg) rotateY(10deg) rotateZ(2deg) translate(-50%, -50%);
+  
+  /* 
+    Q 弹的过渡效果：
+    cubic-bezier(0.34, 1.56, 0.64, 1) 是一个带回弹的曲线（类似弹簧）
+    让 Logo 在恢复原状或变大时有“啵”一下的感觉
+  */
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* 优化渲染性能 */
+  will-change: transform;
+}
+
+/* 鼠标悬停时的交互效果：更可爱的 Q 弹悬浮 */
+.VPHero .image-src:hover {
+  /* 
+    复位到“原来的效果”：
+    即完全正对屏幕，没有倾斜，没有歪头，就像一张普通的平面图。
+    保留一点点放大 (scale 1.05)，作为交互反馈。
+  */
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.05) translate(-50%, -50%);
+  
+  /* 悬停时可以稍微快一点弹起来 */
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 
+  可选：添加一个缓慢的浮动动画，让它平时就像在呼吸一样微微上下浮动
+  增加生命感
+*/
+@keyframes float {
+  0%, 100% {
+    transform: perspective(1000px) rotateX(10deg) rotateY(10deg) rotateZ(-2deg) translate(-50%, -50%);
+  }
+  50% {
+    /* 微微上浮 10px */
+    transform: perspective(1000px) rotateX(12deg) rotateY(12deg) rotateZ(-1deg) translate(-50%, -60%);
+  }
+}
+
+/* 如果觉得太花哨可以注释掉下面这行，或者只在 prefers-reduced-motion: no-preference 时开启 */
+/* .VPHero .image-src {
+  animation: float 6s ease-in-out infinite;
+} */

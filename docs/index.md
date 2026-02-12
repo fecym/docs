@@ -16,7 +16,7 @@ hero:
       text: 归档
       link: /@pages/archivesPage
   image:
-    src: /teek-logo-large.png
+    src: /logo.svg
     alt: fecym blog
 
 features:
@@ -28,7 +28,7 @@ features:
       details: 组件设计、状态管理、性能优化与 ECharts 可视化落地。
     - icon: 🚀
       title: 服务端与部署
-      details: Node.js、Nginx、MySQL、Linux 运维与上线流程经验。
+      details: Node.js、Nginx、MySQL、Linux、Docker 运维与上线流程经验。
     - icon: 🤝
       title: 协作与效率
       details: Git、npm、CI/CD、规范化工作流，提升协作与交付速度。
@@ -45,7 +45,7 @@ features:
 - Vue 生态与工程化：Vue、组件设计、状态管理、性能优化、Vite、Webpack
 - 前端基础：HTML、CSS、JavaScript（异步、模块化、编码规范、质量保障）
 - 可视化实践：ECharts、图形渲染与地图
-- 服务与部署：Node.js、Nginx、MySQL、（必要时 Redis）
+- 服务与部署：Node.js、Nginx、Docker、MySQL、（必要时 Redis）
 - 团队协作与效率：Git、npm、ESLint、工作流优化与开发技巧
 - 面试与职业：面试题解析、成长与复盘
 - 随笔与读书：产品体验、行业趋势与个人成长
