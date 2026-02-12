@@ -1,0 +1,1 @@
+:root{animation:rainbow 12s linear infinite}.vp-doc #hero-text{display:none!important}@media (min-width: 640px){:root{--vp-home-hero-image-filter: blur(56px)}}@media (min-width: 960px){:root{--vp-home-hero-image-filter: blur(68px)}}.vp-doc table:focus-visible{outline:none}.vp-doc th,.vp-doc td{border:1px solid var(--vp-c-divider)}img{display:inline-block}
