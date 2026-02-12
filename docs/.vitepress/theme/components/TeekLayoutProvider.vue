@@ -2,7 +2,6 @@
 import Teek from "vitepress-theme-teek";
 import ContributeChart from "./ContributeChart.vue";
 import NotFound from "./404.vue";
-
 </script>
 
 <template>

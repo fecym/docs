@@ -1,11 +1,10 @@
 ---
 title: Webpack 进阶篇
-date: 2020-03-08
+date: 2020-03-08 08:00:00
 tagsPage: true
-#layout: home
-
 categories:
   - Webpack
+permalink: /pages/bd81b1
 ---
 
 ## 安装

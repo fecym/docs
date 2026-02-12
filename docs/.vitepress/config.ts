@@ -2,16 +2,22 @@ import {defineConfig} from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
 import {teekConfig} from "./teekConfig";
 import viteCompression from "vite-plugin-compression";
+// @ts-ignore
+import {createRewrites} from 'vitepress-theme-teek/config';
+
+const rewrites = createRewrites({srcDir: "docs"});
 
 const description = [
   "fecym 的技术博客：前端工程师，专注 Vue 全家桶与工程化",
   "记录编码基础、CSS/HTML/JavaScript、Node、ECharts、Webpack/Vite",
   "覆盖 Git、Linux、MySQL、Nginx、ESLint、npm、面试与实用技巧"
 ].join(" · ");
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: teekConfig,
+  rewrites: {
+    ...rewrites
+  },
   title: "风起代码间",
   description: description,
   cleanUrls: false,

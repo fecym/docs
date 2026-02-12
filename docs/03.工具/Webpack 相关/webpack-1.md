@@ -1,11 +1,11 @@
 ---
 title: Webpack 基础篇
-date: 2019-05-21
+date: 2019-05-21 08:00:00
 tags:
   - Webpack
-
 categories:
   - Webpack
+permalink: /pages/ea6feb
 ---
 
 ## webpack 介绍

@@ -1,11 +1,11 @@
 ---
 title: Webpack 深入篇
-date: 2020-09-13
+date: 2020-09-13 08:00:00
 tags:
   - Webpack
-
 categories:
   - Webpack
+permalink: /pages/0408ae
 ---
 
 ## 介绍

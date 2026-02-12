@@ -82,6 +82,7 @@ export const teekConfig = defineTeekConfig({
     autoFrontmatter: true,
     sidebarOption: {
       initItems: true,
+      resolveRule: 'rewrites',
       ignoreList: ['views', '-undone.md']
     },
   },

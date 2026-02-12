@@ -1,6 +1,6 @@
 ---
 title: vscode 插件开发
-date: 2021-03-20 08:00:00
+date: 2021-03-20 16:00:00
 private: true
 privateRealm: common
 tags:
@@ -8,6 +8,7 @@ tags:
 categories:
   - views
   - plugins
+permalink: /pages/118849
 ---
 
 ## vscode 插件可以做什么
