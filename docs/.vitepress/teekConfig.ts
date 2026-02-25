@@ -1,6 +1,5 @@
 // @ts-ignore
 import {defineTeekConfig} from "vitepress-theme-teek/config";
-
 export const teekConfig = defineTeekConfig({
   teekHome: false, // 是否开启博客首页
   vpHome: true, // 是否隐藏 VP 首页
@@ -26,16 +25,15 @@ export const teekConfig = defineTeekConfig({
     copiedDone: (TkMessage: { success: (arg0: string) => any; }) => TkMessage.success("复制成功！"),
   },
   riskLink: {
-    enabled: false,
-    title: "即将离开，请注意财产安全",
+    enabled: true,
     whitelist: [/https:\/\/github.com/],
   },
   private: {
-    enabled: false,
+    enabled: true,
     // siteLogin: true,
     realm: {
       common: [
-        {username: "fecym", password: "12345678910", role: "admin"},
+        {username: "fecym", password: "12345678910"},
       ]
     },
   },

@@ -22,6 +22,9 @@ export default defineConfig({
   description: description,
   cleanUrls: false,
   lastUpdated: true,
+  transformPageData(pageData) {
+    pageData.frontmatter.name = pageData.frontmatter.name || pageData.title || '风起代码间';
+  },
   lang: "zh-CN",
   // @ts-ignore
   base: process.env.BUILD_TYPE ? "/docs/" : '/',

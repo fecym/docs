@@ -1,0 +1,25 @@
+/* 登录页样式覆盖 */
+.tk-login__right__header img {
+  /* 默认是 60px，这里调整为 40px */
+  width: 40px !important;
+  /* 如果想要调整 logo 和文字的间距，可以取消注释并修改下面的 margin-right */
+  /* margin-right: 10px; */
+}
+
+/* 标题文字样式调整 */
+.tk-login__right__header .title {
+  /* 默认是 42px，可以根据 logo 大小调整 */
+  /* font-size: 32px; */
+}
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+  .tk-login__right__header img {
+    width: 32px !important;
+  }
+  
+  .tk-login__right__header .title {
+    /* 移动端默认是 24px */
+    /* font-size: 20px; */
+  }
+}

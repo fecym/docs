@@ -2,6 +2,7 @@
 import Teek from "vitepress-theme-teek";
 import ContributeChart from "./ContributeChart.vue";
 import NotFound from "./404.vue";
+import CustomRiskLinkPage from "./CustomRiskLinkPage.vue";
 </script>
 
 <template>
@@ -12,6 +13,10 @@ import NotFound from "./404.vue";
 
     <template #not-found>
       <NotFound />
+    </template>
+
+    <template #teek-risk-link-page>
+      <CustomRiskLinkPage />
     </template>
   </Teek.Layout>
 </template>
