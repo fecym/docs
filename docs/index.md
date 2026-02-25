@@ -11,10 +11,10 @@ hero:
       link: /intro
     - theme: alt
       text: 所有文章
-      link: /@pages/articleOverviewPage
+      link: /articleOverview
     - theme: alt
       text: 归档
-      link: /@pages/archivesPage
+      link: /archives
   image:
     src: /logo.svg
     alt: fecym blog

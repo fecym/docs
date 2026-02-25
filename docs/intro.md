@@ -4,7 +4,7 @@ title: 关于博客
 sidebar: false
 article: false
 outline: false
-permalink: /pages/87aa9d
+permalink: /intro
 categories:
   - 
 ---
