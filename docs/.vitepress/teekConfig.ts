@@ -4,6 +4,15 @@ export const teekConfig = defineTeekConfig({
   teekHome: false, // 是否开启博客首页
   vpHome: true, // 是否隐藏 VP 首页
   sidebarTrigger: true, // 是否开启侧边栏折叠功能
+  backTop: {
+    enabled: false,
+  },
+  toComment: {
+    enabled: false,
+  },
+  themeEnhance: {
+    enabled: false,
+  },
   author: {name: "fecym", link: "https://github.com/fecym"},
   footerInfo: {
     theme: {
