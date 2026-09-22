@@ -1,7 +1,9 @@
 import {defineConfig} from "vitepress";
-import llmstxt from "vitepress-plugin-llms";
 import {teekConfig} from "./teekConfig";
 import viteCompression from "vite-plugin-compression";
+import {compressMissingAssets} from "./compressMissing";
+import {trimFontsPlugin} from "./trimFonts";
+import {bundleAnalyzePlugin} from "./config.analyze";
 // @ts-ignore
 import {createRewrites} from 'vitepress-theme-teek/config';
 
@@ -87,6 +89,8 @@ export default defineConfig({
       return [...items, ...permalinkItemBak];
     },
   },
+  // 补齐 metadata.*.js 等「Rollup 之外写盘」文件的 .gz/.br（vite-plugin-compression 覆盖不到）
+  buildEnd: compressMissingAssets as any,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: "/logo-mini.svg",
@@ -149,9 +153,14 @@ export default defineConfig({
     // },
   },
   vite: {
-    // 插件：生产不加载 llmstxt，避免 SSR 构建清空 .temp 导致 app.js 缺失
     plugins: [
-      llmstxt() as any,
+      // 依赖分析（默认关闭）：VP_ANALYZE=1 pnpm analyze 时启用，数据写入 .analyze/bundle-report.jsonl
+      ...(process.env.VP_ANALYZE ? [bundleAnalyzePlugin() as any] : []),
+      // 字体裁剪：只保留 Inter latin / latin-ext 子集（cyrillic、greek、vietnamese 用不到）
+      trimFontsPlugin() as any,
+      // 已移除 vitepress-plugin-llms：它会产出 llms.txt / llms-full.txt 以及 52 个页面 .md 副本（约 1.27 MB），
+      // 而 llms.txt 中的链接全部指向这些 .md 副本，只删副本会让索引失效，因此整体关闭。
+      // 如需恢复：import llmstxt from "vitepress-plugin-llms"; 并在此处加入 llmstxt() as any。
       viteCompression({
         algorithm: "gzip",
         ext: ".gz",

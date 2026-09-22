@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
+    "analyze": "VP_ANALYZE=1 vitepress build docs --outDir .analyze/dist",
+    "deps": "node scripts/analyze-deps.mjs",
     "preview": "vitepress preview docs",
     "deploy": "bash deploy.sh"
   },
