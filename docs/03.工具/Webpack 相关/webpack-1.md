@@ -24,7 +24,7 @@ Webpack 可以直接执行 webpack 命令进行打包，也可以通过手动配
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/webpack-arguments.jpg" height="">
+  <img src="/imgs/webpack-arguments.webp" height="">
 </p>
 
 - 让 `webpack` 正常启动，至少需要两个 `npm` 包，`webpack、webpack-cli`
@@ -35,12 +35,12 @@ Webpack 可以直接执行 webpack 命令进行打包，也可以通过手动配
 
 - `entry` 用法如下
 
-<img src="/imgs/base-entry.jpg">
+<img src="/imgs/base-entry.webp">
 
 - 当然也可以采用动态配置 `entry`， 采用箭头函数动态返回。
 
 <p align="center" class="p-images">
-  <img src="/imgs/dynamic-entry.jpg" height="400">
+  <img src="/imgs/dynamic-entry.webp" height="400">
 </p>
 
 - 关于 `entry`， 我们要记住， 他有多种配置类型， 而且可以动态配置， 还可以为入口设置别名呐。

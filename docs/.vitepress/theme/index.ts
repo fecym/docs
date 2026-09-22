@@ -53,7 +53,7 @@ export default {
               onmouseover="this.style.transform='scale(1.05) rotate(2deg)'"
               onmouseout="this.style.transform='scale(1) rotate(0deg)'"
               >
-                <img src="/appreciate-qrcode.jpg" width="200" height="200" alt="赞赏二维码" style="display: block; border-radius: 6px;">
+                <img src="/appreciate-qrcode.webp" width="200" height="200" alt="赞赏二维码" style="display: block; border-radius: 6px;">
               </div>
               <p style="margin-top: 16px; font-size: 14px; color: var(--vp-c-text-2); font-weight: 500; letter-spacing: 1px;">感谢老板 ☕️</p>
             </div>`,

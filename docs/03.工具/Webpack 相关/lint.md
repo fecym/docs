@@ -156,9 +156,9 @@ function onListening() {
 
 最终效果如下：
 
-<!-- ![](https://chengyuming.cn/imgs/express-template-start.png) -->
+<!-- ![](https://chengyuming.cn/imgs/express-template-start.webp) -->
 <p align="center">
-  <img src="/imgs/express-template-start.png"/>
+  <img src="/imgs/express-template-start.webp"/>
 </p>
 
 ## eslint 和 prettier
@@ -342,9 +342,9 @@ prettier 格式化代码也很简单，只需要执行 `npx prettier --write src
 
 执行 git init 的时候会生成一个 `.git` 文件夹，或者从 github、gitlab 中 download 下来的代码都会有这么一个文件夹，git hook 就是这个文件夹的 hooks 下的一些钩子函数，特定时期他们将会被调用，完整钩子参考[ git hooks ](https://git-scm.com/docs/githooks)
 
-<!-- ![](https://chengyuming.cn/imgs/git-hooks.png) -->
+<!-- ![](https://chengyuming.cn/imgs/git-hooks.webp) -->
 <p align="center">
-  <img src="/imgs/git-hooks.png"/>
+  <img src="/imgs/git-hooks.webp"/>
 </p>
 
 里面的文件分为以 .sample 结尾的文件和没有这个结尾的文件

@@ -156,7 +156,7 @@ hello.start();
 配置完之后，我们可以执行 `npm link` 命令，我们会得到以下的输出，此时我们命令行工具就可以使用了，直接输入 `hello --name=xxx` 便可以测试
 
 <p class="p-images">
-  <img src="/imgs/basis-command-yargs-hello.png" height="" title="npm link" />
+  <img src="/imgs/basis-command-yargs-hello.webp" height="" title="npm link" />
 </p>
 
 如果你想让别人也用到你的这个工具，你可以把它发布到 npm 中，直接在控住台中登录 npm 然后，`npm publish` 就发布上去了

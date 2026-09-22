@@ -28,7 +28,7 @@ categories:
 一个树结构包含一系列存在父子关系的节点。每个节点都有一个父节点（除了顶部的第一个节点）以及 0 个或多个子节点：
 
 <p align="center">
-  <img src="/imgs/tree.jpg"/>
+  <img src="/imgs/tree.webp"/>
 </p>
 
 - 节点：树中的每个元素都叫作节点
@@ -306,7 +306,7 @@ function array2Tree(array) {
 说白了就是：二叉树是每个节点最多有两个子树的树结构，通常子树被称作 左子树 和 右子树。
 
 <p align="center">
-  <img src="/imgs/bst.png"/>
+  <img src="/imgs/bst.webp"/>
 </p>
 
 二叉树在前端业务开发中不常见，但理解二叉树，对于学习算法是一个很重要的开始。有位大佬讲过所有回溯、动规、分治算法其实都是树的问题，而树的问题就永远逃不开树的递归遍历那几行代码

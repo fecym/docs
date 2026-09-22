@@ -552,7 +552,7 @@ resolve: {
 
 <!-- ![bootstrap]('./images/webpack-resolve.png') -->
 <p align="center" class="p-images">
-  <img src="/imgs/webpack-resolve.png" />
+  <img src="/imgs/webpack-resolve.webp" />
 </p>
 
 - 此时我们可以通过 mainFields 字段来控制查找的先后顺序

@@ -129,8 +129,8 @@ map.flyTo({
 - 如下图，左边是效果，右边是该区域的数据，原地图是没有那个紫色的边框的，我们要查出来后给该区域添加上
 
   <p>
-    <img src="/imgs/mapbox-addlayer-line-result.png" height="248">
-    <img src="/imgs/mapbox-addlayer-line-data.png" height="220">
+    <img src="/imgs/mapbox-addlayer-line-result.webp" height="248">
+    <img src="/imgs/mapbox-addlayer-line-data.webp" height="220">
   </p>
 
 - 那么我么需要用到 addLayer 方法，添加 layer，但是我们需要获取到底图的数据

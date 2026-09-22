@@ -13,7 +13,7 @@ categories:
 ### 一个有趣的问题
 
 <p align="center" class="p-images">
-  <img src="/imgs/basis-javascript-type-change.jpg" height="260" />
+  <img src="/imgs/basis-javascript-type-change.webp" height="260" />
 </p>
 
 > 看到了这个我亲自尝试了下，结果发现自己对 js 基础越来越陌生了，现在好好复习下吧
@@ -70,7 +70,7 @@ Number(!![]); // 1
 > 在 js 中类型转换有三种情况：转布尔值；转数字；转字符串。如果发生了隐式转换，那么各种类型互转符合下面的规则：
 
 <p align="center" class="p-images">
-  <img src="/imgs/js-type-transform.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/js-type-transform.webp" width="" style="border-radius: 8px;">
 </p>
 
 ### 显示数据类型转换
@@ -158,7 +158,7 @@ console.log(`${o} 你好`); // Uncaught TypeError: Cannot convert object to prim
 - 这张图可能理解会更好点
 
 <p align="center" class="p-images">
-  <img src="/imgs/js-type-transform2.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/js-type-transform2.webp" width="" style="border-radius: 8px;">
 </p>
 
 ### == 和 ===
@@ -440,7 +440,7 @@ function debounce(fn, step) {
 - 鼠标悬停列表后地图上的点也改变其颜色，如下图
 
   <p align="center" class="p-images">
-    <img src="/imgs/javascript-basis-mapbox.jpg" width="700" style="border-radius: 8px;">
+    <img src="/imgs/javascript-basis-mapbox.webp" width="700" style="border-radius: 8px;">
   </p>
 
 - 鼠标滑动事件是高频事件，一定需要阻止一下，否则一会页面就卡死了，我想都没有想就想到了节流，限制事件的执行频率，代码如下

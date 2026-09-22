@@ -83,7 +83,7 @@ categories:
 - 在这一步我遇到了一个问题，`nginx` 报了一个错误，意思是说端口被占用了，我天，我刚买的服务器，`80` 端口就被占用了，于是我们查看下到底是谁占了我的 `80` 端口
 
 <p align="center" class="p-images">
-  <img src="/imgs/nginx-setup-address-already.jpg" height="" title="端口被占用" />
+  <img src="/imgs/nginx-setup-address-already.webp" height="" title="端口被占用" />
 </p>
 
 ```sh
@@ -205,7 +205,7 @@ server {
 - 下载完成之后，我们输入 `nvm list` 告诉你 nvm 命令不存在
 
 <p align="left">
-  <img src="/imgs/node-nvm-error.png" height="" title="" />
+  <img src="/imgs/node-nvm-error.webp" height="" title="" />
 </p>
 
 - 解决方法：`source ~/.bashrc`
@@ -247,7 +247,7 @@ server {
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/big-front-service-redis-make.jpg" height="" title="redis安装成功" />
+  <img src="/imgs/big-front-service-redis-make.webp" height="" title="redis安装成功" />
 </p>
 
 ### 连接 redis
@@ -255,7 +255,7 @@ server {
 此时进入 `/usr/local/redis` 目录下有个 `bin` 目录，执行 `./redis-server` 命令，看到如下图所示，说明安装成功
 
 <p align="center" class="p-images">
-  <img src="/imgs/big-front-service-redis-make-success.jpg" height="" title="redis启动成功" />
+  <img src="/imgs/big-front-service-redis-make-success.webp" height="" title="redis启动成功" />
 </p>
 
 退出：`Ctrl + c` 退出
@@ -273,7 +273,7 @@ vim /usr/local/redis/bin/redis.conf
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/big-front-service-redis-vim-conf.jpg" height="" title="redis 后台启动" />
+  <img src="/imgs/big-front-service-redis-vim-conf.webp" height="" title="redis 后台启动" />
 </p>
 
 - 然后执行 `./redis-server redis.conf`，这样就后台启动了
@@ -313,7 +313,7 @@ vim /usr/local/redis/bin/redis.conf
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/big-front-service-init-mysql-install.png" height="" title="这网速..." />
+  <img src="/imgs/big-front-service-init-mysql-install.webp" height="" title="这网速..." />
 </p>
 
 - 服务器网速不好，400 多兆的东西需要下载 16h，换个方式下载吧，本地下载完传到服务器上吧
@@ -379,7 +379,7 @@ vim /usr/local/redis/bin/redis.conf
 - 并且为你生成了临时的 `MySQL` 登录密码，一定要记下来，我们需要登录进 `MySQL`，然后修改密码
 
 <p align="center" class="p-images">
-  <img src="/imgs/big-front-service-init-mysql-install-init-success.png" height="" title="安装成功" />
+  <img src="/imgs/big-front-service-init-mysql-install-init-success.webp" height="" title="安装成功" />
 </p>
 
 ### 配置 my.cnf
@@ -393,7 +393,7 @@ vim /usr/local/redis/bin/redis.conf
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/big-front-service-init-mysql-config-my.conf.png" height="" title="修改配置文件" />
+  <img src="/imgs/big-front-service-init-mysql-config-my.conf.webp" height="" title="修改配置文件" />
 </p>
 
 ### 建立 MySQL 服务

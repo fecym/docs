@@ -280,6 +280,51 @@ Inter 的 latin / latin-ext 罗马体与斜体，保留中文标点 `Punctuation
 
 ---
 
+## 十一、图片资源 webp 化
+
+### 背景与数据
+
+`docs/public` 下的 118 张 jpg/png 统一转为 webp：
+
+| | 数量 | 体积 |
+|---|---:|---:|
+| 原 jpg/png | 118 | 2.79 MB |
+| 现 webp | 118 | 2.06 MB |
+
+净减少 0.73 MB（-26%）。
+
+### 引用替换
+
+扫描 69 个文档/配置文件，共发现 118 处本地图片引用：
+
+| 类别 | 数量 | 处理 |
+|---|---:|---|
+| 存在同名 `.webp` | 106 | 已替换（104 处站内 + 2 处自有域名外链 `chengyuming.cn`） |
+| 历史死链（原图本就不存在） | 6 | 保持原样 |
+| 第三方外链（jsdelivr 头像） | 2 | 保持原样 |
+
+补充说明：
+
+- 104 处站内引用全部是绝对路径（`/imgs/xxx.jpg`），不存在相对路径歧义；
+- 替换时跳过 markdown 代码块，避免改坏文章里的示例代码（如 webpack 的 `test: /\.png$/`）；
+- 涉及 3 处代码引用：`theme/components/404.vue`、`theme/index.ts`（赞赏二维码）、`@pages/loginPage.md`（登录页背景）；
+- `teekConfig.template.ts` 只改了 1 处真实引用（`/appreciate-qrcode.jpg`），其中 4 处 `/img/bg*.jpg` 属死链未动。
+
+### 配套脚本（保留在 scripts/）
+
+| 脚本 | 用途 |
+|---|---|
+| `scripts/replace-image-refs.mjs` | 精确替换图片引用；默认预览，`--write` 落盘，自带死链/外链排除 |
+| `scripts/check-asset-refs.mjs` | 校验产物里的资源引用是否都能落地（`pnpm check:assets`） |
+
+### 验证结果
+
+1. 替换脚本复跑：**0 个文件、0 处可替换**（幂等）；
+2. `pnpm build` 成功，`pnpm check:assets`：产物 110 处图片引用，**缺失 0 处**；
+3. 顺带发现（与本次改动无关）：
+   - 文章正文里有 10 处指向旧站路径的链接（`/views/basis/css.html`、`/node/fs.html`、`/views/webpack/` 等）；
+   - teek 主题自带的 `iconfont.woff2/woff/ttf` 在产物中缺失，构建时即有 3 条 warning（主题包问题）。
+
 ## 附录 A：复现命令
 
 ```bash

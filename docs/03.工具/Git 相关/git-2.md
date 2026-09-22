@@ -45,7 +45,7 @@ git push <origin_name> <branch>
 当你在一个项目中执行 `git init`，或者克隆一个仓库时，`.git` 文件夹就会自动生成。
 
 <p align="center">
-  <img src="/imgs/git/git-folder.png" alt=".git 文件夹" />
+  <img src="/imgs/git/git-folder.webp" alt=".git 文件夹" />
 </p>
 
 1. `HEAD`: 指向当前分支的引用。 `ref: refs/heads/main`
@@ -71,7 +71,7 @@ git push <origin_name> <branch>
 git hooks 是 .git 文件夹的一个特殊目录，用于存储 Git 仓库的钩子脚本。默认会有很多 .sample 结尾的文件，这些都是示例文件，当把 .sample 后缀去掉后，Git 就会自动执行该脚本 。
 
 <p align="center">
-  <img src="/imgs/git/githooks.png" alt="githooks" />
+  <img src="/imgs/git/githooks.webp" alt="githooks" />
 </p>
 
 ### 让钩子生效
@@ -120,13 +120,13 @@ sh scripts/pre-commit-message.sh
 ```
 
 <p align="center">
-  <img src="/imgs/git/pre-commit.png" alt="" />
+  <img src="/imgs/git/pre-commit.webp" alt="" />
 </p>
 
 此时执行 git commit 命令时，就会先执行 pre-commit 脚本，打印出我们所编写内容
 
 <p align="center">
-  <img src="/imgs/git/pre-commit-res.png" alt="" />
+  <img src="/imgs/git/pre-commit-res.webp" alt="" />
 </p>
 
 ### 更优雅的方式

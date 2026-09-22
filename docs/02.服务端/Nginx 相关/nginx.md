@@ -167,7 +167,7 @@ http 服务上支持若干个虚拟主机。每个虚拟主机一个对应的 se
 - 也可以写成**alias**，来匹配，alias /root/cym/project/daily-admin/，但是 location / 不可以写成 alias，否则会是 403
 
 <p align="center" class="p-images">
-  <img src="/imgs/nginx-location-conf.png" height="">
+  <img src="/imgs/nginx-location-conf.webp" height="">
 </p>
 
 ### index;

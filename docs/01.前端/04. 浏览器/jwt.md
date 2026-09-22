@@ -28,7 +28,7 @@ cookie 是不可跨域的：每个 `cookie` 都会绑定单一的域名，无法
 第二请求的时候，我们会发现，请求头中携带了 `Cookie` 字段，第一次请求的时候是没有 `Cookie` 字段的。
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-cookie.png" alt="cookie">
+  <img src="/imgs/basis-cookie.webp" alt="cookie">
 </p>
 
 ### cookie 的重要属性
@@ -88,7 +88,7 @@ app.listen(3000);
 - 浏览器接受到服务器返回的 `sessionID` 信息后，会将此信息保存到 `cookie` 中，同时 `cookie` 会记录此 `sessionID` 属于哪个域名。
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-session.jpg" alt="session">
+  <img src="/imgs/basis-session.webp" alt="session">
 </p>
 
 - 当用户第二次访问服务器的时候，请求会自动会自动判断此域名下是否存在此 `cookie` 信息，如果存在则自动将此信息发送给服务器，服务器会从 `cookie` 中获取 `sessionID`，再根据 `sessionID` 查找对应的 `session` 信息后，如果没有找到说明用户没有登录或者 `session` 实效，如果找到说明用户已经登录继续执行以后操作
@@ -100,7 +100,7 @@ app.listen(3000);
 接下来我们用 `koa` 来实现一个 `session`，需求如下当用户登录之后，点击用户中心则可以跳转用户中心，然后返回到其他页面之后在再次点击用户中心也可以进去用户中心，没有登陆过则不可以跳转到用户中心，让他跳转登录页，退出后清空 `session`，使其不能进入用户中心页面。完整代码已上传 `github` [传送门](https://github.com/fecym/sesssion.git)
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-session-demo.jpg" alt="登录校验" title="登录校验">
+  <img src="/imgs/basis-session-demo.webp" alt="登录校验" title="登录校验">
 </p>
 
 ```js

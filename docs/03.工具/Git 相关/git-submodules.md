@@ -50,7 +50,7 @@ git submodule
 ```
 
 <p align="left" class="p-images">
-  <img src="/imgs/git-submodules.png" style="border-radius: 8px;">
+  <img src="/imgs/git-submodules.webp" style="border-radius: 8px;">
 </p>
 
 - 更新子模块
@@ -139,7 +139,7 @@ git clone git@github.com:fecym/git-submodules.git --recursive
 这之后每次更新子模块，在主模块使用 `git status` 会发现终端由以下提示子模块的变动（hash 发生了改变）会有两种状态：`modified content` 和 `new commits`，两种情况发生在 `代码有修改但未提交` 和 `代码修改并提交`
 
 <p align="left" class="p-images">
-  <img src="/imgs/git-status.png" style="border-radius: 8px;">
+  <img src="/imgs/git-status.webp" style="border-radius: 8px;">
 </p>
 
 提交代码前，可以在主模块看一下状态(git status)，确保确保是自己的修改，并且状态是对的
@@ -321,7 +321,7 @@ code review 时，发现小伙伴儿的代码风格都不一样，理论上代�
 @vue/cli-service 默认是没有 lint 命令，只有 `serve`、`inspect` 和 `build` 三个默认命令，都是使用 registerCommand 来注册的
 
 <p align="left" class="p-images">
-  <img src="/imgs/vue-cli-commands.png" style="border-radius: 8px;">
+  <img src="/imgs/vue-cli-commands.webp" style="border-radius: 8px;">
 </p>
 
 子模块要想 lint 代码并且与主模块保持一致，我们还得使用 @vue/cli-service lint，但是主模块有，我当时也很纳闷，于是看了一下源码发现是必须有 eslint 的时候他会自己去注册 lint 命令，于是我们在 package.json 中加入 eslint 就可以了
@@ -359,13 +359,13 @@ code review 时，发现小伙伴儿的代码风格都不一样，理论上代�
 git hooks 的实现其实非常简单，就是 .git/hooks 文件下，保存了一些 shell 脚本，然后在对应的钩子中执行这些脚本就行了。比如下图中，这是一个还没有配置 git hooks 的仓库，默认会有很多 .sample 结尾的文件，这些都是示例文件
 
 <p align="left" class="p-images">
-  <img src="/imgs/githooks.png" style="border-radius: 8px;">
+  <img src="/imgs/githooks.webp" style="border-radius: 8px;">
 </p>
 
 我们项目已经注册了 githooks，不带 .sample 就是已经注册好的，打开 pre-commit.sample 文件看一下其中的内容，大致意思是说这是一个示例，做了一些格式方面的检测，这个脚本默认是不生效的，如果要生效，把文件名改为 pre-commit 也就是去掉 `.sample` 即可
 
 <p align="left" class="p-images">
-  <img src="/imgs/pre-commit.png" style="border-radius: 8px;">
+  <img src="/imgs/pre-commit.webp" style="border-radius: 8px;">
 </p>
 
 `pre-commit` 这个钩子是在 git commit 命令执行之前触发
@@ -409,7 +409,7 @@ husky 是一个让配置 git 钩子变得更简单的工具。husky 的原理是
 但是每次都没成功，于是翻看了源码，里面查找的路径是基于当前 node_modules 然后向上查找到 package.json，内部执行的是包内的 `runner.js`，是相对于 install.js 目录
 
 <p align="left" class="p-images">
-  <img src="/imgs/githooks-install.png" style="border-radius: 8px;">
+  <img src="/imgs/githooks-install.webp" style="border-radius: 8px;">
 </p>
 
 如果我们想直接用的话，就需要在每一个子模块中都安装 yorkie，但是能在主模块中处理一次，肯定不能在子模块中多次处理，最终还是决定把 yorkie 源码拿过来修改一下，在初始化的时候执行一次即可
@@ -520,7 +520,7 @@ module.exports = {
 要知道是否注册过 hooks，我们可以在项目根目录中找 `.git/hooks` 里面找那些 shell 脚本，默认会有很多 .sample 结尾的文件，如果所有文件都是 .sample 结尾的则说明没有安装 hooks，如果不带 .sample 说明已经注册过了
 
 <p align="left" class="p-images">
-  <img src="/imgs/githooks.png" style="border-radius: 8px;">
+  <img src="/imgs/githooks.webp" style="border-radius: 8px;">
 </p>
 
 那我们要做的就是直接读取文件夹里面的文件看是否存在如果该文件已存在则说明注册过了，不存在则说明没有注册
@@ -531,7 +531,7 @@ module.exports = {
 - 如果是文件的话，那么这个文件里面会告诉我他的 hooks 的文件夹在哪（子模块会用到）
 
 <p align="left" class="p-images">
-  <img src="/imgs/git-submodules-hooks-dir.jpg" style="border-radius: 8px;">
+  <img src="/imgs/git-submodules-hooks-dir.webp" style="border-radius: 8px;">
 </p>
 
 ```js

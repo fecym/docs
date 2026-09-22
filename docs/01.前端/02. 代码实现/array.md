@@ -29,7 +29,7 @@ function insert(arr, idx, item) {
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/basis-api-array-insert.jpg" title="循环为什么要倒着写？看下面解释" />
+  <img src="/imgs/basis-api-array-insert.webp" title="循环为什么要倒着写？看下面解释" />
 </p>
 
 ## 任意位置移除单个成员

@@ -115,7 +115,7 @@ loading.succeed() //或 loading.fail();
 ```
 
 <p align="left" class="p-images">
-  <img src="/imgs/big-front-npm-cli-beautify.png" height="" title="美化之后的命令行" />
+  <img src="/imgs/big-front-npm-cli-beautify.webp" height="" title="美化之后的命令行" />
 </p>
 
 ## 处理模板

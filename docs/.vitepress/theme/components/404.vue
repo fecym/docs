@@ -8,7 +8,7 @@ const ns = "error-page";
 
 <template>
   <div :class="[ns, 'flx-center']">
-    <img :src="withBase('/404.png')" :class="`${ns}__img`" alt="404" />
+    <img :src="withBase('/404.webp')" :class="`${ns}__img`" alt="404" />
     <div :class="[`${ns}__detail`, 'flx-column']">
       <h2>404</h2>
       <h4>抱歉，您访问的页面不存在~🤷‍♂️🤷‍♀️</h4>

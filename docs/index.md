@@ -71,7 +71,7 @@ features:
 
 |                                微信                                 |                                     公众号                                      |
 |:-----------------------------------------------------------------:|:----------------------------------------------------------------------------:|
-| <img src="/imgs/home/wechat.jpg" alt="WeChat QRcode" width=280 /> | <img src="/imgs/home/official-account.jpg" alt="official-account" width=280> | 
+| <img src="/imgs/home/wechat.webp" alt="WeChat QRcode" width=280 /> | <img src="/imgs/home/official-account.webp" alt="official-account" width=280> | 
 
 <script setup lang="ts">
 import { onMounted } from "vue";

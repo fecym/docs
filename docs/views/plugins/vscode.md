@@ -58,7 +58,7 @@ yo 也提供了一系列指令供我们使用
 package.json 是整个插件工程的配置文件，extension.js 则是工程的入口文件。
 
 <p align="center">
-  <img src="/imgs/vscode-plugin-bootstrap.jpg"/>
+  <img src="/imgs/vscode-plugin-bootstrap.webp"/>
 </p>
 
 ### package.json 介绍

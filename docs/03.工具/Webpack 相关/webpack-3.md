@@ -257,13 +257,13 @@ loader 默认是由两部分组成 pitchLoader 和 normalLoader，loader 执行�
 所有的 loader 都是先走 pitch，不管是否配置了 `enforce` 属性，具体可以参考我的代码，代码地址在后面会全部贴出来
 
 <p align="center" class="p-images">
-  <img src="/imgs/webpack-3-loader-pitch.png" height="">
+  <img src="/imgs/webpack-3-loader-pitch.webp" height="">
 </p>
 
 但是如果 pitchLoader 写了，并且有返回值，他会跳过后面的 loader 直接执行。
 
 <p align="center" class="p-images">
-  <img src="/imgs/webpack-3-loader-pitch-2.png" height="">
+  <img src="/imgs/webpack-3-loader-pitch-2.webp" height="">
 </p>
 
 这段内容，先了解一下，具体需要参考代码调试查看结果
@@ -285,7 +285,7 @@ loader 默认是由两部分组成 pitchLoader 和 normalLoader，loader 执行�
 最重要的阶段是分析语法树，我们是要分析 console 相关的执行语句，删除控制台中所有 console 的输出(log、error、warning 等)，所以拿 `console.log()` 为例分析语法树，下图为 console.log() 解析后的语法树
 
 <p align="center" class="p-images">
-  <img src="/imgs/ast-remove-console.jpg" height="">
+  <img src="/imgs/ast-remove-console.webp" height="">
 </p>
 
 在语法树中我们发现 `console.log()` 是一个调用表达式 `CallExpression`，`CallExpression` 的 `callee` 是个成语表达式 `MemberExpression`，成语对象的标识符 `Identifier` 是 `console`，既然我们找到它了，那么在这个节点把它移除掉就可以。所以我们就可以按照写 ast 的那套流程在代码中这么写，最后把我们写好的这个 `removeConsole` loader 配置到 webpack 中就可以使用了
@@ -421,7 +421,7 @@ module.exports = loader;
 例如 create-react-app 脚手架中的 webpack 配置，会把没有匹配到的文件使用 file-loader 来处理
 
 <p align="left" class="p-images">
-  <img src="/imgs/webpack-loader-react.png" width="" style="border-radius: 8px;">
+  <img src="/imgs/webpack-loader-react.webp" width="" style="border-radius: 8px;">
 </p>
 
 模拟一个 file-loader 的实现
@@ -446,13 +446,13 @@ module.exports = loader;
 此时引入图片，然后打包结果为
 
 <p align="left" class="p-images">
-  <img src="/imgs/webpack-loader-file-loader.png" width="" style="border-radius: 8px;">
+  <img src="/imgs/webpack-loader-file-loader.webp" width="" style="border-radius: 8px;">
 </p>
 
 相应的 url-loader 是专门用来处理图片，比如对图片的做一下限制，文件内容小于多少的图片可以直接转 base64
 
 <p align="left" class="p-images">
-  <img src="/imgs/webpack-loader-url-limit.png" width="" style="border-radius: 8px;">
+  <img src="/imgs/webpack-loader-url-limit.webp" width="" style="border-radius: 8px;">
 </p>
 
 ```js
@@ -476,7 +476,7 @@ module.exports = loader;
 此时引入图片文件小于配置的 15kb，文件被打包为 base64
 
 <p align="left" class="p-images">
-  <img src="/imgs/webpack-loader-url-loader.png" width="" style="border-radius: 8px;">
+  <img src="/imgs/webpack-loader-url-loader.webp" width="" style="border-radius: 8px;">
 </p>
 
 ## webpack plugins
@@ -701,13 +701,13 @@ document.getElementById('root').appendChild(fragment);
 `StaticAssetsPlugin` 的结果
 
 <p align="left" class="p-images">
-  <img src="/imgs/webpack-plugin-StaticAssetsPlugin.png" width="" style="border-radius: 8px;">
+  <img src="/imgs/webpack-plugin-StaticAssetsPlugin.webp" width="" style="border-radius: 8px;">
 </p>
 
 `AssetsAnalysePlugin` 的结果
 
 <p align="left" class="p-images">
-  <img src="/imgs/webpack-plugin-AssetsAnalysePlugin.png" width="" style="border-radius: 8px;">
+  <img src="/imgs/webpack-plugin-AssetsAnalysePlugin.webp" width="" style="border-radius: 8px;">
 </p>
 
 webpack 的 plugin 功能很强大，当然学习成本比较大，当你熟悉之后可以根据业务来实现各种你想要的功能

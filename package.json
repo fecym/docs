@@ -9,6 +9,7 @@
     "build": "vitepress build docs",
     "analyze": "VP_ANALYZE=1 vitepress build docs --outDir .analyze/dist",
     "deps": "node scripts/analyze-deps.mjs",
+    "check:assets": "node scripts/check-asset-refs.mjs",
     "preview": "vitepress preview docs",
     "deploy": "bash deploy.sh"
   },

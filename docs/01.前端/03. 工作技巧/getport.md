@@ -26,7 +26,7 @@ categories:
 翻了下 vue-cli 的源码，它是在跑完项目后用 console.log 打印出来最终的访问项目地址，代码在 `@vue/cli-service/lib/commands/serve.js` 第 261 行
 
 <p align="center">
-  <img src="/imgs/getport-cli-intro.png"/>
+  <img src="/imgs/getport-cli-intro.webp"/>
 </p>
 
 但我们已经不能直接像 vue-cli 这样直接打印我们的要使用的，我们得换个方法
@@ -34,7 +34,7 @@ categories:
 记得 vue-cli 终端错误提示信息用的好像是 `friendly-errors-webpack-plugin` 插件进行更改提示的，不自信的我又进入了 `@vue/cli-service` 里面看代码，终于在 `@vue/cli-service/lib/config/base.js` 中找到了，cli 定义了 `friendly-errors` 使用了 `@soda/friendly-errors-webpack-plugin` 插件，并传入 vue 自定义的格式化和转换器来解析错误信息
 
 <p align="center">
-  <img src="/imgs/getport-friendly-errors.png"/>
+  <img src="/imgs/getport-friendly-errors.webp"/>
 </p>
 
 ## 更改终端提示信息
@@ -67,7 +67,7 @@ module.exports = {
 这下终于还可以保持之前的操作习惯，每次项目编译完成之后，直接点击提示信息进行项目的访问了，而且对新人也比较友好，新来的同学也不需要进行一大堆配置才可以访问本地跑起来的项目了
 
 <p align="center">
-  <img src="/imgs/getport-terminal-prompt1.png"/>
+  <img src="/imgs/getport-terminal-prompt1.webp"/>
 </p>
 
 这就完了嘛？不，还没正式开始呢！因为这根本没考虑到端口被占用情况，端口如果被占用了，cli 的提示端口会自增 1，而我们提示的还是项目配置的端口，这可不是我们想要的
@@ -79,7 +79,7 @@ module.exports = {
 代码在 `@vue/cli-service/lib/commands/serve.js` 中第 107 行，这里使用了 portfinder 去查找了可用端口
 
 <p align="center">
-  <img src="/imgs/getport-cli-portfinder.png"/>
+  <img src="/imgs/getport-cli-portfinder.webp"/>
 </p>
 
 于是我兴冲冲的把代码改了一下加上了一句 `await getPortPromise({ port })`，结果发现加的那个提示没出来，这下我才知道事情远远没有我想的那么简单
@@ -234,7 +234,7 @@ const defaultHosts = (function() {
 1. 如果正常，换下一个 host 重复调用，并把当前的 `port` 存到一个`新的队列里`
 
 <p align="center">
-  <img src="/imgs/getport-normal.png"/>
+  <img src="/imgs/getport-normal.webp"/>
 </p>
 
 2. 如果中途代码异常了：
@@ -243,7 +243,7 @@ const defaultHosts = (function() {
 - 否则就是真的出错了，结束程序抛出异常（在 testPort 里面已经判断过地址被占用了）
 
 <p align="center">
-  <img src="/imgs/getport-error.png"/>
+  <img src="/imgs/getport-error.webp"/>
 </p>
 
 3. 重复执行上面的操作，直到遍历完所有合法的 host
@@ -254,7 +254,7 @@ const defaultHosts = (function() {
 - 如果不一样则拿出最后一个端口再次执行该方法
 
 <p align="center">
-  <img src="/imgs/getport-sort.png"/>
+  <img src="/imgs/getport-sort.webp"/>
 </p>
 
 科普一下：Async 是一个很实用的模块，它为异步 JavaScript 提供了简单而强大的功能。虽然最初设计是为了与 Node.js 一起使用，但它也可以直接在浏览器中使用。

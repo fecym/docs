@@ -27,7 +27,7 @@ privateRealm: common
 记得当时还是 xp 的系统的时候装系统的时候流行这么一句话，开机就按 delete，然后再找小 boot，进去之后把第一启动设备改成 CDROM 或者 USB，使用光盘或者 u 盘来装系统
 
 <p align="center" class="p-images">
-  <img src="/imgs/system-bios.jpg" height="" title="第一启动设备" />
+  <img src="/imgs/system-bios.webp" height="" title="第一启动设备" />
 </p>
 <!-- https://my.vmware.com/cn/web/vmware/info/slug/desktop_end_user_computing/vmware_workstation_pro/14_0 -->
 

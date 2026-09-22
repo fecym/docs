@@ -19,7 +19,7 @@ categories:
 
 <!-- ast -->
 <p align="left" class="p-images">
-  <img src="/imgs/ast.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast.webp" width="" style="border-radius: 8px;">
 </p>
 
 如上图中变量声明语句，转换为 AST 之后就是右图中显示的样式
@@ -132,13 +132,13 @@ estraverse.traverse(ast, {
 输出结果如下：
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-flow-code.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-flow-code.webp" width="" style="border-radius: 8px;">
 </p>
 
 由此可以得到 AST 遍历的流程是深度优先，遍历过程如下：
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-flow.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-flow.webp" width="" style="border-radius: 8px;">
 </p>
 
 ## 修改函数名字
@@ -146,7 +146,7 @@ estraverse.traverse(ast, {
 此时我们发现函数的名字在 `type` 为 `Identifier` 的时候就是该函数的名字，我们就可以直接修改它便可实现一个更改函数名字的 `AST` 工具
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-flow-fn-name.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-flow-fn-name.webp" width="" style="border-radius: 8px;">
 </p>
 
 ```js
@@ -234,7 +234,7 @@ console.log(r.code);
 首先我们在在线分析 AST 的网站上分析 `const fn = (a, b) => a + b` 和 `const fn = function(a, b) { return a + b }`看两者语法树的区别
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-arrow-to-fn.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-arrow-to-fn.webp" width="" style="border-radius: 8px;">
 </p>
 
 根据我们分析可得：
@@ -353,7 +353,7 @@ ArrowFunctionExpression(path) {
 看一下两个语法树的区别
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-import-plugins.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-import-plugins.webp" width="" style="border-radius: 8px;">
 </p>
 
 根据两张图分析我们可以得到一些信息：
@@ -444,7 +444,7 @@ console.log(r.code);
 看打印结果和转换结果似乎没什么问题，这个插件几乎就实现了
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-import-plugins-result_1.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-import-plugins-result_1.webp" width="" style="border-radius: 8px;">
 </p>
 
 ### 特殊情况
@@ -452,7 +452,7 @@ console.log(r.code);
 但是我们考虑一种情况，如果用户不全部按需加载了，按需加载只是一种选择，如果用户这么写了 `import vant, { Button, Icon } from 'vant'`，那么我们这个插件就出现问题了
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-import-plugins-result_2.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-import-plugins-result_2.webp" width="" style="border-radius: 8px;">
 </p>
 
 如果遇到这种写法，那么默认导入的他的 `source` 应该是不变的，我们要把原来的 `source` 拿出来
@@ -514,7 +514,7 @@ function importPlugin(opt) {
 先来看一下两棵语法树的区别
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-rest-to-concat.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-rest-to-concat.webp" width="" style="border-radius: 8px;">
 </p>
 
 根据上图我们分析得出：
@@ -639,7 +639,7 @@ async function func() {
 ### 分析语法树
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-async-try-catch.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-async-try-catch.webp" width="" style="border-radius: 8px;">
 </p>
 
 我们发现我们要做的就是在 `AwaitExpression` await 表达式外层包裹一层 `TryStatement` try 语句
@@ -723,7 +723,7 @@ await asyncFn();
 此时我们可以区分不同的情况做不同的处理，再次观察语法树，发现他们的区别在 blockStatement 节点下面，那么我们就可以直接替换这一级就可以，顺便把 catch 语句补充完整
 
 <p align="left" class="p-images">
-  <img src="/imgs/ast-async-try-catch-all.jpg" width="" style="border-radius: 8px;">
+  <img src="/imgs/ast-async-try-catch-all.webp" width="" style="border-radius: 8px;">
 </p>
 
 此时我们输入的代码如下：

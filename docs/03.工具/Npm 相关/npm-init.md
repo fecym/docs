@@ -217,7 +217,7 @@ categories:
 此时安装 `cym-blog` 这个模块之后，可以看到 `node_modules/.bin` 就有了 `cym-blog` 环境变量
 
 <p align="center" class="p-images">
-  <img src="/imgs/big-front-npm-init-cym-blog.png" height="" title="node_modules/.bin 中环境变量" />
+  <img src="/imgs/big-front-npm-init-cym-blog.webp" height="" title="node_modules/.bin 中环境变量" />
 </p>
 
 此时我们就可以执行 `cym-blog init my-blog` 来创建一个博客项目

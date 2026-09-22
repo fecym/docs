@@ -47,7 +47,7 @@ categories:
 在浏览器的中打开控制台 --> Application 面板 --> Cache --> Cache Storage 中可以找到存在 `Service Worker Cache` 中的数据。
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-cache-service-worker-cache.png" width="700" style="border-radius: 8px;">
+  <img src="/imgs/basis-cache-service-worker-cache.webp" width="700" style="border-radius: 8px;">
 </p>
 
 出于安全问题的考虑，`Service Worker` 只能被使用在 `https` 或者 本地的 `localhost` 环境下
@@ -57,7 +57,7 @@ categories:
 `HTTP Cache` 分为强缓存和协商缓存。优先级较高的是强缓存，在命中强缓存失败的情况下才会走协商缓存，看一张图以及下面的解释来理解一下 `HTTP Cache`
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-cache-http-cache.jpg" width="700" style="border-radius: 8px;">
+  <img src="/imgs/basis-cache-http-cache.webp" width="700" style="border-radius: 8px;">
 </p>
 
 ## 强缓存
@@ -109,7 +109,7 @@ categories:
 以本博客为例，看看缓存保存在了哪里，下图是第一次进来网站，然后刷新一次后的效果
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-cache-http-cache-from.png" width="700" style="border-radius: 8px;">
+  <img src="/imgs/basis-cache-http-cache-from.webp" width="700" style="border-radius: 8px;">
 </p>
 
 其中我们可以看到状态码有 `200` 和 `304`，`200` 后 `size` 属性中有 `memory cache`（以前叫做 `from memory cache`）和 `disk cache`（以前叫做 `from disk cache`）标明了，该缓存来自内存还是硬盘，状态码 `304` 表示走了协商缓存
@@ -131,7 +131,7 @@ categories:
 `Last-Modified` 是服务器相应请求时，返回资源文件在服务器最后的修改时间，如图所示
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-cache-http-cache-last-modified.png" width="700" style="border-radius: 8px;">
+  <img src="/imgs/basis-cache-http-cache-last-modified.webp" width="700" style="border-radius: 8px;">
 </p>
 
 `If-Modified-Since` 则是客户端再次发送请求时，携带上上次请求返回的 `Last-Modified` 的内容，通过这个字段来告诉服务器该资源上次请求返回的最后修改的时间。
@@ -187,7 +187,7 @@ http
 `Etag` 是服务器响应请求时，返回资源文件的唯一标识（由服务器生成），同时也解决了 `Last-Modified` 存在的缺陷，如图：
 
 <p align="left" class="p-images">
-  <img src="/imgs/basis-cache-http-cache-etag.png" width="700" style="border-radius: 8px;">
+  <img src="/imgs/basis-cache-http-cache-etag.webp" width="700" style="border-radius: 8px;">
 </p>
 
 `If-None-Match` 是浏览器再次发送该请求时，携带上次请求返回的唯一表示（`Etag`）值，通过此字段告诉服务器该资源上次请求返回的唯一标识。

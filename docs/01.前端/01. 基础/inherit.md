@@ -117,7 +117,7 @@ typeof Object.__proto__ === 'function'; // true
 ### 经典图
 
 <p align="center" class="p-images">
-  <img src="/imgs/basis-javascript-prototype.png" />
+  <img src="/imgs/basis-javascript-prototype.webp" />
 </p>
 
 ### prototype
@@ -508,7 +508,7 @@ console.log(c, c.sex); //  Child { name: '小铭', age: 24, sex: 'male' }，'mal
   ```
 
   <p align="center" class="p-images">
-    <img src="/imgs/basis-javascript-inherit.png" height="">
+    <img src="/imgs/basis-javascript-inherit.webp" height="">
   </p>
   - 这两个*type*属性是独立的，修改其中一个不会影响到另外一个
   - 每一个实例对象，都有自己的属性和方法的副本。这不仅无法做到数据的共享，也是极大的资源浪费
@@ -555,7 +555,7 @@ console.log(c2, c1);
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/basis-javascript-prototype-inherit.png" height="">
+  <img src="/imgs/basis-javascript-prototype-inherit.webp" height="">
 </p>
 
 - 原型链继承会共享父类的属性，所有的子类都会共享一个属性
@@ -591,7 +591,7 @@ console.log(c1, c2);
 ```
 
 <p align="center" class="p-images">
-  <img src="/imgs/basis-javascript-constructor-inherit.png" height="">
+  <img src="/imgs/basis-javascript-constructor-inherit.webp" height="">
 </p>
 
 - 如上代码，其实父类执行了一次就是生成了两个属性，父类直接执行的话就是给 _window_ 生成了几个属性
