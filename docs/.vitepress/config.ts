@@ -155,7 +155,15 @@ export default defineConfig({
       viteCompression({
         algorithm: "gzip",
         ext: ".gz",
-        threshold: 1024,
+        threshold: 10240,
+        deleteOriginFile: false,
+      }),
+      viteCompression({
+        verbose: true, // 是否在控制台输出压缩结果
+        disable: false, // 默认 false, 设置为 true 来禁用压缩
+        threshold: 10240, // 只处理大于此大小的资源（单位：字节）。默认值为 0。
+        algorithm: "brotliCompress", // 使用 brotli 压缩
+        ext: ".br", // 输出文件的扩展名
         deleteOriginFile: false,
       }),
     ],
