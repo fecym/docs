@@ -1,0 +1,120 @@
+<svg width="631" height="590" xmlns="http://www.w3.org/2000/svg" 
+  shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+  <g transform="translate(-1184.5, -705)">
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 0 1342 992 L 1342 768 A 8 8 0 0 1 1350 760 L 1364.5 760" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 0 1342 992 L 1342 808 A 8 8 0 0 1 1350 800 L 1364.5 800" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 0 1342 992 L 1342 848 A 8 8 0 0 1 1350 840 L 1364.5 840" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 0 1342 992 L 1342 928 A 8 8 0 0 1 1350 920 L 1364.5 920" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1549.5 920 L 1600.5 920 A 8 8 0 0 0 1608.5 912 L 1608.5 888 A 8 8 0 0 1 1616.5 880 L 1619.5 880" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1549.5 920 L 1600.5 920 L 1608.5 920 L 1616.5 920 L 1619.5 920" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1549.5 920 L 1600.5 920 A 8 8 0 0 1 1608.5 928 L 1608.5 952 A 8 8 0 0 0 1616.5 960 L 1619.5 960" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 L 1342 1000 L 1350 1000 L 1364.5 1000" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 1 1342 1008 L 1342 1072 A 8 8 0 0 0 1350 1080 L 1364.5 1080" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1549.5 1080 L 1600.5 1080 A 8 8 0 0 0 1608.5 1072 L 1608.5 1048 A 8 8 0 0 1 1616.5 1040 L 1619.5 1040" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1549.5 1080 L 1600.5 1080 L 1608.5 1080 L 1616.5 1080 L 1619.5 1080" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1549.5 1080 L 1600.5 1080 A 8 8 0 0 1 1608.5 1088 L 1608.5 1112 A 8 8 0 0 0 1616.5 1120 L 1619.5 1120" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 1 1342 1008 L 1342 1152 A 8 8 0 0 0 1350 1160 L 1364.5 1160" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 1 1342 1008 L 1342 1192 A 8 8 0 0 0 1350 1200 L 1364.5 1200" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <path d="M 1294.5 1000 L 1334 1000 A 8 8 0 0 1 1342 1008 L 1342 1232 A 8 8 0 0 0 1350 1240 L 1364.5 1240" stroke="#746e6a" fill="none" stroke-width="1"/>
+    <rect x="1224.5" y="985" width="70" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#b2afad" stroke-width="1"/>
+    <text x="1259.5" y="1000"
+          font-family="Arial, 黑体, sans-serif" font-size="16px"
+          text-anchor="middle" dominant-baseline="middle" fill="#4e4e4e">
+      tee
+    </text>
+    <rect x="1364.5" y="745" width="155" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1442" y="760"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      一条命令，边看边存
+    </text>
+    <rect x="1364.5" y="785" width="180.83251953125" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1454.916259765625" y="800"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      `tee`：终端里的“三通管”
+    </text>
+    <rect x="1364.5" y="825" width="200" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1464.5" y="840"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      关键一步：别漏掉错误日志
+    </text>
+    <rect x="1364.5" y="905" width="185" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1457" y="920"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      三个顺手又实用的小技巧
+    </text>
+    <text x="1624.5" y="880"
+          font-family="Arial, 黑体, sans-serif" font-size="12px"
+          text-anchor="start" dominant-baseline="middle" fill="#606060">
+      追加写入，保留历史日志
+    </text>
+    <text x="1624.5" y="920"
+          font-family="Arial, 黑体, sans-serif" font-size="12px"
+          text-anchor="start" dominant-baseline="middle" fill="#606060">
+      文件名加时间，方便回溯
+    </text>
+    <text x="1624.5" y="960"
+          font-family="Arial, 黑体, sans-serif" font-size="12px"
+          text-anchor="start" dominant-baseline="middle" fill="#606060">
+      文件存完整，屏幕看重点
+    </text>
+    <rect x="1364.5" y="985" width="140" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1434.5" y="1000"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      只保存需要的输出
+    </text>
+    <rect x="1364.5" y="1065" width="185" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1457" y="1080"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      使用前要留意的三个细节
+    </text>
+    <text x="1624.5" y="1040"
+          font-family="Arial, 黑体, sans-serif" font-size="12px"
+          text-anchor="start" dominant-baseline="middle" fill="#606060">
+      日志为什么不实时了？
+    </text>
+    <text x="1624.5" y="1080"
+          font-family="Arial, 黑体, sans-serif" font-size="12px"
+          text-anchor="start" dominant-baseline="middle" fill="#606060">
+      命令失败，状态却是成功？
+    </text>
+    <text x="1624.5" y="1120"
+          font-family="Arial, 黑体, sans-serif" font-size="12px"
+          text-anchor="start" dominant-baseline="middle" fill="#606060">
+      日志里的奇怪字符是什么？
+    </text>
+    <rect x="1364.5" y="1145" width="160.01708984375" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1444.508544921875" y="1160"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      Windows 平台怎么用
+    </text>
+    <rect x="1364.5" y="1185" width="160.009765625" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1444.5048828125" y="1200"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      一张表快速记住 `tee`
+    </text>
+    <rect x="1364.5" y="1225" width="80" height="30"
+          rx="6" ry="6" fill="#ffffff" stroke="#d1cecd" stroke-width="1"/>
+    <text x="1404.5" y="1240"
+          font-family="Arial, 黑体, sans-serif" font-size="15px"
+          text-anchor="middle" dominant-baseline="middle" fill="#595959">
+      写在最后
+    </text>
+  </g>
+</svg>
